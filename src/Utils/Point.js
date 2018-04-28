@@ -58,20 +58,6 @@ class Point {
   }
 
   /**
-   * Convert an array of constellation coordinates [i, r] to an array of
-   * cartesian coordinates [x, y].
-   *
-   * @param {[{number}, {number}]} ir
-   * @returns {[{number}, {number}]}
-   */
-  static ir_xy(ir) {
-    let [i, r] = ir;
-    // TODO
-    return [x, y];
-  }
-
-
-  /**
    * Convert a "phi" coordinate `p` (as part of the standard polar coordinate
    * system) to an "interval" coordinate `i` (as part of our custom
    * constellation coordinate system).
@@ -142,6 +128,28 @@ class Point {
     let p = this.wrap(Math.atan2(y, x), 2 * PI);
     let r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     return [p, r];
+  }
+
+  /**
+   * Convert an array of cartesian coordinates to an array of constellation
+   * coordinates.
+   *
+   * @param {[{number}, {number}]} xy
+   * @returns {[{number}, {number}]}
+   */
+  static xy_ir(xy) {
+    return this.pr_ir(this.xy_pr(xy));
+  }
+
+  /**
+   * Convert an array of constellation coordinates to an array of cartesian
+   * coordinates.
+   *
+   * @param {[{number}, {number}]} ir
+   * @returns {[{number}, {number}]}
+   */
+  static ir_xy(ir) {
+    return this.pr_xy(this.ir_pr(ir));
   }
 
   /**
