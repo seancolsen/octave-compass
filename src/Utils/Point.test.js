@@ -56,6 +56,26 @@ test('i_p', () => {
   expect(Point.i_p(9)).toBeRoughly(PI);
 });
 
+test('p_i', () => {
+  expect(Point.p_i(PI / 2)).toBeRoughly(0);
+  expect(Point.p_i(PI / 6)).toBeRoughly(2);
+  expect(Point.p_i(0)).toBeRoughly(3);
+  expect(Point.p_i(3 * PI / 2)).toBeRoughly(6);
+  expect(Point.p_i(PI)).toBeRoughly(9);
+});
+
+test('ir_pr', () => {
+  let [p, r] = Point.ir_pr([3, 1]);
+  expect(p).toBeRoughly(0);
+  expect(r).toBe(1);
+});
+
+test('pr_ir', () => {
+  let [i, r] = Point.pr_ir([0, 1]);
+  expect(i).toBeRoughly(3);
+  expect(r).toBe(1);
+});
+
 test('fromIR', () => {
 //  let p = Point.fromIR(0, 0);
 //  expect(p.x).toBe(0);
