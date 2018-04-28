@@ -76,6 +76,18 @@ test('pr_ir', () => {
   expect(r).toBe(1);
 });
 
+test('pr_xy', () => {
+  let [x, y] = Point.pr_xy([0, 0]);
+  expect(x).toBe(0);
+  expect(y).toBe(0);
+});
+
+test('xy_pr', () => {
+  let [p, r] = Point.xy_pr([0, 0]);
+  expect(p).toBe(0);
+  expect(r).toBe(0);
+});
+
 test('fromIR', () => {
 //  let p = Point.fromIR(0, 0);
 //  expect(p.x).toBe(0);

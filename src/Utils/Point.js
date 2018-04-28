@@ -119,6 +119,31 @@ class Point {
     return [this.p_i(p), r];
   }
 
+
+  /**
+   * Convert an array of polar coordinates to an array of cartesian coordinates
+   *
+   * @param {[{number}, {number}]}pr
+   * @returns {[{number}, {number}]}
+   */
+  static pr_xy(pr) {
+    let [p, r] = pr;
+    return [r * Math.cos(p), r * Math.sin(p)];
+  }
+
+  /**
+   * Convert an array of cartesian coordinates to an array of polar coordinates
+   *
+   * @param {[{number}, {number}]} xy
+   * @returns {[{number}, {number}]}
+   */
+  static xy_pr(xy) {
+    let [x, y] = xy;
+    let p = this.wrap(Math.atan2(y, x), 2 * PI);
+    let r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+    return [p, r];
+  }
+
   /**
    * Ensure that `value` is within range between 0 and `max`. If `value` is
    * negative, then it's shifted up enough to make it positive. If `values` is
