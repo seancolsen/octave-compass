@@ -95,10 +95,18 @@ test('pr_ir', () => {
 
 test('pr_xy', () => {
   expect(Point.pr_xy([0, 0])).toBeTheSamePointAs([0, 0]);
+  expect(Point.pr_xy([0, 1])).toBeTheSamePointAs([1, 0]);
+  expect(Point.pr_xy([PI / 2, 1])).toBeTheSamePointAs([0, 1]);
+  expect(Point.pr_xy([PI, 1])).toBeTheSamePointAs([-1, 0]);
+  expect(Point.pr_xy([3 * PI / 2, 1])).toBeTheSamePointAs([0, -1]);
 });
 
 test('xy_pr', () => {
   expect(Point.xy_pr([0, 0])).toBeTheSamePointAs([0, 0]);
+  expect(Point.xy_pr([1, 0])).toBeTheSamePointAs([0, 1]);
+  expect(Point.xy_pr([0, 1])).toBeTheSamePointAs([PI / 2, 1]);
+  expect(Point.xy_pr([-1, 0])).toBeTheSamePointAs([PI, 1]);
+  expect(Point.xy_pr([0, -1])).toBeTheSamePointAs([3 * PI / 2, 1]);
 });
 
 test('fromIR', () => {
