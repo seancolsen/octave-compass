@@ -43,24 +43,6 @@ expect.extend({
   }
 });
 
-test('constructor', () => {
-  let p = new Point(1, 2);
-  expect(p.x).toBe(1);
-  expect(p.y).toBe(2);
-});
-
-test('fromXY', () => {
-  let p = Point.fromXY(1, 2);
-  expect(p.x).toBe(1);
-  expect(p.y).toBe(2);
-});
-
-test('fromXYArray', () => {
-  let p = Point.fromXYArray([1, 2]);
-  expect(p.x).toBe(1);
-  expect(p.y).toBe(2);
-});
-
 test('wrap', () => {
   expect(Point.wrap(150, 100)).toBe(50);
   expect(Point.wrap(-2, 100)).toBe(98);
@@ -121,10 +103,4 @@ test('xy_ir', () => {
   expect(Point.xy_ir([1, 0])).toBeTheSamePointAs([3, 1]);
   expect(Point.xy_ir([0, -1])).toBeTheSamePointAs([6, 1]);
   expect(Point.xy_ir([-1, 0])).toBeTheSamePointAs([9, 1]);
-});
-
-test('fromIR', () => {
-//  let p = Point.fromIR(0, 0);
-//  expect(p.x).toBe(0);
-//  expect(p.y).toBe(0);
 });

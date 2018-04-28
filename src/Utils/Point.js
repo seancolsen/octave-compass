@@ -28,35 +28,6 @@ class Point {
    */
   static DIVISIONS = 12;
 
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-
-
-  static fromXY(x, y) {
-    return new Point(x, y);
-  }
-
-  static fromXYArray(xy) {
-    return new Point(xy[0], xy[1]);
-  }
-
-  static fromIR(i, r) {
-    // TODO
-  }
-
-  /**
-   * Convert cartesian coordinates to constellation coordinates
-   *
-   * @param {{x: {number}, y: {number}}} cartesian
-   * @returns {{r: {number}, i: {number}}}
-   */
-  static toConstellation(cartesian) {
-    // TODO
-    return {};
-  }
-
   /**
    * Convert a "phi" coordinate `p` (as part of the standard polar coordinate
    * system) to an "interval" coordinate `i` (as part of our custom
@@ -104,7 +75,6 @@ class Point {
     let [p, r] = pr;
     return [this.p_i(p), r];
   }
-
 
   /**
    * Convert an array of polar coordinates to an array of cartesian coordinates
