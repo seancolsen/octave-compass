@@ -1,10 +1,10 @@
 import Point from './Point.js';
 
 const PI = Math.PI;
+const THRESHOLD = 0.00000000000001;
 
 expect.extend({
   toBeRoughly(received, argument) {
-    const THRESHOLD = 0.00000000000001;
     const pass = Math.abs(received - argument) < THRESHOLD;
     if (pass) {
       return {
@@ -20,6 +20,27 @@ expect.extend({
       };
     }
   },
+});
+
+expect.extend({
+  toBeTheSamePointAs(reveived, argument) {
+    const pass =
+      Math.abs(reveived[0] - argument[0]) < THRESHOLD &&
+      Math.abs(reveived[1] - argument[1]) < THRESHOLD;
+    if (pass) {
+      return {
+        message: () =>
+          `expected ${received} to not be the same point as ${argument}`,
+        pass: true,
+      };
+    }
+    else {
+      return {
+        message: () => `expected ${received} to be the same point as ${argument}`,
+        pass: false,
+      };
+    }
+  }
 });
 
 test('constructor', () => {
@@ -65,27 +86,19 @@ test('p_i', () => {
 });
 
 test('ir_pr', () => {
-  let [p, r] = Point.ir_pr([3, 1]);
-  expect(p).toBeRoughly(0);
-  expect(r).toBe(1);
+  expect(Point.ir_pr([3, 1])).toBeTheSamePointAs([0, 1]);
 });
 
 test('pr_ir', () => {
-  let [i, r] = Point.pr_ir([0, 1]);
-  expect(i).toBeRoughly(3);
-  expect(r).toBe(1);
+  expect(Point.pr_ir([0, 1])).toBeTheSamePointAs([3, 1]);
 });
 
 test('pr_xy', () => {
-  let [x, y] = Point.pr_xy([0, 0]);
-  expect(x).toBe(0);
-  expect(y).toBe(0);
+  expect(Point.pr_xy([0, 0])).toBeTheSamePointAs([0, 0]);
 });
 
 test('xy_pr', () => {
-  let [p, r] = Point.xy_pr([0, 0]);
-  expect(p).toBe(0);
-  expect(r).toBe(0);
+  expect(Point.xy_pr([0, 0])).toBeTheSamePointAs([0, 0]);
 });
 
 test('fromIR', () => {
