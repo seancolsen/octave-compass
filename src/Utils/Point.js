@@ -45,6 +45,17 @@ class Point {
   static DIVISIONS = 12;
 
   /**
+   * Return the factor by which a radius should be reduced when it lies on the
+   * edge between two keys. We want to reduce it so that we get straight lines
+   * between keys.
+   *
+   * @returns {number}
+   */
+  static get rFactorAtEdge() {
+    return Math.cos(PI / this.DIVISIONS);
+  }
+
+  /**
    * Convert a "phi" coordinate `p` (as part of the standard polar coordinate
    * system) to an "interval" coordinate `i` (as part of our custom
    * constellation coordinate system).

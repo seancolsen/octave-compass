@@ -1,4 +1,4 @@
-theoryData = {
+const musicTheory = {
   notes: [
     {
       sharpName: "C",
@@ -113,3 +113,5 @@ theoryData = {
   },
 
 };
+
+export default musicTheory;
