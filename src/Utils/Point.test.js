@@ -1,7 +1,26 @@
 import Point from './Point.js';
 
 const PI = Math.PI;
-const THRESHOLD = 0.00000000000001;
+
+expect.extend({
+  toBeRoughly(received, argument) {
+    const THRESHOLD = 0.00000000000001;
+    const pass = Math.abs(received - argument) < THRESHOLD;
+    if (pass) {
+      return {
+        message: () =>
+          `expected ${received} to not be roughly equal to ${argument}`,
+        pass: true,
+      };
+    }
+    else {
+      return {
+        message: () => `expected ${received} to be roughly equal to ${argument}`,
+        pass: false,
+      };
+    }
+  },
+});
 
 test('constructor', () => {
   let p = new Point(1, 2);
@@ -30,11 +49,11 @@ test('wrap', () => {
 });
 
 test('i_p', () => {
-  expect(Point.i_p(0) - (PI / 2)).toBeLessThan(THRESHOLD);
-  expect(Point.i_p(2) - (PI / 6)).toBeLessThan(THRESHOLD);
-  expect(Point.i_p(3) - (0)).toBeLessThan(THRESHOLD);
-  expect(Point.i_p(6) - (3 * PI / 2)).toBeLessThan(THRESHOLD);
-  expect(Point.i_p(9) - (PI)).toBeLessThan(THRESHOLD);
+  expect(Point.i_p(0)).toBeRoughly(PI / 2);
+  expect(Point.i_p(2)).toBeRoughly(PI / 6);
+  expect(Point.i_p(3)).toBeRoughly(0);
+  expect(Point.i_p(6)).toBeRoughly(3 * PI / 2);
+  expect(Point.i_p(9)).toBeRoughly(PI);
 });
 
 test('fromIR', () => {
