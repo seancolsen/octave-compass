@@ -23,10 +23,10 @@ expect.extend({
 });
 
 expect.extend({
-  toBeTheSamePointAs(reveived, argument) {
+  toBeTheSamePointAs(received, argument) {
     const pass =
-      Math.abs(reveived[0] - argument[0]) < THRESHOLD &&
-      Math.abs(reveived[1] - argument[1]) < THRESHOLD;
+      Math.abs(received[0] - argument[0]) < THRESHOLD &&
+      Math.abs(received[1] - argument[1]) < THRESHOLD;
     if (pass) {
       return {
         message: () =>
@@ -78,29 +78,29 @@ test('pr_ir', () => {
 test('pr_xy', () => {
   expect(Point.pr_xy([0, 0])).toBeTheSamePointAs([0, 0]);
   expect(Point.pr_xy([0, 1])).toBeTheSamePointAs([1, 0]);
-  expect(Point.pr_xy([PI / 2, 1])).toBeTheSamePointAs([0, 1]);
+  expect(Point.pr_xy([PI / 2, 1])).toBeTheSamePointAs([0, -1]);
   expect(Point.pr_xy([PI, 1])).toBeTheSamePointAs([-1, 0]);
-  expect(Point.pr_xy([3 * PI / 2, 1])).toBeTheSamePointAs([0, -1]);
+  expect(Point.pr_xy([3 * PI / 2, 1])).toBeTheSamePointAs([0, 1]);
 });
 
 test('xy_pr', () => {
   expect(Point.xy_pr([0, 0])).toBeTheSamePointAs([0, 0]);
   expect(Point.xy_pr([1, 0])).toBeTheSamePointAs([0, 1]);
-  expect(Point.xy_pr([0, 1])).toBeTheSamePointAs([PI / 2, 1]);
+  expect(Point.xy_pr([0, -1])).toBeTheSamePointAs([PI / 2, 1]);
   expect(Point.xy_pr([-1, 0])).toBeTheSamePointAs([PI, 1]);
-  expect(Point.xy_pr([0, -1])).toBeTheSamePointAs([3 * PI / 2, 1]);
+  expect(Point.xy_pr([0, 1])).toBeTheSamePointAs([3 * PI / 2, 1]);
 });
 
 test('ir_xy', () => {
-  expect(Point.ir_xy([0, 1])).toBeTheSamePointAs([0, 1]);
+  expect(Point.ir_xy([0, 1])).toBeTheSamePointAs([0, -1]);
   expect(Point.ir_xy([3, 1])).toBeTheSamePointAs([1, 0]);
-  expect(Point.ir_xy([6, 1])).toBeTheSamePointAs([0, -1]);
+  expect(Point.ir_xy([6, 1])).toBeTheSamePointAs([0, 1]);
   expect(Point.ir_xy([9, 1])).toBeTheSamePointAs([-1, 0]);
 });
 
 test('xy_ir', () => {
-  expect(Point.xy_ir([0, 1])).toBeTheSamePointAs([0, 1]);
+  expect(Point.xy_ir([0, -1])).toBeTheSamePointAs([0, 1]);
   expect(Point.xy_ir([1, 0])).toBeTheSamePointAs([3, 1]);
-  expect(Point.xy_ir([0, -1])).toBeTheSamePointAs([6, 1]);
+  expect(Point.xy_ir([0, 1])).toBeTheSamePointAs([6, 1]);
   expect(Point.xy_ir([-1, 0])).toBeTheSamePointAs([9, 1]);
 });

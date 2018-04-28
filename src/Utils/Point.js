@@ -1,6 +1,8 @@
 const PI = Math.PI;
 
 /**
+ * CONSTELLATION COORDINATE SYSTEM
+ *
  * To make things easier in this app, we think of the objects existing within
  * a custom coordinate system, called the "constellation coordinate system". The
  * idea is similar to the polar coordinate system with a couple differences.
@@ -16,6 +18,20 @@ const PI = Math.PI;
  *
  * As i increases, we move clockwise (in contrast to polar, which moves counter-
  * clockwise).
+ *
+ *
+ * CARTESIAN COORDINATE SYSTEM
+ *
+ * Our cartesian coordinate system within this app considers the positive y
+ * axis to be pointing down. We do this to match the way that SVG works.
+ *
+ *
+ * POLAR COORDINATE SYSTEM
+ *
+ * We have utilities within this class for converting points to and from polar
+ * coordinates, but they really only exist for the purpose of simplifying the
+ * process of converting between points in constellation and cartesian.
+ *
  */
 class Point {
 
@@ -84,7 +100,10 @@ class Point {
    */
   static pr_xy(pr) {
     let [p, r] = pr;
-    return [r * Math.cos(p), r * Math.sin(p)];
+    let x = r * Math.cos(p);
+    let y = r * Math.sin(p);
+    y = -y; // Flip axis, for SVG
+    return [x , y];
   }
 
   /**
@@ -95,6 +114,7 @@ class Point {
    */
   static xy_pr(xy) {
     let [x, y] = xy;
+    y = -y; // Flip axis, for SVG
     let p = this.wrap(Math.atan2(y, x), 2 * PI);
     let r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     return [p, r];
