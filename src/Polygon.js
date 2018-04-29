@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import Point from './Utils/Point';
+import Point from './Utils/Point.js';
 
-class Polygon extends Component {
+export default class Polygon extends Component {
   render() {
     let pointsInXY = this.props.points.map((a) => Point.ir_xy(a));
     let pointsString = pointsInXY.map((a) => a.join(',')).join(' ');
@@ -10,5 +10,3 @@ class Polygon extends Component {
     );
   }
 }
-
-export default Polygon;
