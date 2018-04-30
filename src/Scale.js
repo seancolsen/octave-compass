@@ -7,6 +7,6 @@ export default function Scale(props) {
   let intervals = [0, 2, 4, 5, 7, 9, 11];
   let points = intervals.map(v => [v, RADIUS]);
   return (
-    <Polygon points={points}/>
+    <Polygon points={points} rotation={0}/>
   );
 }

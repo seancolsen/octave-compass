@@ -1,3 +1,6 @@
+import {musicTheory} from '../Data/musicTheory.js';
+import Scalar from './Scalar.js'
+
 const PI = Math.PI;
 
 /**
@@ -9,7 +12,7 @@ const PI = Math.PI;
  *
  * The constellation coordinate system has the following two coordinates:
  *
- * - i -- to represent the musical interval
+ * - i -- to represent the musical interval (0 - 11)
  * - r -- to represent the radius (like in polar)
  *
  * When i = 0, we are at the top most part of the coordinate system (in contrast
@@ -33,16 +36,7 @@ const PI = Math.PI;
  * process of converting between points in constellation and cartesian.
  *
  */
-class Point {
-
-  /**
-   * The number of divisions (pie slices) within the octave. We set this to
-   * 12 here since (for now) we're hard-coding this app to use twelve-tone
-   * equal temperament.
-   *
-   * @type int
-   */
-  static DIVISIONS = 12;
+export default class Point {
 
   /**
    * Return the factor by which a radius should be reduced when it lies on the
@@ -52,31 +46,31 @@ class Point {
    * @returns {number}
    */
   static get rFactorAtEdge() {
-    return Math.cos(PI / this.DIVISIONS);
+    return Math.cos(PI / musicTheory.octaveDivisions);
   }
 
   /**
    * Convert a "phi" coordinate `p` (as part of the standard polar coordinate
-   * system) to an "interval" coordinate `i` (as part of our custom
+   * system) in radians to an "interval" coordinate `i` (as part of our custom
    * constellation coordinate system).
    *
    * @param {number} p
    * @returns {number}
    */
   static p_i(p) {
-    return this.wrap(this.DIVISIONS*(5/4 - p/(2*PI)), 12);
+    return Scalar.wrap(musicTheory.octaveDivisions*(5/4 - p/(2*PI)), 12);
   }
 
   /**
    * Convert an "interval" coordinate `i` (as part of our custom constellation
-   * coordinate system) to a "phi" coordinate (as part of the standard polar
-   * coordinate system).
+   * coordinate system) to a "phi" coordinate `p` (as part of the standard polar
+   * coordinate system) in radians.
    *
    * @param {number} i
    * @returns {number}
    */
   static i_p(i) {
-    return this.wrap((2 + 1/2)*PI - i*2*PI/this.DIVISIONS, 2*PI);
+    return Scalar.wrap((2 + 1/2)*PI - i*2*PI/musicTheory.octaveDivisions, 2*PI);
   }
 
   /**
@@ -126,7 +120,7 @@ class Point {
   static xy_pr(xy) {
     let [x, y] = xy;
     y = -y; // Flip axis, for SVG
-    let p = this.wrap(Math.atan2(y, x), 2 * PI);
+    let p = Scalar.wrap(Math.atan2(y, x), 2 * PI);
     let r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     return [p, r];
   }
@@ -153,21 +147,4 @@ class Point {
     return this.pr_xy(this.ir_pr(ir));
   }
 
-  /**
-   * Ensure that `value` is within range between 0 and `max`. If `value` is
-   * negative, then it's shifted up enough to make it positive. If `values` is
-   * greater than `max`, then it's shifted down to make it in-range.
-   *
-   * @param {number} value
-   * @param {number} max
-   * @returns {number}
-   */
-  static wrap(value, max) {
-    let shift = (value < 0) ? Math.ceil(Math.abs(value)/max)*max : 0;
-    let positiveValue = value + shift;
-    return positiveValue % max;
-  }
-
 }
-
-export default Point;

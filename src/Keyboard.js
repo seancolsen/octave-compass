@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Key from "./Key.js";
-import musicTheory from "./Data/musicTheory.js";
+import {musicTheory} from "./Data/musicTheory.js";
 
 export default class Keyboard extends Component {
   render() {

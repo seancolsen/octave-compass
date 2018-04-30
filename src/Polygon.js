@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import Point from './Utils/Point.js';
+import Points from './Utils/Points.js';
 
 export default class Polygon extends Component {
   render() {
-    let pointsInXY = this.props.points.map((a) => Point.ir_xy(a));
-    let pointsString = pointsInXY.map((a) => a.join(',')).join(' ');
+    let pointsString = Points.stringFromIR(this.props.points);
+    let rotation = this.props.rotation || 0;
+    let transformString = `rotate(${rotation})`;
     return (
-      <polygon points={pointsString}/>
+      <polygon points={pointsString} transform={transformString}/>
     );
   }
 }

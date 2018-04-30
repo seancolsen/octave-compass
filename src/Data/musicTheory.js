@@ -1,4 +1,7 @@
-const musicTheory = {
+export const musicTheory = {
+
+  octaveDivisions: 12,
+
   notes: [
     {
       sharpName: "C",
@@ -113,5 +116,3 @@ const musicTheory = {
   },
 
 };
-
-export default musicTheory;

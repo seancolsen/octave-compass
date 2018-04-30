@@ -43,14 +43,6 @@ expect.extend({
   }
 });
 
-test('wrap', () => {
-  expect(Point.wrap(150, 100)).toBe(50);
-  expect(Point.wrap(-2, 100)).toBe(98);
-  expect(Point.wrap(0, 100)).toBe(0);
-  expect(Point.wrap(100, 100)).toBe(0);
-  expect(Point.wrap(1050, 100)).toBe(50);
-});
-
 test('i_p', () => {
   expect(Point.i_p(0)).toBeRoughly(PI / 2);
   expect(Point.i_p(2)).toBeRoughly(PI / 6);
