@@ -23,13 +23,13 @@ export default class Scale extends Component {
   render() {
     let intervals = [0, 2, 4, 5, 7, 9, 11];
     let points = intervals.map(v => [v, RADIUS]);
-    let children = <Polygon points={points}/>;
     return (
       <Group
         onClick={this.handleClick}
-        children={children}
         rotation={this.state.rotation}
-      />
+      >
+        <Polygon points={points}/>
+      </Group>
     );
   }
 
