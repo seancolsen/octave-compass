@@ -1,6 +1,5 @@
 import {musicTheory} from '../Data/musicTheory.js';
 
-const PI = Math.PI;
 const CIRCLE_DEGREES = 360;
 
 /**

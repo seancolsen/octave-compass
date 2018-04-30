@@ -12,11 +12,21 @@ export default class Scale extends Component {
     };
   }
 
+  handleClick = () => {
+    this.setState({
+      rotation: this.state.rotation + 1,
+    });
+  };
+
   render() {
     let intervals = [0, 2, 4, 5, 7, 9, 11];
     let points = intervals.map(v => [v, RADIUS]);
     return (
-      <Polygon points={points} rotation={this.state.rotation}/>
+      <Polygon
+        points={points}
+        rotation={this.state.rotation}
+        onClick={this.handleClick}
+      />
     );
   }
 
