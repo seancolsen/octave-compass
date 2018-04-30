@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Polygon from "./Polygon.js";
+import Group from './Group.js';
 
 const RADIUS = 56;
 
@@ -12,7 +13,8 @@ export default class Scale extends Component {
     };
   }
 
-  handleClick = () => {
+  handleClick = (e) => {
+    console.log(e.target);
     this.setState({
       rotation: this.state.rotation + 1,
     });
@@ -21,11 +23,12 @@ export default class Scale extends Component {
   render() {
     let intervals = [0, 2, 4, 5, 7, 9, 11];
     let points = intervals.map(v => [v, RADIUS]);
+    let children = <Polygon points={points}/>;
     return (
-      <Polygon
-        points={points}
-        rotation={this.state.rotation}
+      <Group
         onClick={this.handleClick}
+        children={children}
+        rotation={this.state.rotation}
       />
     );
   }
