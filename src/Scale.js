@@ -13,10 +13,9 @@ export default class Scale extends Component {
     };
   }
 
-  handleClick = (e) => {
-    console.log(e.target);
+  handleMouseMove = (e) => {
     this.setState({
-      rotation: this.state.rotation + 1,
+      rotation: e.clientX / 100,
     });
   };
 
@@ -25,7 +24,7 @@ export default class Scale extends Component {
     let points = intervals.map(v => [v, RADIUS]);
     return (
       <Group
-        onClick={this.handleClick}
+        onMouseMove={this.handleMouseMove}
         rotation={this.state.rotation}
       >
         <Polygon points={points}/>
