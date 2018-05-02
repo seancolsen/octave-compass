@@ -7,25 +7,43 @@ export default class Wheel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      keyboardRotation: 0,
-      scaleRotation: 0
+      elementRotating: null,
     };
   }
 
-  handleMouseMove = (e) => {
+  startRotating(event, component) {
     this.setState({
-      scaleRotation: e.clientX / 100,
+      elementRotating: component,
     });
-  };
+  }
+
+  stopRotating() {
+    this.setState({
+      elementRotating: null,
+    });
+  }
+
+  handleMouseMove(event) {
+    if (!this.state.elementRotating) {
+      return;
+    }
+    this.state.elementRotating.setState({
+      rotation: event.clientX / 100,
+    });
+  }
 
   render() {
     return (
       <svg
         viewBox={'-100 -100 200 200'}
-        onMouseMove={this.handleMouseMove}
+        onMouseMove={(event) => this.handleMouseMove(event)}
+        onMouseLeave={() => this.stopRotating()}
+        onMouseUp={() => this.stopRotating()}
       >
         <Keyboard/>
-        <Scale rotation={this.state.scaleRotation}/>
+        <Scale
+          onMouseDown={(event, component) => this.startRotating(event, component)}
+        />
       </svg>
     );
   }
