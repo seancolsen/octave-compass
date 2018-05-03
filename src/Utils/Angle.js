@@ -9,7 +9,7 @@ const CIRCLE_DEGREES = 360;
  * about angles outside the context of points, we don't need to think about the
  * additional complexities of the coordinate system transformations. That's why
  * the functions here are simpler. They only deal with scaling. In contrast, the
- * functions `Point.i_p` and `Point.p_i` deal with scaling as well as shifting.
+ * functions `Point.iToP` and `Point.pToI` deal with scaling as well as shifting.
  */
 export default class Angle {
 
@@ -19,7 +19,7 @@ export default class Angle {
    * @param {number} i
    * @returns {number}
    */
-  static i_d(i) {
+  static iToD(i) {
     return CIRCLE_DEGREES * i / musicTheory.octaveDivisions;
   }
 
@@ -29,7 +29,7 @@ export default class Angle {
    * @param {number} d
    * @returns {number}
    */
-  static d_i(d) {
+  static dToI(d) {
     return musicTheory.octaveDivisions * d / (CIRCLE_DEGREES);
   }
 

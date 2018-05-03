@@ -14,7 +14,7 @@ export default class Points {
    * @return {string}
    */
   static stringFromIR(pointsInIR) {
-    let pointsInXY = pointsInIR.map((point) => Point.ir_xy(point));
+    let pointsInXY = pointsInIR.map((point) => Point.irToXy(point));
     return pointsInXY.map((point) => point.join(',')).join(' ');
   }
 

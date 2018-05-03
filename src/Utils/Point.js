@@ -57,7 +57,7 @@ export default class Point {
    * @param {number} p
    * @returns {number}
    */
-  static p_i(p) {
+  static pToI(p) {
     return Scalar.wrap(musicTheory.octaveDivisions*(5/4 - p/(2*PI)), 12);
   }
 
@@ -69,7 +69,7 @@ export default class Point {
    * @param {number} i
    * @returns {number}
    */
-  static i_p(i) {
+  static iToP(i) {
     return Scalar.wrap((2 + 1/2)*PI - i*2*PI/musicTheory.octaveDivisions, 2*PI);
   }
 
@@ -80,9 +80,9 @@ export default class Point {
    * @param {[{number}, {number}]} ir
    * @returns {[{number}, {number}]}
    */
-  static ir_pr(ir) {
+  static irToPr(ir) {
     let [i, r] = ir;
-    return [this.i_p(i), r];
+    return [this.iToP(i), r];
   }
 
   /**
@@ -92,9 +92,9 @@ export default class Point {
    * @param {[{number}, {number}]} pr
    * @returns {[{number}, {number}]}
    */
-  static pr_ir(pr) {
+  static prToIr(pr) {
     let [p, r] = pr;
-    return [this.p_i(p), r];
+    return [this.pToI(p), r];
   }
 
   /**
@@ -103,7 +103,7 @@ export default class Point {
    * @param {[{number}, {number}]}pr
    * @returns {[{number}, {number}]}
    */
-  static pr_xy(pr) {
+  static prToXy(pr) {
     let [p, r] = pr;
     let x = r * Math.cos(p);
     let y = r * Math.sin(p);
@@ -117,7 +117,7 @@ export default class Point {
    * @param {[{number}, {number}]} xy
    * @returns {[{number}, {number}]}
    */
-  static xy_pr(xy) {
+  static xyToPr(xy) {
     let [x, y] = xy;
     y = -y; // Flip axis, for SVG
     let p = Scalar.wrap(Math.atan2(y, x), 2 * PI);
@@ -132,8 +132,8 @@ export default class Point {
    * @param {[{number}, {number}]} xy
    * @returns {[{number}, {number}]}
    */
-  static xy_ir(xy) {
-    return this.pr_ir(this.xy_pr(xy));
+  static xyToIr(xy) {
+    return this.prToIr(this.xyToPr(xy));
   }
 
   /**
@@ -143,8 +143,8 @@ export default class Point {
    * @param {[{number}, {number}]} ir
    * @returns {[{number}, {number}]}
    */
-  static ir_xy(ir) {
-    return this.pr_xy(this.ir_pr(ir));
+  static irToXy(ir) {
+    return this.prToXy(this.irToPr(ir));
   }
 
   /**
@@ -156,7 +156,7 @@ export default class Point {
    * @param {{clientX: {number}, clientX: {number}}} clientXY
    * @returns {{x: {number}, y: {number}}}
    */
-  static clientXY_svgXY(svgDOMRect, svgOrigin, clientXY) {
+  static clientXyToSvgXy(svgDOMRect, svgOrigin, clientXY) {
     return 0;
   }
 
