@@ -25,8 +25,9 @@ export default class Wheel extends Component {
   }
 
   /**
+   * Compute the angle of the mouse as an interval
    *
-   * @param event
+   * @param {object} event
    * @return {number}
    */
   static grabAngle(event) {
@@ -35,8 +36,15 @@ export default class Wheel extends Component {
     return IrPoint.fromCursor(svgRect, BOX_SIZE, cursor).i;
   }
 
-  startRotating(event, component) {
+  /**
+   * Called when the user grabs a rotatable element
 
+   * @param {object} event
+   *   The mouseDown event
+   * @param {object} component
+   *   The React component that the user grabbed
+   */
+  startRotating(event, component) {
     this.setState({
       elementRotating: component,
       rotationWhenGrabbed: component.state.rotation,
@@ -44,6 +52,10 @@ export default class Wheel extends Component {
     });
   }
 
+  /**
+   * Called frequently, any time we have the slightest inkling that the user is
+   * (no longer?) rotating anything.
+   */
   stopRotating() {
     if (!this.state.elementRotating) {
       return;
@@ -56,6 +68,12 @@ export default class Wheel extends Component {
     });
   }
 
+  /**
+   * Called as the mouse moves when the user is rotating something.
+   *
+   * @param {object} event
+   *   The mouseMove event
+   */
   handleMouseMove(event) {
     if (!this.state.elementRotating) {
       return;
