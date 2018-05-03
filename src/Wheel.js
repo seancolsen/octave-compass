@@ -1,6 +1,15 @@
 import React, {Component} from 'react';
 import Keyboard from "./Keyboard.js";
 import Scale from "./Scale.js";
+import Point from "./Utils/Point.js";
+
+/**
+ * The width and height of the square SVG view box. This number is a bit
+ * arbitrary since the SVG is then scaled.
+ *
+ * @type {number}
+ */
+const BOX_SIZE = 200;
 
 export default class Wheel extends Component {
 
@@ -8,12 +17,18 @@ export default class Wheel extends Component {
     super(props);
     this.state = {
       elementRotating: null,
+      rotationWhenGrabbed: null,
     };
   }
 
   startRotating(event, component) {
+    let svg = event.target.viewportElement.getBoundingClientRect();
+    console.log(svg);
+    console.log({"clientX": event.clientX, "clientY": event.clientY,});
     this.setState({
       elementRotating: component,
+      rotationWhenGrabbed: this.state.rotationWhenGrabbed,
+      grabAngle: 0,
     });
   }
 
@@ -35,7 +50,7 @@ export default class Wheel extends Component {
   render() {
     return (
       <svg
-        viewBox={'-100 -100 200 200'}
+        viewBox={`-${BOX_SIZE/2} -${BOX_SIZE/2} ${BOX_SIZE} ${BOX_SIZE}`}
         onMouseMove={(event) => this.handleMouseMove(event)}
         onMouseLeave={() => this.stopRotating()}
         onMouseUp={() => this.stopRotating()}

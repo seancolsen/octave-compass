@@ -147,4 +147,17 @@ export default class Point {
     return this.pr_xy(this.ir_pr(ir));
   }
 
+  /**
+   * Convert a point in the page coordinate system to a point in the SVG
+   * coordinate system.
+   *
+   * @param {DOMRect} svgDOMRect
+   * @param {{x: {number}, y: {number}}} svgOrigin
+   * @param {{clientX: {number}, clientX: {number}}} clientXY
+   * @returns {{x: {number}, y: {number}}}
+   */
+  static clientXY_svgXY(svgDOMRect, svgOrigin, clientXY) {
+    return 0;
+  }
+
 }
