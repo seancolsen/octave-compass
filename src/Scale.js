@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import Polygon from "./Polygon.js";
-import Group from './Group.js';
+import Polygon from "./Polygon";
+import Group from './Group';
+import IrPoint from './Utils/IrPoint'
 
 const RADIUS = 56;
 
@@ -19,7 +20,7 @@ export default class Scale extends Component {
 
   render() {
     let intervals = [0, 2, 4, 5, 7, 9, 11];
-    let points = intervals.map(v => [v, RADIUS]);
+    let points = intervals.map(i => IrPoint.fromArray([i, RADIUS]));
     return (
       <Group
         rotation={this.state.rotation}

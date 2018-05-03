@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Keyboard from "./Keyboard.js";
 import Scale from "./Scale.js";
-import Point from "./Utils/Point.js";
 
 /**
  * The width and height of the square SVG view box. This number is a bit
@@ -23,8 +22,6 @@ export default class Wheel extends Component {
 
   startRotating(event, component) {
     let svg = event.target.viewportElement.getBoundingClientRect();
-    console.log(svg);
-    console.log({"clientX": event.clientX, "clientY": event.clientY,});
     this.setState({
       elementRotating: component,
       rotationWhenGrabbed: this.state.rotationWhenGrabbed,

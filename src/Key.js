@@ -1,23 +1,26 @@
 import React, {Component} from 'react';
-import Point from './Utils/Point.js';
-import Polygon from './Polygon.js';
+import Scalar from './Utils/Scalar';
+import Polygon from './Polygon';
+import IrPoint from "./Utils/IrPoint";
 
 const R_INNER = 56;
 const R_OUTER = 75;
 
 export default class Key extends Component {
   render() {
-    let basicPoints = [
-      [-0.5, R_OUTER * Point.rFactorAtEdge],
+    let shape = [
+      [-0.5, R_OUTER * Scalar.rFactorAtEdge],
       [0, R_OUTER],
-      [0.5, R_OUTER * Point.rFactorAtEdge],
-      [0.5, R_INNER * Point.rFactorAtEdge],
+      [0.5, R_OUTER * Scalar.rFactorAtEdge],
+      [0.5, R_INNER * Scalar.rFactorAtEdge],
       [0, R_INNER],
-      [-0.5, R_INNER * Point.rFactorAtEdge],
+      [-0.5, R_INNER * Scalar.rFactorAtEdge],
     ];
-    let shiftedPoints = basicPoints.map((a) => [a[0] + this.props.interval, a[1]]);
+    let points = shape.map(ir =>
+      IrPoint.fromArray(ir).plus({i: this.props.interval})
+    );
     return (
-      <Polygon points={shiftedPoints}/>
+      <Polygon points={points}/>
     );
   }
 }

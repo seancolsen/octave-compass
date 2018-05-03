@@ -1,3 +1,7 @@
+import {musicTheory} from "../Data/musicTheory";
+
+const PI = Math.PI;
+
 /**
  * Helper functions to deal with plain scalar numbers
  */
@@ -16,6 +20,17 @@ export default class Scalar {
     let shift = (value < 0) ? Math.ceil(Math.abs(value) / max) * max : 0;
     let positiveValue = value + shift;
     return positiveValue % max;
+  }
+
+  /**
+   * Return the factor by which a radius should be reduced when it lies on the
+   * edge between two keys. We want to reduce it so that we get straight lines
+   * between keys.
+   *
+   * @returns {number}
+   */
+  static get rFactorAtEdge() {
+    return Math.cos(PI / musicTheory.octaveDivisions);
   }
 
 }

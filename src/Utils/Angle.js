@@ -1,5 +1,7 @@
 import {musicTheory} from '../Data/musicTheory.js';
+import Scalar from "./Scalar";
 
+const PI = Math.PI;
 const CIRCLE_DEGREES = 360;
 
 /**
@@ -31,6 +33,30 @@ export default class Angle {
    */
   static dToI(d) {
     return musicTheory.octaveDivisions * d / (CIRCLE_DEGREES);
+  }
+
+  /**
+   * Convert a "phi" coordinate `p` (as part of the standard polar coordinate
+   * system) in radians to an "interval" coordinate `i` (as part of our custom
+   * constellation coordinate system).
+   *
+   * @param {number} p
+   * @returns {number}
+   */
+  static pToI(p) {
+    return Scalar.wrap(musicTheory.octaveDivisions * (5 / 4 - p / (2 * PI)), 12);
+  }
+
+  /**
+   * Convert an "interval" coordinate `i` (as part of our custom constellation
+   * coordinate system) to a "phi" coordinate `p` (as part of the standard polar
+   * coordinate system) in radians.
+   *
+   * @param {number} i
+   * @returns {number}
+   */
+  static iToP(i) {
+    return Scalar.wrap((2 + 1 / 2) * PI - i * 2 * PI / musicTheory.octaveDivisions, 2 * PI);
   }
 
 }
