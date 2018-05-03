@@ -43,18 +43,13 @@ expect.extend({
 expect.extend({
   toBeTheSamePointAs(received, argument) {
     const pass = objectValuesAreWithinThreshold(received, argument);
-    if (pass) {
-      return {
-        message: () =>
-          `expected ${received} to not be the same point as ${argument}`,
-        pass: true,
-      };
-    }
-    else {
-      return {
-        message: () => `expected ${received} to be the same point as ${argument}`,
-        pass: false,
-      };
-    }
+    let r = JSON.stringify(received);
+    let a = JSON.stringify(argument);
+    let not = pass ? 'not' : '';
+    let message = `expected ${r} to ${not}be the same point as ${a}`;
+    return {
+      message: () => message,
+      pass: pass,
+    };
   }
 });

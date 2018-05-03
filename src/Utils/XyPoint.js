@@ -1,5 +1,6 @@
 import Scalar from "./Scalar";
 import PrPoint from "./PrPoint.js";
+import IrPoint from "./IrPoint";
 
 const PI = Math.PI;
 
@@ -76,6 +77,27 @@ export default class XyPoint {
   static stringFromIrArray(irPoints) {
     let xyPoints = irPoints.map((irPoint) => irPoint.toXy());
     return xyPoints.map((point) => point.toString()).join(' ');
+  }
+
+  /**
+   * Vector addition.
+   *
+   * @param {object} xyPoint
+   * @return {XyPoint}
+   */
+  plus(xyPoint) {
+    let x = xyPoint.x || 0;
+    let y = xyPoint.y || 0;
+    return new XyPoint(this.x + x, this.y + y);
+  }
+
+  /**
+   * Multiply both coordinates of this point by a scalar number.
+   *
+   * @param {number} factor
+   */
+  times(factor) {
+    return new XyPoint(this.x * factor, this.y * factor);
   }
 
 }

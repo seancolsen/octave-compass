@@ -30,3 +30,19 @@ test('plus', () => {
   expect((new IrPoint(3, 1)).plus({i: -1, r: 0.5}))
     .toBeTheSamePointAs(new IrPoint(2, 1.5));
 });
+
+test('fromCursor simple', () => {
+  let domRect = {x: 0, y: 0, width: 200, height: 200};
+  let boxSize = 200;
+  let cursor = new XyPoint(150, 100);
+  expect(IrPoint.fromCursor(domRect, boxSize, cursor))
+    .toBeTheSamePointAs(new IrPoint(3, 50));
+});
+
+test('fromCursor complex', () => {
+  let domRect = {x: 10, y: 10, width: 600, height: 600};
+  let boxSize = 200;
+  let cursor = new XyPoint(460, 310);
+  expect(IrPoint.fromCursor(domRect, boxSize, cursor))
+    .toBeTheSamePointAs(new IrPoint(3, 50));
+});

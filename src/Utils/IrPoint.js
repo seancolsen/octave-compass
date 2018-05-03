@@ -1,5 +1,6 @@
 import Angle from './Angle.js';
 import PrPoint from './PrPoint.js';
+import XyPoint from "./XyPoint";
 
 /**
  * CONSTELLATION COORDINATE SYSTEM
@@ -47,13 +48,24 @@ export default class IrPoint {
   /**
    * Convert an XY point in the page space to an IR point in the SVG space.
    *
-   * @param {DOMRect} svgDOMRect
-   * @param {XyPoint} svgOrigin
-   * @param {XyPoint} cursor
+   * @param {object} svgDOMRect
+   *
+   * @param {number} svgBoxSize
+   *   The width of the SVG box within the SVG coordinate system. We assume the
+   *   box is square and assume that the SVG origin is at the center of the SVG
+   *   canvas (since that logic is hard-coded into this app and unlikely to
+   *   change).
+   *
+   * @param {object} cursor
+   *
    * @returns {IrPoint}
    */
-  static fromCursor(svgDOMRect, svgOrigin, cursor) {
-    return 0; // TODO
+  static fromCursor(svgDOMRect, svgBoxSize, cursor) {
+    return (new XyPoint(cursor.x, cursor.y))
+      .plus({x: -svgDOMRect.x, y: -svgDOMRect.y})
+      .times(svgBoxSize / svgDOMRect.width)
+      .plus({x: -svgBoxSize / 2, y: -svgBoxSize / 2})
+      .toIr();
   }
 
   /**
@@ -77,6 +89,7 @@ export default class IrPoint {
   /**
    *
    * @param {object} irPoint
+   * @return {IrPoint}
    */
   plus(irPoint) {
     let i = irPoint.i || 0;

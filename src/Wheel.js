@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Keyboard from "./Keyboard.js";
 import Scale from "./Scale.js";
+import IrPoint from "./Utils/IrPoint";
+import XyPoint from "./Utils/XyPoint";
 
 /**
  * The width and height of the square SVG view box. This number is a bit
@@ -16,16 +18,28 @@ export default class Wheel extends Component {
     super(props);
     this.state = {
       elementRotating: null,
-      rotationWhenGrabbed: null,
+      angleWhenGrabbed: null,
+      angleOfGrab: null,
     };
   }
 
+  /**
+   *
+   * @param event
+   * @return {number}
+   */
+  static grabAngle(event) {
+    let svgRect = event.target.viewportElement.getBoundingClientRect();
+    let cursor = new XyPoint(event.clientX, event.clientY);
+    return IrPoint.fromCursor(svgRect, BOX_SIZE, cursor).i;
+  }
+
   startRotating(event, component) {
-    let svg = event.target.viewportElement.getBoundingClientRect();
+
     this.setState({
       elementRotating: component,
-      rotationWhenGrabbed: this.state.rotationWhenGrabbed,
-      grabAngle: 0,
+      rotationWhenGrabbed: component.state.rotation,
+      initialGrabAngle: Wheel.grabAngle(event),
     });
   }
 
@@ -39,8 +53,10 @@ export default class Wheel extends Component {
     if (!this.state.elementRotating) {
       return;
     }
+    let angleDragged = Wheel.grabAngle(event) - this.state.initialGrabAngle;
     this.state.elementRotating.setState({
-      rotation: event.clientX / 100,
+      rotation:
+        this.state.rotationWhenGrabbed + angleDragged,
     });
   }
 
