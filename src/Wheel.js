@@ -3,6 +3,7 @@ import Keyboard from "./Keyboard.js";
 import Scale from "./Scale.js";
 import IrPoint from "./Utils/IrPoint";
 import XyPoint from "./Utils/XyPoint";
+import Rotatable from "./Rotatable";
 
 /**
  * The width and height of the square SVG view box. This number is a bit
@@ -68,10 +69,16 @@ export default class Wheel extends Component {
         onMouseLeave={() => this.stopRotating()}
         onMouseUp={() => this.stopRotating()}
       >
-        <Keyboard/>
-        <Scale
+        <Rotatable
           onMouseDown={(event, component) => this.startRotating(event, component)}
-        />
+        >
+          <Keyboard/>
+        </Rotatable>
+        <Rotatable
+          onMouseDown={(event, component) => this.startRotating(event, component)}
+        >
+          <Scale/>
+        </Rotatable>
       </svg>
     );
   }
