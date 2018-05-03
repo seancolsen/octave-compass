@@ -45,6 +45,12 @@ export default class Wheel extends Component {
   }
 
   stopRotating() {
+    if (!this.state.elementRotating) {
+      return;
+    }
+    this.state.elementRotating.setState({
+      rotation: Math.round(this.state.elementRotating.state.rotation),
+    });
     this.setState({
       elementRotating: null,
     });
