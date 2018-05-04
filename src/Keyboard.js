@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import Key from "./Key.js";
 import {musicTheory} from "./Data/musicTheory.js";
+import Note from './Utils/Note';
 
 export default class Keyboard extends Component {
   render() {
-    const keys = Object.entries(musicTheory.intervals).map((i) => {
-      let interval = parseInt(i[0]);
+    const keys = musicTheory.notes.map((note, index) => {
+      const label = Note.prettyName(note.flatName);
       return (
-        <Key key={interval} interval={interval}/>
+        <Key key={index} label={label} interval={index}/>
       );
     });
     return (
