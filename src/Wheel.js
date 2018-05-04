@@ -31,7 +31,9 @@ export default class Wheel extends Component {
    * @return {number}
    */
   static grabAngle(event) {
-    let svgRect = event.target.viewportElement.getBoundingClientRect();
+    let target = event.target;
+    let svg = (target.tagName === "svg") ? target : target.viewportElement;
+    let svgRect = svg.getBoundingClientRect();
     let cursor = new XyPoint(event.clientX, event.clientY);
     return IrPoint.fromCursor(svgRect, BOX_SIZE, cursor).i;
   }
