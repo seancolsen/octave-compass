@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import XyPoint from './Utils/XyPoint';
 
-export default class Polygon extends Component {
-  render() {
-    let pointsString = XyPoint.stringFromIrArray(this.props.points);
-    return <polygon points={pointsString}/>;
-  }
+export default function Polygon(props) {
+  let pointsString = XyPoint.stringFromIrArray(props.points);
+  return <polygon className={props.className} points={pointsString}/>;
 }
