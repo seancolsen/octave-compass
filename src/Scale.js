@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Polygon from "./Polygon";
 import IrPoint from './Utils/IrPoint'
 import styled from 'styled-components';
+import Rotatable from "./Rotatable";
 
 const RADIUS = 56;
 
@@ -13,7 +14,9 @@ function Scale(props) {
   );
 }
 
-export default styled(Scale)`
+const StyledScale = styled(Scale)`
   fill: #e4e4e4;
   filter: drop-shadow( 0 0 3px #000 );
 `;
+
+export default Rotatable(StyledScale);

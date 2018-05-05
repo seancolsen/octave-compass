@@ -95,16 +95,15 @@ export default class Wheel extends Component {
         onMouseLeave={() => this.stopRotating()}
         onMouseUp={() => this.stopRotating()}
       >
-        <Rotatable
-          onMouseDown={(event, component) => this.startRotating(event, component)}
-        >
-          <Keyboard/>
-        </Rotatable>
-        <Rotatable
-          onMouseDown={(event, component) => this.startRotating(event, component)}
-        >
-          <Scale/>
-        </Rotatable>
+
+        <Keyboard onMouseDown={(event, component) =>
+          this.startRotating(event, component)
+        }/>
+
+        <Scale onMouseDown={(event, component) =>
+          this.startRotating(event, component)
+        }/>
+
       </svg>
     );
   }

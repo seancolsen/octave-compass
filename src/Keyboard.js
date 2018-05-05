@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import Key from "./Key.js";
 import {musicTheory} from "./Data/musicTheory.js";
 import Note from './Utils/Note';
+import Rotatable from "./Rotatable";
 
-export default class Keyboard extends Component {
+class Keyboard extends Component {
   render() {
     const keys = musicTheory.notes.map((note, index) => {
       const label = Note.prettyName(note.flatName);
@@ -18,3 +19,5 @@ export default class Keyboard extends Component {
     );
   }
 }
+
+export default Rotatable(Keyboard);
