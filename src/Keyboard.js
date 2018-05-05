@@ -9,7 +9,12 @@ class Keyboard extends Component {
     const keys = musicTheory.notes.map((note, index) => {
       const label = Note.prettyName(note.flatName);
       return (
-        <Key key={index} label={label} interval={index}/>
+        <Key
+          key={index}
+          label={label}
+          interval={index}
+          rotation={this.props.rotation}
+        />
       );
     });
     return (

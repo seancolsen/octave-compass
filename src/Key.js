@@ -24,7 +24,12 @@ class Key extends Component {
     return (
       <g>
         <Polygon className={this.props.className} points={points}/>
-        <KeyLabel interval={this.props.interval}>{this.props.label}</KeyLabel>
+        <KeyLabel
+          interval={this.props.interval}
+          rotation={this.props.rotation}
+        >
+          {this.props.label}
+        </KeyLabel>
       </g>
     );
   }

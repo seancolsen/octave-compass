@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import IrPoint from "./Utils/IrPoint";
 import styled from 'styled-components';
+import Angle from "./Utils/Angle";
 
 const RADIUS = 64;
 
 function KeyLabel(props) {
   let point = (new IrPoint(props.interval, RADIUS)).toXy();
-  let transform = `rotate(0) translate(${point.x} ${point.y})`;
+  let rotation = -Angle.iToD(props.rotation);
+  let transform = `translate(${point.x} ${point.y}) rotate(${rotation})`;
   return (
     <text
       className={props.className}
