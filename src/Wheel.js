@@ -3,7 +3,8 @@ import Keyboard from "./Keyboard.js";
 import Scale from "./Scale.js";
 import IrPoint from "./Utils/IrPoint";
 import XyPoint from "./Utils/XyPoint";
-import Rotatable from "./Rotatable";
+import {musicTheory} from './Data/musicTheory';
+import Scalar from "./Utils/Scalar";
 
 /**
  * The width and height of the square SVG view box. This number is a bit
@@ -45,10 +46,14 @@ export default class Wheel extends Component {
    *   The mouseDown event
    * @param {object} component
    *   The React component that the user grabbed
+   * @param {string} componentType
+   *   (e.g. 'Keyboard', 'Scale'
    */
-  startRotating(event, component) {
+  startRotating(event, component, componentType) {
+    console.log(componentType);
     this.setState({
       elementRotating: component,
+      elementRotatingType: componentType,
       rotationWhenGrabbed: component.state.rotation,
       initialGrabAngle: Wheel.grabAngle(event),
     });
@@ -62,11 +67,18 @@ export default class Wheel extends Component {
     if (!this.state.elementRotating) {
       return;
     }
+    const rotation = this.state.elementRotating.state.rotation;
+    const divisions = musicTheory.octaveDivisions;
+    const wholeRotation = Math.round(Scalar.wrap(rotation, divisions));
     this.state.elementRotating.setState({
-      rotation: Math.round(this.state.elementRotating.state.rotation),
+      rotation: wholeRotation,
     });
+    if (this.state.elementRotatingType === 'Keyboard') {
+      this.props.setTonalCenter(divisions - wholeRotation);
+    }
     this.setState({
       elementRotating: null,
+      tonalCenter: 2,
     });
   }
 
@@ -96,12 +108,12 @@ export default class Wheel extends Component {
         onMouseUp={() => this.stopRotating()}
       >
 
-        <Keyboard onMouseDown={(event, component) =>
-          this.startRotating(event, component)
+        <Keyboard onMouseDown={(event, component, componentType) =>
+          this.startRotating(event, component, componentType)
         }/>
 
-        <Scale onMouseDown={(event, component) =>
-          this.startRotating(event, component)
+        <Scale onMouseDown={(event, component, componentType) =>
+          this.startRotating(event, component, componentType)
         }/>
 
       </svg>

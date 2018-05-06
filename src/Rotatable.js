@@ -12,7 +12,10 @@ export default function Rotatable(WrappedComponent) {
     }
 
     handleMouseDown(event) {
-      this.props.onMouseDown(event, this);
+      let componentName = (WrappedComponent.name === 'StyledComponent') ?
+        WrappedComponent.target.name :
+        WrappedComponent.name;
+      this.props.onMouseDown(event, this, componentName);
     }
 
     render() {
