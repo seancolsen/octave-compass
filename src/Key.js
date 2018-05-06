@@ -27,6 +27,7 @@ class Key extends Component {
         <KeyLabel
           interval={this.props.interval}
           rotation={this.props.rotation}
+          color={this.props.color}
         >
           {this.props.label}
         </KeyLabel>

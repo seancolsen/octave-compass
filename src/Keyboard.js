@@ -6,12 +6,13 @@ import Rotatable from "./Rotatable";
 
 class Keyboard extends Component {
   render() {
-    const keys = musicTheory.notes.map((note, index) => {
-      const label = Note.prettyName(note.flatName);
+    const keys = musicTheory.notes.map((noteData, index) => {
+      const note = new Note(noteData);
       return (
         <Key
           key={index}
-          label={label}
+          label={note.name('flat')}
+          color={note.color}
           interval={index}
           rotation={this.props.rotation}
         />
