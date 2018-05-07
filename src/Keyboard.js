@@ -34,6 +34,7 @@ class Keyboard extends Component {
           color={note.color}
           interval={index}
           rotation={this.props.rotation}
+          active={false}
         />
       );
     });

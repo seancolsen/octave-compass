@@ -8,7 +8,12 @@ import KeyLabel from "./KeyLabel";
 const R_INNER = 56;
 const R_OUTER = 75;
 
-class Key extends Component {
+const Background = styled(Polygon)`
+  fill: ${props => props.active ? '#e4e4e4' : '#949494'};
+  stroke: #949494;
+`;
+
+export default class Key extends Component {
   render() {
     let shape = [
       [-0.5, R_OUTER * Scalar.rFactorAtEdge],
@@ -23,20 +28,22 @@ class Key extends Component {
     );
     return (
       <g>
-        <Polygon className={this.props.className} points={points}/>
+
+        <Background
+          points={points}
+          active={this.props.active}
+        />
+
         <KeyLabel
           interval={this.props.interval}
           rotation={this.props.rotation}
           color={this.props.color}
+          active={this.props.active}
         >
           {this.props.label}
         </KeyLabel>
+
       </g>
     );
   }
 }
-
-export default styled(Key)`
-  fill: #e4e4e4;
-  stroke: #949494;
-`;
