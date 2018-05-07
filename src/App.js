@@ -3,6 +3,8 @@ import './App.css';
 import Wheel from "./Wheel.js";
 import IntervalSet from "./Utils/IntervalSet";
 import Marquee from "./Marquee";
+import Scalar from "./Utils/Scalar";
+import {musicTheory} from "./Data/musicTheory";
 
 export default class App extends Component {
 
@@ -15,8 +17,9 @@ export default class App extends Component {
   }
 
   setTonalCenter(tonalCenter) {
+    const tc = Scalar.wrap(tonalCenter, musicTheory.octaveDivisions);
     this.setState({
-      tonalCenter: tonalCenter,
+      tonalCenter: tc,
     })
   }
 
