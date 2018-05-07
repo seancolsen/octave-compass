@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Wheel from "./Wheel.js";
+import IntervalSet from "./Utils/IntervalSet";
 
 export default class App extends Component {
 
@@ -8,6 +9,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       tonalCenter: 0,
+      intervalSet: new IntervalSet(0b101010110101), // Major scale
     };
   }
 
@@ -20,7 +22,10 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <Wheel setTonalCenter={tc => this.setTonalCenter(tc)}/>
+        <Wheel
+          setTonalCenter={tc => this.setTonalCenter(tc)}
+          intervalSet={this.state.intervalSet}
+        />
       </div>
     );
   }

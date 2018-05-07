@@ -108,13 +108,18 @@ export default class Wheel extends Component {
         onMouseUp={() => this.stopRotating()}
       >
 
-        <Keyboard onMouseDown={(event, component, componentType) =>
-          this.startRotating(event, component, componentType)
-        }/>
+        <Keyboard
+          onMouseDown={(event, component, componentType) =>
+            this.startRotating(event, component, componentType)
+          }
+        />
 
-        <Scale onMouseDown={(event, component, componentType) =>
-          this.startRotating(event, component, componentType)
-        }/>
+        <Scale
+          onMouseDown={(event, component, componentType) =>
+            this.startRotating(event, component, componentType)
+          }
+          intervalSet={this.props.intervalSet}
+        />
 
       </svg>
     );

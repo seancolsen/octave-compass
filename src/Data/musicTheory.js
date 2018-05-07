@@ -1,3 +1,13 @@
+/**
+ * This file stores data about the names of certain things in music theory.
+ *
+ * We use binary numbers to refer to sets of notes. These binary numbers are
+ * "big-endian", which might be counter-intuitive, depending on how you choose
+ * to think about it. See 'Utils/IntervalSet.js' for a more comprehensive
+ * description of how these binary numbers work.
+ *
+ */
+
 export const musicTheory = {
 
   octaveDivisions: 12,
@@ -81,38 +91,38 @@ export const musicTheory = {
   },
 
   chords: {
-    0b00010010000: {
+    0b000010010001: {
       name: "major",
       symbol: "<strong>M</strong>",
     },
-    0b00100010000: {
+    0b000010001001: {
       name: "minor",
       symbol: "<em>m</em>",
     },
-    0b00010010010: {
+    0b010010010001: {
       name: "dominant 7",
       symbol: "7",
     },
-    0b00010010001: {
+    0b100010010001: {
       name: "major 7",
       symbol: "M<sup>7</sup>",
     },
-    0b00100010010: {
+    0b010010001001: {
       name: "minor 7",
       symbol: "<em>m</em><sup>7</sup>",
     },
   },
 
   scales: {
-    0b01011010101: "Major scale / Ionian mode",
-    0b01101011010: "Natural minor scale / Aeolian mode",
-    0b01011010110: "Mixolydian mode",
-    0b01101010110: "Dorian mode",
-    0b10101011010: "Phrygian mode",
-    0b01010110101: "Lydian mode",
-    0b10101101010: "Locrian mode",
+    0b101010110101: "Major scale / Ionian mode",
+    0b010110101101: "Natural minor scale / Aeolian mode",
+    0b011010110101: "Mixolydian mode",
+    0b011010101101: "Dorian mode",
+    0b010110101011: "Phrygian mode",
+    0b101011010101: "Lydian mode",
+    0b010101101011: "Locrian mode",
 
-    0b01101011001: "Harmonic minor",
+    0b100110101101: "Harmonic minor",
   },
 
 };
