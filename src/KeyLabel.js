@@ -35,7 +35,6 @@ export default function KeyLabel(props) {
       <StyledText
         x={0}
         y={0.75}
-        className={props.className}
         dominantBaseline={'middle'} // TODO address lack of IE support
         textAnchor={'middle'}
         color={props.color}
