@@ -67,6 +67,18 @@ export default class IntervalSet {
   }
 
   /**
+   * Return a new IntervalSet with the given interval flipped from active to
+   * inactive -- or from inactive to active -- as necessary.
+   *
+   * @param {int} interval
+   * @return {IntervalSet}
+   */
+  toggleInterval(interval) {
+    const result = this.binary ^ Math.pow(2, interval);
+    return new IntervalSet(result);
+  }
+
+  /**
    * Search within our defined scales and chords to see if we have a name for
    * this set of intervals
    *

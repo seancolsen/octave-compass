@@ -22,6 +22,7 @@ export default class Base extends Component {
         key={interval}
         interval={interval}
         active={this.intervalIsActive(interval)}
+        onClick={() => this.props.toggleInterval(interval)}
       />
     );
   }

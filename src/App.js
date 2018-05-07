@@ -29,6 +29,12 @@ export default class App extends Component {
     });
   }
 
+  toggleInterval(interval) {
+    this.setState({
+      intervalSet: this.state.intervalSet.toggleInterval(interval),
+    });
+  }
+
   render() {
     return (
       <div className="App">
@@ -40,6 +46,7 @@ export default class App extends Component {
           setTonalCenter={tc => this.setTonalCenter(tc)}
           shiftIntervalSet={(r) => this.shiftIntervalSet(r)}
           intervalSet={this.state.intervalSet}
+          toggleInterval={interval => this.toggleInterval(interval)}
         />
       </div>
     );

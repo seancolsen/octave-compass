@@ -54,3 +54,12 @@ test('isActive', () => {
   expect(IntervalSet.fromBinary(0b000010010001).isActive(10)).toBe(false);
   expect(IntervalSet.fromBinary(0b000010010001).isActive(10)).toBe(false);
 });
+
+test('toggleInterval', () => {
+  expect(IntervalSet.fromBinary(0b000010010001).toggleInterval(10).binary)
+    .toBe(0b010010010001);
+  expect(IntervalSet.fromBinary(0b000010010001).toggleInterval(7).binary)
+    .toBe(0b000000010001);
+  expect(IntervalSet.fromBinary(0b000010010001).toggleInterval(0).binary)
+    .toBe(0b000010010000);
+});

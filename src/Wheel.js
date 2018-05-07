@@ -116,6 +116,7 @@ export default class Wheel extends Component {
         <Base
           intervalSet={this.props.intervalSet}
           isRotating={!!this.state.elementRotating}
+          toggleInterval={this.props.toggleInterval}
         />
 
         <Keyboard
