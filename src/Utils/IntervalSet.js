@@ -66,4 +66,16 @@ export default class IntervalSet {
     return new IntervalSet(result);
   }
 
+  /**
+   * Search within our defined scales and chords to see if we have a name for
+   * this set of intervals
+   *
+   * @return {string}
+   */
+  get name() {
+    const t = musicTheory;
+    const fallback = 'Unknown interval set';
+    return t.scales[this.binary] || t.chords[this.binary] || fallback;
+  }
+
 }

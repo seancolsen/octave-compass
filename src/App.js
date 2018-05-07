@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Wheel from "./Wheel.js";
 import IntervalSet from "./Utils/IntervalSet";
+import Marquee from "./Marquee";
 
 export default class App extends Component {
 
@@ -28,6 +29,10 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
+        <Marquee
+          tonalCenter={this.state.tonalCenter}
+          intervalSet={this.state.intervalSet}
+        />
         <Wheel
           setTonalCenter={tc => this.setTonalCenter(tc)}
           shiftIntervalSet={(r) => this.shiftIntervalSet(r)}
