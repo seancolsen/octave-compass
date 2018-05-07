@@ -5,6 +5,10 @@ import Angle from "./Utils/Angle";
 
 const RADIUS = 64.5;
 
+const StyledG = styled.g`
+  opacity: ${props => (props.active) ? '1' : '0.3'};
+`;
+
 const StyledRect = styled.rect`
   fill: ${props => (props.color === 'white') ? 'white' : 'black'};
 `;
@@ -19,7 +23,7 @@ export default function KeyLabel(props) {
   let rotation = -Angle.iToD(props.rotation);
   let transform = `translate(${point.x} ${point.y}) rotate(${rotation})`;
   return (
-    <g transform={transform}>
+    <StyledG active={props.active} transform={transform}>
 
       <StyledRect
         x="-6" y="-6"
@@ -39,6 +43,6 @@ export default function KeyLabel(props) {
         {props.children}
       </StyledText>
 
-    </g>
+    </StyledG>
   );
 }

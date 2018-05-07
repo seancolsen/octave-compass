@@ -116,6 +116,8 @@ export default class Wheel extends Component {
           onMouseDown={(event, component, componentType) =>
             this.startRotating(event, component, componentType)
           }
+          intervalSet={this.props.intervalSet}
+          isRotating={!!this.state.elementRotating}
         />
 
         <Scale

@@ -41,9 +41,9 @@ export default class IntervalSet {
   toArray() {
     const intervals = [...Array(divisions).keys()];
     let result = [];
-    intervals.forEach(i => {
-      if ((this.binary & Math.pow(2, i)) > 0) {
-        result.push(i);
+    intervals.forEach(interval => {
+      if (this.isActive(interval)) {
+        result.push(interval);
       }
     });
     return result;
@@ -76,6 +76,16 @@ export default class IntervalSet {
     const t = musicTheory;
     const fallback = 'Unknown interval set';
     return t.scales[this.binary] || t.chords[this.binary] || fallback;
+  }
+
+  /**
+   * Test whether the given interval is active within this interval set.
+   *
+   * @param {int} interval
+   * @return {boolean}
+   */
+  isActive(interval) {
+    return (this.binary & Math.pow(2, interval)) > 0;
   }
 
 }

@@ -20,21 +20,31 @@ class Keyboard extends Component {
   }
 
   /**
+   *
+   * @param {int} interval
+   * @return {bool}
+   */
+  keyIsActive(interval) {
+    return (this.props.isRotating) ? false :
+      this.props.intervalSet.shift(-this.props.rotation).isActive(interval);
+  }
+
+  /**
    * Generate array of Key components
    *
    * @return {any[]}
    */
   keys() {
-    return musicTheory.notes.map((noteData, index) => {
+    return musicTheory.notes.map((noteData, interval) => {
       const note = new Note(noteData);
       return (
         <Key
-          key={index}
+          key={interval}
           label={note.name(this.useNames())}
           color={note.color}
-          interval={index}
+          interval={interval}
           rotation={this.props.rotation}
-          active={false}
+          active={this.keyIsActive(interval)}
         />
       );
     });
