@@ -5,6 +5,7 @@ import IrPoint from "./Utils/IrPoint";
 import XyPoint from "./Utils/XyPoint";
 import {musicTheory} from './Data/musicTheory';
 import Scalar from "./Utils/Scalar";
+import Base from './Base';
 
 /**
  * The width and height of the square SVG view box. This number is a bit
@@ -111,6 +112,11 @@ export default class Wheel extends Component {
         onMouseLeave={() => this.stopRotating()}
         onMouseUp={() => this.stopRotating()}
       >
+
+        <Base
+          intervalSet={this.props.intervalSet}
+          isRotating={!!this.state.elementRotating}
+        />
 
         <Keyboard
           onMouseDown={(event, component, componentType) =>

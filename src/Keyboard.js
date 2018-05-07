@@ -20,7 +20,6 @@ class Keyboard extends Component {
   }
 
   /**
-   *
    * @param {int} interval
    * @return {bool}
    */
