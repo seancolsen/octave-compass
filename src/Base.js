@@ -17,12 +17,12 @@ export default class Base extends Component {
    * @return {[BaseInterval]}
    */
   baseIntervals() {
-    return Object.keys(musicTheory.intervals).map(interval =>
+    return musicTheory.intervals.map((name, ordinal) =>
       <BaseInterval
-        key={interval}
-        interval={interval}
-        active={this.intervalIsActive(interval)}
-        onClick={() => this.props.toggleInterval(interval)}
+        key={ordinal}
+        interval={ordinal}
+        active={this.intervalIsActive(ordinal)}
+        onClick={() => this.props.toggleInterval(ordinal)}
       />
     );
   }

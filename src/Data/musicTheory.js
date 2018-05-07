@@ -75,20 +75,20 @@ export const musicTheory = {
     },
   ],
 
-  intervals: {
-    0: "tonal center",
-    1: "minor 2",
-    2: "major 2",
-    3: "minor 3",
-    4: "major 3",
-    5: "perfect 4",
-    6: "tritone",
-    7: "perfect 5",
-    8: "minor 6",
-    9: "major 6",
-    10: "minor 7",
-    11: "major 7",
-  },
+  intervals: [
+    "tonal center",
+    "minor 2",
+    "major 2",
+    "minor 3",
+    "major 3",
+    "perfect 4",
+    "tritone",
+    "perfect 5",
+    "minor 6",
+    "major 6",
+    "minor 7",
+    "major 7",
+  ],
 
   chords: {
     0b000010010001: {

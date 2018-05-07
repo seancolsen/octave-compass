@@ -82,7 +82,7 @@ export default class IrPoint {
    *
    * @returns {XyPoint}
    */
-  toXy(ir) {
+  toXy() {
     return this.toPr().toXy();
   }
 
