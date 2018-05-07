@@ -1,4 +1,5 @@
 import {musicTheory} from "../Data/musicTheory";
+import Scalar from './Scalar';
 
 const divisions = musicTheory.octaveDivisions;
 
@@ -46,6 +47,23 @@ export default class IntervalSet {
       }
     });
     return result;
+  }
+
+  /**
+   * Left-shift the bits of the binary intervals by the number of bits given,
+   * and wrap the bit around the right side. This corresponds to rotating the
+   * scale clockwise by the number of intervals given.
+   *
+   * @param {int} amount
+   * @return {IntervalSet}
+   */
+  shift(amount) {
+    const shift = Scalar.wrap(Math.round(amount), divisions);
+    const shiftToWrap = divisions - shift;
+    const allBits = (this.binary << shift) | (this.binary >> shiftToWrap);
+    const mask = Math.pow(2, divisions) - 1;
+    const result = allBits & mask;
+    return new IntervalSet(result);
   }
 
 }

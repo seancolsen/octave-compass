@@ -15,3 +15,27 @@ test('toArray major chord', () => {
     .toEqual([0, 4, 7]);
 });
 
+test('shift(0)',() => {
+  expect(IntervalSet.fromBinary(0b101100111000).shift(0).binary)
+    .toBe(0b101100111000);
+});
+
+test('shift(1)', () => {
+  expect(IntervalSet.fromBinary(0b101100111000).shift(1).binary)
+    .toBe(0b011001110001);
+});
+
+test('shift(-1)', () => {
+  expect(IntervalSet.fromBinary(0b101100111000).shift(-1).binary)
+    .toBe(0b010110011100);
+});
+
+test('shift(6)', () => {
+  expect(IntervalSet.fromBinary(0b101100111000).shift(6).binary)
+    .toBe(0b111000101100);
+});
+
+test('shift(-4)', () => {
+  expect(IntervalSet.fromBinary(0b101100111000).shift(-4).binary)
+    .toBe(0b100010110011);
+});

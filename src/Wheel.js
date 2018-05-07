@@ -50,7 +50,6 @@ export default class Wheel extends Component {
    *   (e.g. 'Keyboard', 'Scale'
    */
   startRotating(event, component, componentType) {
-    console.log(componentType);
     this.setState({
       elementRotating: component,
       elementRotatingType: componentType,
@@ -70,15 +69,20 @@ export default class Wheel extends Component {
     const rotation = this.state.elementRotating.state.rotation;
     const divisions = musicTheory.octaveDivisions;
     const wholeRotation = Math.round(Scalar.wrap(rotation, divisions));
-    this.state.elementRotating.setState({
-      rotation: wholeRotation,
-    });
     if (this.state.elementRotatingType === 'Keyboard') {
+      this.state.elementRotating.setState({
+        rotation: wholeRotation,
+      });
       this.props.setTonalCenter(divisions - wholeRotation);
+    }
+    if (this.state.elementRotatingType === 'Scale') {
+      this.state.elementRotating.setState({
+        rotation: 0,
+      });
+      this.props.shiftIntervalSet(wholeRotation);
     }
     this.setState({
       elementRotating: null,
-      tonalCenter: 2,
     });
   }
 

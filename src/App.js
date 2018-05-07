@@ -19,11 +19,18 @@ export default class App extends Component {
     })
   }
 
+  shiftIntervalSet(rotation) {
+    this.setState({
+      intervalSet: this.state.intervalSet.shift(rotation),
+    });
+  }
+
   render() {
     return (
       <div className="App">
         <Wheel
           setTonalCenter={tc => this.setTonalCenter(tc)}
+          shiftIntervalSet={(r) => this.shiftIntervalSet(r)}
           intervalSet={this.state.intervalSet}
         />
       </div>
