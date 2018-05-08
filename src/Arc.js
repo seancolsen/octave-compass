@@ -18,7 +18,7 @@ export default class Arc extends Component {
 
   render() {
     return (
-      <path d={this.d()} className={this.props.className}/>
+      <path d={this.d()} className={this.props.className} id={this.props.id}/>
     );
   }
 

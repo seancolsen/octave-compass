@@ -3,6 +3,7 @@ import SvgCheckbox from "./SvgCheckbox";
 import IrPoint from "./Utils/IrPoint";
 import Arc from './Arc';
 import styled from 'styled-components';
+import IntervalLabel from "./IntervalLabel";
 
 const checkboxRadius = 82;
 const arcRadius = 85;
@@ -25,6 +26,7 @@ export default function BaseInterval(props) {
         radius={arcRadius}
         active={props.active}
       />
+      <IntervalLabel interval={props.interval} label={props.label}/>
       <SvgCheckbox x={point.x} y={point.y} checked={props.active}/>
     </g>
   );
