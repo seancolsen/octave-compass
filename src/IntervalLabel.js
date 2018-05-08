@@ -11,7 +11,8 @@ const TextPath = styled(Arc)`
 `;
 
 const StyledText = styled.text`
-  font-size: 20px;
+  fill: ${props => props.active ? '#FFF' : '#555'};
+  font-size: 30px;
 `;
 
 export default function IntervalLabel(props) {
@@ -24,8 +25,10 @@ export default function IntervalLabel(props) {
         startInterval={props.interval - arcSpan}
         endInterval={props.interval + arcSpan}
       />
-      <StyledText>
-        <textPath href={`#${id}`}>{props.label}</textPath>
+      <StyledText active={props.active} textAnchor={'middle'}>
+        <textPath href={`#${id}`} startOffset={'50%'}>
+          {props.label}
+        </textPath>
       </StyledText>
     </g>
   );

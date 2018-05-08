@@ -26,7 +26,11 @@ export default function BaseInterval(props) {
         radius={arcRadius}
         active={props.active}
       />
-      <IntervalLabel interval={props.interval} label={props.label}/>
+      <IntervalLabel
+        interval={props.interval}
+        label={props.label}
+        active={props.active}
+      />
       <SvgCheckbox x={point.x} y={point.y} checked={props.active}/>
     </g>
   );

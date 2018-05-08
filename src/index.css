@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Spectral:400,800|Roboto');
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
   background: #777777;
+  font-family: 'Spectral', serif;
 }
 
 svg text {
