@@ -8,12 +8,14 @@ import Scalar from "./Utils/Scalar";
 import Base from './Base';
 
 /**
- * The width and height of the square SVG view box. This number is a bit
- * arbitrary since the SVG is then scaled.
+ * The width and height of the square SVG view box in user units (basically SVG
+ * pixels). This number is a bit arbitrary since the SVG is then scaled, but
+ * all other numerical measurements within the SVG should be considered
+ * relative to this value.
  *
  * @type {number}
  */
-const BOX_SIZE = 200;
+const BOX_SIZE = 1000;
 
 export default class Wheel extends Component {
 

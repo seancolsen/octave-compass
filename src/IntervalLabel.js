@@ -2,7 +2,7 @@ import React from 'react';
 import Arc from "./Arc";
 import styled from 'styled-components';
 
-const arcRadius = 90;
+const arcRadius = 450;
 const arcSpan = 0.4;
 
 const TextPath = styled(Arc)`
@@ -11,7 +11,7 @@ const TextPath = styled(Arc)`
 `;
 
 const StyledText = styled.text`
-  font-size: 6px;
+  font-size: 20px;
 `;
 
 export default function IntervalLabel(props) {

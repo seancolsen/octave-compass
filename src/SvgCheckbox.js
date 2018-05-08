@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styled from "styled-components";
 
-const size = 6;
+const size = 30;
 const checkMarkCharacter = '✔';
 
 // TODO set stroke
@@ -10,7 +10,7 @@ const StyledRect = styled.rect`
 `;
 
 const StyledText = styled.text`
-  font-size: 7px;
+  font-size: 35px;
 `;
 
 export default class SvgCheckbox extends Component {
@@ -18,8 +18,8 @@ export default class SvgCheckbox extends Component {
   static checkMark() {
     return (
       <StyledText
-        x={0}
-        y={0.75}
+        x={1}
+        y={5}
         dominantBaseline={'middle'} // TODO address lack of IE support
         textAnchor={'middle'}
       >
@@ -35,7 +35,7 @@ export default class SvgCheckbox extends Component {
         <StyledRect
           x={-size / 2} y={-size / 2}
           width={size} height={size}
-          rx={2} ry={2}
+          rx={size / 5} ry={size / 5}
           checked={this.props.checked}
         />
         {this.props.checked ? SvgCheckbox.checkMark() : null}

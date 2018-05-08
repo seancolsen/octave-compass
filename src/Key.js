@@ -5,8 +5,8 @@ import IrPoint from "./Utils/IrPoint";
 import styled from 'styled-components';
 import KeyLabel from "./KeyLabel";
 
-const R_INNER = 56;
-const R_OUTER = 75;
+const R_INNER = 280;
+const R_OUTER = 375;
 
 const Background = styled(Polygon)`
   fill: ${props => props.active ? '#e4e4e4' : '#949494'};

@@ -3,7 +3,8 @@ import IrPoint from "./Utils/IrPoint";
 import styled from 'styled-components';
 import Angle from "./Utils/Angle";
 
-const RADIUS = 64.5;
+const radius = 322;
+const size = 60;
 
 const StyledG = styled.g`
   opacity: ${props => (props.active) ? '1' : '0.3'};
@@ -14,21 +15,21 @@ const StyledRect = styled.rect`
 `;
 
 const StyledText = styled.text`
-  font-size: 7px;
+  font-size: 35px;
   fill: ${props => (props.color === 'white') ? 'black' : 'white'};
 `;
 
 export default function KeyLabel(props) {
-  let point = (new IrPoint(props.interval, RADIUS)).toXy();
+  let point = (new IrPoint(props.interval, radius)).toXy();
   let rotation = -Angle.iToD(props.rotation);
   let transform = `translate(${point.x} ${point.y}) rotate(${rotation})`;
   return (
     <StyledG active={props.active} transform={transform}>
 
       <StyledRect
-        x="-6" y="-6"
-        width="12" height="12"
-        rx={3}  ry={3}
+        x={-size/2} y={-size/2}
+        width={size} height={size}
+        rx={size/6}  ry={size/6}
         color={props.color}
       />
 

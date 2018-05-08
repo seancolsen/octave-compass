@@ -5,12 +5,12 @@ import Arc from './Arc';
 import styled from 'styled-components';
 import IntervalLabel from "./IntervalLabel";
 
-const checkboxRadius = 82;
-const arcRadius = 85;
+const checkboxRadius = 410;
+const arcRadius = 425;
 const arcSpan = 0.5;
 
 const Background = styled(Arc)`
-  stroke-width: 26px;
+  stroke-width: 130px;
   stroke: ${props => (props.active) ? '#888' : '#777'};
   fill: none;
   stroke-linecap: butt;

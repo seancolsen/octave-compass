@@ -4,7 +4,7 @@ import IrPoint from './Utils/IrPoint'
 import styled from 'styled-components';
 import Rotatable from "./Rotatable";
 
-const RADIUS = 56;
+const RADIUS = 280;
 
 function Scale(props) {
   const intervals = props.intervalSet.toArray();
@@ -16,7 +16,7 @@ function Scale(props) {
 
 const StyledScale = styled(Scale)`
   fill: #e4e4e4;
-  filter: drop-shadow( 0 0 3px #000 );
+  filter: drop-shadow( 0 0 10px #000 );
 `;
 
 export default Rotatable(StyledScale);
