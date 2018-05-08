@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Arc from "./Arc";
 import styled from 'styled-components';
+import {musicTheory} from "./Data/musicTheory";
 
-const arcRadius = 450;
+const upperRadius = 455;
+const lowerRadius = 470;
 const arcSpan = 0.4;
 
 const TextPath = styled(Arc)`
@@ -15,21 +17,38 @@ const StyledText = styled.text`
   font-size: 30px;
 `;
 
-export default function IntervalLabel(props) {
-  const id = `interval-label-${props.interval}`;
-  return (
-    <g>
-      <TextPath
-        id={id}
-        radius={arcRadius}
-        startInterval={props.interval - arcSpan}
-        endInterval={props.interval + arcSpan}
-      />
-      <StyledText active={props.active} textAnchor={'middle'}>
-        <textPath href={`#${id}`} startOffset={'50%'}>
-          {props.label}
-        </textPath>
-      </StyledText>
-    </g>
-  );
+export default class IntervalLabel extends Component {
+
+  /**
+   * If the interval we're labeling is on the lower half of the wheel, then we
+   * want to treat it a bit differently. This function returns true for those
+   * "bottom" intervals.
+   *
+   * @return {boolean}
+   */
+  isOnBottom() {
+    const revolution = this.props.interval / musicTheory.octaveDivisions;
+    return (revolution > 0.25) && (revolution < 0.75);
+  }
+  
+  render() {
+    const b = this.isOnBottom();
+    const id = `interval-label-${this.props.interval}`;
+    return (
+      <g>
+        <TextPath
+          id={id}
+          radius={b ? lowerRadius : upperRadius}
+          startInterval={this.props.interval + (arcSpan * (b ? 1 : -1))}
+          endInterval={this.props.interval + (arcSpan * (b ? -1 : 1))}
+        />
+        <StyledText active={this.props.active} textAnchor={'middle'}>
+          <textPath href={`#${id}`} startOffset={'50%'}>
+            {this.props.label}
+          </textPath>
+        </StyledText>
+      </g>
+    );
+  }
+  
 }
