@@ -4,22 +4,35 @@ import Polygon from './Polygon';
 import IrPoint from "./Utils/IrPoint";
 import styled from 'styled-components';
 import KeyLabel from "./KeyLabel";
+import Arc from './Arc';
 
-const R_INNER = 280;
-const R_OUTER = 375;
+const innerRadius = 280;
+const outerRadius = 375;
+const labelSpread = 0.20;
+const labelTieRadius = 0.978 * (innerRadius + outerRadius) / 2;
+const labelTieSpan = 0.2;
+const labelTieWidth = 50;
 
 const Background = styled(Polygon)`
   fill: ${props => props.active ? '#e4e4e4' : '#949494'};
   stroke: #949494;
 `;
 
-const labelSpread = 0.22;
+const DoubleLabelTie = styled(Arc)`
+  stroke: black;
+  stroke-width: ${labelTieWidth}px;
+`;
 
 export default class Key extends Component {
 
   labels() {
     if (this.props.label.constructor === Array) {
       return [
+        <DoubleLabelTie
+          startInterval={this.props.interval - labelTieSpan}
+          endInterval={this.props.interval + labelTieSpan}
+          radius={labelTieRadius}
+        />,
         <KeyLabel
           interval={this.props.interval - labelSpread}
           rotation={this.props.rotation}
@@ -52,12 +65,12 @@ export default class Key extends Component {
 
   render() {
     let shape = [
-      [-0.5, R_OUTER * Scalar.rFactorAtEdge],
-      [0, R_OUTER],
-      [0.5, R_OUTER * Scalar.rFactorAtEdge],
-      [0.5, R_INNER * Scalar.rFactorAtEdge],
-      [0, R_INNER],
-      [-0.5, R_INNER * Scalar.rFactorAtEdge],
+      [-0.5, outerRadius * Scalar.rFactorAtEdge],
+      [0, outerRadius],
+      [0.5, outerRadius * Scalar.rFactorAtEdge],
+      [0.5, innerRadius * Scalar.rFactorAtEdge],
+      [0, innerRadius],
+      [-0.5, innerRadius * Scalar.rFactorAtEdge],
     ];
     let points = shape.map(ir =>
       IrPoint.fromArray(ir).plus({i: this.props.interval})
