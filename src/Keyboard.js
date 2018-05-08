@@ -39,7 +39,7 @@ class Keyboard extends Component {
       return (
         <Key
           key={interval}
-          label={note.name(this.useNames())}
+          label={note.name('both')}
           color={note.color}
           interval={interval}
           rotation={this.props.rotation}

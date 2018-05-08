@@ -13,7 +13,43 @@ const Background = styled(Polygon)`
   stroke: #949494;
 `;
 
+const labelSpread = 0.22;
+
 export default class Key extends Component {
+
+  labels() {
+    if (this.props.label.constructor === Array) {
+      return [
+        <KeyLabel
+          interval={this.props.interval - labelSpread}
+          rotation={this.props.rotation}
+          color={this.props.color}
+          active={this.props.active}
+        >
+          {this.props.label[0]}
+        </KeyLabel>,
+        <KeyLabel
+          interval={this.props.interval + labelSpread}
+          rotation={this.props.rotation}
+          color={this.props.color}
+          active={this.props.active}
+        >
+          {this.props.label[1]}
+        </KeyLabel>
+      ];
+    }
+    return (
+      <KeyLabel
+        interval={this.props.interval}
+        rotation={this.props.rotation}
+        color={this.props.color}
+        active={this.props.active}
+      >
+        {this.props.label}
+      </KeyLabel>
+    );
+  }
+
   render() {
     let shape = [
       [-0.5, R_OUTER * Scalar.rFactorAtEdge],
@@ -34,14 +70,7 @@ export default class Key extends Component {
           active={this.props.active}
         />
 
-        <KeyLabel
-          interval={this.props.interval}
-          rotation={this.props.rotation}
-          color={this.props.color}
-          active={this.props.active}
-        >
-          {this.props.label}
-        </KeyLabel>
+        {this.labels()}
 
       </g>
     );
