@@ -13,8 +13,12 @@ const labelTieRadius = 0.978 * (innerRadius + outerRadius) / 2;
 const labelTieSpan = 0.2;
 const labelTieWidth = 50;
 
+const StyledG = styled.g`
+  opacity: ${props => props.active ? '1' : '0.25'};
+`;
+
 const Background = styled(Polygon)`
-  fill: ${props => props.active ? '#e4e4e4' : '#949494'};
+  fill: #e4e4e4;
   stroke: #949494;
 `;
 
@@ -76,7 +80,7 @@ export default class Key extends Component {
       IrPoint.fromArray(ir).plus({i: this.props.interval})
     );
     return (
-      <g>
+      <StyledG active={this.props.active}>
 
         <Background
           points={points}
@@ -85,7 +89,7 @@ export default class Key extends Component {
 
         {this.labels()}
 
-      </g>
+      </StyledG>
     );
   }
 }
