@@ -3,7 +3,6 @@ export default class Note {
   constructor(noteData) {
     this.sharpName = noteData.sharpName;
     this.flatName = noteData.flatName;
-    this.useNames = noteData.useNames;
   }
 
   /**
@@ -16,10 +15,29 @@ export default class Note {
   }
 
   /**
+   * Return the single-letter name for this note, even if it's a black key.
+   *
+   * @param {string} nameType
+   *   e.g. 'flat', 'sharp', or 'both'
+   *
+   * @return {string}
+   */
+  baseName(nameType) {
+    const map = {
+      'flat': this.flatName.slice(0, 1),
+      'sharp': this.sharpName.slice(0, 1),
+      'both': `${this.sharpName} / ${this.flatName}`,
+    };
+    return map[nameType];
+  }
+
+  /**
    * Determine the name of this note according to the specified name type. When
    * both
    *
    * @param nameType
+   *   e.g. 'flat', 'sharp', or 'both'
+   *
    * @return {string|string[]}
    */
   name(nameType) {

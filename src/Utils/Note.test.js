@@ -27,3 +27,10 @@ test('name', () => {
   expect(cSharp.name('flat')).toBe('D♭');
   expect(cSharp.name('both')).toEqual(['C♯', 'D♭']);
 });
+
+test('baseName', () => {
+  let cSharp = new Note(cSharpData);
+  expect(cSharp.baseName('sharp')).toBe('C');
+  expect(cSharp.baseName('flat')).toBe('D');
+  expect(cSharp.baseName('both')).toBe('C sharp / D flat');
+});

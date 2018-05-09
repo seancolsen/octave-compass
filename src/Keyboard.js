@@ -4,19 +4,31 @@ import {musicTheory} from "./Data/musicTheory.js";
 import Note from './Utils/Note';
 import Rotatable from "./Rotatable";
 import Scalar from './Utils/Scalar';
+import NoteSet from './Utils/NoteSet';
 
 class Keyboard extends Component {
 
   /**
    * Determine which types of names to use for keys based on the rotation of the
    * keyboard.
+   *
+   * @return {string}
+   *   e.g. 'flat', 'sharp', or 'both'
    */
   useNames() {
-    const divisions = musicTheory.octaveDivisions;
-    const roundRotation = Math.round(this.props.rotation);
-    const interval = Scalar.wrap(divisions - roundRotation, divisions);
-    const note = new Note(musicTheory.notes[interval]);
-    return note.useNames;
+    if (this.props.isRotating) {
+      return 'both';
+    }
+    return this.noteSet.nameType;
+  }
+
+  /**
+   * Return the set of notes that are currently active.
+   *
+   * @return {NoteSet[]}
+   */
+  get noteSet() {
+    return NoteSet.fromIntervalSet(this.props.intervalSet, this.props.rotation);
   }
 
   /**
@@ -39,7 +51,7 @@ class Keyboard extends Component {
       return (
         <Key
           key={interval}
-          label={note.name('both')}
+          label={note.name(this.useNames())}
           color={note.color}
           interval={interval}
           rotation={this.props.rotation}

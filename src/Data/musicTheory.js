@@ -16,62 +16,50 @@ export const musicTheory = {
     {
       sharpName: "C",
       flatName: "C",
-      useNames: "flat",
     },
     {
       sharpName: "C sharp",
       flatName: "D flat",
-      useNames: "flat",
     },
     {
       sharpName: "D",
       flatName: "D",
-      useNames: "sharp",
     },
     {
       sharpName: "D sharp",
       flatName: "E flat",
-      useNames: "flat",
     },
     {
       sharpName: "E",
       flatName: "E",
-      useNames: "sharp",
     },
     {
       sharpName: "F",
       flatName: "F",
-      useNames: "flat",
     },
     {
       sharpName: "F sharp",
       flatName: "G flat",
-      useNames: "flat",
     },
     {
       sharpName: "G",
       flatName: "G",
-      useNames: "sharp",
     },
     {
       sharpName: "G sharp",
       flatName: "A flat",
-      useNames: "flat",
     },
     {
       sharpName: "A",
       flatName: "A",
-      useNames: "sharp",
     },
     {
       sharpName: "A sharp",
       flatName: "B flat",
-      useNames: "flat",
     },
     {
       sharpName: "B",
       flatName: "B",
-      useNames: "sharp",
     },
   ],
 
