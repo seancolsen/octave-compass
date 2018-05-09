@@ -47,35 +47,4 @@ export default class NoteSet {
     return this.notes.length;
   }
 
-  /**
-   * Test whether the supplied name type will satisfy common music theory
-   * conventions when naming notes. We want to make sure we don't have more than
-   * one note in the set with the same base name.
-   *
-   * @param {string} nameType
-   * @return {boolean}
-   */
-  nameTypeIsOk(nameType) {
-    if (nameType === 'both') {
-      return true;
-    }
-    const baseNames = this.notes.map(n => n.baseName(nameType));
-    return baseNames.every((baseName) =>
-      baseNames.filter(n => n === baseName).length === 1
-    );
-  }
-
-  /**
-   * Find the best strategy for naming all the notes in this set. First we see
-   * if we can use the "flat name". If that doesn't produce a good result, then
-   * we see if we can use the "sharp name". Finally, we fall back to "both" for
-   * less-common sets of notes.
-   *
-   * @return {string}
-   *   e.g. 'flat', 'sharp', or 'both'
-   */
-  get nameType() {
-    return ['flat', 'sharp', 'both'].find(this.nameTypeIsOk.bind(this));
-  }
-
 }

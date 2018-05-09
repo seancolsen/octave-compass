@@ -28,21 +28,3 @@ test('fromIntervalSet rotated', () => {
   expect(noteSet.notes[5].flatName).toBe('G');
   expect(noteSet.notes[6].flatName).toBe('A');
 });
-
-test('nameTypeIsOk', () => {
-  const eMajorScale = NoteSet.fromIntervalSet(
-    new IntervalSet(0b101010110101),
-    -4
-  );
-  expect(eMajorScale.nameTypeIsOk('flat')).toBe(false);
-  expect(eMajorScale.nameTypeIsOk('sharp')).toBe(true);
-  expect(eMajorScale.nameTypeIsOk('both')).toBe(true);
-});
-
-test('nameType E major scale', () => {
-  const eMajorScale = NoteSet.fromIntervalSet(
-    new IntervalSet(0b101010110101),
-    -4
-  );
-  expect(eMajorScale.nameType).toBe('sharp');
-});

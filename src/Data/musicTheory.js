@@ -12,56 +12,91 @@ export const musicTheory = {
 
   octaveDivisions: 12,
 
-  notes: [
-    {
-      sharpName: "C",
-      flatName: "C",
+  notes: {
+    0: {
+      names: {
+        natural: "C",
+        sharp: "B",
+        doubleFlat: "D",
+      }
     },
-    {
-      sharpName: "C sharp",
-      flatName: "D flat",
+    1: {
+      names: {
+        sharp: "C",
+        flat: "D",
+        doubleSharp: "B",
+      }
     },
-    {
-      sharpName: "D",
-      flatName: "D",
+    2: {
+      names: {
+        natural: "D",
+        doubleSharp: "C",
+        doubleFlat: "E",
+      }
     },
-    {
-      sharpName: "D sharp",
-      flatName: "E flat",
+    3: {
+      names: {
+        sharp: "D",
+        flat: "E",
+        doubleFlat: "F",
+      }
     },
-    {
-      sharpName: "E",
-      flatName: "E",
+    4: {
+      names: {
+        natural: "E",
+        flat: "F",
+        doubleSharp: "D",
+      }
     },
-    {
-      sharpName: "F",
-      flatName: "F",
+    5: {
+      names: {
+        natural: "F",
+        sharp: "E",
+        doubleFlat: "G",
+      }
     },
-    {
-      sharpName: "F sharp",
-      flatName: "G flat",
+    6: {
+      names: {
+        sharp: "F",
+        flat: "G",
+        doubleSharp: "E",
+      }
     },
-    {
-      sharpName: "G",
-      flatName: "G",
+    7: {
+      names: {
+        natural: "G",
+        doubleSharp: "F",
+        doubleFlat: "A",
+      }
     },
-    {
-      sharpName: "G sharp",
-      flatName: "A flat",
+    8: {
+      names: {
+        sharp: "G",
+        flat: "A",
+      }
     },
-    {
-      sharpName: "A",
-      flatName: "A",
+    9: {
+      names: {
+        natural: "A",
+        doubleSharp: "G",
+        doubleFlat: "B",
+      }
     },
-    {
-      sharpName: "A sharp",
-      flatName: "B flat",
+    10: {
+      names: {
+        sharp: "A",
+        flat: "B",
+        doubleFlat: "C",
+      }
     },
-    {
-      sharpName: "B",
-      flatName: "B",
+    11: {
+      names: {
+        natural: "B",
+        flat: "C",
+        doubleSharp: "A",
+      }
     },
-  ],
+  },
 
   intervals: [
     "tonal center",
