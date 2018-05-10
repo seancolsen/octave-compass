@@ -17,10 +17,9 @@ const NoteName = styled.span`
 `;
 
 export default function Marquee(props) {
-  const tonalCenter = new Note(musicTheory.notes[props.tonalCenter]);
   return <StyledDiv className={props.className}>
     <IntervalSetName>{props.intervalSet.name}</IntervalSetName>
     <span> in </span>
-    <NoteName>{tonalCenter.name('flat')}</NoteName>
+    <NoteName>?</NoteName>
   </StyledDiv>;
 }

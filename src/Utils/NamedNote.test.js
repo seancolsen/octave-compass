@@ -1,10 +1,10 @@
-import NoteName from './NoteName';
+import NamedNote from './NamedNote';
 import {musicTheory} from "../Data/musicTheory";
 import Note from "./Note";
 
-const noteC = new Note(musicTheory.notes[0]);
-const noteDFlat = new Note(musicTheory.notes[1]);
-const noteG = new Note(musicTheory.notes[7]);
+const noteC = new Note(0);
+const noteDFlat = new Note(1);
+const noteG = new Note(7);
 
 const cNatural = noteC.namedAs('natural');
 const cSharp = noteDFlat.namedAs('sharp');

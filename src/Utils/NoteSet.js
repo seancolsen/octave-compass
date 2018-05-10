@@ -2,7 +2,7 @@ import {musicTheory} from "../Data/musicTheory";
 import Note from './Note';
 import Scalar from "./Scalar";
 import CustomMath from "./CustomMath";
-import NoteNameSet from './NoteNameSet';
+import NamedNoteSet from './NamedNoteSet';
 
 export default class NoteSet {
 
@@ -12,7 +12,7 @@ export default class NoteSet {
   notes;
 
   /**
-   * @type {[NoteName]}
+   * @type {[NamedNote]}
    */
   names;
 
@@ -29,8 +29,16 @@ export default class NoteSet {
    * @return {Note[]}
    */
   static get chromaticNotes() {
-    return Object.entries(musicTheory.notes)
-      .map(([index, noteData]) => new Note(noteData));
+    return [...Array(musicTheory.octaveDivisions).keys()].map(i => new Note(i));
+  }
+
+  /**
+   * Return a new NoteSet containing all possible notes.
+   *
+   * @return {NoteSet}
+   */
+  static get chromatic() {
+    return new NoteSet(NoteSet.chromaticNotes);
   }
 
   /**
@@ -72,7 +80,7 @@ export default class NoteSet {
    *     ['natural', 'doubleSharp', 'doubleFlat'],
    *   ]
    */
-  get possibleModifiersForEachNoteName() {
+  get possibleModifiersForEachNamedNote() {
     return this.notes.map(note => Object.keys(note.names));
   }
 
@@ -83,30 +91,30 @@ export default class NoteSet {
    * name sets is 3^7 = 2187.
    *
    */
-  get possibleNoteNameSets() {
-    return CustomMath.cartesianProduct(...this.possibleModifiersForEachNoteName)
-      .map(modifierKeys => NoteNameSet.fromModifiers(this, modifierKeys));
+  get possibleNamedNoteSets() {
+    return CustomMath.cartesianProduct(...this.possibleModifiersForEachNamedNote)
+      .map(modifierKeys => NamedNoteSet.fromModifiers(this, modifierKeys));
   }
 
   /**
-   * Select all NoteNameSets that have the best possible score.
+   * Select all NamedNoteSets that have the best possible score.
    *
-   * @return {[NoteNameSet]}
+   * @return {[NamedNoteSet]}
    */
-  get bestNoteNameSets() {
+  get bestNamedNoteSets() {
     const lowestDemerits = Math.min(
-      ...this.possibleNoteNameSets.map(s => s.demerits)
+      ...this.possibleNamedNoteSets.map(s => s.demerits)
     );
-    return this.possibleNoteNameSets.filter(s => s.demerits === lowestDemerits);
+    return this.possibleNamedNoteSets.filter(s => s.demerits === lowestDemerits);
   }
 
   /**
-   * Choose one NoteNameSet, even if multiple sets tie for the winning score.
+   * Choose one NamedNoteSet, even if multiple sets tie for the winning score.
    *
-   * @return {NoteNameSet}
+   * @return {NamedNoteSet}
    */
-  get bestNoteNameSet() {
-    return this.bestNoteNameSets[0];
+  get bestNamedNoteSet() {
+    return this.bestNamedNoteSets[0];
   }
 
   /**
@@ -118,7 +126,7 @@ export default class NoteSet {
    */
   get named() {
     let result = new NoteSet(this.notes);
-    result.names = result.bestNoteNameSet.noteNames;
+    result.names = result.bestNamedNoteSet.namedNotes;
     return result;
   }
 

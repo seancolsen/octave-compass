@@ -21,11 +21,11 @@ const modifiers = {
   },
 };
 
-export default class NoteName {
+export default class NamedNote {
 
   /**
    * @type {Note}
-   *   The note object containing this NoteName
+   *   The note object containing this NamedNote
    */
   note;
 

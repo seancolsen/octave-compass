@@ -1,15 +1,25 @@
-import NoteName from "./NoteName";
+import NamedNote from "./NamedNote";
+import {musicTheory} from "../Data/musicTheory";
 
 export default class Note {
 
   /**
-   * @type {{string: NoteName}}
+   * C is 0. Id numbers increase from there.
+   *
+   * @type {int}
+   */
+  id;
+
+  /**
+   * @type {{string: NamedNote}}
    */
   names = {};
 
-  constructor(noteData) {
+  constructor(id) {
+    this.id = id;
+    const noteData = musicTheory.notes[id];
     Object.entries(noteData.names).forEach(([modifier, base]) => {
-      this.names[modifier] = new NoteName(this, modifier, base);
+      this.names[modifier] = new NamedNote(this, modifier, base);
     });
   }
 
@@ -23,11 +33,11 @@ export default class Note {
   }
 
   /**
-   * Return a NoteName for this note which uses the given modifier.
+   * Return a NamedNote for this note which uses the given modifier.
    *
    * @param {string} modifier
    *   e.g. "flat"
-   * @return {NoteName}
+   * @return {NamedNote}
    */
   namedAs(modifier) {
     return this.names[modifier];

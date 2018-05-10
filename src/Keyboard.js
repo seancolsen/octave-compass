@@ -46,17 +46,15 @@ class Keyboard extends Component {
    * @return {any[]}
    */
   keys() {
-    // TODO change map to entries
-    return musicTheory.notes.map((noteData, interval) => {
-      const note = new Note(noteData);
+    return NoteSet.chromatic.notes.map(note => {
       return (
         <Key
-          key={interval}
-          label={note.name(this.useNames())}
+          key={note.id}
+          label={'?'}
           color={note.color}
-          interval={interval}
+          interval={note.id}
           rotation={this.props.rotation}
-          active={this.keyIsActive(interval)}
+          active={this.keyIsActive(note.id)}
         />
       );
     });

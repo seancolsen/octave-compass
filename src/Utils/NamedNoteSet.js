@@ -7,12 +7,12 @@ const demeritFactors = {
   duplicateBaseNames: 7,
 };
 
-export default class NoteNameSet {
+export default class NamedNoteSet {
 
   /**
-   * @type {NoteName[]}
+   * @type {NamedNote[]}
    */
-  noteNames = [];
+  namedNotes = [];
 
   /**
    * @type {number}
@@ -20,15 +20,15 @@ export default class NoteNameSet {
   demerits = 0;
 
   /**
-   * @param {NoteName[]} noteNames
+   * @param {NamedNote[]} namedNotes
    */
-  constructor(noteNames) {
-    this.noteNames = noteNames;
+  constructor(namedNotes) {
+    this.namedNotes = namedNotes;
     this.demerits = this.calculateDemerits();
   }
 
   /**
-   * Return a new NoteNameSet that contains named notes for the given NoteSet,
+   * Return a new NamedNoteSet that contains named notes for the given NoteSet,
    * according to the supplied array of modifiers. Each modifier should
    * correspond to a Note within the NoteSet, and the array indexes should be
    * the same between the modifiers and the Notes.
@@ -37,10 +37,10 @@ export default class NoteNameSet {
    * @param {string[]} modifierKeys
    */
   static fromModifiers(noteSet, modifierKeys) {
-    const noteNames = noteSet.notes.map((note, index) =>
+    const namedNotes = noteSet.notes.map((note, index) =>
       note.names[modifierKeys[index]]
     );
-    return new NoteNameSet(noteNames);
+    return new NamedNoteSet(namedNotes);
   }
 
   /**
@@ -63,9 +63,9 @@ export default class NoteNameSet {
    * @return {number}
    */
   get accidentalInsteadOfNaturalDemerits() {
-    return this.noteNames.filter(noteName =>
-      noteName.note.names.hasOwnProperty('natural') &&
-      noteName.direction !== 'none'
+    return this.namedNotes.filter(namedNote =>
+      namedNote.note.names.hasOwnProperty('natural') &&
+      namedNote.direction !== 'none'
     ).length * demeritFactors.accidentalInsteadOfNatural;
   }
 
@@ -77,8 +77,8 @@ export default class NoteNameSet {
    * @return {number}
    */
   get mixOfSharpsAndFlatsDemerits() {
-    const sharps = this.noteNames.filter(n => n.direction === 'sharp').length;
-    const flats = this.noteNames.filter(n => n.direction === 'flat').length;
+    const sharps = this.namedNotes.filter(n => n.direction === 'sharp').length;
+    const flats = this.namedNotes.filter(n => n.direction === 'flat').length;
     return (sharps > 0) && (flats > 0) ? demeritFactors.mixOfSharpsAndFlats : 0;
   }
 
@@ -89,7 +89,7 @@ export default class NoteNameSet {
    * @return {number}
    */
   get doubleModifierDemerits() {
-    return this.noteNames.filter(n => n.isDouble)
+    return this.namedNotes.filter(n => n.isDouble)
       .length * demeritFactors.doubleModifier;
   }
 
@@ -102,7 +102,7 @@ export default class NoteNameSet {
    * @return {number}
    */
   get duplicateBaseNamesDemerits() {
-    const baseNames = this.noteNames.map(name => name.baseName);
+    const baseNames = this.namedNotes.map(name => name.baseName);
     const baseNameFrequency = CustomMath.valueFrequency(baseNames);
     const extraBaseNameCount = Object.entries(baseNameFrequency)
       .map(([baseName, frequency]) => frequency - 1).reduce((a, b) => a + b);

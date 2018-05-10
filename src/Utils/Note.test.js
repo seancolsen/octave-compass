@@ -1,8 +1,11 @@
 import Note from './Note';
-import {musicTheory} from "../Data/musicTheory";
 
-const noteC = new Note(musicTheory.notes[0]);
-const noteCSharp = new Note(musicTheory.notes[1]);
+const noteC = new Note(0);
+const noteCSharp = new Note(1);
+
+test('constructor', () => {
+  expect(noteC).toBeDefined();
+});
 
 test('color', () => {
   expect(noteC.color).toBe('white');

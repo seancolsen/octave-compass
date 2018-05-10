@@ -1,6 +1,10 @@
 import NoteSet from './NoteSet';
 import IntervalSet from "./IntervalSet";
 
+test('chromatic', () => {
+  expect(NoteSet.chromatic.notes.length).toBe(12);
+});
+
 test('fromIntervalSet basic', () => {
   const intervalSet = new IntervalSet(0b101010110101);
   const rotation = 0;
@@ -29,30 +33,30 @@ test('fromIntervalSet rotated', () => {
   expect(noteSet.notes[6].names.natural.baseName).toBe('A');
 });
 
-test('possibleModifiersForEachNoteName', () => {
+test('possibleModifiersForEachNamedNote', () => {
   const intervalSet = new IntervalSet(0b000010010001);
   const rotation = 0;
   const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
-  expect(noteSet.possibleModifiersForEachNoteName).toEqual([
+  expect(noteSet.possibleModifiersForEachNamedNote).toEqual([
     ['natural', 'sharp', 'doubleFlat'],
     ['natural', 'flat', 'doubleSharp'],
     ['natural', 'doubleSharp', 'doubleFlat'],
   ]);
 });
 
-test('possibleNoteNameSets small', () => {
+test('possibleNamedNoteSets small', () => {
   const intervalSet = new IntervalSet(0b000010000001);
   const rotation = 0;
   const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
-  const sets = noteSet.possibleNoteNameSets;
+  const sets = noteSet.possibleNamedNoteSets;
   expect(sets.length).toBe(9);
 });
 
-test('possibleNoteNameSets large', () => {
+test('possibleNamedNoteSets large', () => {
   const intervalSet = new IntervalSet(0b101010110101);
   const rotation = 0;
   const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
-  const sets = noteSet.possibleNoteNameSets;
+  const sets = noteSet.possibleNamedNoteSets;
   expect(sets.length).toBe(2187);
 });
 
