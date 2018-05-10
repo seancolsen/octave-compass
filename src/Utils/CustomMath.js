@@ -1,4 +1,4 @@
-export default class Statistics {
+export default class CustomMath {
 
   /**
    * Count the occurrences of each value in an array. Return an object with the
@@ -14,6 +14,19 @@ export default class Statistics {
     let result = {};
     values.forEach(v => {result[v] = (result[v] || 0) + 1});
     return result;
+  }
+
+  /**
+   * Produce a combinatorial cartesian product
+   *
+   * @param {array} a
+   * @param {array} b
+   * @param {array} c
+   * @return {*}
+   */
+  static cartesianProduct(a, b, ...c) {
+    const f = (a, b) => [].concat(...a.map(d => b.map(e => [].concat(d, e))));
+    return b ? CustomMath.cartesianProduct(f(a, b), ...c) : a;
   }
 
 }

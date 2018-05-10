@@ -46,6 +46,7 @@ class Keyboard extends Component {
    * @return {any[]}
    */
   keys() {
+    // TODO change map to entries
     return musicTheory.notes.map((noteData, interval) => {
       const note = new Note(noteData);
       return (

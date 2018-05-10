@@ -19,8 +19,7 @@ export default class Note {
    * @return {string}
    */
   get color() {
-    return this.names.some(name => name.modifier === 'natural') ?
-      'white' : 'black';
+    return this.names.hasOwnProperty('natural') ? 'white' : 'black';
   }
 
   /**

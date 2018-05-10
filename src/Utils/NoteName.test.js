@@ -21,6 +21,7 @@ test('baseName', () => {
 
 test('unicode', () => {
   expect(dFlat.unicode).toBe('D♭');
+  expect(dDoubleFlat.unicode).toBe('D𝄫');
 });
 
 test('direction', () => {
@@ -29,4 +30,12 @@ test('direction', () => {
   expect(cSharp.direction).toBe('sharp');
   expect(fDoubleSharp.direction).toBe('sharp');
   expect(dDoubleFlat.direction).toBe('flat');
+});
+
+test('isDouble', () => {
+  expect(cNatural.isDouble).toBe(false);
+  expect(cSharp.isDouble).toBe(false);
+  expect(dFlat.isDouble).toBe(false);
+  expect(fDoubleSharp.isDouble).toBe(true);
+  expect(dDoubleFlat.isDouble).toBe(true);
 });

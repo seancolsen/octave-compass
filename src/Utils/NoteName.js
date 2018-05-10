@@ -67,7 +67,7 @@ export default class NoteName {
    * @return {boolean}
    */
   get isDouble() {
-    return this.modifier === 'doubleSharp' || this.modifier === 'doubleSharp';
+    return this.modifier === 'doubleFlat' || this.modifier === 'doubleSharp';
   }
 
 }
