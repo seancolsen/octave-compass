@@ -2,10 +2,15 @@ import NoteName from "./NoteName";
 
 export default class Note {
 
+  /**
+   * @type {{string: NoteName}}
+   */
+  names = {};
+
   constructor(noteData) {
-    this.names = Object.entries(noteData.names).map(
-      ([modifier, base]) => new NoteName(base, modifier)
-    );
+    Object.entries(noteData.names).forEach(([modifier, base]) => {
+      this.names[modifier] = new NoteName(this, modifier, base);
+    });
   }
 
   /**
@@ -16,6 +21,17 @@ export default class Note {
   get color() {
     return this.names.some(name => name.modifier === 'natural') ?
       'white' : 'black';
+  }
+
+  /**
+   * Return a NoteName for this note which uses the given modifier.
+   *
+   * @param {string} modifier
+   *   e.g. "flat"
+   * @return {NoteName}
+   */
+  namedAs(modifier) {
+    return this.names[modifier];
   }
 
 }

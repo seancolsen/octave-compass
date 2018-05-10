@@ -23,9 +23,28 @@ const modifiers = {
 
 export default class NoteName {
 
-  constructor(baseName, modifier) {
-    this.baseName = baseName;
+  /**
+   * @type {Note}
+   *   The note object containing this NoteName
+   */
+  note;
+
+  /**
+   * @type {String}
+   *   e.g. "natural", "flat", "sharp", "doubleFlat", "doubleSharp"
+   */
+  modifier;
+
+  /**
+   * @type {string}
+   *   This will always be one character e.g. "C"
+   */
+  baseName;
+
+  constructor(note, modifier, baseName) {
+    this.note = note;
     this.modifier = modifier;
+    this.baseName = baseName;
   }
 
   /**
@@ -42,6 +61,13 @@ export default class NoteName {
    */
   get direction() {
     return modifiers[this.modifier].direction;
+  }
+
+  /**
+   * @return {boolean}
+   */
+  get isDouble() {
+    return this.modifier === 'doubleSharp' || this.modifier === 'doubleSharp';
   }
 
 }

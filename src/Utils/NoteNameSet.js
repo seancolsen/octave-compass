@@ -42,7 +42,10 @@ export default class NoteNameSet {
    * @return {number}
    */
   get accidentalInsteadOfNaturalDemerits() {
-    return 0; // TODO
+    return this.noteNames.filter(noteName =>
+      noteName.note.names.hasOwnProperty('natural') &&
+      noteName.direction !== 'none'
+    ).length * demerits.accidentalInsteadOfNatural;
   }
 
   /**
@@ -65,7 +68,8 @@ export default class NoteNameSet {
    * @return {number}
    */
   get doubleModifierDemerits() {
-    return 0; // TODO
+    return this.noteNames.filter(n => n.isDouble)
+      .length * demerits.doubleModifier;
   }
 
   /**
