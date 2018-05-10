@@ -57,6 +57,16 @@ export default class NamedNote {
   }
 
   /**
+   * Return a not-so pretty version of this note name (e.g. "B flat").
+   *
+   * @return {string}
+   */
+  get ascii() {
+    const modifier = (this.modifier === 'natural') ? '' : ' ' + this.modifier;
+    return `${this.baseName}${modifier}`;
+  }
+
+  /**
    * @return {string}
    */
   get direction() {

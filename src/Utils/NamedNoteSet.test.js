@@ -24,8 +24,28 @@ const fFlat = noteE.namedAs('flat');
 const eSharp = noteF.namedAs('sharp');
 const eDoubleSharp = noteGFlat.namedAs('doubleSharp');
 const fDoubleSharp = noteG.namedAs('doubleSharp');
-const g = noteG.namedAs('natural');
+const gNatural = noteG.namedAs('natural');
 const gSharp = noteAFlat.namedAs('sharp');
+
+test('direction sharp', () => {
+  const set = new NamedNoteSet([cNatural, cSharp, eDoubleSharp]);
+  expect(set.direction).toBe('sharp');
+});
+
+test('direction flat', () => {
+  const set = new NamedNoteSet([cNatural, dFlat]);
+  expect(set.direction).toBe('flat');
+});
+
+test('direction natural', () => {
+  const set = new NamedNoteSet([cNatural, gNatural]);
+  expect(set.direction).toBe('natural');
+});
+
+test('direction null', () => {
+  const set = new NamedNoteSet([cNatural, dFlat, eSharp]);
+  expect(set.direction).toBeNull();
+});
 
 test('duplicateBaseNamesDemerits positive', () => {
   const set = new NamedNoteSet([cNatural, cSharp]);
@@ -123,7 +143,7 @@ test('single note demerits comparison', () => {
 
 test('double note demerits comparison', () => {
   const betterSet = new NamedNoteSet([fDoubleSharp, gSharp]);
-  const worseSet = new NamedNoteSet([g, gSharp]);
+  const worseSet = new NamedNoteSet([gNatural, gSharp]);
   expect(betterSet.demerits).toBeLessThan(worseSet.demerits);
 });
 

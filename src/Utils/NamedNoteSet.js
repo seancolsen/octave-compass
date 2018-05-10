@@ -44,6 +44,28 @@ export default class NamedNoteSet {
   }
 
   /**
+   * If we have a consensus among all notes about the direction of their
+   * modifiers (sharp vs flat), then return that direction. Otherwise return
+   * `null`.
+   *
+   * @return {null|string}
+   */
+  get direction() {
+    const sharps = this.namedNotes.filter(n => n.direction === 'sharp').length;
+    const flats = this.namedNotes.filter(n => n.direction === 'flat').length;
+    if (sharps === 0 && flats === 0) {
+      return 'natural';
+    }
+    if (sharps > 0 && flats === 0) {
+      return 'sharp';
+    }
+    if (flats > 0 && sharps === 0) {
+      return 'flat';
+    }
+    return null;
+  }
+
+  /**
    * @return {number}
    */
   calculateDemerits() {
@@ -77,9 +99,7 @@ export default class NamedNoteSet {
    * @return {number}
    */
   get mixOfSharpsAndFlatsDemerits() {
-    const sharps = this.namedNotes.filter(n => n.direction === 'sharp').length;
-    const flats = this.namedNotes.filter(n => n.direction === 'flat').length;
-    return (sharps > 0) && (flats > 0) ? demeritFactors.mixOfSharpsAndFlats : 0;
+    return (!this.direction) ? demeritFactors.mixOfSharpsAndFlats : 0;
   }
 
   /**

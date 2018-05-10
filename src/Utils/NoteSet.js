@@ -4,17 +4,26 @@ import Scalar from "./Scalar";
 import CustomMath from "./CustomMath";
 import NamedNoteSet from './NamedNoteSet';
 
+/**
+ * Only name the NoteSet if we have 8 notes or fewer. With more notes, the notes
+ * are more computationally intensive to name and having the note names is
+ * less useful.
+ *
+ * @type {number}
+ */
+const maxSetSizeToName = 8;
+
 export default class NoteSet {
 
   /**
    * @type {[Note]}
    */
-  notes;
+  notes = [];
 
   /**
    * @type {[NamedNote]}
    */
-  names;
+  names = [];
 
   /**
    * @param {Note[]} notes
@@ -52,7 +61,7 @@ export default class NoteSet {
    * @return {NoteSet}
    */
   static fromIntervalSet(intervalSet, rotation) {
-    const allNotes = this.chromaticNotes;
+    const allNotes = NoteSet.chromaticNotes;
     const notes = intervalSet.toArray().map(i =>
       allNotes[Scalar.wrap(i - rotation, musicTheory.octaveDivisions)]
     );
@@ -128,6 +137,17 @@ export default class NoteSet {
     let result = new NoteSet(this.notes);
     result.names = result.bestNamedNoteSet.namedNotes;
     return result;
+  }
+
+  /**
+   * Return a NoteSet that *might* be named, but only if it's not too hard.
+   * Naming large sets is hard, and not really that useful. Only name the
+   * smaller sets.
+   *
+   * @return {NoteSet}
+   */
+  get namedIfFeasible() {
+    return (this.count <= maxSetSizeToName) ? this.named : this;
   }
 
 }

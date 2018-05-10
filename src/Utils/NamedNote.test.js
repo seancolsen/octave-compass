@@ -24,6 +24,12 @@ test('unicode', () => {
   expect(dDoubleFlat.unicode).toBe('D𝄫');
 });
 
+test('ascii', () => {
+  expect(cNatural.ascii).toBe('C');
+  expect(dFlat.ascii).toBe('D flat');
+  expect(dDoubleFlat.ascii).toBe('D doubleFlat');
+});
+
 test('direction', () => {
   expect(dFlat.direction).toBe('flat');
   expect(cNatural.direction).toBe('none');
