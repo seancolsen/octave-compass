@@ -13,6 +13,7 @@ const noteE = new Note(musicTheory.notes[4]);
 const noteF = new Note(musicTheory.notes[5]);
 const noteGFlat = new Note(musicTheory.notes[6]);
 const noteG = new Note(musicTheory.notes[7]);
+const noteAFlat = new Note(musicTheory.notes[8]);
 
 const cNatural = noteC.namedAs('natural');
 const cSharp = noteDFlat.namedAs('sharp');
@@ -23,6 +24,8 @@ const fFlat = noteE.namedAs('flat');
 const eSharp = noteF.namedAs('sharp');
 const eDoubleSharp = noteGFlat.namedAs('doubleSharp');
 const fDoubleSharp = noteG.namedAs('doubleSharp');
+const g = noteG.namedAs('natural');
+const gSharp = noteAFlat.namedAs('sharp');
 
 test('duplicateBaseNamesDemerits positive', () => {
   const set = new NoteNameSet([cNatural, cSharp]);
@@ -108,7 +111,7 @@ test('fromModifiers complex', () => {
   expect(noteNameSet.noteNames[2].unicode).toBe('A𝄪');
 });
 
-test('demerits comparison', () => {
+test('single note demerits comparison', () => {
   const cNaturalSet = new NoteNameSet([cNatural]);
   const fFlatSet = new NoteNameSet([fFlat]);
   const fDoubleSharpSet = new NoteNameSet([fDoubleSharp]);
@@ -117,3 +120,11 @@ test('demerits comparison', () => {
   expect(fDoubleSharpSet.demerits).toBeGreaterThan(fFlatSet.demerits);
   expect(fDoubleSharpSet.demerits).toEqual(eDoubleFlatSet.demerits);
 });
+
+test('double note demerits comparison', () => {
+  const betterSet = new NoteNameSet([fDoubleSharp, gSharp]);
+  const worseSet = new NoteNameSet([g, gSharp]);
+  expect(betterSet.demerits).toBeLessThan(worseSet.demerits);
+});
+
+

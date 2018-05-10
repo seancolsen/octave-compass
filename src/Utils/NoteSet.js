@@ -7,6 +7,16 @@ import NoteNameSet from './NoteNameSet';
 export default class NoteSet {
 
   /**
+   * @type {[Note]}
+   */
+  notes;
+
+  /**
+   * @type {[NoteName]}
+   */
+  names;
+
+  /**
    * @param {Note[]} notes
    */
   constructor(notes) {
@@ -78,6 +88,38 @@ export default class NoteSet {
       .map(modifierKeys => NoteNameSet.fromModifiers(this, modifierKeys));
   }
 
-  //get bestNoteNameSet
+  /**
+   * Select all NoteNameSets that have the best possible score.
+   *
+   * @return {[NoteNameSet]}
+   */
+  get bestNoteNameSets() {
+    const lowestDemerits = Math.min(
+      ...this.possibleNoteNameSets.map(s => s.demerits)
+    );
+    return this.possibleNoteNameSets.filter(s => s.demerits === lowestDemerits);
+  }
+
+  /**
+   * Choose one NoteNameSet, even if multiple sets tie for the winning score.
+   *
+   * @return {NoteNameSet}
+   */
+  get bestNoteNameSet() {
+    return this.bestNoteNameSets[0];
+  }
+
+  /**
+   * Return a new NoteSet that's identical to this one, except with the `names`
+   * property filled in. We don't do this in the constructor because it's a
+   * computationally intensive task, especially for larger note sets.
+   *
+   * @return {NoteSet}
+   */
+  get named() {
+    let result = new NoteSet(this.notes);
+    result.names = result.bestNoteNameSet.noteNames;
+    return result;
+  }
 
 }

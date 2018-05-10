@@ -4,7 +4,7 @@ const demeritFactors = {
   accidentalInsteadOfNatural: 1,
   mixOfSharpsAndFlats: 2,
   doubleModifier: 4,
-  duplicateBaseNames: 5,
+  duplicateBaseNames: 7,
 };
 
 export default class NoteNameSet {
