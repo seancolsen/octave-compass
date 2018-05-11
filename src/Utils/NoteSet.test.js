@@ -64,7 +64,7 @@ test('named C major scale', () => {
   const intervalSet = new IntervalSet(0b101010110101);
   const rotation = 0;
   const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
-  const names = noteSet.named.names;
+  const names = noteSet.named.nameSet.noteNames;
   expect(names.map(n => n.unicode))
     .toEqual(['C', 'D', 'E', 'F', 'G', 'A', 'B']);
 });
@@ -73,7 +73,7 @@ test('named complex scale', () => {
   const intervalSet = new IntervalSet(0b010111001101);
   const rotation = -1;
   const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
-  const names = noteSet.named.names;
+  const names = noteSet.named.nameSet.noteNames;
   expect(names.map(n => n.unicode))
     .toEqual(['C♯', 'D♯', 'E', 'F𝄪', 'G♯', 'A', 'B']);
 });
@@ -84,4 +84,48 @@ test('note names are stored within the notes', () => {
   const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
   expect(noteSet.named.notes.map(note => note.name.unicode))
     .toEqual(['C', 'E', 'G']);
+});
+
+test('toIntervalSet no rotation', () => {
+  const binary = 0b000010010001;
+  const intervalSet = new IntervalSet(binary);
+  const rotation = 0;
+  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  expect(noteSet.toIntervalSet().binary).toBe(binary);
+});
+
+test('toIntervalSet with rotation', () => {
+  const binary = 0b000010010001;
+  const intervalSet = new IntervalSet(binary);
+  const rotation = -2;
+  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  expect(noteSet.toIntervalSet(-2).binary).toBe(binary);
+});
+
+test('directionallyNamed', () => {
+  expect(
+    NoteSet.chromatic.directionallyNamed('flat').notes
+    .map(note => note.name.ascii)
+  ).toEqual([
+    'C',
+    'D flat',
+    'D',
+    'E flat',
+    'E',
+    'F',
+    'G flat',
+    'G',
+    'A flat',
+    'A',
+    'B flat',
+    'B'
+  ]);
+});
+
+test('compliment', () => {
+  const intervalSet = new IntervalSet(0b101010110101);
+  const rotation = 2; // B flat major scale
+  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  expect(noteSet.named.compliment.notes.map(note => note.name.ascii))
+    .toEqual(['D flat', 'E', 'G flat', 'A flat', 'B']);
 });

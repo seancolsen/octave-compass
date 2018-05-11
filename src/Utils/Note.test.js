@@ -31,3 +31,12 @@ test('getNameToMatch', () => {
   expect(noteCSharp.getNameToMatch('sharp').ascii).toBe('C sharp');
   expect(noteCSharp.getNameToMatch('flat').ascii).toBe('D flat');
 });
+
+test('namedToMatch', () => {
+  expect(noteC.namedToMatch('natural').name.ascii).toBe('C');
+  expect(noteC.namedToMatch('sharp').name.ascii).toBe('C');
+  expect(noteC.namedToMatch('flat').name.ascii).toBe('C');
+  expect(noteCSharp.namedToMatch('natural').name).toBeUndefined();
+  expect(noteCSharp.namedToMatch('sharp').name.ascii).toBe('C sharp');
+  expect(noteCSharp.namedToMatch('flat').name.ascii).toBe('D flat');
+});

@@ -3,6 +3,7 @@ import Note from './Note';
 import Scalar from "./Scalar";
 import CustomMath from "./CustomMath";
 import NoteNameSet from './NoteNameSet';
+import IntervalSet from "./IntervalSet";
 
 /**
  * Only name the NoteSet if we have 8 notes or fewer. With more notes, the notes
@@ -21,9 +22,12 @@ export default class NoteSet {
   notes = [];
 
   /**
-   * @type {[NoteName]}
+   * This NoteSet starts out without any names. Names are filled in only when
+   * necessary because that task is expensive.
+   *
+   * @type {NoteNameSet}
    */
-  names = [];
+  nameSet;
 
   /**
    * @param {Note[]} notes
@@ -135,8 +139,8 @@ export default class NoteSet {
    */
   get named() {
     let result = new NoteSet(this.notes);
-    result.names = result.bestNoteNameSet.noteNames;
-    result.names.forEach(name => {name.note.name = name});
+    result.nameSet = result.bestNoteNameSet;
+    result.nameSet.noteNames.forEach(name => {name.note.name = name});
     return result;
   }
 
@@ -152,12 +156,52 @@ export default class NoteSet {
   }
 
   /**
+   * Return a copied NoteSet with names added, if possible, according to the
+   * given direction.
+   *
+   * @param {string} direction
+   * @return {NoteSet}
+   */
+  directionallyNamed(direction) {
+    let result = new NoteSet(this.notes);
+    result.notes.forEach((note, index, notes) => {
+      notes[index] = note.namedToMatch(direction);
+    });
+    return result;
+  }
+
+  /**
    * Return the first note within this set.
    *
    * @return {Note}
    */
   get firstNote() {
     return this.notes[0];
+  }
+
+  /**
+   * Return a new IntervalSet that represents all the notes in this NotesSet.
+   *
+   * @param {int} shift
+   *   This should match the shift value used to create a new NoteSet from the
+   *   returned IntervalSet.
+   * @return {IntervalSet}
+   */
+  toIntervalSet(shift = 0) {
+    return IntervalSet.fromArray(this.notes.map(note => note.id)).shift(shift);
+  }
+
+  /**
+   * Return a new note set that contains all the notes this set doesn't
+   * contain. If this set has names, then try to give names to the complimentary
+   * set too, so that they look nice together.
+   *
+   * @return {NoteSet}
+   */
+  get compliment() {
+    const direction = (this.nameSet) ? this.nameSet.direction : null;
+    return NoteSet.fromIntervalSet(this.toIntervalSet(0).compliment, 0)
+      .directionallyNamed(direction);
   }
 
 }

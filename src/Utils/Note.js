@@ -81,6 +81,23 @@ export default class Note {
   }
 
   /**
+   * Return a copy of this note with a name added to match the given direction,
+   * if possible
+   *
+   * @param {string} direction
+   * @return {Note}
+   */
+  namedToMatch(direction) {
+    const name = this.getNameToMatch(direction);
+    if (!name) {
+      return this;
+    }
+    const result = new Note(this.id);
+    result.name = name;
+    return result;
+  }
+
+  /**
    *
    * @return {string}
    */
