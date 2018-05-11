@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import IrPoint from './Utils/IrPoint';
-import {musicTheory} from "./Data/musicTheory";
 
 export default class Arc extends Component {
 

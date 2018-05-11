@@ -1,6 +1,5 @@
 import Scalar from "./Scalar";
 import PrPoint from "./PrPoint.js";
-import IrPoint from "./IrPoint";
 
 const PI = Math.PI;
 

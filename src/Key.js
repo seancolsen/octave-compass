@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Scalar from './Utils/Scalar';
 import Polygon from './Polygon';
 import IrPoint from "./Utils/IrPoint";

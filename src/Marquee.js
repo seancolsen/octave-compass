@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import {musicTheory} from "./Data/musicTheory";
-import Note from './Utils/Note';
 
 const StyledDiv = styled.div`
   text-align: center;

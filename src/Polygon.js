@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import XyPoint from './Utils/XyPoint';
 
 export default function Polygon(props) {

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import IrPoint from "./Utils/IrPoint";
 import styled from 'styled-components';
 import Angle from "./Utils/Angle";
