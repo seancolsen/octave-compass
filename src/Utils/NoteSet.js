@@ -136,7 +136,7 @@ export default class NoteSet {
   get named() {
     let result = new NoteSet(this.notes);
     result.names = result.bestNoteNameSet.noteNames;
-    result.notes;
+    result.names.forEach(name => {name.note.name = name});
     return result;
   }
 

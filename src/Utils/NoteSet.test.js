@@ -77,3 +77,11 @@ test('named complex scale', () => {
   expect(names.map(n => n.unicode))
     .toEqual(['C♯', 'D♯', 'E', 'F𝄪', 'G♯', 'A', 'B']);
 });
+
+test('note names are stored within the notes', () => {
+  const intervalSet = new IntervalSet(0b000010010001);
+  const rotation = 0;
+  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  expect(noteSet.named.notes.map(note => note.name.unicode))
+    .toEqual(['C', 'E', 'G']);
+});
