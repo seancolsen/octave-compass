@@ -46,7 +46,7 @@ class Keyboard extends Component {
    * @return {any[]}
    */
   keys() {
-    return NoteSet.chromatic.notes.map(note => {
+    return this.props.noteSet.notes.map(note => {
       return (
         <Key
           key={note.id}

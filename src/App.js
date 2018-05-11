@@ -5,6 +5,7 @@ import IntervalSet from "./Utils/IntervalSet";
 import Marquee from "./Marquee";
 import Scalar from "./Utils/Scalar";
 import {musicTheory} from "./Data/musicTheory";
+import NoteSet from "./Utils/NoteSet";
 
 export default class App extends Component {
 
@@ -14,6 +15,18 @@ export default class App extends Component {
       tonalCenter: 0,
       intervalSet: new IntervalSet(0b101010110101), // Major scale
     };
+  }
+
+  /**
+   * Calculate the current notes based on the intervals and rotation.
+   *
+   * @return {NoteSet}
+   */
+  noteSet() {
+    return NoteSet.fromIntervalSet(
+      this.state.intervalSet,
+      -this.state.tonalCenter
+    );
   }
 
   setTonalCenter(tonalCenter) {
@@ -41,11 +54,13 @@ export default class App extends Component {
         <Marquee
           tonalCenter={this.state.tonalCenter}
           intervalSet={this.state.intervalSet}
+          noteSet={this.noteSet()}
         />
         <Wheel
           setTonalCenter={tc => this.setTonalCenter(tc)}
           shiftIntervalSet={(r) => this.shiftIntervalSet(r)}
           intervalSet={this.state.intervalSet}
+          noteSet={this.noteSet()}
           toggleInterval={interval => this.toggleInterval(interval)}
         />
       </div>

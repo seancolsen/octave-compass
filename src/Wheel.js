@@ -126,6 +126,7 @@ export default class Wheel extends Component {
             this.startRotating(event, component, componentType)
           }
           intervalSet={this.props.intervalSet}
+          noteSet={this.props.noteSet}
           isRotating={!!this.state.elementRotating}
         />
 

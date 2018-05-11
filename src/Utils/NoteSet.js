@@ -150,4 +150,13 @@ export default class NoteSet {
     return (this.count <= maxSetSizeToName) ? this.named : this;
   }
 
+  /**
+   * Return the first note within this set.
+   *
+   * @return {Note}
+   */
+  get firstNote() {
+    return this.notes[0];
+  }
+
 }
