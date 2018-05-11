@@ -8,7 +8,7 @@ const tieRadius = 320;
 const tieSpan = 0.2;
 const tieWidth = 50;
 
-const DoubleLabelTie = styled(Arc)`
+const LabelTie = styled(Arc)`
   stroke: ${props => props.color};
   stroke-width: ${tieWidth}px;
 `;
@@ -19,15 +19,14 @@ export default function KeyLabelSet(props) {
   const nameCount = names.length;
   let result = [];
 
+  let labelTie = null;
   if (nameCount > 1) {
-    result.push(
-      <DoubleLabelTie
+    labelTie = <LabelTie
         startInterval={props.note.id - tieSpan}
         endInterval={props.note.id + tieSpan}
         color={props.note.color}
         radius={tieRadius}
-      />
-    );
+      />;
   }
 
   names.forEach((name, index) => {
@@ -47,6 +46,11 @@ export default function KeyLabelSet(props) {
     );
   });
 
-  return (result);
+  return (
+    <g>
+      {labelTie}
+      <g>{result}</g>
+    </g>
+  );
 
 }
