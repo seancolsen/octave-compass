@@ -99,10 +99,24 @@ export default class Note {
 
   /**
    *
-   * @return {string}
+   * @return {NoteName[]}
    */
-  get keyLabel() {
-    return this.name ? this.name.unicode : '??'; // TODO be smarter here
+  get namesToUseForLabels() {
+    if (!this.name) {
+      if (this.canBeNamedAs('natural')) {
+        return [this.possibleNames.natural];
+      }
+      return [this.possibleNames.sharp, this.possibleNames.flat];
+    }
+
+    if (this.name.isDouble) {
+      if (this.canBeNamedAs('natural')) {
+        const names = [this.possibleNames.natural, this.name];
+        return this.name.direction === 'flat' ? names : names.reverse;
+      }
+    }
+
+    return [this.name];
   }
 
 }
