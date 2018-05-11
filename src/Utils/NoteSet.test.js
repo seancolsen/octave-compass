@@ -1,5 +1,6 @@
 import NoteSet from './NoteSet';
 import IntervalSet from "./IntervalSet";
+import Note from "./Note";
 
 test('chromatic', () => {
   expect(NoteSet.chromatic.notes.length).toBe(12);
@@ -128,4 +129,18 @@ test('compliment', () => {
   const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
   expect(noteSet.named.compliment.notes.map(note => note.name.ascii))
     .toEqual(['D flat', 'E', 'G flat', 'A flat', 'B']);
+});
+
+test('Squash bug with note naming', () => {
+  const noteSet = new NoteSet([
+    new Note(0),
+    new Note(4),
+    new Note(5),
+    new Note(6),
+    new Note(7),
+    new Note(9),
+    new Note(11),
+  ]);
+  const value = noteSet.named.notes[1].namesToUseForLabels[0];
+  expect(value.unicode).toBeDefined();
 });

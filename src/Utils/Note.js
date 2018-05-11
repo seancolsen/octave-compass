@@ -118,7 +118,7 @@ export default class Note {
     if (this.name.isDouble) {
       if (this.canBeNamedAs('natural')) {
         const names = [this.possibleNames.natural, this.name];
-        return this.name.direction === 'flat' ? names : names.reverse;
+        return this.name.direction === 'flat' ? names : names.reverse();
       }
     }
 
