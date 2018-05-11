@@ -17,11 +17,15 @@ const NoteName = styled.span`
 `;
 
 export default function Marquee(props) {
+  const tonalCenter = props.noteSet.firstNote.namesToUseForLabels
+    .map(name => name.unicode).join('/');
   return (
     <StyledDiv className={props.className}>
       <IntervalSetName>{props.intervalSet.name}</IntervalSetName>
       <span> in </span>
-      <NoteName>{props.noteSet.firstNote.getNameToMatch('flat').unicode}</NoteName>
+      <NoteName>
+        {tonalCenter}
+      </NoteName>
     </StyledDiv>
   );
 }
