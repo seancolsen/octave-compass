@@ -115,11 +115,9 @@ export default class Note {
       return [this.possibleNames.sharp, this.possibleNames.flat];
     }
 
-    if (this.name.isDouble) {
-      if (this.canBeNamedAs('natural')) {
-        const names = [this.possibleNames.natural, this.name];
-        return this.name.direction === 'flat' ? names : names.reverse();
-      }
+    if (this.canBeNamedAs('natural') && this.name.modifier !== 'natural') {
+      const names = [this.possibleNames.natural, this.name];
+      return this.name.direction === 'flat' ? names : names.reverse();
     }
 
     return [this.name];
