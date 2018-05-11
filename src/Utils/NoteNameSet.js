@@ -7,12 +7,12 @@ const demeritFactors = {
   duplicateBaseNames: 7,
 };
 
-export default class NamedNoteSet {
+export default class NoteNameSet {
 
   /**
-   * @type {NamedNote[]}
+   * @type {NoteName[]}
    */
-  namedNotes = [];
+  noteNames = [];
 
   /**
    * @type {number}
@@ -20,15 +20,15 @@ export default class NamedNoteSet {
   demerits = 0;
 
   /**
-   * @param {NamedNote[]} namedNotes
+   * @param {NoteName[]} noteNames
    */
-  constructor(namedNotes) {
-    this.namedNotes = namedNotes;
+  constructor(noteNames) {
+    this.noteNames = noteNames;
     this.demerits = this.calculateDemerits();
   }
 
   /**
-   * Return a new NamedNoteSet that contains named notes for the given NoteSet,
+   * Return a new NoteNameSet that contains named notes for the given NoteSet,
    * according to the supplied array of modifiers. Each modifier should
    * correspond to a Note within the NoteSet, and the array indexes should be
    * the same between the modifiers and the Notes.
@@ -37,10 +37,10 @@ export default class NamedNoteSet {
    * @param {string[]} modifierKeys
    */
   static fromModifiers(noteSet, modifierKeys) {
-    const namedNotes = noteSet.notes.map((note, index) =>
-      note.names[modifierKeys[index]]
+    const noteNames = noteSet.notes.map((note, index) =>
+      note.possibleNames[modifierKeys[index]]
     );
-    return new NamedNoteSet(namedNotes);
+    return new NoteNameSet(noteNames);
   }
 
   /**
@@ -51,8 +51,8 @@ export default class NamedNoteSet {
    * @return {null|string}
    */
   get direction() {
-    const sharps = this.namedNotes.filter(n => n.direction === 'sharp').length;
-    const flats = this.namedNotes.filter(n => n.direction === 'flat').length;
+    const sharps = this.noteNames.filter(n => n.direction === 'sharp').length;
+    const flats = this.noteNames.filter(n => n.direction === 'flat').length;
     if (sharps === 0 && flats === 0) {
       return 'natural';
     }
@@ -85,15 +85,15 @@ export default class NamedNoteSet {
    * @return {number}
    */
   get accidentalInsteadOfNaturalDemerits() {
-    return this.namedNotes.filter(namedNote =>
-      namedNote.note.names.hasOwnProperty('natural') &&
-      namedNote.direction !== 'none'
+    return this.noteNames.filter(noteName =>
+      noteName.note.possibleNames.hasOwnProperty('natural') &&
+      noteName.direction !== 'none'
     ).length * demeritFactors.accidentalInsteadOfNatural;
   }
 
   /**
-   * We don't like sets of notes names that contain a mix of sharps and flats.
-   * Ideally they should have names that are either all sharp or all flat.
+   * We don't like sets of notes possibleNames that contain a mix of sharps and flats.
+   * Ideally they should have possibleNames that are either all sharp or all flat.
    * Assign some demerits if we have a mix.
    *
    * @return {number}
@@ -109,20 +109,20 @@ export default class NamedNoteSet {
    * @return {number}
    */
   get doubleModifierDemerits() {
-    return this.namedNotes.filter(n => n.isDouble)
+    return this.noteNames.filter(n => n.isDouble)
       .length * demeritFactors.doubleModifier;
   }
 
   /**
-   * We don't like sets of note names that contain note names "C" and "C sharp".
+   * We don't like sets of note possibleNames that contain note possibleNames "C" and "C sharp".
    * In this example, we'd prefer to name the notes as "C" and "D flat", so we
-   * assign demerits for any duplicate base names in order to prioritize sets of
-   * names that contain distinct base names.
+   * assign demerits for any duplicate base possibleNames in order to prioritize sets of
+   * possibleNames that contain distinct base possibleNames.
    *
    * @return {number}
    */
   get duplicateBaseNamesDemerits() {
-    const baseNames = this.namedNotes.map(name => name.baseName);
+    const baseNames = this.noteNames.map(name => name.baseName);
     const baseNameFrequency = CustomMath.valueFrequency(baseNames);
     const extraBaseNameCount = Object.entries(baseNameFrequency)
       .map(([baseName, frequency]) => frequency - 1).reduce((a, b) => a + b);

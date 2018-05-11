@@ -21,7 +21,7 @@ export default function Marquee(props) {
     <StyledDiv className={props.className}>
       <IntervalSetName>{props.intervalSet.name}</IntervalSetName>
       <span> in </span>
-      <NoteName>{props.noteSet.firstNote.namedToMatch('flat').unicode}</NoteName>
+      <NoteName>{props.noteSet.firstNote.getNameToMatch('flat').unicode}</NoteName>
     </StyledDiv>
   );
 }

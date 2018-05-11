@@ -1527,7 +1527,7 @@ colormin@^1.0.5:
   resolved "https://registry.yarnpkg.com/colormin/-/colormin-1.1.2.tgz#ea2f7420a72b96881a38aae59ec124a6f7298133"
   dependencies:
     color "^0.11.0"
-    css-color-names "0.0.4"
+    css-color-possibleNames "0.0.4"
     has "^1.0.1"
 
 colors@~1.1.2:
@@ -1742,7 +1742,7 @@ crypto-random-string@^1.0.0:
 
 css-color-names@0.0.4:
   version "0.0.4"
-  resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
+  resolved "https://registry.yarnpkg.com/css-color-possibleNames/-/css-color-possibleNames-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
 
 css-loader@0.28.7:
   version "0.28.7"

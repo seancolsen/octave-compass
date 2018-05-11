@@ -1,31 +1,10 @@
-const modifiers = {
-  'natural': {
-    symbol: '',
-    direction: 'none',
-  },
-  'flat': {
-    symbol: '♭',
-    direction: 'flat',
-  },
-  'sharp': {
-    symbol: '♯',
-    direction: 'sharp',
-  },
-  'doubleFlat': {
-    symbol: '𝄫',
-    direction: 'flat',
-  },
-  'doubleSharp': {
-    symbol: '𝄪',
-    direction: 'sharp',
-  },
-};
+import {modifiers} from '../Data/modifiers';
 
-export default class NamedNote {
+export default class NoteName {
 
   /**
    * @type {Note}
-   *   The note object containing this NamedNote
+   *   The note object containing this NoteName
    */
   note;
 

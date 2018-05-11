@@ -1,16 +1,14 @@
-import NamedNote from './NamedNote';
-import {musicTheory} from "../Data/musicTheory";
 import Note from "./Note";
 
 const noteC = new Note(0);
 const noteDFlat = new Note(1);
 const noteG = new Note(7);
 
-const cNatural = noteC.namedAs('natural');
-const cSharp = noteDFlat.namedAs('sharp');
-const dFlat = noteDFlat.namedAs('flat');
-const fDoubleSharp = noteG.namedAs('doubleSharp');
-const dDoubleFlat = noteC.namedAs('doubleFlat');
+const cNatural = noteC.getNameUsing('natural');
+const cSharp = noteDFlat.getNameUsing('sharp');
+const dFlat = noteDFlat.getNameUsing('flat');
+const fDoubleSharp = noteG.getNameUsing('doubleSharp');
+const dDoubleFlat = noteC.getNameUsing('doubleFlat');
 
 test('baseName', () => {
   expect(cNatural.baseName).toBe('C');

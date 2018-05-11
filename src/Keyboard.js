@@ -9,7 +9,7 @@ import NoteSet from './Utils/NoteSet';
 class Keyboard extends Component {
 
   /**
-   * Determine which types of names to use for keys based on the rotation of the
+   * Determine which types of possibleNames to use for keys based on the rotation of the
    * keyboard.
    *
    * @return {string}

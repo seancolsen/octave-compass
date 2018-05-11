@@ -2,7 +2,7 @@ import {musicTheory} from "../Data/musicTheory";
 import Note from './Note';
 import Scalar from "./Scalar";
 import CustomMath from "./CustomMath";
-import NamedNoteSet from './NamedNoteSet';
+import NoteNameSet from './NoteNameSet';
 
 /**
  * Only name the NoteSet if we have 8 notes or fewer. With more notes, the notes
@@ -21,7 +21,7 @@ export default class NoteSet {
   notes = [];
 
   /**
-   * @type {[NamedNote]}
+   * @type {[NoteName]}
    */
   names = [];
 
@@ -89,8 +89,8 @@ export default class NoteSet {
    *     ['natural', 'doubleSharp', 'doubleFlat'],
    *   ]
    */
-  get possibleModifiersForEachNamedNote() {
-    return this.notes.map(note => Object.keys(note.names));
+  get possibleModifiersForEachNoteName() {
+    return this.notes.map(note => Object.keys(note.possibleNames));
   }
 
   /**
@@ -100,30 +100,30 @@ export default class NoteSet {
    * name sets is 3^7 = 2187.
    *
    */
-  get possibleNamedNoteSets() {
-    return CustomMath.cartesianProduct(...this.possibleModifiersForEachNamedNote)
-      .map(modifierKeys => NamedNoteSet.fromModifiers(this, modifierKeys));
+  get possibleNoteNameSets() {
+    return CustomMath.cartesianProduct(...this.possibleModifiersForEachNoteName)
+      .map(modifierKeys => NoteNameSet.fromModifiers(this, modifierKeys));
   }
 
   /**
-   * Select all NamedNoteSets that have the best possible score.
+   * Select all NoteNameSets that have the best possible score.
    *
-   * @return {[NamedNoteSet]}
+   * @return {[NoteNameSet]}
    */
-  get bestNamedNoteSets() {
+  get bestNoteNameSets() {
     const lowestDemerits = Math.min(
-      ...this.possibleNamedNoteSets.map(s => s.demerits)
+      ...this.possibleNoteNameSets.map(s => s.demerits)
     );
-    return this.possibleNamedNoteSets.filter(s => s.demerits === lowestDemerits);
+    return this.possibleNoteNameSets.filter(s => s.demerits === lowestDemerits);
   }
 
   /**
-   * Choose one NamedNoteSet, even if multiple sets tie for the winning score.
+   * Choose one NoteNameSet, even if multiple sets tie for the winning score.
    *
-   * @return {NamedNoteSet}
+   * @return {NoteNameSet}
    */
-  get bestNamedNoteSet() {
-    return this.bestNamedNoteSets[0];
+  get bestNoteNameSet() {
+    return this.bestNoteNameSets[0];
   }
 
   /**
@@ -135,7 +135,8 @@ export default class NoteSet {
    */
   get named() {
     let result = new NoteSet(this.notes);
-    result.names = result.bestNamedNoteSet.namedNotes;
+    result.names = result.bestNoteNameSet.noteNames;
+    result.notes;
     return result;
   }
 
