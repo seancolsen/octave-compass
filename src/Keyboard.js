@@ -50,7 +50,7 @@ class Keyboard extends Component {
       return (
         <Key
           key={note.id}
-          label={'?'}
+          label={note.keyLabel}
           color={note.color}
           interval={note.id}
           rotation={this.props.rotation}

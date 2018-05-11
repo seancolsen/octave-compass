@@ -26,7 +26,7 @@ export default class App extends Component {
     return NoteSet.fromIntervalSet(
       this.state.intervalSet,
       -this.state.tonalCenter
-    );
+    ).namedIfFeasible;
   }
 
   setTonalCenter(tonalCenter) {

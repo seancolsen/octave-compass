@@ -80,4 +80,12 @@ export default class Note {
     return null;
   }
 
+  /**
+   *
+   * @return {string}
+   */
+  get keyLabel() {
+    return this.name ? this.name.unicode : '??'; // TODO be smarter here
+  }
+
 }
