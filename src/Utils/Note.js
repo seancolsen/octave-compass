@@ -69,13 +69,18 @@ export default class Note {
    *
    * @param {null|string} direction
    *   e.g. 'sharp', 'flat', 'natural', null
+   * @param {null|string} fallback
+   *   A name type to use if `direction` isn't available
    */
-  getNameToMatch(direction) {
+  getNameToMatch(direction, fallback = null) {
     if (this.canBeNamedAs('natural')) {
       return this.possibleNames.natural;
     }
     if (this.canBeNamedAs(direction)) {
       return this.possibleNames[direction];
+    }
+    if (fallback && this.canBeNamedAs(fallback)) {
+      return this.possibleNames[fallback];
     }
     return null;
   }
@@ -85,10 +90,11 @@ export default class Note {
    * if possible
    *
    * @param {string} direction
+   * @param {string|null} fallback
    * @return {Note}
    */
-  namedToMatch(direction) {
-    const name = this.getNameToMatch(direction);
+  namedToMatch(direction, fallback = null) {
+    const name = this.getNameToMatch(direction, fallback);
     if (!name) {
       return this;
     }

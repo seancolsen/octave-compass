@@ -160,12 +160,13 @@ export default class NoteSet {
    * given direction.
    *
    * @param {string} direction
+   * @param {null|string} fallback
    * @return {NoteSet}
    */
-  directionallyNamed(direction) {
+  directionallyNamed(direction, fallback = null) {
     let result = new NoteSet(this.notes);
     result.notes.forEach((note, index, notes) => {
-      notes[index] = note.namedToMatch(direction);
+      notes[index] = note.namedToMatch(direction, fallback);
     });
     return result;
   }
@@ -201,7 +202,7 @@ export default class NoteSet {
   get compliment() {
     const direction = (this.nameSet) ? this.nameSet.direction : null;
     return NoteSet.fromIntervalSet(this.toIntervalSet(0).compliment, 0)
-      .directionallyNamed(direction);
+      .directionallyNamed(direction, 'flat');
   }
 
 }
