@@ -11,8 +11,8 @@ const StyledRect = styled.rect`
 `;
 
 const StyledText = styled.text`
-  font-size: 42px;
-  font-weight: bold;
+  font-size: ${props => props.parenthetical ? '34px' : '42px'};
+  font-weight: ${props => props.parenthetical ? 'normal' : 'bold'};;
   fill: ${props => (props.color === 'white') ? 'black' : 'white'};
 `;
 
@@ -36,8 +36,11 @@ export default function KeyLabel(props) {
         dominantBaseline={'middle'} // TODO address lack of IE support
         textAnchor={'middle'}
         color={props.color}
+        parenthetical={props.parenthetical}
       >
-        {props.children}
+        {props.parenthetical ? '(' : ''}
+          {props.children}
+        {props.parenthetical ? ')' : ''}
       </StyledText>
 
     </g>

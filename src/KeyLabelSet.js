@@ -40,6 +40,7 @@ export default function KeyLabelSet(props) {
         rotation={props.rotation}
         color={props.note.color}
         active={props.active}
+        parenthetical={nameCount > 1 && name.modifier === 'natural'}
       >
         {name.unicode}
       </KeyLabel>
