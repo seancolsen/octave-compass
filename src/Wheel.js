@@ -6,6 +6,7 @@ import XyPoint from "./Utils/XyPoint";
 import {musicTheory} from './Data/musicTheory';
 import Scalar from "./Utils/Scalar";
 import Base from './Base';
+import ShadowFilter from "./ShadowFilter";
 
 /**
  * The width and height of the square SVG view box in user units (basically SVG
@@ -114,6 +115,8 @@ export default class Wheel extends Component {
         onMouseLeave={() => this.stopRotating()}
         onMouseUp={() => this.stopRotating()}
       >
+
+        <ShadowFilter/>
 
         <Base
           intervalSet={this.props.intervalSet}

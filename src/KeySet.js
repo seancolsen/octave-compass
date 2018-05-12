@@ -3,7 +3,7 @@ import Key from "./Key";
 import styled from 'styled-components';
 
 const StyledG = styled.g`
-  filter: ${props => props.active ? 'drop-shadow( 0 0 10px #000 )' : 'none'};
+  filter: ${props => props.active ? 'url(#drop-shadow)' : 'none'};
 `;
 
 export default function KeySet(props) {

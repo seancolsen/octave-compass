@@ -16,7 +16,7 @@ function Scale(props) {
 
 const StyledScale = styled(Scale)`
   fill: #e4e4e4;
-  filter: drop-shadow( 0 0 10px #000 );
+  filter: url(#drop-shadow);
 `;
 
 export default Rotatable(StyledScale);
