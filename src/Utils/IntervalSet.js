@@ -1,4 +1,5 @@
 import {musicTheory} from "../Data/musicTheory";
+import {scales} from "../Data/scales";
 import Scalar from './Scalar';
 
 const divisions = musicTheory.octaveDivisions;
@@ -173,15 +174,13 @@ export default class IntervalSet {
   }
 
   /**
-   * Search within our defined scales and chords to see if we have a name for
+   * Search within our defined scales and chords to see if we have any name for
    * this set of intervals
    *
-   * @return {string}
+   * @return {string[]}
    */
-  get name() {
-    const t = musicTheory;
-    const fallback = 'Unknown interval set';
-    return t.scales[this.binary] || t.chords[this.binary] || fallback;
+  get names() {
+    return scales[this.binary] || [musicTheory.chords[this.binary]] || [];
   }
 
   /**

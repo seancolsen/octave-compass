@@ -136,16 +136,4 @@ export const musicTheory = {
     },
   },
 
-  scales: {
-    0b101010110101: "Major scale / Ionian mode",
-    0b010110101101: "Natural minor scale / Aeolian mode",
-    0b011010110101: "Mixolydian mode",
-    0b011010101101: "Dorian mode",
-    0b010110101011: "Phrygian mode",
-    0b101011010101: "Lydian mode",
-    0b010101101011: "Locrian mode",
-
-    0b100110101101: "Harmonic minor",
-  },
-
 };

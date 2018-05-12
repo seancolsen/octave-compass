@@ -10,6 +10,10 @@ const IntervalSetName = styled.span`
   font-weight: bold;
 `;
 
+const UnknownName = styled.span`
+  font-style: italic;
+`;
+
 const NoteName = styled.span`
   font-weight: bold;
 `;
@@ -17,13 +21,18 @@ const NoteName = styled.span`
 export default function Marquee(props) {
   const tonalCenter = props.noteSet.firstNote.namesToUseForLabels
     .map(name => name.unicode).join('/');
+  const name = props.intervalSet.names.join(" / ");
   return (
     <StyledDiv className={props.className}>
-      <IntervalSetName>{props.intervalSet.name}</IntervalSetName>
+      {name ?
+        <IntervalSetName>{name}</IntervalSetName> :
+        <UnknownName>unknown scale</UnknownName>
+      }
       <span> in </span>
       <NoteName>
         {tonalCenter}
       </NoteName>
+      <span> ({props.intervalSet.binary})</span>
     </StyledDiv>
   );
 }
