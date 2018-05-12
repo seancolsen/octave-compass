@@ -1,5 +1,5 @@
 /**
- * This file stores data about the possibleNames of certain things in music theory.
+ * This file stores data about the names of certain things in music theory.
  *
  * We use binary numbers to refer to sets of notes. These binary numbers are
  * "big-endian", which might be counter-intuitive, depending on how you choose
