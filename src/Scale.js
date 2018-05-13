@@ -11,16 +11,13 @@ const RADIUS = 280;
 function Scale(props) {
   const intervals = props.intervalSet.ordinals;
   const points = intervals.map(i => IrPoint.fromArray([i, RADIUS]));
-  const chordSets = IntervalSetFactory.chordSets(
-    props.intervalSet,
-    props.selectedChords
-  );
   return (
     <g>
       <Polygon className={props.className} points={points}/>
       <SwarmOfChords
         intervalSet={props.intervalSet}
         selectedChords={props.selectedChords}
+        rotation={props.rotation}
       />
     </g>
   );

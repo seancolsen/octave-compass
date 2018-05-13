@@ -13,6 +13,7 @@ export default function SwarmOfChords(props) {
           <SliceOfChords
             key={index}
             chordSet={chordSet}
+            rotation={props.rotation}
           />
         )
       }
