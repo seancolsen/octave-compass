@@ -99,3 +99,16 @@ test('compliment', () => {
   expect(IntervalSet.fromBinary(0b111111111111).compliment.binary)
     .toBe(0b000000000000);
 });
+
+test('contains', () => {
+  expect(IntervalSet.fromBinary(0b101010110101).contains(
+    IntervalSet.fromBinary(0b000010010001))).toBe(true);
+  expect(IntervalSet.fromBinary(0b000010010001).contains(
+    IntervalSet.fromBinary(0b101010110101))).toBe(false);
+  expect(IntervalSet.fromBinary(0b101010110101).contains(
+    IntervalSet.fromBinary(0b000100100010))).toBe(false);
+  expect(IntervalSet.fromBinary(0b111111111111).contains(
+    IntervalSet.fromBinary(0b111111111111))).toBe(true);
+  expect(IntervalSet.fromBinary(0b000000000000).contains(
+    IntervalSet.fromBinary(0b000000000000))).toBe(true);
+});

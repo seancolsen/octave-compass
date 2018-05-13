@@ -1,5 +1,6 @@
 import {musicTheory} from "../Data/musicTheory";
 import {scales} from "../Data/scales";
+import {chords} from "../Data/chords";
 import Scalar from './Scalar';
 
 const divisions = musicTheory.octaveDivisions;
@@ -180,7 +181,15 @@ export default class IntervalSet {
    * @return {string[]}
    */
   get names() {
-    return scales[this.binary] || [musicTheory.chords[this.binary]] || [];
+    const scaleNames = scales[this.binary];
+    if (scaleNames) {
+      return scaleNames;
+    }
+    const chordData = chords[this.binary];
+    if (chordData) {
+      return [chordData.name + " chord"];
+    }
+    return [];
   }
 
   /**
@@ -201,6 +210,16 @@ export default class IntervalSet {
    */
   get compliment() {
     return this.toggleBinaryIntervals(IntervalSet.chromaticBinary);
+  }
+
+  /**
+   * Return true if the given set is a subset of this set.
+   *
+   * @param {IntervalSet} intervalSet
+   * @return {boolean}
+   */
+  contains(intervalSet) {
+    return (this.binary & intervalSet.binary) === intervalSet.binary;
   }
 
 }
