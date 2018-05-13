@@ -19,6 +19,9 @@ export default class App extends Component {
       selectedChords: [
         new Chord(0b000010010001),
         new Chord(0b000010001001),
+        new Chord(0b000001001001),
+        new Chord(0b010010010001),
+        new Chord(0b100010010001),
       ],
     };
   }

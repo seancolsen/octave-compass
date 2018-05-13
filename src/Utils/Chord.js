@@ -13,6 +13,8 @@ export default class Chord extends IntervalSet {
     this.names = [chordData.name];
     this.symbol = chordData.symbol;
     this.color = chordData.color;
+    this.weight = chordData.weight;
+    this.emblemSize = chordData.emblemSize;
   }
 
   /**
