@@ -52,7 +52,7 @@ export default class IntervalSetFactory {
     const allBits = (binary << shift) | (binary >> shiftToWrap);
     const mask = IntervalSet.chromaticBinary;
     const result = allBits & mask;
-    return new IntervalSet(result);
+    return IntervalSetFactory.fromBinary(result);
   }
 
   /**
