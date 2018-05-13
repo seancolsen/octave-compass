@@ -6,6 +6,7 @@ import Marquee from "./Marquee";
 import Scalar from "./Utils/Scalar";
 import {musicTheory} from "./Data/musicTheory";
 import NoteSet from "./Utils/NoteSet";
+import IntervalSetFactory from "./Utils/IntervalSetFactory";
 
 export default class App extends Component {
 
@@ -13,7 +14,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       tonalCenter: 0,
-      intervalSet: new IntervalSet(0b101010110101), // Major scale
+      intervalSet: IntervalSetFactory.fromBinary(0b101010110101),
     };
   }
 
@@ -38,13 +39,19 @@ export default class App extends Component {
 
   shiftIntervalSet(rotation) {
     this.setState({
-      intervalSet: this.state.intervalSet.shift(rotation),
+      intervalSet: IntervalSetFactory.fromShift(
+        this.state.intervalSet,
+        rotation
+      ),
     });
   }
 
   toggleInterval(interval) {
     this.setState({
-      intervalSet: this.state.intervalSet.toggleInterval(interval),
+      intervalSet: IntervalSetFactory.fromToggledInterval(
+        this.state.intervalSet,
+        interval
+      ),
     });
   }
 

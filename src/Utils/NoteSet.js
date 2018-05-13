@@ -4,6 +4,7 @@ import Scalar from "./Scalar";
 import CustomMath from "./CustomMath";
 import NoteNameSet from './NoteNameSet';
 import IntervalSet from "./IntervalSet";
+import IntervalSetFactory from "./IntervalSetFactory";
 
 /**
  * Only name the NoteSet if we have 8 notes or fewer. With more notes, the notes
@@ -189,7 +190,10 @@ export default class NoteSet {
    * @return {IntervalSet}
    */
   toIntervalSet(shift = 0) {
-    return IntervalSet.fromArray(this.notes.map(note => note.id)).shift(shift);
+    return IntervalSetFactory.fromShift(
+        IntervalSetFactory.fromArray(this.notes.map(note => note.id)),
+        shift
+      );
   }
 
   /**
@@ -201,8 +205,9 @@ export default class NoteSet {
    */
   get compliment() {
     const direction = (this.nameSet) ? this.nameSet.direction : null;
-    return NoteSet.fromIntervalSet(this.toIntervalSet(0).compliment, 0)
-      .directionallyNamed(direction, 'flat');
+    return NoteSet.fromIntervalSet(
+      IntervalSetFactory.fromCompliment(this.toIntervalSet(0)), 0
+    ).directionallyNamed(direction, 'flat');
   }
 
 }

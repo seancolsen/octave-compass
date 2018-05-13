@@ -1,7 +1,7 @@
 import {musicTheory} from "../Data/musicTheory";
 import {scales} from "../Data/scales";
-import {chords} from "../Data/chords";
 import Scalar from './Scalar';
+//import IntervalSetFactory from "./IntervalSetFactory";
 
 const divisions = musicTheory.octaveDivisions;
 
@@ -35,6 +35,14 @@ const divisions = musicTheory.octaveDivisions;
  *
  */
 export default class IntervalSet {
+
+  /**
+   * Possible names for this IntervalSet. We intentionally don't fill this array
+   * in this class. The sub-classes are the ones which do that work.
+   *
+   * @type {string[]}
+   */
+  names = [];
 
   constructor(binary) {
     this.binary = binary;
@@ -83,31 +91,10 @@ export default class IntervalSet {
    *
    * @param {int} binary
    * @param {int} ordinal
+   * @return {boolean}
    */
   static binaryContainsOrdinal(binary, ordinal) {
     return (binary & IntervalSet.ordinalToBinary(ordinal)) > 0;
-  }
-
-  /**
-   *
-   * @param {int} binary
-   *
-   * @return {IntervalSet}
-   */
-  static fromBinary(binary) {
-    return new IntervalSet(binary);
-  }
-
-  /**
-   * Return a new Interval set
-   *
-   * @param {int[]} array
-   *   e.g. [0, 4, 7] for a major chord
-   *
-   * @return {IntervalSet}
-   */
-  static fromArray(array) {
-    return IntervalSet.fromBinary(IntervalSet.ordinalsToBinary(array));
   }
 
   /**
@@ -137,62 +124,6 @@ export default class IntervalSet {
   }
 
   /**
-   * Left-shift the bits of the binary intervals by the number of bits given,
-   * and wrap the bit around the right side. This corresponds to rotating the
-   * scale clockwise by the number of intervals given.
-   *
-   * @param {int} amount
-   * @return {IntervalSet}
-   */
-  shift(amount) {
-    const shift = Scalar.wrap(Math.round(amount), divisions);
-    const shiftToWrap = divisions - shift;
-    const allBits = (this.binary << shift) | (this.binary >> shiftToWrap);
-    const mask = IntervalSet.chromaticBinary;
-    const result = allBits & mask;
-    return new IntervalSet(result);
-  }
-
-  /**
-   * Return a new interval set with intervals toggled where the given binary
-   * bits are true.
-   *
-   * @return {IntervalSet}
-   */
-  toggleBinaryIntervals(binary) {
-    return new IntervalSet(this.binary ^ binary);
-  }
-
-  /**
-   * Return a new IntervalSet with the given interval flipped from active to
-   * inactive -- or from inactive to active -- as necessary.
-   *
-   * @param {int} ordinal
-   * @return {IntervalSet}
-   */
-  toggleInterval(ordinal) {
-    return this.toggleBinaryIntervals(IntervalSet.ordinalToBinary(ordinal));
-  }
-
-  /**
-   * Search within our defined scales and chords to see if we have any name for
-   * this set of intervals
-   *
-   * @return {string[]}
-   */
-  get names() {
-    const scaleNames = scales[this.binary];
-    if (scaleNames) {
-      return scaleNames;
-    }
-    const chordData = chords[this.binary];
-    if (chordData) {
-      return [chordData.name + " chord"];
-    }
-    return [];
-  }
-
-  /**
    * Test whether the given interval is active within this interval set.
    *
    * @param {int} interval
@@ -200,16 +131,6 @@ export default class IntervalSet {
    */
   isActive(interval) {
     return IntervalSet.binaryContainsOrdinal(this.binary, interval);
-  }
-
-  /**
-   * Return a new interval set that contains all the intervals this set doesn't
-   * contain.
-   *
-   * @return {IntervalSet}
-   */
-  get compliment() {
-    return this.toggleBinaryIntervals(IntervalSet.chromaticBinary);
   }
 
   /**
