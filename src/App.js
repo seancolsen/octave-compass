@@ -7,6 +7,7 @@ import Scalar from "./Utils/Scalar";
 import {musicTheory} from "./Data/musicTheory";
 import NoteSet from "./Utils/NoteSet";
 import IntervalSetFactory from "./Utils/IntervalSetFactory";
+import Chord from "./Utils/Chord";
 
 export default class App extends Component {
 
@@ -15,6 +16,7 @@ export default class App extends Component {
     this.state = {
       tonalCenter: 0,
       intervalSet: IntervalSetFactory.fromBinary(0b101010110101),
+      selectedChords: [new Chord(0b000010010001)],
     };
   }
 
@@ -69,6 +71,7 @@ export default class App extends Component {
           intervalSet={this.state.intervalSet}
           noteSet={this.noteSet()}
           toggleInterval={interval => this.toggleInterval(interval)}
+          selectedChords={this.state.selectedChords}
         />
       </div>
     );

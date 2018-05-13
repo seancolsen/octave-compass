@@ -138,6 +138,7 @@ export default class Wheel extends Component {
             this.startRotating(event, component, componentType)
           }
           intervalSet={this.props.intervalSet}
+          selectedChords={this.props.selectedChords}
         />
 
       </svg>
