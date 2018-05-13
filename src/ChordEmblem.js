@@ -6,7 +6,7 @@ const circleRadius = 30;
 const constellationRadius = 220;
 
 const Background = styled.circle`
-  fill: grey;
+  fill: ${props => props.color || 'grey'};
 `;
 
 const Symbol = styled.text`
@@ -18,7 +18,11 @@ export default function ChordEmblem(props) {
   const point = new IrPoint(props.interval, constellationRadius).toXy();
   return (
     <g>
-      <Background cx={point.x} cy={point.y} r={circleRadius}/>
+      <Background
+        cx={point.x} cy={point.y}
+        r={circleRadius}
+        color={props.chord.color}
+      />
       <Symbol x={point.x} y={point.y}>?</Symbol>
     </g>
   );

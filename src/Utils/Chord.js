@@ -12,6 +12,7 @@ export default class Chord extends IntervalSet {
     super(binary);
     this.names = [chordData.name];
     this.symbol = chordData.symbol;
+    this.color = chordData.color;
   }
 
   /**

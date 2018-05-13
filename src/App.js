@@ -16,7 +16,10 @@ export default class App extends Component {
     this.state = {
       tonalCenter: 0,
       intervalSet: IntervalSetFactory.fromBinary(0b101010110101),
-      selectedChords: [new Chord(0b000010010001)],
+      selectedChords: [
+        new Chord(0b000010010001),
+        new Chord(0b000010001001),
+      ],
     };
   }
 
