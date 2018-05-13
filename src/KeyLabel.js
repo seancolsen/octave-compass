@@ -3,7 +3,7 @@ import IrPoint from "./Utils/IrPoint";
 import styled from 'styled-components';
 import Angle from "./Utils/Angle";
 
-const radius = 322;
+const radius = 350;
 const size = 60;
 
 const StyledRect = styled.rect`

@@ -5,8 +5,8 @@ import IrPoint from "./Utils/IrPoint";
 import styled from 'styled-components';
 import KeyLabelSet from "./KeyLabelSet";
 
-const innerRadius = 280;
-const outerRadius = 375;
+const innerRadius = 308;
+const outerRadius = 400;
 
 const StyledG = styled.g`
   opacity: ${props => props.active ? '1' : '0.25'};

@@ -3,8 +3,8 @@ import Arc from "./Arc";
 import styled from 'styled-components';
 import {musicTheory} from "./Data/musicTheory";
 
-const upperRadius = 455;
-const lowerRadius = 470;
+const upperRadius = 465;
+const lowerRadius = 480;
 const arcSpan = 0.4;
 
 const TextPath = styled(Arc)`

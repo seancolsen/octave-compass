@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import ChordEmblem from "./ChordEmblem";
 
-const constellationRadius = 260;
-const radialSpacing = 10;
+const constellationRadius = 295;
+const radialSpacing = 5;
 const circleRadius = 40;
 
 export default class SliceOfChords extends Component {

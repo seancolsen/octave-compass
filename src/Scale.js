@@ -6,7 +6,7 @@ import Rotatable from "./Rotatable";
 import IntervalSetFactory from "./Utils/IntervalSetFactory";
 import SwarmOfChords from "./SwarmOfChords";
 
-const RADIUS = 280;
+const RADIUS = 310;
 
 function Scale(props) {
   const intervals = props.intervalSet.ordinals;

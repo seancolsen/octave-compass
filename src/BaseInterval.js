@@ -5,8 +5,8 @@ import Arc from './Arc';
 import styled from 'styled-components';
 import IntervalLabel from "./IntervalLabel";
 
-const checkboxRadius = 410;
-const arcRadius = 425;
+const checkboxRadius = 430;
+const arcRadius = 430;
 const arcSpan = 0.5;
 
 const Background = styled(Arc)`

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Arc from "./Arc";
 
 const spread = 0.20;
-const tieRadius = 320;
+const tieRadius = 348;
 const tieSpan = 0.2;
 const tieWidth = 50;
 
