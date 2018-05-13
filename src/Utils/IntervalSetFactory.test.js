@@ -1,5 +1,7 @@
 import IntervalSetFactory from "./IntervalSetFactory";
 import IntervalSet from "./IntervalSet";
+import {chordsData} from "../Data/chordsData";
+import Chord from "./Chord";
 
 test('fromBinary chord', () => {
   const set = IntervalSetFactory.fromBinary(0b000010010001);
@@ -62,16 +64,16 @@ test('toggleInterval', () => {
 });
 
 test('fromArray major chord', () => {
-  expect(IntervalSetFactory.fromArray([0, 4, 7]).toArray()).toEqual([0, 4, 7]);
+  expect(IntervalSetFactory.fromOrdinals([0, 4, 7]).ordinals).toEqual([0, 4, 7]);
 });
 
 test('fromArray empty set', () => {
-  expect(IntervalSetFactory.fromArray([]).toArray()).toEqual([]);
+  expect(IntervalSetFactory.fromOrdinals([]).ordinals).toEqual([]);
 });
 
 test('fromArray chromatic', () => {
   const chromatic = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-  expect(IntervalSetFactory.fromArray(chromatic).toArray()).toEqual(chromatic);
+  expect(IntervalSetFactory.fromOrdinals(chromatic).ordinals).toEqual(chromatic);
 });
 
 test('compliment', () => {
@@ -86,3 +88,10 @@ test('compliment', () => {
   ).toBe(0b000000000000);
 });
 
+test('chordSets', () => {
+  const intervalSet = IntervalSetFactory.fromBinary(0b101010110101);
+  const possibleChords = [new Chord(0b000010010001)];
+  const chordSets = IntervalSetFactory.chordSets(intervalSet, possibleChords);
+  expect(chordSets.map(chordSet => chordSet.count))
+    .toEqual([1, 0, 0, 1, 1, 0, 0]);
+});

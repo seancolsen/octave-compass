@@ -1,10 +1,10 @@
 import IntervalSet from "./IntervalSet";
-import {scales} from "../Data/scales";
+import {allScales} from "../Data/allScales";
 
 export default class Scale extends IntervalSet {
 
   constructor(binary) {
-    const scaleData = scales[binary];
+    const scaleData = allScales[binary];
     if (!scaleData) {
       throw "Unknown scale";
     }

@@ -1,4 +1,4 @@
-export const scales = {
+export const allScales = {
   0b000011000111: [
 
     "Raga Nabhomani",

@@ -7,7 +7,7 @@ import Rotatable from "./Rotatable";
 const RADIUS = 280;
 
 function Scale(props) {
-  const intervals = props.intervalSet.toArray();
+  const intervals = props.intervalSet.ordinals;
   const points = intervals.map(i => IrPoint.fromArray([i, RADIUS]));
   return (
     <Polygon className={props.className} points={points}/>

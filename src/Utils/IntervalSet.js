@@ -1,7 +1,4 @@
 import {musicTheory} from "../Data/musicTheory";
-import {scales} from "../Data/scales";
-import Scalar from './Scalar';
-//import IntervalSetFactory from "./IntervalSetFactory";
 
 const divisions = musicTheory.octaveDivisions;
 
@@ -114,12 +111,12 @@ export default class IntervalSet {
   }
 
   /**
-   * Return an array of intervals present in this set.
+   * Return an array of interval ordinals present in this set.
    *
-   * @return {Array}
+   * @return {int[]}
    *   e.g [0, 4, 7] for a major chord
    */
-  toArray() {
+  get ordinals() {
     return IntervalSet.binaryToOrdinals(this.binary);
   }
 

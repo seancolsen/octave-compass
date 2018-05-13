@@ -3,6 +3,7 @@ import Chord from "./Chord";
 import IntervalSet from "./IntervalSet";
 import Scale from "./Scale";
 import Scalar from "./Scalar";
+import ChordSet from "./ChordSet";
 
 const divisions = musicTheory.octaveDivisions;
 
@@ -57,13 +58,15 @@ export default class IntervalSetFactory {
   /**
    * Return a new Interval set
    *
-   * @param {int[]} array
+   * @param {int[]} ordinals
    *   e.g. [0, 4, 7] for a major chord
    *
    * @return {IntervalSet}
    */
-  static fromArray(array) {
-    return IntervalSetFactory.fromBinary(IntervalSet.ordinalsToBinary(array));
+  static fromOrdinals(ordinals) {
+    return IntervalSetFactory.fromBinary(
+      IntervalSet.ordinalsToBinary(ordinals)
+    );
   }
 
   /**
@@ -107,5 +110,22 @@ export default class IntervalSetFactory {
     );
   }
 
+  /**
+   * For each of the given chords, return the chords that exist within the given
+   * interval set. The return value is an object with interval ordinals as keys
+   * and arrays of chords (which exist at those intervals) as values.
+   *
+   * @param {IntervalSet} intervalSet
+   * @param {Chord[]} possibleChords
+   *
+   * @return {ChordSet[]}
+   */
+  static chordSets(intervalSet, possibleChords) {
+    let result = [];
+    intervalSet.ordinals.forEach(ordinal => {
+      result.push(ChordSet.atOrdinal(intervalSet, ordinal, possibleChords));
+    });
+    return result;
+  }
 
 }

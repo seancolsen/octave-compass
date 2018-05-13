@@ -67,7 +67,7 @@ export default class NoteSet {
    */
   static fromIntervalSet(intervalSet, rotation) {
     const allNotes = NoteSet.chromaticNotes;
-    const notes = intervalSet.toArray().map(i =>
+    const notes = intervalSet.ordinals.map(i =>
       allNotes[Scalar.wrap(i - rotation, musicTheory.octaveDivisions)]
     );
     return new NoteSet(notes);
@@ -191,7 +191,7 @@ export default class NoteSet {
    */
   toIntervalSet(shift = 0) {
     return IntervalSetFactory.fromShift(
-        IntervalSetFactory.fromArray(this.notes.map(note => note.id)),
+        IntervalSetFactory.fromOrdinals(this.notes.map(note => note.id)),
         shift
       );
   }

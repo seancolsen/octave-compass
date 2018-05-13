@@ -1,4 +1,4 @@
-export const chords = {
+export const chordsData = {
   0b000010010001: {
     name: "major",
     symbol: "<strong>M</strong>",

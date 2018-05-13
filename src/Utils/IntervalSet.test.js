@@ -14,18 +14,18 @@ test('binaryToOrdinals', () => {
   expect(IntervalSet.binaryToOrdinals(0b000010010001)).toEqual([0, 4, 7]);
 });
 
-test('toArray empty', () => {
-  expect(new IntervalSet(0b000000000000).toArray())
+test('ordinals empty', () => {
+  expect(new IntervalSet(0b000000000000).ordinals)
     .toEqual([]);
 });
 
-test('toArray full', () => {
-  expect(new IntervalSet(0b111111111111).toArray())
+test('ordinals full', () => {
+  expect(new IntervalSet(0b111111111111).ordinals)
     .toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 });
 
-test('toArray major chord', () => {
-  expect(new IntervalSet(0b000010010001).toArray())
+test('ordinals major chord', () => {
+  expect(new IntervalSet(0b000010010001).ordinals)
     .toEqual([0, 4, 7]);
 });
 
