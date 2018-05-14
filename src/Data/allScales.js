@@ -27,9 +27,6 @@ export const allScales = {
   0b000101001011: [
     "Raga Chhaya Todi",
   ],
-  0b000101010011: [
-    "Augmented",
-  ],
   0b000101011011: [
     "Jazz Minor",
   ],
@@ -41,11 +38,11 @@ export const allScales = {
     "Hirajoshi",
   ],
   0b000110010011: [
+    "Raga Revagupti",
     "Raga Reva",
-    "Revagupti",
   ],
   0b000110010101: [
-    "Janasammodini",
+    "Raga Janasammohini",
     "Raga Bhupeshwari",
   ],
   0b000110100011: [
@@ -198,7 +195,6 @@ export const allScales = {
     "Gypsy Hexatonic",
   ],
   0b001110110101: [
-    "Major Bebop Heptatonic",
     "Mela Mararanjani",
   ],
   0b001110111001: [
@@ -348,6 +344,7 @@ export const allScales = {
     "Super Locrian all sharps",
   ],
   0b010101101011: [
+    "Locrian",
     "Qablitum",
   ],
   0b010101101101: [
@@ -392,14 +389,15 @@ export const allScales = {
     "Phrygian Hexatonic",
   ],
   0b010110101011: [
-    "Bhairavi",
-    "Ishartum",
     "Phrygian",
+    "Ishartum",
+    "Bhairavi",
   ],
   0b010110101101: [
+    "Minor",
+    "Natural Minor",
     "Aeolian",
     "Magein Avot",
-    "Natural Minor",
   ],
   0b010110101111: [
     "Phrygian Aeolian",
@@ -412,6 +410,7 @@ export const allScales = {
     "Raga Kamalamanohari",
   ],
   0b010110110011: [
+    "Phrygian Dominant",
     "Ahavah Rabbah",
     "Alhijaz",
     "Avaha Raba",
@@ -424,7 +423,6 @@ export const allScales = {
     "Hijaz-Nahawand",
     "Hitzaz",
     "Jewish Major",
-    "Phrygian Dominant",
     "Raga Vakulabharanam",
     "Spanish Gypsy",
   ],
@@ -568,12 +566,12 @@ export const allScales = {
     "Maqam Hicaz",
   ],
   0b011010110101: [
+    "Mixolydian",
     "Adonai Malach",
+    "Mitum",
+    "Khamaj",
     "Ching",
     "Gregorian Scale 7",
-    "Khamaj",
-    "Mitum",
-    "Mixolydian",
   ],
   0b011010111001: [
     "Raga Nandkauns",
@@ -600,10 +598,10 @@ export const allScales = {
     "Todi bVII",
   ],
   0b011011001101: [
-    "Misheberach",
-    "Misheberak",
-    "Romanian Minor",
     "Ukrainian Dorian",
+    "Romanian Minor",
+    "Misheberak",
+    "Misheberach",
   ],
   0b011011010001: [
     "Raga Vutari",
@@ -932,8 +930,8 @@ export const allScales = {
     "Raga Kokilaravam",
   ],
   0b101010101101: [
+    "Melodic Minor",
     "Jazz Minor",
-    "Minor Melodic",
   ],
   0b101010110001: [
     "Genus Secundum",
@@ -942,11 +940,11 @@ export const allScales = {
     "Bhairubahar Thaat",
   ],
   0b101010110101: [
-    "Bilaval",
-    "Ionian",
     "Major",
+    "Ionian",
     "Nid Murub",
     "Thaat",
+    "Bilaval",
   ],
   0b101010111001: [
     "Houzam",
@@ -969,11 +967,11 @@ export const allScales = {
     "Marva Thaat",
   ],
   0b101011010101: [
-    "Kalyan",
     "Lydian",
-    "Nis Garbri",
-    "Ping",
+    "Kalyan",
     "Raga Kuksumakaram",
+    "Ping",
+    "Nis Garbri",
   ],
   0b101011010111: [
     "Ishikotsucho",
