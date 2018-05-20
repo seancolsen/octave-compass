@@ -37,7 +37,10 @@ export default function Key(props) {
         active={props.active}
       />
 
-      <KeyLabelSet note={props.note} rotation={props.rotation}/>
+      <KeyLabelSet
+        note={props.note}
+        rotation={props.rotation}
+      />
 
     </StyledG>
   );

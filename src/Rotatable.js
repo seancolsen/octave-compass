@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
 import Group from './Group';
+import Scalar from "./Utils/Scalar";
+import {musicTheory} from "./Data/musicTheory";
+import XyPoint from "./Utils/XyPoint";
+import IrPoint from "./Utils/IrPoint";
+import Wheel from "./Wheel";
 
 export default function Rotatable(WrappedComponent) {
 
@@ -8,21 +13,47 @@ export default function Rotatable(WrappedComponent) {
       super(props);
       this.state = {
         rotation: 0,
+        isRotating: false,
+        rotationWhenGrabbed: null,
+        initialGrabAngle: null,
       }
     }
 
-    handleMouseDown(event) {
-      let componentName = (WrappedComponent.name === 'StyledComponent') ?
-        WrappedComponent.target.name :
-        WrappedComponent.name;
-      this.props.onMouseDown(event, this, componentName);
+    /**
+     * Called when the user grabs a rotatable element
+
+     * @param {object} event
+     *   The mouseDown event
+     */
+    startRotating(event) {
+      this.setState({
+        isRotating: true,
+        rotationWhenGrabbed: this.state.rotation,
+        initialGrabAngle: Wheel.grabAngle(event),
+      });
+      this.props.startRotating(this);
+    }
+
+    stopRotating() {
+      if (!this.state.isRotating) {
+        return;
+      }
+      const wholeRotation = Math.round(Scalar.wrap(
+        this.state.rotation,
+        musicTheory.octaveDivisions
+      ));
+      this.setState({
+        isRotating: false,
+        rotation: 0,
+      });
+      this.props.afterRotating(wholeRotation);
     }
 
     render() {
       return (
         <Group
           rotation={this.state.rotation}
-          onMouseDown={(event) => this.handleMouseDown(event)}
+          onMouseDown={(event) => this.startRotating(event)}
         >
           <WrappedComponent rotation={this.state.rotation} {...this.props} />
         </Group>

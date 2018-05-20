@@ -23,9 +23,9 @@ export default class Wheel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      elementRotating: null,
-      angleWhenGrabbed: null,
-      angleOfGrab: null,
+      componentsRotating: [],
+      keyboardIsRotating: false,
+      scaleIsRotating: false,
     };
   }
 
@@ -43,50 +43,9 @@ export default class Wheel extends Component {
     return IrPoint.fromCursor(svgRect, BOX_SIZE, cursor).i;
   }
 
-  /**
-   * Called when the user grabs a rotatable element
-
-   * @param {object} event
-   *   The mouseDown event
-   * @param {object} component
-   *   The React component that the user grabbed
-   * @param {string} componentType
-   *   (e.g. 'Keyboard', 'Scale'
-   */
-  startRotating(event, component, componentType) {
+  startRotating(component) {
     this.setState({
-      elementRotating: component,
-      elementRotatingType: componentType,
-      rotationWhenGrabbed: component.state.rotation,
-      initialGrabAngle: Wheel.grabAngle(event),
-    });
-  }
-
-  /**
-   * Called frequently, any time we have the slightest inkling that the user is
-   * (no longer?) rotating anything.
-   */
-  stopRotating() {
-    if (!this.state.elementRotating) {
-      return;
-    }
-    const rotation = this.state.elementRotating.state.rotation;
-    const divisions = musicTheory.octaveDivisions;
-    const wholeRotation = Math.round(Scalar.wrap(rotation, divisions));
-    if (this.state.elementRotatingType === 'Keyboard') {
-      this.state.elementRotating.setState({
-        rotation: wholeRotation,
-      });
-      this.props.setTonalCenter(divisions - wholeRotation);
-    }
-    if (this.state.elementRotatingType === 'Scale') {
-      this.state.elementRotating.setState({
-        rotation: 0,
-      });
-      this.props.shiftIntervalSet(wholeRotation);
-    }
-    this.setState({
-      elementRotating: null,
+      componentsRotating: this.state.componentsRotating.concat(component),
     });
   }
 
@@ -97,15 +56,28 @@ export default class Wheel extends Component {
    *   The mouseMove event
    */
   handleMouseMove(event) {
-    if (!this.state.elementRotating) {
-      return;
-    }
-    let angleDragged = Wheel.grabAngle(event) - this.state.initialGrabAngle;
-    this.state.elementRotating.setState({
-      rotation:
-        this.state.rotationWhenGrabbed + angleDragged,
+    this.state.componentsRotating.forEach(component => {
+      let angleDragged =
+        Wheel.grabAngle(event) - component.state.initialGrabAngle;
+      component.setState({
+        rotation: component.state.rotationWhenGrabbed + angleDragged,
+      });
     });
   }
+
+  /**
+   * Called frequently, any time we have the slightest inkling that the user is
+   * (no longer?) rotating anything.
+   */
+  stopRotating() {
+    this.state.componentsRotating.forEach(component => {
+      component.stopRotating();
+    });
+    this.setState({
+      componentsRotating: [],
+    });
+  }
+
 
   render() {
     return (
@@ -125,18 +97,16 @@ export default class Wheel extends Component {
         />
 
         <Keyboard
-          onMouseDown={(event, component, componentType) =>
-            this.startRotating(event, component, componentType)
-          }
+          startRotating={component => this.startRotating(component)}
+          afterRotating={rotation => this.props.shiftTonalCenter(rotation)}
           intervalSet={this.props.intervalSet}
+          tonalCenter={this.props.tonalCenter}
           noteSet={this.props.noteSet}
-          isRotating={!!this.state.elementRotating}
         />
 
         <Scale
-          onMouseDown={(event, component, componentType) =>
-            this.startRotating(event, component, componentType)
-          }
+          startRotating={component => this.startRotating(component)}
+          afterRotating={rotation => this.props.shiftIntervalSet(rotation)}
           intervalSet={this.props.intervalSet}
           selectedChords={this.props.selectedChords}
         />

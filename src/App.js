@@ -38,8 +38,8 @@ export default class App extends Component {
     ).namedIfFeasible;
   }
 
-  setTonalCenter(tonalCenter) {
-    const tc = Scalar.wrap(tonalCenter, musicTheory.octaveDivisions);
+  shiftTonalCenter(intervalDiff) {
+    const tc = Scalar.wrapToOctave(this.state.tonalCenter - intervalDiff);
     this.setState({
       tonalCenter: tc,
     })
@@ -72,9 +72,10 @@ export default class App extends Component {
           noteSet={this.noteSet()}
         />
         <Wheel
-          setTonalCenter={tc => this.setTonalCenter(tc)}
-          shiftIntervalSet={(r) => this.shiftIntervalSet(r)}
+          shiftTonalCenter={i => this.shiftTonalCenter(i)}
+          shiftIntervalSet={r => this.shiftIntervalSet(r)}
           intervalSet={this.state.intervalSet}
+          tonalCenter={this.state.tonalCenter}
           noteSet={this.noteSet()}
           toggleInterval={interval => this.toggleInterval(interval)}
           selectedChords={this.state.selectedChords}

@@ -23,6 +23,17 @@ export default class Scalar {
   }
 
   /**
+   * Ensure that `value` is within range between 0 and the number of octave
+   * divisions (typically 12).
+   *
+   * @param {number} value
+   * @return {number}
+   */
+  static wrapToOctave(value) {
+    return Scalar.wrap(value, musicTheory.octaveDivisions);
+  }
+
+  /**
    * Return the factor by which a radius should be reduced when it lies on the
    * edge between two keys. We want to reduce it so that we get straight lines
    * between keys.
