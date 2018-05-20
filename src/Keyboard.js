@@ -15,7 +15,7 @@ function Keyboard(props) {
       />
       <KeySet
         noteSet={props.noteSet}
-        active={!props.isRotating}
+        active={!props.somethingIsRotating}
         rotation={rotation}
       />
     </g>

@@ -29,6 +29,18 @@ export default class Wheel extends Component {
     };
   }
 
+  setKeyboardIsRotating(bool) {
+    this.setState({keyboardIsRotating: bool});
+  }
+
+  setScaleIsRotating(bool) {
+    this.setState({scaleIsRotating: bool});
+  }
+
+  somethingIsRotating() {
+    return this.state.keyboardIsRotating || this.state.scaleIsRotating;
+  }
+
   /**
    * Compute the angle of the mouse as an interval
    *
@@ -43,10 +55,17 @@ export default class Wheel extends Component {
     return IrPoint.fromCursor(svgRect, BOX_SIZE, cursor).i;
   }
 
-  startRotating(component) {
-    this.setState({
-      componentsRotating: this.state.componentsRotating.concat(component),
-    });
+  startRotating(component, name) {
+    let state = {
+      componentsRotating: this.state.componentsRotating.concat(component)
+    };
+    if (name === 'Keyboard') {
+      state.keyboardIsRotating = true;
+    }
+    if (name === 'Scale') {
+      state.scaleIsRotating = true;
+    }
+    this.setState(state);
   }
 
   /**
@@ -75,9 +94,10 @@ export default class Wheel extends Component {
     });
     this.setState({
       componentsRotating: [],
+      keyboardIsRotating: false,
+      scaleIsRotating: false,
     });
   }
-
 
   render() {
     return (
@@ -94,18 +114,20 @@ export default class Wheel extends Component {
           intervalSet={this.props.intervalSet}
           isRotating={!!this.state.elementRotating}
           toggleInterval={this.props.toggleInterval}
+          scaleIsRotating={this.state.scaleIsRotating}
         />
 
         <Keyboard
-          startRotating={component => this.startRotating(component)}
+          startRotating={component => this.startRotating(component, 'Keyboard')}
           afterRotating={rotation => this.props.shiftTonalCenter(rotation)}
           intervalSet={this.props.intervalSet}
           tonalCenter={this.props.tonalCenter}
           noteSet={this.props.noteSet}
+          somethingIsRotating={this.somethingIsRotating()}
         />
 
         <Scale
-          startRotating={component => this.startRotating(component)}
+          startRotating={component => this.startRotating(component, 'Scale')}
           afterRotating={rotation => this.props.shiftIntervalSet(rotation)}
           intervalSet={this.props.intervalSet}
           selectedChords={this.props.selectedChords}

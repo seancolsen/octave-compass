@@ -9,7 +9,7 @@ export default class Base extends Component {
    * @return {boolean}
    */
   intervalIsActive(interval) {
-    return (this.props.isRotating) ? false :
+    return (this.props.scaleIsRotating) ? false :
       this.props.intervalSet.isActive(interval);
   }
 
