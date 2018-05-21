@@ -3,8 +3,6 @@ import Keyboard from "./Keyboard.js";
 import Scale from "./Scale.js";
 import IrPoint from "./Utils/IrPoint";
 import XyPoint from "./Utils/XyPoint";
-import {musicTheory} from './Data/musicTheory';
-import Scalar from "./Utils/Scalar";
 import Base from './Base';
 import ShadowFilter from "./ShadowFilter";
 

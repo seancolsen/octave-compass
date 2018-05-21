@@ -3,7 +3,6 @@ import Note from './Note';
 import Scalar from "./Scalar";
 import CustomMath from "./CustomMath";
 import NoteNameSet from './NoteNameSet';
-import IntervalSet from "./IntervalSet";
 import IntervalSetFactory from "./IntervalSetFactory";
 
 /**

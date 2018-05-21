@@ -3,7 +3,6 @@ import Polygon from "./Polygon";
 import IrPoint from './Utils/IrPoint'
 import styled from 'styled-components';
 import Rotatable from "./Rotatable";
-import IntervalSetFactory from "./Utils/IntervalSetFactory";
 import SwarmOfChords from "./SwarmOfChords";
 
 const RADIUS = 310;

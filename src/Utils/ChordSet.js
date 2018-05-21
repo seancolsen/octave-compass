@@ -1,4 +1,3 @@
-import Chord from './Chord';
 import IntervalSetFactory from "./IntervalSetFactory";
 
 /**

@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import Group from './Group';
 import Scalar from "./Utils/Scalar";
 import {musicTheory} from "./Data/musicTheory";
-import XyPoint from "./Utils/XyPoint";
-import IrPoint from "./Utils/IrPoint";
 import Wheel from "./Wheel";
 
 export default function Rotatable(WrappedComponent) {

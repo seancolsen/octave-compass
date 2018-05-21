@@ -6,7 +6,7 @@ export default class Scale extends IntervalSet {
   constructor(binary) {
     const scaleData = allScales[binary] || [];
     if (scaleData.length < 1) {
-      throw "Unknown scale";
+      throw new Error("Unknown scale");
     }
     super(binary);
     this.names = scaleData;

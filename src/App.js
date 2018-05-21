@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Wheel from "./Wheel.js";
-import IntervalSet from "./Utils/IntervalSet";
 import Marquee from "./Marquee";
 import Scalar from "./Utils/Scalar";
-import {musicTheory} from "./Data/musicTheory";
 import NoteSet from "./Utils/NoteSet";
 import IntervalSetFactory from "./Utils/IntervalSetFactory";
 import Chord from "./Utils/Chord";

@@ -7,7 +7,7 @@ export default class Chord extends IntervalSet {
   constructor(binary) {
     const chordData = chordsData[binary];
     if (!chordData) {
-      throw "Unknown chord";
+      throw new Error("Unknown chord");
     }
     super(binary);
     this.names = [chordData.name];
