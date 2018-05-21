@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import AlternateScaleNames from "./AlternateScaleNames";
 
 const DefaultName = styled.div`
   text-align: center;
@@ -18,21 +19,9 @@ const NoteName = styled.span`
   font-weight: bold;
 `;
 
-const AlternateNames = styled(DefaultName)`
-  font-size: 75%;
-  font-style: italic;
-  height: 1em;
-`;
-
-const Aka = styled.span`
-  color: #333;
-`;
-
 function Marquee(props) {
   const tonalCenter = props.noteSet.firstNote.namesToUseForLabels
     .map(name => name.unicode).join('/');
-  const alternateNames = props.intervalSet.alternateNames;
-  const alternateNamesString = alternateNames ? alternateNames.join(", ") : '';
   const defaultName = props.intervalSet.defaultName;
   return (
     <div className={props.className}>
@@ -47,13 +36,7 @@ function Marquee(props) {
         </NoteName>
         <span> ({props.intervalSet.binary})</span>
       </DefaultName>
-      <AlternateNames>
-        {alternateNamesString ?
-          [<Aka>Also know as: </Aka>,
-          <span>{alternateNamesString}</span>]
-          : ""
-        }
-      </AlternateNames>
+      <AlternateScaleNames intervalSet={props.intervalSet}/>
     </div>
   );
 }
