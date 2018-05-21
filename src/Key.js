@@ -8,12 +8,8 @@ import KeyLabelSet from "./KeyLabelSet";
 const innerRadius = 308;
 const outerRadius = 400;
 
-const StyledG = styled.g`
-  opacity: ${props => props.active ? '1' : '0.25'};
-`;
-
 const Background = styled(Polygon)`
-  fill: #e4e4e4;
+  fill: ${p => p.active ? '#e4e4e4' : '#999'};
   stroke: #949494;
 `;
 
@@ -30,7 +26,7 @@ export default function Key(props) {
     IrPoint.fromArray(ir).plus({i: props.note.id})
   );
   return (
-    <StyledG active={props.active}>
+    <g>
 
       <Background
         points={points}
@@ -40,8 +36,9 @@ export default function Key(props) {
       <KeyLabelSet
         note={props.note}
         rotation={props.rotation}
+        active={props.active}
       />
 
-    </StyledG>
+    </g>
   );
 }

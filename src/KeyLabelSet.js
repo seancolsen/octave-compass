@@ -8,6 +8,10 @@ const tieRadius = 348;
 const tieSpan = 0.2;
 const tieWidth = 50;
 
+const StyledG = styled.g`
+  opacity: ${props => props.active ? '1' : '0.25'};
+`;
+
 const LabelTie = styled(Arc)`
   stroke: ${props => props.color};
   stroke-width: ${tieWidth}px;
@@ -48,10 +52,10 @@ export default function KeyLabelSet(props) {
   });
 
   return (
-    <g>
+    <StyledG active={props.active}>
       {labelTie}
       <g>{result}</g>
-    </g>
+    </StyledG>
   );
 
 }
