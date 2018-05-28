@@ -80,7 +80,9 @@ export default class App extends Component {
           toggleInterval={interval => this.toggleInterval(interval)}
           selectedChords={this.state.selectedChords}
         />
-        <Notation/>
+        <Notation
+          noteSet={this.noteSet()}
+        />
         <Menu/>
       </div>
     );
