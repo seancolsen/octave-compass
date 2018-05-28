@@ -106,7 +106,7 @@ test('toIntervalSet with rotation', () => {
 test('directionallyNamed', () => {
   expect(
     NoteSet.chromatic.directionallyNamed('flat').notes
-    .map(note => note.name.ascii)
+    .map(note => note.name.spelledOut)
   ).toEqual([
     'C',
     'D flat',
@@ -127,7 +127,7 @@ test('compliment', () => {
   const intervalSet = new IntervalSet(0b101010110101);
   const rotation = 2; // B flat major scale
   const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
-  expect(noteSet.named.compliment.notes.map(note => note.name.ascii))
+  expect(noteSet.named.compliment.notes.map(note => note.name.spelledOut))
     .toEqual(['D flat', 'E', 'G flat', 'A flat', 'B']);
 });
 

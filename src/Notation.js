@@ -12,10 +12,10 @@ class Notation extends Component {
     this.draw();
   }
 
-
   draw() {
     const VF = Vex.Flow;
     let div = document.getElementById("notation");
+    div.innerHTML = '';
     let renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
     renderer.resize(500, 100);
     let context = renderer.getContext();
@@ -31,9 +31,7 @@ class Notation extends Component {
 
     stave.setContext(context).draw();
 
-    const noteNames = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
-    const pitches = noteNames.map(noteName => `${noteName}/${octave}`);
-    pitches.push(`${noteNames[0]}/5`);
+    const pitches = this.props.noteSet.pitchSetStartingFrom(octave).slashNotation;
     const staveNotes = pitches.map(pitch =>
       new VF.StaveNote({clef: clef, keys: [pitch], duration: 'q'})
     );

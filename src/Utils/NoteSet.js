@@ -4,6 +4,7 @@ import Scalar from "./Scalar";
 import CustomMath from "./CustomMath";
 import NoteNameSet from './NoteNameSet';
 import IntervalSetFactory from "./IntervalSetFactory";
+import PitchSet from "./PitchSet";
 
 /**
  * Only name the NoteSet if we have 8 notes or fewer. With more notes, the notes
@@ -207,6 +208,14 @@ export default class NoteSet {
     return NoteSet.fromIntervalSet(
       IntervalSetFactory.fromCompliment(this.toIntervalSet(0)), 0
     ).directionallyNamed(direction, 'flat');
+  }
+
+  /**
+   *
+   * @param {number} octave
+   */
+  pitchSetStartingFrom(octave) {
+    return new PitchSet(this, octave);
   }
 
 }

@@ -24,19 +24,19 @@ test('getNameUsing', () => {
 });
 
 test('getNameToMatch', () => {
-  expect(noteC.getNameToMatch('natural').ascii).toBe('C');
-  expect(noteC.getNameToMatch('sharp').ascii).toBe('C');
-  expect(noteC.getNameToMatch('flat').ascii).toBe('C');
+  expect(noteC.getNameToMatch('natural').spelledOut).toBe('C');
+  expect(noteC.getNameToMatch('sharp').spelledOut).toBe('C');
+  expect(noteC.getNameToMatch('flat').spelledOut).toBe('C');
   expect(noteCSharp.getNameToMatch('natural')).toBeNull();
-  expect(noteCSharp.getNameToMatch('sharp').ascii).toBe('C sharp');
-  expect(noteCSharp.getNameToMatch('flat').ascii).toBe('D flat');
+  expect(noteCSharp.getNameToMatch('sharp').spelledOut).toBe('C sharp');
+  expect(noteCSharp.getNameToMatch('flat').spelledOut).toBe('D flat');
 });
 
 test('namedToMatch', () => {
-  expect(noteC.namedToMatch('natural').name.ascii).toBe('C');
-  expect(noteC.namedToMatch('sharp').name.ascii).toBe('C');
-  expect(noteC.namedToMatch('flat').name.ascii).toBe('C');
+  expect(noteC.namedToMatch('natural').name.spelledOut).toBe('C');
+  expect(noteC.namedToMatch('sharp').name.spelledOut).toBe('C');
+  expect(noteC.namedToMatch('flat').name.spelledOut).toBe('C');
   expect(noteCSharp.namedToMatch('natural').name).toBeUndefined();
-  expect(noteCSharp.namedToMatch('sharp').name.ascii).toBe('C sharp');
-  expect(noteCSharp.namedToMatch('flat').name.ascii).toBe('D flat');
+  expect(noteCSharp.namedToMatch('sharp').name.spelledOut).toBe('C sharp');
+  expect(noteCSharp.namedToMatch('flat').name.spelledOut).toBe('D flat');
 });

@@ -36,13 +36,22 @@ export default class NoteName {
   }
 
   /**
-   * Return a not-so pretty version of this note name (e.g. "B flat").
+   * Return a fully spelled-out version of this note name (e.g. "B flat").
+   *
+   * @return {string}
+   */
+  get spelledOut() {
+    const modifier = (this.modifier === 'natural') ? '' : ' ' + this.modifier;
+    return `${this.baseName}${modifier}`;
+  }
+
+  /**
+   * Return an ASCII-compatible version of this note name (e.g. "Bb")
    *
    * @return {string}
    */
   get ascii() {
-    const modifier = (this.modifier === 'natural') ? '' : ' ' + this.modifier;
-    return `${this.baseName}${modifier}`;
+    return `${this.baseName}${modifiers[this.modifier].ascii}`;
   }
 
   /**

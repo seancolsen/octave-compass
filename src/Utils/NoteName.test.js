@@ -22,10 +22,16 @@ test('unicode', () => {
   expect(dDoubleFlat.unicode).toBe('D𝄫');
 });
 
+test('spelledOut', () => {
+  expect(cNatural.spelledOut).toBe('C');
+  expect(dFlat.spelledOut).toBe('D flat');
+  expect(dDoubleFlat.spelledOut).toBe('D doubleFlat');
+});
+
 test('ascii', () => {
   expect(cNatural.ascii).toBe('C');
-  expect(dFlat.ascii).toBe('D flat');
-  expect(dDoubleFlat.ascii).toBe('D doubleFlat');
+  expect(dFlat.ascii).toBe('Db');
+  expect(dDoubleFlat.ascii).toBe('Dbb');
 });
 
 test('direction', () => {
