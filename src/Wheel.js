@@ -99,39 +99,41 @@ export default class Wheel extends Component {
 
   render() {
     return (
-      <svg
-        viewBox={`-${BOX_SIZE/2} -${BOX_SIZE/2} ${BOX_SIZE} ${BOX_SIZE}`}
-        onMouseMove={(event) => this.handleMouseMove(event)}
-        onMouseLeave={() => this.stopRotating()}
-        onMouseUp={() => this.stopRotating()}
-      >
+      <div id='wheel'>
+        <svg
+          viewBox={`-${BOX_SIZE/2} -${BOX_SIZE/2} ${BOX_SIZE} ${BOX_SIZE}`}
+          onMouseMove={(event) => this.handleMouseMove(event)}
+          onMouseLeave={() => this.stopRotating()}
+          onMouseUp={() => this.stopRotating()}
+        >
 
-        <ShadowFilter/>
+          <ShadowFilter/>
 
-        <Base
-          intervalSet={this.props.intervalSet}
-          isRotating={!!this.state.elementRotating}
-          toggleInterval={this.props.toggleInterval}
-          scaleIsRotating={this.state.scaleIsRotating}
-        />
+          <Base
+            intervalSet={this.props.intervalSet}
+            isRotating={!!this.state.elementRotating}
+            toggleInterval={this.props.toggleInterval}
+            scaleIsRotating={this.state.scaleIsRotating}
+          />
 
-        <Keyboard
-          startRotating={component => this.startRotating(component, 'Keyboard')}
-          afterRotating={rotation => this.props.shiftTonalCenter(rotation)}
-          intervalSet={this.props.intervalSet}
-          tonalCenter={this.props.tonalCenter}
-          noteSet={this.props.noteSet}
-          somethingIsRotating={this.somethingIsRotating()}
-        />
+          <Keyboard
+            startRotating={component => this.startRotating(component, 'Keyboard')}
+            afterRotating={rotation => this.props.shiftTonalCenter(rotation)}
+            intervalSet={this.props.intervalSet}
+            tonalCenter={this.props.tonalCenter}
+            noteSet={this.props.noteSet}
+            somethingIsRotating={this.somethingIsRotating()}
+          />
 
-        <Scale
-          startRotating={component => this.startRotating(component, 'Scale')}
-          afterRotating={rotation => this.props.shiftIntervalSet(rotation)}
-          intervalSet={this.props.intervalSet}
-          selectedChords={this.props.selectedChords}
-        />
+          <Scale
+            startRotating={component => this.startRotating(component, 'Scale')}
+            afterRotating={rotation => this.props.shiftIntervalSet(rotation)}
+            intervalSet={this.props.intervalSet}
+            selectedChords={this.props.selectedChords}
+          />
 
-      </svg>
+        </svg>
+      </div>
     );
   }
 }

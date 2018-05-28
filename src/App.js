@@ -6,6 +6,8 @@ import Scalar from "./Utils/Scalar";
 import NoteSet from "./Utils/NoteSet";
 import IntervalSetFactory from "./Utils/IntervalSetFactory";
 import Chord from "./Utils/Chord";
+import Notation from "./Notation";
+import Menu from "./Menu";
 
 export default class App extends Component {
 
@@ -63,7 +65,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div id='app' className="App">
         <Marquee
           tonalCenter={this.state.tonalCenter}
           intervalSet={this.state.intervalSet}
@@ -78,6 +80,8 @@ export default class App extends Component {
           toggleInterval={interval => this.toggleInterval(interval)}
           selectedChords={this.state.selectedChords}
         />
+        <Notation/>
+        <Menu/>
       </div>
     );
   }

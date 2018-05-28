@@ -18,3 +18,54 @@ svg text {
 svg text::selection {
   background: none;
 }
+
+body,
+#root,
+#app {
+  height: 100vh;
+  overflow: hidden;
+}
+
+#wheel {
+  overflow: hidden;
+  text-align: center;
+}
+
+#wheel svg {
+  display: inline-block;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#app {
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+}
+
+@media (min-aspect-ratio: 1/1) {
+  #app {
+    grid-auto-flow: column;
+    grid-template-columns: 75vh auto;
+    grid-template-rows: 10vh 75vh 15vh;
+  }
+
+  #menu {
+    grid-row: 1 / -1;
+  }
+}
+
+@media (min-aspect-ratio: 3/2) {
+  #app {
+    grid-template-columns: 100vh 1fr;
+    grid-template-rows: 1fr 10fr 30fr;
+  }
+
+  #wheel {
+    order: -1;
+    grid-row: 1 / -1;
+  }
+
+  #menu {
+    grid-row: auto;
+  }
+}

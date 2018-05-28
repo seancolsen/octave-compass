@@ -4,7 +4,6 @@ import AlternateScaleNames from "./AlternateScaleNames";
 
 const DefaultName = styled.div`
   text-align: center;
-  padding: 0.5rem;
 `;
 
 const IntervalSetName = styled.span`
@@ -24,7 +23,7 @@ function Marquee(props) {
     .map(name => name.unicode).join('/');
   const defaultName = props.intervalSet.defaultName;
   return (
-    <div className={props.className}>
+    <div className={props.className} id='marquee'>
       <DefaultName>
         {defaultName ?
           <IntervalSetName>{defaultName}</IntervalSetName> :
@@ -42,5 +41,5 @@ function Marquee(props) {
 }
 
 export default styled(Marquee)`
-  margin-bottom: 1em;
+  background: #888;
 `;
