@@ -51,8 +51,7 @@ export default class Pitch {
    *   e.g. "C/4", "Bb/3", "F#/5"
    */
   get slashNotation() {
-    const noteName = this.note.name || this.note.getNameToMatch('flat');
-    return `${noteName.ascii}/${this.octave}`;
+    return `${this.note.guaranteedName.ascii}/${this.octave}`;
   }
 
 }

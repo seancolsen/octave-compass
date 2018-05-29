@@ -123,4 +123,14 @@ export default class Note {
     return [this.name];
   }
 
+  /**
+   * If this note already has a name, then return it. Otherwise, return a "flat"
+   * name.
+   *
+   * @return {NoteName}
+   */
+  get guaranteedName() {
+    return this.name || this.getNameToMatch('flat');
+  }
+
 }

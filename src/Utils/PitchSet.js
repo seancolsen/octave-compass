@@ -25,12 +25,4 @@ export default class PitchSet {
     });
   }
 
-  /**
-   * @return {string[]}
-   *   e.g. ["C/4", "E/4", "G/4"]
-   */
-  get slashNotation() {
-    return this.pitches.map(pitch => pitch.slashNotation);
-  }
-
 }

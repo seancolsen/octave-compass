@@ -15,7 +15,9 @@ class Notation extends Component {
   draw() {
     const VF = Vex.Flow;
     let div = document.getElementById("notation");
-    div.innerHTML = '';
+    if (div && div.firstChild) {
+      div.firstChild.remove();
+    }
     let renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
     renderer.resize(500, 100);
     let context = renderer.getContext();
@@ -31,13 +33,23 @@ class Notation extends Component {
 
     stave.setContext(context).draw();
 
-    const pitches = this.props.noteSet.pitchSetStartingFrom(octave).slashNotation;
-    const staveNotes = pitches.map(pitch =>
-      new VF.StaveNote({clef: clef, keys: [pitch], duration: 'q'})
-    );
-    let voice = new VF.Voice({num_beats: pitches.length, beat_value: 4});
+    const pitches = this.props.noteSet.pitchSetStartingFrom(octave).pitches;
+    const staveNotes = pitches.map(pitch => {
+      let staveNote = new VF.StaveNote({
+        clef: clef,
+        keys: [pitch.slashNotation],
+        duration: 'q'
+      });
+      let modifier = pitch.note.guaranteedName.modifier.ascii;
+      if (modifier) {
+        staveNote = staveNote.addAccidental(0, new VF.Accidental(modifier));
+      }
+      return staveNote;
+    });
+
+    let voice = new VF.Voice({num_beats: staveNotes.length, beat_value: 4});
     voice.addTickables(staveNotes);
-    let formatter = new VF.Formatter().joinVoices([voice]).format([voice], 400);
+    new VF.Formatter().joinVoices([voice]).format([voice], 400);
     voice.draw(context, stave);
   }
 
