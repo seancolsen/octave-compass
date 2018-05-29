@@ -1,16 +1,15 @@
-import {modifiers} from '../Data/modifiers';
+import Modifier from "./Modifier";
 
 export default class NoteName {
 
   /**
    * @type {Note}
-   *   The note object containing this NoteName
+   *   A back-reference to the note object that contains this NoteName
    */
   note;
 
   /**
-   * @type {String}
-   *   e.g. "natural", "flat", "sharp", "doubleFlat", "doubleSharp"
+   * @type {Modifier}
    */
   modifier;
 
@@ -20,9 +19,9 @@ export default class NoteName {
    */
   baseName;
 
-  constructor(note, modifier, baseName) {
+  constructor(note, modifierName, baseName) {
     this.note = note;
-    this.modifier = modifier;
+    this.modifier = new Modifier(modifierName);
     this.baseName = baseName;
   }
 
@@ -32,7 +31,7 @@ export default class NoteName {
    * @return {string}
    */
   get unicode() {
-    return `${this.baseName}${modifiers[this.modifier].symbol}`;
+    return `${this.baseName}${this.modifier.unicode}`;
   }
 
   /**
@@ -41,8 +40,8 @@ export default class NoteName {
    * @return {string}
    */
   get spelledOut() {
-    const modifier = (this.modifier === 'natural') ? '' : ' ' + this.modifier;
-    return `${this.baseName}${modifier}`;
+    const phrase = this.modifier.english;
+    return phrase ? `${this.baseName} ${phrase}` : this.baseName;
   }
 
   /**
@@ -51,21 +50,21 @@ export default class NoteName {
    * @return {string}
    */
   get ascii() {
-    return `${this.baseName}${modifiers[this.modifier].ascii}`;
+    return `${this.baseName}${this.modifier.ascii}`;
   }
 
   /**
    * @return {string}
    */
   get direction() {
-    return modifiers[this.modifier].direction;
+    return this.modifier.direction;
   }
 
   /**
    * @return {boolean}
    */
   get isDouble() {
-    return this.modifier === 'doubleFlat' || this.modifier === 'doubleSharp';
+    return this.modifier.isDouble;
   }
 
 }

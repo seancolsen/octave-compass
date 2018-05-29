@@ -115,7 +115,7 @@ export default class Note {
       return [this.possibleNames.sharp, this.possibleNames.flat];
     }
 
-    if (this.canBeNamedAs('natural') && this.name.modifier !== 'natural') {
+    if (this.canBeNamedAs('natural') && this.name.modifier.name !== 'natural') {
       const names = [this.possibleNames.natural, this.name];
       return this.name.direction === 'flat' ? names : names.reverse();
     }

@@ -25,7 +25,7 @@ test('unicode', () => {
 test('spelledOut', () => {
   expect(cNatural.spelledOut).toBe('C');
   expect(dFlat.spelledOut).toBe('D flat');
-  expect(dDoubleFlat.spelledOut).toBe('D doubleFlat');
+  expect(dDoubleFlat.spelledOut).toBe('D double flat');
 });
 
 test('ascii', () => {
