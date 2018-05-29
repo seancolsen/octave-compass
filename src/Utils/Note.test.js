@@ -40,3 +40,8 @@ test('namedToMatch', () => {
   expect(noteCSharp.namedToMatch('sharp').name.spelledOut).toBe('C sharp');
   expect(noteCSharp.namedToMatch('flat').name.spelledOut).toBe('D flat');
 });
+
+test('namedUsing', () => {
+  expect(noteC.namedUsing('natural').name.spelledOut).toBe('C');
+  expect(noteC.namedUsing('sharp').name.spelledOut).toBe('B sharp');
+});

@@ -61,6 +61,23 @@ export default class Note {
   }
 
   /**
+   * Return a copy of this Note, with a name added, using the given modifier.
+   *
+   * @param {string} modifier
+   *   e.g. "sharp"
+   *
+   * @return {Note}
+   */
+  namedUsing(modifier) {
+    if (!this.canBeNamedAs(modifier)) {
+      throw new Error(`Cannot name note ${this.id} as ${modifier}`);
+    }
+    let result = new Note(this.id);
+    result.name = this.possibleNames[modifier];
+    return result;
+  }
+
+  /**
    * Try to return a NoteName for this note that will look good when placed
    * alongside other notes that consistently use the given direction. If this
    * note has a natural name, then we use that no matter what. If this note has

@@ -3,12 +3,16 @@ import Note from "./Note";
 const noteC = new Note(0);
 const noteDFlat = new Note(1);
 const noteG = new Note(7);
+const noteB = new Note(11);
 
 const cNatural = noteC.getNameUsing('natural');
 const cSharp = noteDFlat.getNameUsing('sharp');
 const dFlat = noteDFlat.getNameUsing('flat');
 const fDoubleSharp = noteG.getNameUsing('doubleSharp');
 const dDoubleFlat = noteC.getNameUsing('doubleFlat');
+const bSharp = noteC.getNameUsing('sharp');
+const bDoubleSharp = noteDFlat.getNameUsing('doubleSharp');
+const cFlat = noteB.getNameUsing('flat');
 
 test('baseName', () => {
   expect(cNatural.baseName).toBe('C');
@@ -48,4 +52,11 @@ test('isDouble', () => {
   expect(dFlat.isDouble).toBe(false);
   expect(fDoubleSharp.isDouble).toBe(true);
   expect(dDoubleFlat.isDouble).toBe(true);
+});
+
+test('octaveBoundaryTraversal', () => {
+  expect(bSharp.octaveBoundaryTraversal).toBe(-1);
+  expect(bDoubleSharp.octaveBoundaryTraversal).toBe(-1);
+  expect(cSharp.octaveBoundaryTraversal).toBe(0);
+  expect(cFlat.octaveBoundaryTraversal).toBe(1);
 });
