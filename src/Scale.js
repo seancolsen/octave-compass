@@ -23,8 +23,10 @@ function Scale(props) {
 }
 
 const StyledScale = styled(Scale)`
-  fill: #e4e4e4;
+  fill: #E1E1E1;
   filter: url(#drop-shadow);
+  stroke: #f7f7f7;
+  stroke-width: 3px;
 `;
 
 export default Rotatable(StyledScale);

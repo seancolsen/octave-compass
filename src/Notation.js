@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import styled from 'styled-components';
 import Vex from 'vexflow';
 
-class Notation extends Component {
+export default class Notation extends Component {
 
   componentDidMount() {
     this.draw();
@@ -59,7 +58,3 @@ class Notation extends Component {
     );
   }
 }
-
-export default styled(Notation)`
-  background: white;
-`;

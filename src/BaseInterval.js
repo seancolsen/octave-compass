@@ -11,7 +11,7 @@ const arcSpan = 0.5;
 
 const Background = styled(Arc)`
   stroke-width: 130px;
-  stroke: ${props => (props.active) ? '#888' : '#777'};
+  stroke: ${props => (props.active) ? 'white' : '#e4e4e4'};
   fill: none;
   stroke-linecap: butt;
 `;

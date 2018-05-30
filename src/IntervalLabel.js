@@ -13,7 +13,7 @@ const TextPath = styled(Arc)`
 `;
 
 const StyledText = styled.text`
-  fill: ${props => props.active ? '#FFF' : '#555'};
+  fill: ${props => props.active ? 'black' : '#AAA'};
   font-size: 30px;
 `;
 

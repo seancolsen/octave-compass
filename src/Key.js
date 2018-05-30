@@ -9,8 +9,9 @@ const innerRadius = 308;
 const outerRadius = 400;
 
 const Background = styled(Polygon)`
-  fill: ${p => p.active ? '#e4e4e4' : '#999'};
-  stroke: #949494;
+  fill: ${p => p.active ? '#e1e1e1' : '#b7b7b7'};
+  stroke: #a7a7a7;
+  stroke-width: 3px;
 `;
 
 export default function Key(props) {

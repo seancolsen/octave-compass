@@ -18,7 +18,7 @@ const NoteName = styled.span`
   font-weight: bold;
 `;
 
-function Marquee(props) {
+export default function Marquee(props) {
   const tonalCenter = props.noteSet.firstNote.namesToUseForLabels
     .map(name => name.unicode).join('/');
   const defaultName = props.intervalSet.defaultName;
@@ -39,7 +39,3 @@ function Marquee(props) {
     </div>
   );
 }
-
-export default styled(Marquee)`
-  background: #888;
-`;

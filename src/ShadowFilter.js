@@ -3,7 +3,7 @@ import React from 'react';
 export default function ShadowFilter(props) {
   return (
     <filter id="drop-shadow">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="15"/>
       <feOffset dx="0" dy="0" result="offsetblur"/>
       <feFlood floodColor="#000"/>
       <feComposite in2="offsetblur" operator="in"/>

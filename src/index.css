@@ -3,7 +3,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: #777777;
+  background: #e4e4e4;
   font-family: 'Spectral', serif;
 }
 
@@ -39,7 +39,15 @@ body,
 
 #app {
   display: grid;
+  /*grid-gap: 2vmin;*/
   grid-template-rows: auto 1fr auto auto;
+}
+
+#marquee,
+#notation,
+#menu {
+  /*background: white;*/
+  /*box-shadow: 0 0 2vmin #474747;*/
 }
 
 @media (min-aspect-ratio: 1/1) {
