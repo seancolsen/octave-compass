@@ -43,11 +43,14 @@ body,
   grid-template-rows: auto 1fr auto auto;
 }
 
-#marquee,
-#notation,
-#menu {
-  /*background: white;*/
-  /*box-shadow: 0 0 2vmin #474747;*/
+#notation {
+  padding: 10px;
+}
+
+#notation svg {
+  background: white;
+  border-radius: 1.5vmin;
+  box-shadow: inset 0 0 2vmin #999999;
 }
 
 @media (min-aspect-ratio: 1/1) {

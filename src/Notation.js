@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Vex from 'vexflow';
+import CustomMath from "./Utils/CustomMath";
 
 const VF = Vex.Flow;
 
@@ -44,10 +45,47 @@ export default class Notation extends Component {
   }
 
   /**
+   * Determine the optimal width (in SVG user space units) of the stave. VexFlow
+   * does squish the notes together *somewhat*, but we want to make the stave
+   * wider as well so that the spacing between notes looks good.
+   *
+   * @param {int} noteCount
+   * @return {number}
+   */
+  static staveWidth(noteCount) {
+    return CustomMath.linearInterpolate(noteCount,
+      {in: 7, out: 450},
+      {in: 12, out: 550}
+    );
+  }
+
+  /**
+   * Determine the optimal width (in SVG user space units) of the group of
+   * notes on the stave. It seems like VexFlow doesn't do a very good job at
+   * listening to the width we specify in `VF.Formatter().format()`. Sometimes
+   * the notes are spaced out too far apart, particularly if they have
+   * accidentals. This function tries to squish them together better.
+   *
+   * @param {int} noteCount
+   * @return {number}
+   */
+  static noteFormattingWidth(noteCount) {
+    return CustomMath.linearInterpolate(noteCount,
+      {in: 7, out: 425},
+      {in: 12, out: 525}
+    );
+  }
+
+  /**
    * Refresh the notation SVG
    */
   draw() {
+    // Initialize values
     let containingDiv = document.getElementById("notation");
+    const staveNotes = this.staveNotes();
+    const noteCount = staveNotes.length;
+    const width = Notation.staveWidth(noteCount);
+    const margin = 0.04 * width;
 
     // If the SVG already exists, remove it
     if (containingDiv && containingDiv.firstChild) {
@@ -56,20 +94,24 @@ export default class Notation extends Component {
 
     // Set up renderer
     let renderer = new VF.Renderer(containingDiv, VF.Renderer.Backends.SVG);
-    renderer.resize(400, 100);
     let context = renderer.getContext();
 
     // Set up stave
-    let stave = new VF.Stave(0, 0, 400);
+    let stave = new VF.Stave(0, 0, width);
     stave.addClef(this.state.clef);
     stave.setContext(context).draw();
 
     // Add notes to stave
-    const staveNotes = this.staveNotes();
-    let voice = new VF.Voice({num_beats: staveNotes.length, beat_value: 4});
+    let voice = new VF.Voice({num_beats: noteCount, beat_value: 4});
     voice.addTickables(staveNotes);
-    new VF.Formatter().joinVoices([voice]).format([voice], 400);
+    let formatter = new VF.Formatter();
+    formatter.joinVoices([voice]);
+    formatter.format([voice], Notation.noteFormattingWidth(noteCount));
     voice.draw(context, stave);
+
+    // Set up SVG viewBox
+    let svg = containingDiv.firstChild;
+    svg.setAttribute('viewBox', `${-margin} 10 ${width + 2 * margin} 95`);
   }
 
   render() {
