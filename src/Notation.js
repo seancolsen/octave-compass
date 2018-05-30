@@ -33,6 +33,7 @@ export default class Notation extends Component {
         clef: this.state.clef,
         keys: [pitch.slashNotation],
         duration: 'q',
+        auto_stem: true,
       });
       let modifier = pitch.note.guaranteedName.modifier.ascii;
       if (modifier) {
