@@ -18,12 +18,30 @@ const Symbol = styled.text`
   }
 `;
 
+const HighlightableG = styled.g`
+  & * {
+    cursor: pointer;
+  }
+  &:hover ${Background} {
+    filter: url('#playing-highlight');
+    stroke: yellow;
+    stroke-width: 2px;
+  }
+`;
+
+const NonHighlightableG = styled.g`
+  & * {
+    cursor: grab;
+  }
+`;
+
 export default function ChordEmblem(props) {
   const point = new IrPoint(props.interval, props.radialPosition).toXy();
   const rotation = -Angle.iToD(props.rotation);
   let transform = `translate(${point.x} ${point.y}) rotate(${rotation})`;
+  const G = props.somethingIsRotating ? NonHighlightableG : HighlightableG;
   return (
-    <g transform={transform}>
+    <G transform={transform} className={props.className}>
       <Background
         cx={0} cy={0}
         r={props.size}
@@ -35,6 +53,6 @@ export default function ChordEmblem(props) {
         dominantBaseline={'middle'} // TODO address lack of IE support
         textAnchor={'middle'}
       />
-    </g>
+    </G>
   );
 }

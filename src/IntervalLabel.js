@@ -35,7 +35,7 @@ export default class IntervalLabel extends Component {
     const b = this.isOnBottom();
     const id = `interval-label-${this.props.interval}`;
     return (
-      <g>
+      <g className={this.props.className}>
         <TextPath
           id={id}
           radius={b ? lowerRadius : upperRadius}

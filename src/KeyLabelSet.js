@@ -8,8 +8,21 @@ const tieRadius = 348;
 const tieSpan = 0.2;
 const tieWidth = 50;
 
-const StyledG = styled.g`
-  opacity: ${props => props.active ? '1' : '0.25'};
+const ActiveG = styled.g`
+  opacity: 1;
+  & * {
+    cursor: pointer;
+  }
+  &:hover {
+    filter: url('#playing-highlight');
+  }
+`;
+
+const InactiveG = styled.g`
+  opacity: 0.25;
+  & * {
+    cursor: grab;
+  }
 `;
 
 const LabelTie = styled(Arc)`
@@ -51,11 +64,13 @@ export default function KeyLabelSet(props) {
     );
   });
 
+  const G = props.active ? ActiveG : InactiveG;
+
   return (
-    <StyledG active={props.active}>
+    <G active={props.active}>
       {labelTie}
       <g>{result}</g>
-    </StyledG>
+    </G>
   );
 
 }

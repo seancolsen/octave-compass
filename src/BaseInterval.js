@@ -16,17 +16,19 @@ const Background = styled(Arc)`
   stroke-linecap: butt;
 `;
 
-export default function BaseInterval(props) {
+const StyledIntervalLabel = styled(IntervalLabel)``;
+
+function BaseInterval(props) {
   const point = (new IrPoint(props.interval, checkboxRadius)).toXy();
   return (
-    <g onClick={props.onClick}>
+    <g onClick={props.onClick} className={props.className}>
       <Background
         startInterval={props.interval - arcSpan}
         endInterval={props.interval + arcSpan}
         radius={arcRadius}
         active={props.active}
       />
-      <IntervalLabel
+      <StyledIntervalLabel
         interval={props.interval}
         label={props.label}
         active={props.active}
@@ -35,3 +37,12 @@ export default function BaseInterval(props) {
     </g>
   );
 }
+
+export default styled(BaseInterval)`
+  & * {
+    cursor: pointer;
+  }
+  &:hover ${StyledIntervalLabel} {
+    text-decoration: underline;
+  }
+`;

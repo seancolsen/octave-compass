@@ -29,6 +29,7 @@ export default class SliceOfChords extends Component {
           chord={chord}
           interval={this.props.chordSet.ordinal}
           rotation={this.props.rotation}
+          somethingIsRotating={this.props.somethingIsRotating}
         />
       );
       radialPosition -= size;

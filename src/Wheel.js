@@ -107,7 +107,18 @@ export default class Wheel extends Component {
           onMouseUp={() => this.stopRotating()}
         >
 
-          <ShadowFilter/>
+          <ShadowFilter
+            id='drop-shadow'
+            color='#000'
+            size='15'
+            bounds={1.2}
+          />
+          <ShadowFilter
+            id='playing-highlight'
+            color='yellow'
+            size='25'
+            bounds={3}
+          />
 
           <Base
             intervalSet={this.props.intervalSet}
@@ -130,6 +141,7 @@ export default class Wheel extends Component {
             afterRotating={rotation => this.props.shiftIntervalSet(rotation)}
             intervalSet={this.props.intervalSet}
             selectedChords={this.props.selectedChords}
+            somethingIsRotating={this.somethingIsRotating()}
           />
 
         </svg>

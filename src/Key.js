@@ -12,6 +12,7 @@ const Background = styled(Polygon)`
   fill: ${p => p.active ? '#e1e1e1' : '#b7b7b7'};
   stroke: #a7a7a7;
   stroke-width: 3px;
+  cursor: grab;
 `;
 
 export default function Key(props) {
