@@ -41,6 +41,18 @@ export default class IntervalSet {
    */
   names = [];
 
+  /**
+   * This property is set by child classes. Scales and chords have names,
+   * sometimes multiple names. The defaultName represents the primary name
+   * that we display.
+   *
+   * @type {string|null}
+   */
+  defaultName = null;
+
+  /**
+   * @param {number} binary
+   */
   constructor(binary) {
     this.binary = binary;
   }
@@ -138,6 +150,14 @@ export default class IntervalSet {
    */
   contains(intervalSet) {
     return (this.binary & intervalSet.binary) === intervalSet.binary;
+  }
+
+  /**
+   *
+   * @return {*|string}
+   */
+  get displayName() {
+    return this.defaultName || 'Scale ' + parseInt(this.binary, 10);
   }
 
 }

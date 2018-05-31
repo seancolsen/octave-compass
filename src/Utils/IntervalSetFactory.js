@@ -18,6 +18,15 @@ const divisions = musicTheory.octaveDivisions;
 export default class IntervalSetFactory {
 
   /**
+   * Return an interval set containing all the intervals.
+   *
+   * @return {IntervalSet}
+   */
+  static get chromatic() {
+    return new IntervalSet(IntervalSet.chromaticBinary);
+  }
+
+  /**
    * @param {int} binary
    *
    * @return {IntervalSet}

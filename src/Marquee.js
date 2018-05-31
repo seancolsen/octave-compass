@@ -19,20 +19,15 @@ const NoteName = styled.span`
 `;
 
 export default function Marquee(props) {
-  const tonalCenter = props.noteSet.firstNote.namesToUseForLabels
-    .map(name => name.unicode).join('/');
-  const defaultName = props.intervalSet.defaultName;
   return (
     <div className={props.className} id='marquee'>
       <DefaultName>
-        {defaultName ?
-          <IntervalSetName>{defaultName}</IntervalSetName> :
-          <UnknownName>unknown scale</UnknownName>
+        {props.intervalSet.defaultName ?
+          <IntervalSetName>{props.intervalSet.defaultName}</IntervalSetName> :
+          <UnknownName>{props.intervalSet.displayName}</UnknownName>
         }
         <span> in </span>
-        <NoteName>
-          {tonalCenter}
-        </NoteName>
+        <NoteName>{props.noteSet.tonalCenterName}</NoteName>
       </DefaultName>
       <AlternateScaleNames intervalSet={props.intervalSet}/>
     </div>

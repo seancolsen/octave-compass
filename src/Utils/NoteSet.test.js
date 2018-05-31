@@ -1,6 +1,7 @@
 import NoteSet from './NoteSet';
 import IntervalSet from "./IntervalSet";
 import Note from "./Note";
+import IntervalSetFactory from "./IntervalSetFactory";
 
 test('chromatic', () => {
   expect(NoteSet.chromatic.notes.length).toBe(12);
@@ -143,4 +144,18 @@ test('Squash bug with note naming', () => {
   ]);
   const value = noteSet.named.notes[1].namesToUseForLabels[0];
   expect(value.unicode).toBeDefined();
+});
+
+test('tonalCenterName B flat major', () => {
+  const intervalSet = new IntervalSet(0b101010110101);
+  const rotation = 2;
+  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation).named;
+  expect(noteSet.tonalCenterName).toBe('B♭');
+});
+
+test('tonalCenterName C# chromatic', () => {
+  const intervalSet = IntervalSetFactory.chromatic;
+  const rotation = -1;
+  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  expect(noteSet.tonalCenterName).toBe('C♯/D♭');
 });

@@ -105,7 +105,7 @@ export default class App extends Component {
   }
 
   componentDidUpdate() {
-    this.updateUrlFromState();
+    this.updateWindowFromState();
   }
 
   updateStateFromUrl() {
@@ -117,9 +117,17 @@ export default class App extends Component {
     });
   }
 
-  updateUrlFromState() {
+  updateWindowFromState() {
+    // Set page title
+    const appTitle = 'Octave Compass';
+    const intervalSetName = this.state.intervalSet.displayName;
+    const tonalCenter = this.noteSet().tonalCenterName;
+    const title = `${intervalSetName} in ${tonalCenter} | ${appTitle}`;
+    document.title = title;
+
+    // Set URL
     const url = Url.generate(this.state.intervalSet, this.state.tonalCenter);
-    window.history.pushState(null, null, url);
+    window.history.pushState(null, title, url);
   }
 
   render() {

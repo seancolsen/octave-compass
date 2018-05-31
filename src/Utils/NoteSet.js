@@ -218,4 +218,15 @@ export default class NoteSet {
     return new PitchSet(this, octave);
   }
 
+  /**
+   * Return a nice looking string that describes the tonal center of this note
+   * set.
+   *
+   * @return {string}
+   */
+  get tonalCenterName() {
+    return this.firstNote.namesToUseForLabels
+      .map(name => name.unicode).join('/');
+  }
+
 }
