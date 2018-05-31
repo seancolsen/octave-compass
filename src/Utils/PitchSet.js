@@ -25,4 +25,15 @@ export default class PitchSet {
     });
   }
 
+  /**
+   * Return a new PitchSet containing all the pitches within this octave that
+   * this pitch set does not contain.
+   *
+   * @return {PitchSet}
+   */
+  get compliment() {
+    const startingOctave = this.pitches[0].octave;
+    return this.noteSet.compliment.pitchSetStartingFrom(startingOctave);
+  }
+
 }

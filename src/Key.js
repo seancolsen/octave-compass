@@ -25,7 +25,7 @@ export default function Key(props) {
     [-0.5, innerRadius * Scalar.rFactorAtEdge],
   ];
   const points = shape.map(ir =>
-    IrPoint.fromArray(ir).plus({i: props.note.id})
+    IrPoint.fromArray(ir).plus({i: props.pitch.note.id})
   );
   return (
     <g>
@@ -36,9 +36,11 @@ export default function Key(props) {
       />
 
       <KeyLabelSet
-        note={props.note}
+        pitch={props.pitch}
+        ordinal={props.ordinal}
         rotation={props.rotation}
         active={props.active}
+        playNotes={props.playNotes}
       />
 
     </g>

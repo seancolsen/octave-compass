@@ -8,6 +8,7 @@ import IntervalSetFactory from "./Utils/IntervalSetFactory";
 import Chord from "./Utils/Chord";
 import Notation from "./Notation";
 import Menu from "./Menu";
+import Tone from "tone";
 
 export default class App extends Component {
 
@@ -23,6 +24,7 @@ export default class App extends Component {
         new Chord(0b010010010001),
         new Chord(0b100010010001),
       ],
+      clef: 'treble',
     };
   }
 
@@ -36,6 +38,15 @@ export default class App extends Component {
       this.state.intervalSet,
       -this.state.tonalCenter
     ).namedIfFeasible;
+  }
+
+  /**
+   * Calculate the current pitches based on the current notes.
+   */
+  pitchSet() {
+    // TODO: Set octave based on this.state.clef
+    const octave = 4;
+    return this.noteSet().pitchSetStartingFrom(octave);
   }
 
   shiftTonalCenter(intervalDiff) {
@@ -63,6 +74,14 @@ export default class App extends Component {
     });
   }
 
+  playNotes(noteOrdinals) {
+    const pitches = this.pitchSet().pitches.filter((pitch, index) =>
+      noteOrdinals.includes(index)
+    ).map(pitch => pitch.frequency);
+    const synth = new Tone.PolySynth(pitches.length, Tone.Synth).toMaster();
+    synth.triggerAttackRelease(pitches, "8n", "+0.05")
+  }
+
   render() {
     return (
       <div id='app' className="App">
@@ -76,12 +95,14 @@ export default class App extends Component {
           shiftIntervalSet={r => this.shiftIntervalSet(r)}
           intervalSet={this.state.intervalSet}
           tonalCenter={this.state.tonalCenter}
-          noteSet={this.noteSet()}
+          pitchSet={this.pitchSet()}
           toggleInterval={interval => this.toggleInterval(interval)}
           selectedChords={this.state.selectedChords}
+          playNotes={noteOrdinals => this.playNotes(noteOrdinals)}
         />
         <Notation
-          noteSet={this.noteSet()}
+          pitchSet={this.pitchSet()}
+          clef={this.state.clef}
         />
         <Menu/>
       </div>

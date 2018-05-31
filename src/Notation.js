@@ -6,13 +6,6 @@ const VF = Vex.Flow;
 
 export default class Notation extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      clef: "treble",
-    };
-  }
-
   componentDidMount() {
     this.draw();
   }
@@ -27,11 +20,9 @@ export default class Notation extends Component {
    * @return {StaveNote[]}
    */
   staveNotes() {
-    const octave = 4;
-    const pitches = this.props.noteSet.pitchSetStartingFrom(octave).pitches;
-    return pitches.map(pitch => {
+    return this.props.pitchSet.pitches.map(pitch => {
       let staveNote = new VF.StaveNote({
-        clef: this.state.clef,
+        clef: this.props.clef,
         keys: [pitch.slashNotation],
         duration: 'q',
         auto_stem: true,
@@ -98,7 +89,7 @@ export default class Notation extends Component {
 
     // Set up stave
     let stave = new VF.Stave(0, 0, width);
-    stave.addClef(this.state.clef);
+    stave.addClef(this.props.clef);
     stave.setContext(context).draw();
 
     // Add notes to stave

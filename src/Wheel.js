@@ -132,8 +132,9 @@ export default class Wheel extends Component {
             afterRotating={rotation => this.props.shiftTonalCenter(rotation)}
             intervalSet={this.props.intervalSet}
             tonalCenter={this.props.tonalCenter}
-            noteSet={this.props.noteSet}
+            pitchSet={this.props.pitchSet}
             somethingIsRotating={this.somethingIsRotating()}
+            playNotes={this.props.playNotes}
           />
 
           <Scale

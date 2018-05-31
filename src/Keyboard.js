@@ -9,14 +9,15 @@ function Keyboard(props) {
   return (
     <g transform={transform}>
       <KeySet
-        noteSet={props.noteSet.compliment}
+        pitchSet={props.pitchSet.compliment}
         active={false}
         rotation={rotation}
       />
       <KeySet
-        noteSet={props.noteSet}
+        pitchSet={props.pitchSet}
         active={!props.somethingIsRotating}
         rotation={rotation}
+        playNotes={props.playNotes}
       />
     </g>
   );
