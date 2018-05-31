@@ -74,9 +74,9 @@ export default class App extends Component {
     });
   }
 
-  playNotes(noteOrdinals) {
-    const pitches = this.pitchSet().pitches.filter((pitch, index) =>
-      noteOrdinals.includes(index)
+  playNotes(noteIds) {
+    const pitches = this.pitchSet().pitches.filter(pitch =>
+      noteIds.includes(pitch.note.id)
     ).map(pitch => pitch.frequency);
     const synth = new Tone.PolySynth(pitches.length, Tone.Synth).toMaster();
     synth.triggerAttackRelease(pitches, "8n", "+0.05")
@@ -98,7 +98,7 @@ export default class App extends Component {
           pitchSet={this.pitchSet()}
           toggleInterval={interval => this.toggleInterval(interval)}
           selectedChords={this.state.selectedChords}
-          playNotes={noteOrdinals => this.playNotes(noteOrdinals)}
+          playNotes={noteIds => this.playNotes(noteIds)}
         />
         <Notation
           pitchSet={this.pitchSet()}

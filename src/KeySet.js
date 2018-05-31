@@ -10,10 +10,9 @@ export default function KeySet(props) {
   return (
     <StyledG active={props.active}>
       {
-        props.pitchSet.pitches.map((pitch, index) =>
+        props.pitchSet.pitches.map(pitch =>
           <Key
             key={pitch.note.id}
-            ordinal={index}
             pitch={pitch}
             rotation={props.rotation}
             active={props.active}
