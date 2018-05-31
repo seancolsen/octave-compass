@@ -4,6 +4,7 @@ import IrPoint from './Utils/IrPoint'
 import styled from 'styled-components';
 import Rotatable from "./Rotatable";
 import SwarmOfChords from "./SwarmOfChords";
+import Brand from "./Brand";
 
 const RADIUS = 310;
 
@@ -21,6 +22,7 @@ function Scale(props) {
   return (
     <g>
       <Background points={points}/>
+      <Brand rotation={props.rotation}/>
       <SwarmOfChords
         intervalSet={props.intervalSet}
         selectedChords={props.selectedChords}
