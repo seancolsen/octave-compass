@@ -9,6 +9,7 @@ import Chord from "./Utils/Chord";
 import Notation from "./Notation";
 import Menu from "./Menu";
 import Tone from "tone";
+import Url from "./Utils/Url";
 
 export default class App extends Component {
 
@@ -97,6 +98,28 @@ export default class App extends Component {
       Scalar.wrapToOctave(ordinal + this.state.tonalCenter)
     );
     this.playNotes(notes);
+  }
+
+  componentDidMount() {
+    this.updateStateFromUrl();
+  }
+
+  componentDidUpdate() {
+    this.updateUrlFromState();
+  }
+
+  updateStateFromUrl() {
+    const url = window.location.pathname;
+    const parts = Url.parse(url);
+    this.setState({
+      intervalSet: parts.intervalSet,
+      tonalCenter: parts.tonalCenter,
+    });
+  }
+
+  updateUrlFromState() {
+    const url = Url.generate(this.state.intervalSet, this.state.tonalCenter);
+    window.history.pushState(null, null, url);
   }
 
   render() {

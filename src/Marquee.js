@@ -33,7 +33,6 @@ export default function Marquee(props) {
         <NoteName>
           {tonalCenter}
         </NoteName>
-        <span> ({props.intervalSet.binary})</span>
       </DefaultName>
       <AlternateScaleNames intervalSet={props.intervalSet}/>
     </div>
