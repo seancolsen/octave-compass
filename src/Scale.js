@@ -26,6 +26,7 @@ function Scale(props) {
         selectedChords={props.selectedChords}
         rotation={props.rotation}
         somethingIsRotating={props.somethingIsRotating}
+        playIntervals={props.playIntervals}
       />
     </g>
   );

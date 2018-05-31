@@ -74,12 +74,29 @@ export default class App extends Component {
     });
   }
 
+  /**
+   * Generate sound for an array of notes, given their IDs.
+   *
+   * @param {int[]} noteIds
+   */
   playNotes(noteIds) {
     const pitches = this.pitchSet().pitches.filter(pitch =>
       noteIds.includes(pitch.note.id)
     ).map(pitch => pitch.frequency);
     const synth = new Tone.PolySynth(pitches.length, Tone.Synth).toMaster();
-    synth.triggerAttackRelease(pitches, "8n", "+0.05")
+    synth.triggerAttackRelease(pitches, "8n", "+0.03")
+  }
+
+  /**
+   * Generate sound for an array of intervals, given their ordinals.
+   *
+   * @param {int[]} ordinals
+   */
+  playIntervals(ordinals) {
+    const notes = ordinals.map(ordinal =>
+      Scalar.wrapToOctave(ordinal + this.state.tonalCenter)
+    );
+    this.playNotes(notes);
   }
 
   render() {
@@ -99,6 +116,7 @@ export default class App extends Component {
           toggleInterval={interval => this.toggleInterval(interval)}
           selectedChords={this.state.selectedChords}
           playNotes={noteIds => this.playNotes(noteIds)}
+          playIntervals={ordinals => this.playIntervals(ordinals)}
         />
         <Notation
           pitchSet={this.pitchSet()}

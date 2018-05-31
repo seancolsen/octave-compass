@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import IrPoint from "./Utils/IrPoint";
 import styled from 'styled-components';
 import Angle from "./Utils/Angle";
+import IntervalSetFactory from "./Utils/IntervalSetFactory";
 
 const Background = styled.circle`
   fill: ${props => props.color || 'grey'};
@@ -35,24 +36,43 @@ const NonHighlightableG = styled.g`
   }
 `;
 
-export default function ChordEmblem(props) {
-  const point = new IrPoint(props.interval, props.radialPosition).toXy();
-  const rotation = -Angle.iToD(props.rotation);
-  let transform = `translate(${point.x} ${point.y}) rotate(${rotation})`;
-  const G = props.somethingIsRotating ? NonHighlightableG : HighlightableG;
-  return (
-    <G transform={transform} className={props.className}>
-      <Background
-        cx={0} cy={0}
-        r={props.size}
-        color={props.chord.color}
-      />
-      <Symbol
-        x={0} y={0}
-        dangerouslySetInnerHTML={{__html: props.chord.symbol}}
-        dominantBaseline={'middle'} // TODO address lack of IE support
-        textAnchor={'middle'}
-      />
-    </G>
-  );
+export default class ChordEmblem extends Component {
+
+  handleMouseDown(e) {
+    const shiftedChord = IntervalSetFactory.fromShift(
+      this.props.chord,
+      this.props.interval
+    );
+    this.props.playIntervals(shiftedChord.ordinals);
+  }
+  
+  render() {
+    const point = new IrPoint(this.props.interval, this.props.radialPosition)
+      .toXy();
+    const rotation = -Angle.iToD(this.props.rotation);
+    let transform = `translate(${point.x} ${point.y}) rotate(${rotation})`;
+    const G = this.props.somethingIsRotating ?
+      NonHighlightableG : HighlightableG;
+    return (
+      <G
+        transform={transform}
+        className={this.props.className}
+        // TODO: get note ordinals in here
+        onMouseDown={e => this.handleMouseDown(e)}
+      >
+        <Background
+          cx={0} cy={0}
+          r={this.props.size}
+          color={this.props.chord.color}
+        />
+        <Symbol
+          x={0} y={0}
+          dangerouslySetInnerHTML={{__html: this.props.chord.symbol}}
+          dominantBaseline={'middle'} // TODO address lack of IE support
+          textAnchor={'middle'}
+        />
+      </G>
+    );
+  }
+  
 }

@@ -15,6 +15,7 @@ export default function SwarmOfChords(props) {
             chordSet={chordSet}
             rotation={props.rotation}
             somethingIsRotating={props.somethingIsRotating}
+            playIntervals={props.playIntervals}
           />
         )
       }
