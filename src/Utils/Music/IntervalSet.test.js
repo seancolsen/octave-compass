@@ -56,3 +56,10 @@ test('contains', () => {
   expect(new IntervalSet(0b000000000000).contains(
     new IntervalSet(0b000000000000))).toBe(true);
 });
+
+test('isIdenticalTo', () => {
+  expect(new IntervalSet(0b101010110101).isIdenticalTo(
+    new IntervalSet(0b101010110101))).toBe(true);
+  expect(new IntervalSet(0b101010110101).isIdenticalTo(
+    new IntervalSet(0b000010010001))).toBe(false);
+});

@@ -153,6 +153,16 @@ export default class IntervalSet {
   }
 
   /**
+   * Return true if all of the intervals in this set match all of the intervals
+   * in the given set.
+   *
+   * @param {IntervalSet} intervalSet
+   */
+  isIdenticalTo(intervalSet) {
+    return this.binary === intervalSet.binary;
+  }
+
+  /**
    *
    * @return {*|string}
    */
