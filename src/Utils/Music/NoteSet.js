@@ -3,8 +3,8 @@ import Note from "Utils/Music/Note";
 import Scalar from "Utils/Math/Scalar";
 import CustomMath from "Utils/Math/CustomMath";
 import NoteNameSet from "Utils/Music/NoteNameSet";
-import IntervalSetFactory from "Utils/Music/IntervalSetFactory";
 import PitchSet from "Utils/Music/PitchSet";
+import IntervalSet from "Utils/Music/IntervalSet";
 
 /**
  * Only name the NoteSet if we have 8 notes or fewer. With more notes, the notes
@@ -192,10 +192,9 @@ export default class NoteSet {
    * @return {IntervalSet}
    */
   toIntervalSet(shift = 0) {
-    return IntervalSetFactory.fromShift(
-      IntervalSetFactory.fromOrdinals(this.notes.map(note => note.id)),
-      shift
-    );
+    const ordinals = this.notes.map(note => note.id);
+    const intervalSet = IntervalSet.fromOrdinals(ordinals);
+    return intervalSet.shift(shift);
   }
 
   /**
@@ -207,14 +206,14 @@ export default class NoteSet {
    */
   get compliment() {
     const direction = (this.nameSet) ? this.nameSet.direction : null;
-    return NoteSet.fromIntervalSet(
-      IntervalSetFactory.fromCompliment(this.toIntervalSet(0)), 0
-    ).directionallyNamed(direction, 'flat');
+    return NoteSet.fromIntervalSet(this.toIntervalSet(0).compliment, 0)
+      .directionallyNamed(direction, 'flat');
   }
 
   /**
    *
    * @param {number} octave
+   * @return {PitchSet}
    */
   pitchSetStartingFrom(octave) {
     return new PitchSet(this, octave);

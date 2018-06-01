@@ -1,11 +1,8 @@
 import React from 'react';
 import SliceOfChords from "components/Wheel/Scale/SliceOfChords";
-import IntervalSetFactory from "Utils/Music/IntervalSetFactory";
 
 export default function SwarmOfChords(props) {
-  const chordSets = IntervalSetFactory.chordSets(
-    props.intervalSet, props.selectedChords
-  );
+  const chordSets = props.intervalSet.chordSets(props.selectedChords);
   return (
     <g>
       {

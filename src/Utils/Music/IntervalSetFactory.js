@@ -1,11 +1,7 @@
 import IntervalSet from "Utils/Music/IntervalSet";
 import Chord from "Utils/Music/Chord";
 import Scale from "Utils/Music/Scale";
-import Scalar from "Utils/Math/Scalar";
-import ChordSet from "Utils/Music/ChordSet";
-import {musicTheory} from "Data/musicTheory";
 
-const divisions = musicTheory.octaveDivisions;
 /**
  * This class exists to create IntervalSets of various types.
  *
@@ -17,12 +13,26 @@ const divisions = musicTheory.octaveDivisions;
 export default class IntervalSetFactory {
 
   /**
-   * Return an interval set containing all the intervals.
+   * When given a generic IntervalSet, try to return a Scale or a Chord in its
+   * place if possible. If no Scale or Chord can be found to match the supplied
+   * generic IntervalSet, then return the generic IntervalSet.
    *
+   * @param {IntervalSet} intervalSet
    * @return {IntervalSet}
    */
-  static get chromatic() {
-    return new IntervalSet(IntervalSet.chromaticBinary);
+  static fromIntervalSet(intervalSet) {
+    try {
+      return new Scale(intervalSet.binary);
+    }
+    catch (e) {
+    }
+    try {
+      return new Chord(intervalSet.binary);
+    }
+    catch (e) {
+    }
+    return intervalSet;
+
   }
 
   /**
@@ -31,109 +41,7 @@ export default class IntervalSetFactory {
    * @return {IntervalSet}
    */
   static fromBinary(binary) {
-    try {
-      return new Chord(binary);
-    }
-    catch (e) {
-    }
-    try {
-      return new Scale(binary);
-    }
-    catch (e) {
-    }
-    return new IntervalSet(binary);
-  }
-
-  /**
-   * Left-shift the bits of the binary intervals by the number of bits given,
-   * and wrap the bit around the right side. This corresponds to rotating the
-   * scale clockwise by the number of intervals given.
-   *
-   * @param {IntervalSet} intervalSet
-   * @param {int} shiftAmount
-   * @return {IntervalSet}
-   */
-  static fromShift(intervalSet, shiftAmount) {
-    const binary = intervalSet.binary;
-    const shift = Scalar.wrap(Math.round(shiftAmount), divisions);
-    const shiftToWrap = divisions - shift;
-    const allBits = (binary << shift) | (binary >> shiftToWrap);
-    const mask = IntervalSet.chromaticBinary;
-    const result = allBits & mask;
-    return IntervalSetFactory.fromBinary(result);
-  }
-
-  /**
-   * Return a new Interval set
-   *
-   * @param {int[]} ordinals
-   *   e.g. [0, 4, 7] for a major chord
-   *
-   * @return {IntervalSet}
-   */
-  static fromOrdinals(ordinals) {
-    return IntervalSetFactory.fromBinary(
-      IntervalSet.ordinalsToBinary(ordinals)
-    );
-  }
-
-  /**
-   * Return a new interval set with intervals toggled where the given binary
-   * bits are true.
-   *
-   * @param {IntervalSet} intervalSet
-   * @param {int} binary
-   * @return {IntervalSet}
-   */
-  static fromToggledBinaryIntervals(intervalSet, binary) {
-    return IntervalSetFactory.fromBinary(intervalSet.binary ^ binary);
-  }
-
-  /**
-   * Return a new IntervalSet with the given interval flipped from active to
-   * inactive -- or from inactive to active -- as necessary.
-   *
-   * @param {IntervalSet} intervalSet
-   * @param {int} ordinal
-   * @return {IntervalSet}
-   */
-  static fromToggledInterval(intervalSet, ordinal) {
-    return IntervalSetFactory.fromToggledBinaryIntervals(
-      intervalSet,
-      IntervalSet.ordinalToBinary(ordinal)
-    );
-  }
-
-  /**
-   * Return a new interval set that contains all the intervals the given set
-   * doesn't contain.
-   *
-   * @param {IntervalSet} intervalSet
-   * @return {IntervalSet}
-   */
-  static fromCompliment(intervalSet) {
-    return IntervalSetFactory.fromToggledBinaryIntervals(
-      intervalSet,
-      IntervalSet.chromaticBinary
-    );
-  }
-
-  /**
-   * For each of the given chords, return the chords that exist within the given
-   * interval set. The return value is an object with interval ordinals as keys
-   * and arrays of chords (which exist at those intervals) as values.
-   *
-   * @param {IntervalSet} intervalSet
-   * @param {Chord[]} possibleChords
-   *
-   * @return {ChordSet[]}
-   */
-  static chordSets(intervalSet, possibleChords) {
-    let result = [];
-    intervalSet.ordinals.forEach(ordinal => {
-      result.push(ChordSet.atOrdinal(intervalSet, ordinal, possibleChords));
-    });
-    return result;
+    return IntervalSetFactory.fromIntervalSet(new IntervalSet(binary));
   }
 
 }

@@ -1,4 +1,6 @@
 import IntervalSet from 'Utils/Music/IntervalSet';
+import IntervalSetFactory from "Utils/Music/IntervalSetFactory";
+import Chord from "Utils/Music/Chord";
 
 test('ordinalsToBinary', () => {
   expect(IntervalSet.ordinalsToBinary([])).toEqual(0b0);
@@ -62,4 +64,59 @@ test('isIdenticalTo', () => {
     new IntervalSet(0b101010110101))).toBe(true);
   expect(new IntervalSet(0b101010110101).isIdenticalTo(
     new IntervalSet(0b000010010001))).toBe(false);
+});
+
+test('shift(0)', () => {
+  expect(new IntervalSet(0b101100111000).shift(0).binary).toBe(0b101100111000);
+  expect(new IntervalSet(0b101100111000).shift(1).binary).toBe(0b011001110001);
+  expect(new IntervalSet(0b101100111000).shift(-1).binary).toBe(0b010110011100);
+  expect(new IntervalSet(0b101100111000).shift(6).binary).toBe(0b111000101100);
+  expect(new IntervalSet(0b101100111000).shift(-4).binary).toBe(0b100010110011);
+});
+
+test('fromArray major chord', () => {
+  const ordinals = [0, 4, 7];
+  expect(IntervalSet.fromOrdinals(ordinals).ordinals).toEqual(ordinals);
+});
+
+test('fromArray empty set', () => {
+  const ordinals = [];
+  expect(IntervalSet.fromOrdinals(ordinals).ordinals).toEqual(ordinals);
+});
+
+test('fromArray chromatic', () => {
+  const ordinals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  expect(IntervalSet.fromOrdinals(ordinals).ordinals).toEqual(ordinals);
+});
+
+test('toggleBinaryIntervals', () => {
+  expect(new IntervalSet(0b000010010001)
+    .toggleBinaryIntervals(0b010010000000).binary)
+    .toBe(0b010000010001);
+});
+
+test('toggleIntervalOrdinal', () => {
+  expect(new IntervalSet(0b000010010001).toggleIntervalOrdinal(10).binary)
+    .toBe(0b010010010001);
+  expect(new IntervalSet(0b000010010001).toggleIntervalOrdinal(7).binary)
+    .toBe(0b000000010001);
+  expect(new IntervalSet(0b000010010001).toggleIntervalOrdinal(0).binary)
+    .toBe(0b000010010000);
+});
+
+test('compliment', () => {
+  expect(new IntervalSet(0b101010110101).compliment.binary)
+    .toBe(0b010101001010);
+  expect(new IntervalSet(0b000000000000).compliment.binary)
+    .toBe(0b111111111111);
+  expect(new IntervalSet(0b111111111111).compliment.binary)
+    .toBe(0b000000000000);
+});
+
+test('chordSets', () => {
+  const intervalSet = new IntervalSet(0b101010110101);
+  const possibleChords = [new Chord(0b000010010001)];
+  const chordSets = intervalSet.chordSets(possibleChords);
+  expect(chordSets.map(chordSet => chordSet.count))
+    .toEqual([1, 0, 0, 1, 1, 0, 0]);
 });

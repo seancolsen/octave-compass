@@ -1,4 +1,6 @@
 import {musicTheory} from "Data/musicTheory";
+import Scalar from "Utils/Math/Scalar";
+import ChordSet from "Utils/Music/ChordSet";
 
 const divisions = musicTheory.octaveDivisions;
 
@@ -55,6 +57,27 @@ export default class IntervalSet {
    */
   constructor(binary) {
     this.binary = binary;
+  }
+
+  /**
+   * Return a new IntervalSet, given the ordinals for its intervals.
+   *
+   * @param {int[]} ordinals
+   *   e.g. [0, 4, 7] for a major chord
+   *
+   * @return {IntervalSet}
+   */
+  static fromOrdinals(ordinals) {
+    return new IntervalSet(IntervalSet.ordinalsToBinary(ordinals));
+  }
+
+  /**
+   * Return an interval set containing all the intervals.
+   *
+   * @return {IntervalSet}
+   */
+  static get chromatic() {
+    return new IntervalSet(IntervalSet.chromaticBinary);
   }
 
   /**
@@ -168,6 +191,71 @@ export default class IntervalSet {
    */
   get displayName() {
     return this.defaultName || 'Scale ' + parseInt(this.binary, 10);
+  }
+
+  /**
+   * Left-shift the bits of the binary intervals by the number of bits given,
+   * and wrap the bit around the right side. This corresponds to rotating the
+   * scale clockwise by the number of intervals given.
+   *
+   * @param {int} shiftAmount
+   * @return {IntervalSet}
+   */
+  shift(shiftAmount) {
+    const shift = Scalar.wrap(Math.round(shiftAmount), divisions);
+    const shiftToWrap = divisions - shift;
+    const allBits = (this.binary << shift) | (this.binary >> shiftToWrap);
+    const mask = IntervalSet.chromaticBinary;
+    return new IntervalSet(allBits & mask);
+  }
+
+  /**
+   * Return a new interval set with intervals toggled where the given binary
+   * bits are true.
+   *
+   * @param {int} binary
+   * @return {IntervalSet}
+   */
+  toggleBinaryIntervals(binary) {
+    return new IntervalSet(this.binary ^ binary);
+  }
+
+  /**
+   * Return a new IntervalSet with one interval toggled, as specified by its
+   * ordinal.
+   *
+   * @param ordinal
+   * @return {IntervalSet}
+   */
+  toggleIntervalOrdinal(ordinal) {
+    return this.toggleBinaryIntervals(IntervalSet.ordinalToBinary(ordinal));
+  }
+
+  /**
+   * Return a new interval set that contains all the intervals this set
+   * doesn't contain.
+   *
+   * @return {IntervalSet}
+   */
+  get compliment() {
+    return this.toggleBinaryIntervals(IntervalSet.chromaticBinary);
+  }
+
+
+  /**
+   * For each of the given chords, return the chords that exist within this
+   * interval set.
+   *
+   * @param {Chord[]} possibleChords
+   *
+   * @return {ChordSet[]}
+   */
+  chordSets(possibleChords) {
+    let result = [];
+    this.ordinals.forEach(ordinal => {
+      result.push(ChordSet.atOrdinal(this, ordinal, possibleChords));
+    });
+    return result;
   }
 
 }

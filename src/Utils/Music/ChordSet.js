@@ -1,5 +1,3 @@
-import IntervalSetFactory from "Utils/Music/IntervalSetFactory";
-
 /**
  * This represents a set of chords at a given interval within a scale.
  */
@@ -56,7 +54,7 @@ export default class ChordSet {
   static atOrdinal(intervalSet, ordinal, possibleChords) {
     let chords = [];
     possibleChords.forEach(chord => {
-      const shiftedChord = IntervalSetFactory.fromShift(chord, ordinal);
+      const shiftedChord = chord.shift(ordinal);
       if (intervalSet.contains(shiftedChord)) {
         chords.push(chord);
       }

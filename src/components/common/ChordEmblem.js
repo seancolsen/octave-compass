@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import IrPoint from "Utils/Geometry/IrPoint";
 import styled from 'styled-components';
 import Angle from "Utils/Geometry/Angle";
-import IntervalSetFactory from "Utils/Music/IntervalSetFactory";
 
 const Background = styled.circle`
   fill: ${props => props.color || 'grey'};
@@ -39,10 +38,7 @@ const NonHighlightableG = styled.g`
 export default class ChordEmblem extends Component {
 
   handleMouseDown(e) {
-    const shiftedChord = IntervalSetFactory.fromShift(
-      this.props.chord,
-      this.props.interval
-    );
+    const shiftedChord = this.props.chord.shift(this.props.interval);
     this.props.playIntervals(shiftedChord.ordinals);
   }
   
@@ -57,7 +53,6 @@ export default class ChordEmblem extends Component {
       <G
         transform={transform}
         className={this.props.className}
-        // TODO: get note ordinals in here
         onMouseDown={e => this.handleMouseDown(e)}
       >
         <Background

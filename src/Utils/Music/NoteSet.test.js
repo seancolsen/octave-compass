@@ -1,7 +1,6 @@
 import NoteSet from 'Utils/Music/NoteSet';
 import IntervalSet from "Utils/Music/IntervalSet";
 import Note from "Utils/Music/Note";
-import IntervalSetFactory from "Utils/Music/IntervalSetFactory";
 
 test('chromatic', () => {
   expect(NoteSet.chromatic.notes.length).toBe(12);
@@ -154,7 +153,7 @@ test('tonalCenterName B flat major', () => {
 });
 
 test('tonalCenterName C# chromatic', () => {
-  const intervalSet = IntervalSetFactory.chromatic;
+  const intervalSet = IntervalSet.chromatic;
   const rotation = -1;
   const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
   expect(noteSet.tonalCenterName).toBe('C♯/D♭');

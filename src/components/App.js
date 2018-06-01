@@ -58,18 +58,17 @@ export default class App extends Component {
 
   shiftIntervalSet(rotation) {
     this.setState({
-      intervalSet: IntervalSetFactory.fromShift(
-        this.state.intervalSet,
-        rotation
+      intervalSet:
+        IntervalSetFactory.fromIntervalSet(
+        this.state.intervalSet.shift(rotation)
       ),
     });
   }
 
-  toggleInterval(interval) {
+  toggleInterval(ordinal) {
     this.setState({
-      intervalSet: IntervalSetFactory.fromToggledInterval(
-        this.state.intervalSet,
-        interval
+      intervalSet: IntervalSetFactory.fromIntervalSet(
+        this.state.intervalSet.toggleIntervalOrdinal(ordinal)
       ),
     });
   }
