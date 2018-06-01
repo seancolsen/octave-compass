@@ -120,3 +120,25 @@ test('chordSets', () => {
   expect(chordSets.map(chordSet => chordSet.count))
     .toEqual([1, 0, 0, 1, 1, 0, 0]);
 });
+
+test('count', () => {
+  expect(new IntervalSet(0b111111111111).count).toBe(12);
+  expect(new IntervalSet(0b101010110101).count).toBe(7);
+  expect(new IntervalSet(0).count).toBe(0);
+});
+
+
+test('inversions', () => {
+  expect(new IntervalSet(0b000010010001).inversions.map(
+    intervalSet => intervalSet.binary)
+  )
+    .toEqual([0b000010010001, 0b000100001001, 0b001000100001]);
+});
+
+test('inversionsToBeIdenticalTo', () => {
+  const major0 = new IntervalSet(0b000010010001);
+  const major1 = new IntervalSet(0b000100001001);
+  const major2 = new IntervalSet(0b001000100001);
+  expect(major0.inversionsToBeIdenticalTo(major1)).toBe(1);
+  expect(major0.inversionsToBeIdenticalTo(major2)).toBe(2);
+});

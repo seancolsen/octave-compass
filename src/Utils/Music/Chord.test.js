@@ -1,16 +1,13 @@
 import Chord from "Utils/Music/Chord";
 
+const major0Binary = 0b000010010001;
+const major0 = new Chord(major0Binary);
+
 test('constructor', () => {
-  expect(new Chord(0b000010010001).binary).toBe(0b000010010001);
+  expect(major0.binary).toBe(major0Binary);
 });
 
 test('names', () => {
-  expect(new Chord(0b000010010001).names).toContain('major');
+  expect(major0.names).toContain('major');
 });
-
-test('inversions', () => {
-  expect(new Chord(0b000010010001).inversions.map(chord => chord.binary))
-    .toEqual([0b000010010001, 0b000100001001, 0b001000100001]);
-});
-
 

@@ -241,7 +241,6 @@ export default class IntervalSet {
     return this.toggleBinaryIntervals(IntervalSet.chromaticBinary);
   }
 
-
   /**
    * For each of the given chords, return the chords that exist within this
    * interval set.
@@ -256,6 +255,49 @@ export default class IntervalSet {
       result.push(ChordSet.atOrdinal(this, ordinal, possibleChords));
     });
     return result;
+  }
+
+  /**
+   * How many intervals in in this set?
+   *
+   * @return {number}
+   */
+  get count() {
+    return this.ordinals.length;
+  }
+
+  /**
+   * Return an array of IntervalSets which are inversions of this IntervalSet.
+   * By "inversion" here, we mean inversion in the sense of a chord. The first
+   * inversion is produced by shifting this interval down just enough to place
+   * its "1 ordinal" in the "0 ordinal" position.
+   *
+   * @return {IntervalSet[]}
+   */
+  get inversions() {
+    return this.ordinals.map(ordinal => this.shift(-ordinal));
+  }
+
+  /**
+   * Compare this IntervalSet to the given IntervalSet. If this IntervalSet
+   * can be shifted to become the given intervalSet, then return the minimum
+   * number of (positive) shifts necessary. If there is no way that this
+   * IntervalSet can be shifted to become the given intervalSet, then return
+   * undefined.
+   *
+   * @param {IntervalSet} intervalSet
+   * @return {int}
+   *   e.g.
+   *     - 0 if this chord and the given chord are identical
+   *     - 1 if this chord can become the given chord when inverted once
+   *     - undefined if the two chords are not inversions of each other
+   */
+  inversionsToBeIdenticalTo(intervalSet) {
+    // For performance, abandon early if we have a count mismatch.
+    if (this.count !== intervalSet.count) {
+      return null;
+    }
+    return this.inversions.findIndex(inv => inv.isIdenticalTo(intervalSet));
   }
 
 }
