@@ -59,7 +59,7 @@ export default class Chord extends IntervalSet {
   constructor(binary) {
     const thisIntervalSet = new IntervalSet(binary);
     let inversion = null;
-    const chordData = Object.entries(chordsData)
+    const chordDataEntry = Object.entries(chordsData)
       .find(([possibleChordBinaryString, possibleChordData]) => {
         const possibleChordBinary = parseInt(possibleChordBinaryString, 10);
         const possibleIntervalSet = new IntervalSet(possibleChordBinary);
@@ -67,11 +67,12 @@ export default class Chord extends IntervalSet {
           .inversionsToBeIdenticalTo(thisIntervalSet);
         return Number.isInteger(inversion);
       });
-    if (!chordData) {
+    if (!chordDataEntry) {
       throw new Error("Unknown chord");
     }
     super(binary);
     this.inversion = inversion;
+    const chordData = chordDataEntry[1];
     this.initializeValuesFromChordData(chordData);
   }
 
