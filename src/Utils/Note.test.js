@@ -1,4 +1,4 @@
-import Note from './Note';
+import Note from 'Utils/Note';
 
 const noteC = new Note(0);
 const noteCSharp = new Note(1);

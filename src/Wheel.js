@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import Keyboard from "./Keyboard.js";
-import Scale from "./Scale.js";
-import IrPoint from "./Utils/IrPoint";
-import XyPoint from "./Utils/XyPoint";
-import Base from './Base';
-import ShadowFilter from "./ShadowFilter";
+import Keyboard from "Keyboard.js";
+import Scale from "Scale.js";
+import IrPoint from "Utils/IrPoint";
+import XyPoint from "Utils/XyPoint";
+import Base from 'Base';
+import ShadowFilter from "ShadowFilter";
 
 /**
  * The width and height of the square SVG view box in user units (basically SVG

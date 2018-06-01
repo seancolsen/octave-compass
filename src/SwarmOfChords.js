@@ -1,6 +1,6 @@
 import React from 'react';
-import SliceOfChords from "./SliceOfChords";
-import IntervalSetFactory from "./Utils/IntervalSetFactory";
+import SliceOfChords from "SliceOfChords";
+import IntervalSetFactory from "Utils/IntervalSetFactory";
 
 export default function SwarmOfChords(props) {
   const chordSets = IntervalSetFactory.chordSets(

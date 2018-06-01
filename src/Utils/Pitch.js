@@ -1,4 +1,4 @@
-import {musicTheory} from "../Data/musicTheory";
+import {musicTheory} from "Data/musicTheory";
 
 export default class Pitch {
 

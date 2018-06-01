@@ -1,4 +1,4 @@
-import CustomMath from "./CustomMath";
+import CustomMath from "Utils/CustomMath";
 
 test('valueFrequency', () => {
   expect(CustomMath.valueFrequency(['a', 'a', 'b', 'b', 'b', 'c']))

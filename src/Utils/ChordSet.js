@@ -1,4 +1,4 @@
-import IntervalSetFactory from "./IntervalSetFactory";
+import IntervalSetFactory from "Utils/IntervalSetFactory";
 
 /**
  * This represents a set of chords at a given interval within a scale.

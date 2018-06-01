@@ -1,4 +1,4 @@
-import Modifier from "./Modifier";
+import Modifier from "Utils/Modifier";
 
 test('constructor', () => {
   expect((new Modifier('sharp')).ascii).toBe('#');

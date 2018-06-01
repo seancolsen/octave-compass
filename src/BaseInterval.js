@@ -1,9 +1,9 @@
 import React from 'react';
-import SvgCheckbox from "./SvgCheckbox";
-import IrPoint from "./Utils/IrPoint";
-import Arc from './Arc';
+import SvgCheckbox from "SvgCheckbox";
+import IrPoint from "Utils/IrPoint";
+import Arc from 'Arc';
 import styled from 'styled-components';
-import IntervalLabel from "./IntervalLabel";
+import IntervalLabel from "IntervalLabel";
 
 const checkboxRadius = 430;
 const arcRadius = 430;

@@ -1,4 +1,4 @@
-import IntervalSetFactory from "./IntervalSetFactory";
+import IntervalSetFactory from "Utils/IntervalSetFactory";
 
 const separator = '-';
 const defaultIntervalSetBin = 0b101010110101; // Major scale

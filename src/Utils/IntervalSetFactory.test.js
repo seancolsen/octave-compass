@@ -1,7 +1,6 @@
-import IntervalSetFactory from "./IntervalSetFactory";
-import IntervalSet from "./IntervalSet";
-import {chordsData} from "../Data/chordsData";
-import Chord from "./Chord";
+import IntervalSetFactory from "Utils/IntervalSetFactory";
+import IntervalSet from "Utils/IntervalSet";
+import Chord from "Utils/Chord";
 
 test('fromBinary chord', () => {
   const set = IntervalSetFactory.fromBinary(0b000010010001);

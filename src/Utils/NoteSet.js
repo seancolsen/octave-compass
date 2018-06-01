@@ -1,10 +1,10 @@
-import {musicTheory} from "../Data/musicTheory";
-import Note from './Note';
-import Scalar from "./Scalar";
-import CustomMath from "./CustomMath";
-import NoteNameSet from './NoteNameSet';
-import IntervalSetFactory from "./IntervalSetFactory";
-import PitchSet from "./PitchSet";
+import {musicTheory} from "Data/musicTheory";
+import Note from 'Utils/Note';
+import Scalar from "Utils/Scalar";
+import CustomMath from "Utils/CustomMath";
+import NoteNameSet from 'Utils/NoteNameSet';
+import IntervalSetFactory from "Utils/IntervalSetFactory";
+import PitchSet from "Utils/PitchSet";
 
 /**
  * Only name the NoteSet if we have 8 notes or fewer. With more notes, the notes

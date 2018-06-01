@@ -1,5 +1,5 @@
 import React from 'react';
-import XyPoint from './Utils/XyPoint';
+import XyPoint from 'Utils/XyPoint';
 
 export default function Polygon(props) {
   let pointsString = XyPoint.stringFromIrArray(props.points);

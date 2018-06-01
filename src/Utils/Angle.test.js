@@ -1,4 +1,4 @@
-import Angle from './Angle.js';
+import Angle from 'Utils/Angle';
 
 const PI = Math.PI;
 

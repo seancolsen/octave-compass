@@ -1,7 +1,7 @@
-import NoteNameSet from './NoteNameSet';
-import Note from "./Note";
-import IntervalSet from "./IntervalSet";
-import NoteSet from "./NoteSet";
+import NoteNameSet from 'Utils/NoteNameSet';
+import Note from "Utils/Note";
+import IntervalSet from "Utils/IntervalSet";
+import NoteSet from "Utils/NoteSet";
 
 const noteC = new Note(0);
 const noteDFlat = new Note(1);

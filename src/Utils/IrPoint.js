@@ -1,6 +1,6 @@
-import Angle from './Angle.js';
-import PrPoint from './PrPoint.js';
-import XyPoint from "./XyPoint";
+import Angle from 'Utils/Angle';
+import PrPoint from 'Utils/PrPoint';
+import XyPoint from "Utils/XyPoint";
 
 /**
  * CONSTELLATION COORDINATE SYSTEM

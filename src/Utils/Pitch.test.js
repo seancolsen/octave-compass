@@ -1,5 +1,5 @@
-import Note from "./Note";
-import Pitch from "./Pitch";
+import Note from "Utils/Note";
+import Pitch from "Utils/Pitch";
 
 const noteC = new Note(0);
 const noteA = new Note(9);

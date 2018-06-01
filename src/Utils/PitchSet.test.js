@@ -1,6 +1,6 @@
-import PitchSet from "./PitchSet";
-import NoteSet from "./NoteSet";
-import Note from "./Note";
+import PitchSet from "Utils/PitchSet";
+import NoteSet from "Utils/NoteSet";
+import Note from "Utils/Note";
 
 test('constructor', () => {
   expect((new PitchSet(NoteSet.chromatic, 4)).pitches).toBeDefined();

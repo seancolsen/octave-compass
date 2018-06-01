@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ChordEmblem from "./ChordEmblem";
+import ChordEmblem from "ChordEmblem";
 
 const constellationRadius = 295;
 const maxRadialSpacing = 5;

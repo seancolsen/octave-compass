@@ -1,4 +1,4 @@
-import Pitch from "./Pitch";
+import Pitch from "Utils/Pitch";
 
 export default class PitchSet {
 

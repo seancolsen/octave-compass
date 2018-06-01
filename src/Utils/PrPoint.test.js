@@ -1,6 +1,6 @@
-import XyPoint from './XyPoint';
-import PrPoint from './PrPoint';
-import IrPoint from './IrPoint';
+import XyPoint from 'Utils/XyPoint';
+import PrPoint from 'Utils/PrPoint';
+import IrPoint from 'Utils/IrPoint';
 
 const PI = Math.PI;
 

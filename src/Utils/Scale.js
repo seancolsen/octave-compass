@@ -1,5 +1,5 @@
-import IntervalSet from "./IntervalSet";
-import {allScales} from "../Data/allScales";
+import IntervalSet from "Utils/IntervalSet";
+import {allScales} from "Data/allScales";
 
 export default class Scale extends IntervalSet {
 

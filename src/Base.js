@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import BaseInterval from "./BaseInterval";
-import {musicTheory} from "./Data/musicTheory";
+import BaseInterval from "BaseInterval";
+import {musicTheory} from "Data/musicTheory";
 
 export default class Base extends Component {
 

@@ -1,7 +1,6 @@
-import {musicTheory} from "../Data/musicTheory";
+import {musicTheory} from "Data/musicTheory";
 
 const PI = Math.PI;
-
 /**
  * Helper functions to deal with plain scalar numbers
  */

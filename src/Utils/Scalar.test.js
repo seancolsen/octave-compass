@@ -1,4 +1,4 @@
-import Scalar from "./Scalar.js";
+import Scalar from "Utils/Scalar";
 
 test('wrap', () => {
   expect(Scalar.wrap(150, 100)).toBe(50);

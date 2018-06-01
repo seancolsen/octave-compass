@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import './App.css';
-import Wheel from "./Wheel.js";
-import Marquee from "./Marquee";
-import Scalar from "./Utils/Scalar";
-import NoteSet from "./Utils/NoteSet";
-import IntervalSetFactory from "./Utils/IntervalSetFactory";
-import Chord from "./Utils/Chord";
-import Notation from "./Notation";
-import Menu from "./Menu";
+import 'App.css';
+import Wheel from "Wheel";
+import Marquee from "Marquee";
+import Scalar from "Utils/Scalar";
+import NoteSet from "Utils/NoteSet";
+import IntervalSetFactory from "Utils/IntervalSetFactory";
+import Chord from "Utils/Chord";
+import Notation from "Notation";
+import Menu from "Menu";
 import Tone from "tone";
-import Url from "./Utils/Url";
+import Url from "Utils/Url";
 
 export default class App extends Component {
 

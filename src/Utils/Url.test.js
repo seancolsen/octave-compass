@@ -1,5 +1,5 @@
-import Url from "./Url";
-import IntervalSet from "./IntervalSet";
+import Url from "Utils/Url";
+import IntervalSet from "Utils/IntervalSet";
 
 test('normalize' , () => {
   expect(Url.normalize(' /234-8 ')).toBe('234-8');

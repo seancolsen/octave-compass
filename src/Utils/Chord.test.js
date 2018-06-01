@@ -1,4 +1,4 @@
-import Chord from "./Chord";
+import Chord from "Utils/Chord";
 
 test('constructor', () => {
   expect(new Chord(0b000010010001).binary).toBe(0b000010010001);

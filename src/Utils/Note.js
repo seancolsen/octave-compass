@@ -1,5 +1,5 @@
-import NoteName from "./NoteName";
-import {musicTheory} from "../Data/musicTheory";
+import NoteName from "Utils/NoteName";
+import {musicTheory} from "Data/musicTheory";
 
 export default class Note {
 

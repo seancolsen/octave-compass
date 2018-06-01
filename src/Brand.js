@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Angle from "./Utils/Angle";
+import Angle from "Utils/Angle";
 
 const StyledText = styled.text`
   font-size: 50px;

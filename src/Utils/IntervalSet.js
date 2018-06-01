@@ -1,4 +1,4 @@
-import {musicTheory} from "../Data/musicTheory";
+import {musicTheory} from "Data/musicTheory";
 
 const divisions = musicTheory.octaveDivisions;
 

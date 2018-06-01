@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Vex from 'vexflow';
-import CustomMath from "./Utils/CustomMath";
+import CustomMath from "Utils/CustomMath";
 
 const VF = Vex.Flow;
 

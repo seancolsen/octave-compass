@@ -1,4 +1,4 @@
-import Modifier from "./Modifier";
+import Modifier from "Utils/Modifier";
 
 export default class NoteName {
 

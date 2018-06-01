@@ -1,5 +1,5 @@
 import React from 'react';
-import Angle from "./Utils/Angle";
+import Angle from "Utils/Angle";
 
 export default function Group(props) {
   let rotation = Angle.iToD(props.rotation || 0);

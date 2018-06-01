@@ -1,10 +1,10 @@
 import React from 'react';
-import Polygon from "./Polygon";
-import IrPoint from './Utils/IrPoint'
+import Polygon from "Polygon";
+import IrPoint from 'Utils/IrPoint'
 import styled from 'styled-components';
-import Rotatable from "./Rotatable";
-import SwarmOfChords from "./SwarmOfChords";
-import Brand from "./Brand";
+import Rotatable from "Rotatable";
+import SwarmOfChords from "SwarmOfChords";
+import Brand from "Brand";
 
 const RADIUS = 310;
 

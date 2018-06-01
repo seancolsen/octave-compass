@@ -1,6 +1,6 @@
-import Angle from './Angle.js';
-import IrPoint from './IrPoint.js';
-import XyPoint from './XyPoint.js';
+import Angle from 'Utils/Angle.js';
+import IrPoint from 'Utils/IrPoint.js';
+import XyPoint from 'Utils/XyPoint.js';
 
 /**
  * POLAR COORDINATE SYSTEM

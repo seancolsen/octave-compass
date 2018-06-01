@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import Arc from "./Arc";
+import Arc from "Arc";
 import styled from 'styled-components';
-import {musicTheory} from "./Data/musicTheory";
+import {musicTheory} from "Data/musicTheory";
 
 const upperRadius = 465;
 const lowerRadius = 480;

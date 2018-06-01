@@ -1,7 +1,7 @@
-import NoteSet from './NoteSet';
-import IntervalSet from "./IntervalSet";
-import Note from "./Note";
-import IntervalSetFactory from "./IntervalSetFactory";
+import NoteSet from 'Utils/NoteSet';
+import IntervalSet from "Utils/IntervalSet";
+import Note from "Utils/Note";
+import IntervalSetFactory from "Utils/IntervalSetFactory";
 
 test('chromatic', () => {
   expect(NoteSet.chromatic.notes.length).toBe(12);

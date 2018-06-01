@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import AlternateScaleNames from "./AlternateScaleNames";
+import AlternateScaleNames from "AlternateScaleNames";
 
 const DefaultName = styled.div`
   text-align: center;

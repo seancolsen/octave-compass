@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import IrPoint from './Utils/IrPoint';
+import IrPoint from 'Utils/IrPoint';
 
 export default class Arc extends Component {
 

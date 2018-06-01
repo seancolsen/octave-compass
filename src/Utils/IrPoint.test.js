@@ -1,6 +1,6 @@
-import XyPoint from './XyPoint';
-import IrPoint from './IrPoint';
-import PrPoint from './PrPoint';
+import XyPoint from 'Utils/XyPoint';
+import IrPoint from 'Utils/IrPoint';
+import PrPoint from 'Utils/PrPoint';
 
 test('toXy', () => {
   let data = [

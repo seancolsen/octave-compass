@@ -1,4 +1,4 @@
-import IntervalSet from './IntervalSet';
+import IntervalSet from 'Utils/IntervalSet';
 
 test('ordinalsToBinary', () => {
   expect(IntervalSet.ordinalsToBinary([])).toEqual(0b0);

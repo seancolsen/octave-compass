@@ -1,9 +1,9 @@
-import {musicTheory} from "../Data/musicTheory";
-import Chord from "./Chord";
-import IntervalSet from "./IntervalSet";
-import Scale from "./Scale";
-import Scalar from "./Scalar";
-import ChordSet from "./ChordSet";
+import {musicTheory} from "Data/musicTheory";
+import Chord from "Utils/Chord";
+import IntervalSet from "Utils/IntervalSet";
+import Scale from "Utils/Scale";
+import Scalar from "Utils/Scalar";
+import ChordSet from "Utils/ChordSet";
 
 const divisions = musicTheory.octaveDivisions;
 

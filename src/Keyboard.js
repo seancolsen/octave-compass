@@ -1,7 +1,7 @@
 import React from 'react';
-import Rotatable from "./Rotatable";
-import KeySet from "./KeySet";
-import Angle from "./Utils/Angle";
+import Rotatable from "Rotatable";
+import KeySet from "KeySet";
+import Angle from "Utils/Angle";
 
 function Keyboard(props) {
   const rotation = props.rotation - props.tonalCenter;

@@ -1,6 +1,6 @@
-import IntervalSet from "./IntervalSet";
-import {chordsData} from "../Data/chordsData";
-import IntervalSetFactory from "./IntervalSetFactory";
+import IntervalSet from "Utils/IntervalSet";
+import {chordsData} from "Data/chordsData";
+import IntervalSetFactory from "Utils/IntervalSetFactory";
 
 export default class Chord extends IntervalSet {
 

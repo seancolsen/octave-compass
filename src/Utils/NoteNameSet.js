@@ -1,4 +1,4 @@
-import CustomMath from "./CustomMath";
+import CustomMath from "Utils/CustomMath";
 
 const demeritFactors = {
   accidentalInsteadOfNatural: 1,

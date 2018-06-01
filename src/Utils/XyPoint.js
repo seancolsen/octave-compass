@@ -1,5 +1,5 @@
-import Scalar from "./Scalar";
-import PrPoint from "./PrPoint.js";
+import Scalar from "Utils/Scalar";
+import PrPoint from "Utils/PrPoint.js";
 
 const PI = Math.PI;
 

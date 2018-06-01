@@ -1,7 +1,7 @@
 import React from 'react';
-import IrPoint from "./Utils/IrPoint";
+import IrPoint from "Utils/IrPoint";
 import styled from 'styled-components';
-import Angle from "./Utils/Angle";
+import Angle from "Utils/Angle";
 
 const radius = 350;
 const size = 60;

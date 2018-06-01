@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import IrPoint from "./Utils/IrPoint";
+import IrPoint from "Utils/IrPoint";
 import styled from 'styled-components';
-import Angle from "./Utils/Angle";
-import IntervalSetFactory from "./Utils/IntervalSetFactory";
+import Angle from "Utils/Angle";
+import IntervalSetFactory from "Utils/IntervalSetFactory";
 
 const Background = styled.circle`
   fill: ${props => props.color || 'grey'};

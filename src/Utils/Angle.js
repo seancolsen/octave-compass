@@ -1,5 +1,5 @@
-import {musicTheory} from '../Data/musicTheory.js';
-import Scalar from "./Scalar";
+import {musicTheory} from 'Data/musicTheory';
+import Scalar from "Utils/Scalar";
 
 const PI = Math.PI;
 const CIRCLE_DEGREES = 360;

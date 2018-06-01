@@ -1,7 +1,7 @@
 import React, {Component} from "react";
-import KeyLabel from "./KeyLabel";
+import KeyLabel from "KeyLabel";
 import styled from "styled-components";
-import Arc from "./Arc";
+import Arc from "Arc";
 
 const spread = 0.20;
 const tieRadius = 348;

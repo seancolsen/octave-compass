@@ -1,9 +1,9 @@
 import React from 'react';
-import Scalar from './Utils/Scalar';
-import Polygon from './Polygon';
-import IrPoint from "./Utils/IrPoint";
+import Scalar from 'Utils/Scalar';
+import Polygon from 'Polygon';
+import IrPoint from "Utils/IrPoint";
 import styled from 'styled-components';
-import KeyLabelSet from "./KeyLabelSet";
+import KeyLabelSet from "KeyLabelSet";
 
 const innerRadius = 308;
 const outerRadius = 400;
