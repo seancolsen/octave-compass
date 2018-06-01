@@ -48,13 +48,30 @@ export default class Chord extends IntervalSet {
    */
   emblemSize;
 
+  /**
+   * The number of inversions that the named chord will need to undergo in order
+   * to match the IntervalSet described by this chord.
+   *
+   * @type {int}
+   */
+  inversion;
 
   constructor(binary) {
-    const chordData = chordsData[binary];
+    const thisIntervalSet = new IntervalSet(binary);
+    let inversion = null;
+    const chordData = Object.entries(chordsData)
+      .find(([possibleChordBinaryString, possibleChordData]) => {
+        const possibleChordBinary = parseInt(possibleChordBinaryString, 10);
+        const possibleIntervalSet = new IntervalSet(possibleChordBinary);
+        inversion = possibleIntervalSet
+          .inversionsToBeIdenticalTo(thisIntervalSet);
+        return Number.isInteger(inversion);
+      });
     if (!chordData) {
       throw new Error("Unknown chord");
     }
     super(binary);
+    this.inversion = inversion;
     this.initializeValuesFromChordData(chordData);
   }
 

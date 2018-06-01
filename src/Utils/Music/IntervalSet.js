@@ -283,21 +283,22 @@ export default class IntervalSet {
    * can be shifted to become the given intervalSet, then return the minimum
    * number of (positive) shifts necessary. If there is no way that this
    * IntervalSet can be shifted to become the given intervalSet, then return
-   * undefined.
+   * null.
    *
    * @param {IntervalSet} intervalSet
    * @return {int}
    *   e.g.
    *     - 0 if this chord and the given chord are identical
    *     - 1 if this chord can become the given chord when inverted once
-   *     - undefined if the two chords are not inversions of each other
+   *     - null if the two chords are not inversions of each other
    */
   inversionsToBeIdenticalTo(intervalSet) {
     // For performance, abandon early if we have a count mismatch.
     if (this.count !== intervalSet.count) {
       return null;
     }
-    return this.inversions.findIndex(inv => inv.isIdenticalTo(intervalSet));
+    const i = this.inversions.findIndex(inv => inv.isIdenticalTo(intervalSet));
+    return i >= 0 ? i : null;
   }
 
 }
