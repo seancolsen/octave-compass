@@ -139,8 +139,8 @@ test('inversionsToBeIdenticalTo', () => {
   const major0 = new IntervalSet(0b000010010001);
   const major1 = new IntervalSet(0b000100001001);
   const major2 = new IntervalSet(0b001000100001);
-  const dimimished0 = new IntervalSet(0b0000001001001);
+  const diminished0 = new IntervalSet(0b0000001001001);
   expect(major0.inversionsToBeIdenticalTo(major1)).toBe(1);
   expect(major0.inversionsToBeIdenticalTo(major2)).toBe(2);
-  expect(major0.inversionsToBeIdenticalTo(dimimished0)).toBeNull();
+  expect(major0.inversionsToBeIdenticalTo(diminished0)).toBeNull();
 });
