@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {Component, Fragment} from 'react';
 import styled from 'styled-components';
 import AlternateScaleNames from "components/Marquee/AlternateScaleNames";
+import Chord from "Utils/Music/Chord";
+import {Subtitle} from "components/Marquee/Subtitle";
+import Url from "Utils/Text/Url";
 
 const DefaultName = styled.div`
   text-align: center;
@@ -18,18 +21,89 @@ const NoteName = styled.span`
   font-weight: bold;
 `;
 
-export default function Marquee(props) {
-  return (
-    <div className={props.className} id='marquee'>
-      <DefaultName>
-        {props.intervalSet.defaultName ?
-          <IntervalSetName>{props.intervalSet.defaultName}</IntervalSetName> :
-          <UnknownName>{props.intervalSet.displayName}</UnknownName>
-        }
-        <span> in </span>
-        <NoteName>{props.noteSet.tonalCenterName}</NoteName>
-      </DefaultName>
-      <AlternateScaleNames intervalSet={props.intervalSet}/>
-    </div>
-  );
+export default class Marquee extends Component {
+
+  componentDidUpdate() {
+    this.updateWindow();
+  }
+
+  updateWindow() {
+    // Set page title
+    const appTitle = 'Octave Compass';
+    const title = `${this.windowTitle()} | ${appTitle}`;
+    document.title = title;
+
+    // Set URL
+    const url = Url.generate(
+      this.props.intervalSet,
+      this.props.noteSet.tonalCenterId
+    );
+    window.history.pushState(null, title, url);
+  }
+
+  scaleContent() {
+    const isNamed = !!this.props.intervalSet.defaultName;
+    const NameContainer = isNamed ? IntervalSetName : UnknownName;
+    const intervalSetName = this.props.intervalSet.displayName;
+    const tonalCenterName = this.props.noteSet.tonalCenterName;
+    return {
+      text: `${intervalSetName} in ${tonalCenterName}`,
+      markup: <Fragment>
+        <DefaultName>
+          <NameContainer>{intervalSetName}</NameContainer>
+          <span> in </span>
+          <NoteName>{tonalCenterName}</NoteName>
+        </DefaultName>
+        <AlternateScaleNames intervalSet={this.props.intervalSet}/>
+      </Fragment>
+    };
+  }
+
+  chordContent() {
+    const inversion = this.props.intervalSet.inversion;
+    const inversionText = inversion === 0 ? '' : `(inversion ${inversion})`;
+    const rootNote = this.props.noteSet.rootNote(inversion);
+    const tonalCenterName = rootNote.nameToUseForLabels;
+    const chordName = this.props.intervalSet.displayName;
+    const displayName = `${tonalCenterName} ${chordName} chord`;
+    return {
+      text: `${displayName}${inversionText ? ' ' : ''}${inversionText}`,
+      markup: <Fragment>
+        <DefaultName>
+          <IntervalSetName>{displayName}</IntervalSetName>
+        </DefaultName>
+        <Subtitle>{inversionText}</Subtitle>
+      </Fragment>
+    };
+  }
+
+  /**
+   * Get the content of this Marquee, depending on whether we have a chord or a
+   * scale.
+   *
+   * @return {{text, markup}}
+   */
+  content() {
+    return this.props.intervalSet instanceof Chord ?
+      this.chordContent() : this.scaleContent();
+  }
+
+  /**
+   * This function gets called within App when App wants to set a new window
+   * title.
+   *
+   * @return {string}
+   */
+  windowTitle() {
+    return this.content().text;
+  }
+
+  render() {
+    return (
+      <div className={this.props.className} id='marquee'>
+        {this.content().markup}
+      </div>
+    );
+  }
+
 }

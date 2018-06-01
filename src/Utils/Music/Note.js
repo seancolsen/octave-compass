@@ -141,6 +141,13 @@ export default class Note {
   }
 
   /**
+   * @return {string}
+   */
+  get nameToUseForLabels() {
+    return this.namesToUseForLabels.map(name => name.unicode).join('/');
+  }
+
+  /**
    * If this note already has a name, then return it. Otherwise, return a "flat"
    * name.
    *

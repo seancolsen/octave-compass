@@ -78,7 +78,7 @@ export default class Chord extends IntervalSet {
 
   initializeValuesFromChordData(chordData) {
     this.names = [chordData.name];
-    this.defaultName = chordData.name + ' chord';
+    this.defaultName = chordData.name;
     this.symbol = chordData.symbol;
     this.color = chordData.color;
     this.weight = chordData.weight;

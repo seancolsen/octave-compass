@@ -220,14 +220,34 @@ export default class NoteSet {
   }
 
   /**
+   *
+   * @return {int}
+   */
+  get tonalCenterId() {
+    return this.firstNote.id;
+  }
+
+  /**
    * Return a nice looking string that describes the tonal center of this note
    * set.
    *
    * @return {string}
    */
   get tonalCenterName() {
-    return this.firstNote.namesToUseForLabels
-      .map(name => name.unicode).join('/');
+    return this.firstNote.nameToUseForLabels
+  }
+
+  /**
+   * If this NoteSet represents a chord that's an inversion of a known chord,
+   * this function will return the note that represents the root note of the
+   * chord, when given that chord's inversion value.
+   *
+   * @param {int} inversion
+   * @return {Note}
+   */
+  rootNote(inversion) {
+    const index = Scalar.wrap(-inversion, this.count);
+    return this.notes[index];
   }
 
 }
