@@ -1,5 +1,5 @@
 import IntervalSet from "Utils/Music/IntervalSet";
-import {chordsData} from "Data/chordsData";
+import {chords as chordsData} from "Data/chords";
 
 export default class Chord extends IntervalSet {
 
@@ -59,20 +59,18 @@ export default class Chord extends IntervalSet {
   constructor(binary) {
     const thisIntervalSet = new IntervalSet(binary);
     let inversion = null;
-    const chordDataEntry = Object.entries(chordsData)
-      .find(([possibleChordBinaryString, possibleChordData]) => {
-        const possibleChordBinary = parseInt(possibleChordBinaryString, 10);
-        const possibleIntervalSet = new IntervalSet(possibleChordBinary);
+    const chordData = chordsData
+      .find(data => {
+        const possibleIntervalSet = new IntervalSet(data.binary);
         inversion = possibleIntervalSet
           .inversionsToBeIdenticalTo(thisIntervalSet);
         return Number.isInteger(inversion);
       });
-    if (!chordDataEntry) {
+    if (!chordData) {
       throw new Error("Unknown chord");
     }
     super(binary);
     this.inversion = inversion;
-    const chordData = chordDataEntry[1];
     this.initializeValuesFromChordData(chordData);
   }
 
