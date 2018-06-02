@@ -17,13 +17,7 @@ export default class App extends Component {
     this.state = {
       tonalCenter: 0,
       intervalSet: IntervalSetFactory.fromBinary(0b101010110101),
-      selectedChords: [
-        Chord.fromBinary(0b000010010001),
-        Chord.fromBinary(0b000010001001),
-        Chord.fromBinary(0b000001001001),
-        Chord.fromBinary(0b010010010001),
-        Chord.fromBinary(0b100010010001),
-      ],
+      selectedChords: Chord.allChords,
       clef: 'treble',
     };
   }

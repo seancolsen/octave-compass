@@ -49,6 +49,14 @@ export default class Chord extends IntervalSet {
   emblemSize;
 
   /**
+   * A value of 1 means the default size, which is sized according to the
+   * emblem size.
+   *
+   * @type {number}
+   */
+  textSizeFactor;
+
+  /**
    * The number of inversions that the named chord will need to undergo in order
    * to match the IntervalSet described by this chord.
    *
@@ -64,7 +72,17 @@ export default class Chord extends IntervalSet {
     this.color = chordData.color;
     this.weight = chordData.weight;
     this.emblemSize = chordData.emblemSize;
-    this.inversion = chordData.inversion;
+    this.textSizeFactor = chordData.textSizeFactor;
+    this.inversion = chordData.inversion || 0;
+  }
+
+  /**
+   * Return an array of all possible chords.
+   *
+   * @return {Chord[]}
+   */
+  static get allChords() {
+    return chordsData.map(entry => new Chord(entry));
   }
 
   /**

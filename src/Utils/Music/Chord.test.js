@@ -31,3 +31,6 @@ test('names', () => {
   expect(major0.names).toContain('major');
 });
 
+test('allChords', () => {
+  expect(Chord.allChords.length).toBeGreaterThan(5);
+});

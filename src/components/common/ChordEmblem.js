@@ -3,13 +3,15 @@ import IrPoint from "Utils/Geometry/IrPoint";
 import styled from 'styled-components';
 import Angle from "Utils/Geometry/Angle";
 
+const fontSizeToEmblemSizeRatio = 0.85;
+
 const Background = styled.circle`
   fill: ${props => props.color || 'grey'};
 `;
 
 const Symbol = styled.text`
   fill: white;
-  font-size: 25px;
+  font-size: ${props => props.fontSize}px;
   tspan.bold {
     font-weight: bold;
   }
@@ -41,7 +43,12 @@ export default class ChordEmblem extends Component {
     const shiftedChord = this.props.chord.shift(this.props.interval);
     this.props.playIntervals(shiftedChord.ordinals);
   }
-  
+
+  fontSize() {
+    return this.props.size * this.props.chord.textSizeFactor
+      * fontSizeToEmblemSizeRatio;
+  }
+
   render() {
     const point = new IrPoint(this.props.interval, this.props.radialPosition)
       .toXy();
@@ -65,6 +72,7 @@ export default class ChordEmblem extends Component {
           dangerouslySetInnerHTML={{__html: this.props.chord.symbol}}
           dominantBaseline={'middle'} // TODO address lack of IE support
           textAnchor={'middle'}
+          fontSize={this.fontSize()}
         />
       </G>
     );
