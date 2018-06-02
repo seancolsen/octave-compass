@@ -56,31 +56,43 @@ export default class Chord extends IntervalSet {
    */
   inversion;
 
-  constructor(binary) {
-    const thisIntervalSet = new IntervalSet(binary);
-    let inversion = null;
-    const chordData = chordsData
-      .find(data => {
-        const possibleIntervalSet = new IntervalSet(data.binary);
-        inversion = possibleIntervalSet
-          .inversionsToBeIdenticalTo(thisIntervalSet);
-        return Number.isInteger(inversion);
-      });
-    if (!chordData) {
-      throw new Error("Unknown chord");
-    }
-    super(binary);
-    this.inversion = inversion;
-    this.initializeValuesFromChordData(chordData);
-  }
-
-  initializeValuesFromChordData(chordData) {
+  constructor(chordData) {
+    super(chordData);
     this.names = [chordData.name];
     this.defaultName = chordData.name;
     this.symbol = chordData.symbol;
     this.color = chordData.color;
     this.weight = chordData.weight;
     this.emblemSize = chordData.emblemSize;
+    this.inversion = chordData.inversion;
+  }
+
+  /**
+   * Given the binary intervals of a chord, search for the definition of that
+   * chord and return a Chord object if possible.
+   *
+   * @param {int} binary
+   * @return {Chord}
+   * @throws {Error} if the chord can not be found
+   */
+  static fromBinary(binary) {
+    const thisIntervalSet = IntervalSet.fromBinary(binary);
+    let inversion = null;
+    const chordDataEntry = chordsData.find(data => {
+      const possibleIntervalSet = IntervalSet.fromBinary(data.binary);
+      inversion = possibleIntervalSet
+        .inversionsToBeIdenticalTo(thisIntervalSet);
+      return Number.isInteger(inversion);
+    });
+    if (!chordDataEntry) {
+      throw new Error("Unknown chord");
+    }
+
+    // Copy chordDataEntry to a new object in order to avoid mutating it
+    let chordData = Object.assign({}, chordDataEntry);
+    chordData.inversion = inversion;
+    chordData.binary = binary;
+    return new Chord(chordData);
   }
 
 }

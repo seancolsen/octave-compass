@@ -22,12 +22,12 @@ export default class IntervalSetFactory {
    */
   static fromIntervalSet(intervalSet) {
     try {
-      return new Scale(intervalSet.binary);
+      return Scale.fromBinary(intervalSet.binary);
     }
     catch (e) {
     }
     try {
-      return new Chord(intervalSet.binary);
+      return Chord.fromBinary(intervalSet.binary);
     }
     catch (e) {
     }
@@ -41,7 +41,7 @@ export default class IntervalSetFactory {
    * @return {IntervalSet}
    */
   static fromBinary(binary) {
-    return IntervalSetFactory.fromIntervalSet(new IntervalSet(binary));
+    return IntervalSetFactory.fromIntervalSet(IntervalSet.fromBinary(binary));
   }
 
 }

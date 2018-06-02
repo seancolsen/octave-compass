@@ -18,6 +18,6 @@ test('parse empty', () => {
 });
 
 test('generate', () => {
-  const intervalSet = new IntervalSet(1234);
+  const intervalSet = IntervalSet.fromBinary(1234);
   expect(Url.generate(intervalSet, 7)).toBe('1234-7');
 });

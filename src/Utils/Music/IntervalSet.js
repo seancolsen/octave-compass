@@ -53,10 +53,22 @@ export default class IntervalSet {
   defaultName = null;
 
   /**
-   * @param {number} binary
+   * This constructor takes a kind of funny format in order to be similar to the
+   * constructors of Scale and Chord which inherit from this class.
+   *
+   * @param {{}} intervalSetData
    */
-  constructor(binary) {
-    this.binary = binary;
+  constructor(intervalSetData) {
+    this.binary = intervalSetData.binary;
+  }
+
+  /**
+   * Return a new IntervalSet with the binary intervals as specified.
+   *
+   * @param {int} binary
+   */
+  static fromBinary(binary) {
+    return new IntervalSet({binary: binary});
   }
 
   /**
@@ -68,7 +80,7 @@ export default class IntervalSet {
    * @return {IntervalSet}
    */
   static fromOrdinals(ordinals) {
-    return new IntervalSet(IntervalSet.ordinalsToBinary(ordinals));
+    return IntervalSet.fromBinary(IntervalSet.ordinalsToBinary(ordinals));
   }
 
   /**
@@ -77,7 +89,7 @@ export default class IntervalSet {
    * @return {IntervalSet}
    */
   static get chromatic() {
-    return new IntervalSet(IntervalSet.chromaticBinary);
+    return IntervalSet.fromBinary(IntervalSet.chromaticBinary);
   }
 
   /**
@@ -206,7 +218,7 @@ export default class IntervalSet {
     const shiftToWrap = divisions - shift;
     const allBits = (this.binary << shift) | (this.binary >> shiftToWrap);
     const mask = IntervalSet.chromaticBinary;
-    return new IntervalSet(allBits & mask);
+    return IntervalSet.fromBinary(allBits & mask);
   }
 
   /**
@@ -217,7 +229,7 @@ export default class IntervalSet {
    * @return {IntervalSet}
    */
   toggleBinaryIntervals(binary) {
-    return new IntervalSet(this.binary ^ binary);
+    return IntervalSet.fromBinary(this.binary ^ binary);
   }
 
   /**

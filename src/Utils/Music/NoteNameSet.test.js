@@ -100,7 +100,7 @@ test('demerits zero', () => {
 });
 
 test('fromModifiers simple', () => {
-  const intervalSet = new IntervalSet(0b000010010001);
+  const intervalSet = IntervalSet.fromBinary(0b000010010001);
   const rotation = 0;
   const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
   const noteNameSet = NoteNameSet.fromModifiers(noteSet, [
@@ -115,7 +115,7 @@ test('fromModifiers simple', () => {
 });
 
 test('fromModifiers complex', () => {
-  const intervalSet = new IntervalSet(0b000010010001);
+  const intervalSet = IntervalSet.fromBinary(0b000010010001);
   const rotation = -4;
   const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
   const noteNameSet = NoteNameSet.fromModifiers(noteSet, [

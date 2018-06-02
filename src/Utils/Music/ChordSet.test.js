@@ -2,9 +2,9 @@ import ChordSet from "Utils/Music/ChordSet";
 import Chord from "Utils/Music/Chord";
 import IntervalSet from "Utils/Music/IntervalSet";
 
-const majorChord = new Chord(0b000010010001);
-const dominant7Chord = new Chord(0b010010010001);
-const diminishedChord = new Chord(0b0000001001001);
+const majorChord = Chord.fromBinary(0b000010010001);
+const dominant7Chord = Chord.fromBinary(0b010010010001);
+const diminishedChord = Chord.fromBinary(0b0000001001001);
 
 const majorAndDiminishedAt0 = new ChordSet([majorChord, diminishedChord], 0);
 
@@ -17,7 +17,7 @@ test('totalEmblemSize', () => {
 });
 
 test('atOrdinal', () => {
-  const majorScale = new IntervalSet(0b101010110101);
+  const majorScale = IntervalSet.fromBinary(0b101010110101);
   expect(ChordSet.atOrdinal(majorScale, 7, [majorChord, dominant7Chord]).count)
     .toBe(2);
 });
