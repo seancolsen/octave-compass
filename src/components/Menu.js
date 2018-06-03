@@ -1,13 +1,19 @@
 import React from 'react';
 import ChordSelection from "components/Menu/ChordSelection";
+import styled from 'styled-components';
 
-export default function Menu(props) {
+function Menu(props) {
 
   return (
     <div className={props.className} id='menu'>
       <ChordSelection
         chords={props.chords}
+        toggleChord={props.toggleChord}
       />
     </div>
   );
 }
+
+export default styled(Menu)`
+  overflow: scroll;
+`;

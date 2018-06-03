@@ -17,7 +17,12 @@ export default class App extends Component {
     this.state = {
       tonalCenter: 0,
       intervalSet: IntervalSetFactory.fromBinary(0b101010110101),
-      selectedChords: Chord.allChords,
+      selectedChords: [
+        'diminished',
+        'major',
+        'minor',
+        'dominant 7',
+      ].map(name => Chord.fromName(name)),
       clef: 'treble',
     };
   }
@@ -65,6 +70,17 @@ export default class App extends Component {
         this.state.intervalSet.toggleIntervalOrdinal(ordinal)
       ),
     });
+  }
+
+  /**
+   * Change the state of the selected chords by toggling on or off one chord,
+   * when given the binary representation of that chord.
+   *
+   * @param {int} binary
+   */
+  toggleChord(binary) {
+    // TODO
+    console.log(`toggle ${binary}`);
   }
 
   /**
@@ -129,6 +145,7 @@ export default class App extends Component {
         />
         <Menu
           chords={this.state.selectedChords}
+          toggleChord={binary => this.toggleChord(binary)}
         />
       </div>
     );

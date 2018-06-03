@@ -1,12 +1,14 @@
 import React from "react";
 import ChordChoice from "components/Menu/ChordChoice";
 import styled from 'styled-components';
+import Chord from "Utils/Music/Chord";
 
 function ChordChoices(props) {
-  const chordChoices = props.chords.map(chord =>
+  const chordChoices = Chord.allChords.map(chord =>
     <ChordChoice
       key={chord.binary}
       chord={chord}
+      toggleChord={props.toggleChord}
     />
   );
   return (

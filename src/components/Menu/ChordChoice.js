@@ -2,10 +2,15 @@ import React from "react";
 import ChordEmblem from "components/common/ChordEmblem";
 import styled from 'styled-components';
 
+const ChordName = styled.div``;
+
 function ChordChoice(props) {
   const size = 100;
   return (
-    <div className={props.className}>
+    <div
+      className={props.className}
+      onClick={(e) => props.toggleChord(props.chord.binary)}
+    >
       <svg
         viewBox={`-${size / 2} -${size / 2} ${size} ${size}`}
       >
@@ -18,18 +23,27 @@ function ChordChoice(props) {
           somethingIsRotating={false}
         />
       </svg>
-      <div>{props.chord.defaultName}</div>
-      <div><button>Enable</button></div>
-      <div><button>View</button></div>
+      <ChordName>
+        {props.chord.defaultName}
+      </ChordName>
     </div>
   );
 }
 
 export default styled(ChordChoice)`
-  margin: 10px;
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
   & svg {
     display: block;
     width: 30px;
     margin: auto;
+  }
+  &:hover {
+    background: white;
+  }
+  &:hover ${ChordName} {
+    text-decoration: underline;
   }
 `;
