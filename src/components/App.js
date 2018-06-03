@@ -127,7 +127,9 @@ export default class App extends Component {
           pitchSet={this.pitchSet()}
           clef={this.state.clef}
         />
-        <Menu/>
+        <Menu
+          chords={this.state.selectedChords}
+        />
       </div>
     );
   }
