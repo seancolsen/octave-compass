@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import IntervalSetFactory from "Utils/Music/IntervalSetFactory";
-import Chord from "Utils/Music/Chord";
 import NoteSet from "Utils/Music/NoteSet";
 import Scalar from "Utils/Math/Scalar";
 import Tone from "tone";
@@ -9,6 +8,8 @@ import Marquee from "components/Marquee";
 import Wheel from "components/Wheel";
 import Notation from "components/Notation";
 import Menu from "components/Menu";
+import ChordSet from "Utils/Music/ChordSet";
+import Chord from "Utils/Music/Chord";
 
 export default class App extends Component {
 
@@ -17,14 +18,26 @@ export default class App extends Component {
     this.state = {
       tonalCenter: 0,
       intervalSet: IntervalSetFactory.fromBinary(0b101010110101),
-      selectedChords: [
-        'diminished',
-        'major',
-        'minor',
-        'dominant 7',
-      ].map(name => Chord.fromName(name)),
+      selectedChords: this.initialChordSet(),
       clef: 'treble',
     };
+  }
+
+  /**
+   * Generate a chord set that the app will use as the chords initially
+   * selected.
+   *
+   * @return {ChordSet}
+   */
+  initialChordSet() {
+    const chordNames = [
+      'major',
+      'minor',
+      'dominant 7',
+      'diminished',
+    ];
+    const initialChords = chordNames.map(name => Chord.fromName(name));
+    return new ChordSet(initialChords);
   }
 
   /**
@@ -144,7 +157,7 @@ export default class App extends Component {
           clef={this.state.clef}
         />
         <Menu
-          chords={this.state.selectedChords}
+          selectedChords={this.state.selectedChords}
           toggleChord={binary => this.toggleChord(binary)}
         />
       </div>

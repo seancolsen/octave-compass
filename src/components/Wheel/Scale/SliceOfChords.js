@@ -27,7 +27,7 @@ export default class SliceOfChords extends Component {
           radialPosition={radialPosition}
           size={size}
           chord={chord}
-          interval={this.props.chordSet.ordinal}
+          interval={this.props.ordinal}
           rotation={this.props.rotation}
           somethingIsRotating={this.props.somethingIsRotating}
           playIntervals={this.props.playIntervals}

@@ -1,5 +1,6 @@
 import IntervalSet from 'Utils/Music/IntervalSet';
 import Chord from "Utils/Music/Chord";
+import ChordSet from "Utils/Music/ChordSet";
 
 test('ordinalsToBinary', () => {
   expect(IntervalSet.ordinalsToBinary([])).toEqual(0b0);
@@ -111,11 +112,11 @@ test('compliment', () => {
     .toBe(0b000000000000);
 });
 
-test('chordSets', () => {
+test('ordinalChordSets', () => {
   const intervalSet = IntervalSet.fromBinary(0b101010110101);
-  const possibleChords = [Chord.fromBinary(0b000010010001)];
-  const chordSets = intervalSet.chordSets(possibleChords);
-  expect(chordSets.map(chordSet => chordSet.count))
+  const setOfPossibleChords = new ChordSet([Chord.fromName('major')]);
+  const ordinalChordSets = intervalSet.ordinalChordSets(setOfPossibleChords);
+  expect(ordinalChordSets.map(ocs => ocs.chordSet.count))
     .toEqual([1, 0, 0, 1, 1, 0, 0]);
 });
 

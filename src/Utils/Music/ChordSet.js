@@ -1,5 +1,5 @@
 /**
- * This represents a set of chords at a given interval within a scale.
+ * This represents a set of chords.
  */
 export default class ChordSet {
 
@@ -10,16 +10,8 @@ export default class ChordSet {
    */
   chords = [];
 
-  /**
-   * The interval ordinal at which this chord set exists.
-   *
-   * @type {number}
-   */
-  ordinal = 0;
-
-  constructor(chords, ordinal) {
+  constructor(chords) {
     this.chords = chords;
-    this.ordinal = ordinal;
   }
 
   /**
@@ -40,26 +32,6 @@ export default class ChordSet {
     return this.chords
       .map(chord => chord.emblemSize || 0)
       .reduce((a, b) => a + b, 0);
-  }
-
-  /**
-   * Generate a new chord set which exists at the given ordinal within the
-   * given interval set.
-   *
-   * @param intervalSet
-   * @param ordinal
-   * @param possibleChords
-   * @return {ChordSet}
-   */
-  static atOrdinal(intervalSet, ordinal, possibleChords) {
-    let chords = [];
-    possibleChords.forEach(chord => {
-      const shiftedChord = chord.shift(ordinal);
-      if (intervalSet.contains(shiftedChord)) {
-        chords.push(chord);
-      }
-    });
-    return new ChordSet(chords, ordinal);
   }
 
 }
