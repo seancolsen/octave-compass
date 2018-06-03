@@ -113,4 +113,17 @@ export default class Chord extends IntervalSet {
     return new Chord(chordData);
   }
 
+  /**
+   * Look for a chord with the given name and return it if possible.
+   *
+   * @param {string} name
+   */
+  static fromName(name) {
+    const chordData = chordsData.find(data => data.name === name);
+    if (!chordData) {
+      throw new Error("Unknown chord");
+    }
+    return new Chord(chordData);
+  }
+
 }

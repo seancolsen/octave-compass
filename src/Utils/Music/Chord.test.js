@@ -34,3 +34,8 @@ test('names', () => {
 test('allChords', () => {
   expect(Chord.allChords.length).toBeGreaterThan(5);
 });
+
+test('fromName', () => {
+  expect(Chord.fromName('major').defaultName).toBe('major');
+  expect(() => {Chord.fromName('foobar')}).toThrow();
+});
