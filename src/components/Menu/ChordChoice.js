@@ -9,7 +9,7 @@ function ChordChoice(props) {
   return (
     <div
       className={props.className}
-      onClick={(e) => props.toggleChord(props.chord.binary)}
+      onClick={(e) => props.toggleChord(props.chord)}
     >
       <svg
         viewBox={`-${size / 2} -${size / 2} ${size} ${size}`}
@@ -35,13 +35,11 @@ export default styled(ChordChoice)`
   padding: 10px;
   cursor: pointer;
   border-radius: 5px;
+  background: ${p => p.selected ? 'white' : 'none'};
   & svg {
     display: block;
     width: 30px;
     margin: auto;
-  }
-  &:hover {
-    background: white;
   }
   &:hover ${ChordName} {
     text-decoration: underline;

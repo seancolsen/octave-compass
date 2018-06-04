@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import Chord from "Utils/Music/Chord";
 
 function ChordChoices(props) {
-  // TODO compare chord to props.selectedChords
   const chordChoices = Chord.allChords.map(chord =>
     <ChordChoice
       key={chord.binary}
       chord={chord}
       toggleChord={props.toggleChord}
+      selected={props.selectedChords.containsChord(chord)}
     />
   );
   return (

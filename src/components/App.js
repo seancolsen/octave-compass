@@ -86,14 +86,15 @@ export default class App extends Component {
   }
 
   /**
-   * Change the state of the selected chords by toggling on or off one chord,
-   * when given the binary representation of that chord.
+   * Change the state of the selected chords by adding or removing the given
+   * chord as necessary.
    *
-   * @param {int} binary
+   * @param {Chord} chord
    */
-  toggleChord(binary) {
-    // TODO
-    console.log(`toggle ${binary}`);
+  toggleChord(chord) {
+    this.setState({
+      selectedChords: this.state.selectedChords.toggleChord(chord),
+    })
   }
 
   /**
@@ -158,7 +159,7 @@ export default class App extends Component {
         />
         <Menu
           selectedChords={this.state.selectedChords}
-          toggleChord={binary => this.toggleChord(binary)}
+          toggleChord={chord => this.toggleChord(chord)}
         />
       </div>
     );

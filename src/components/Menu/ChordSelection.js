@@ -10,7 +10,7 @@ export default function ChordSelection(props) {
         <button>Hide all</button>
       </div>
       <ChordChoices
-        selectedChords={props.chords}
+        selectedChords={props.selectedChords}
         toggleChord={props.toggleChord}
       />
     </div>

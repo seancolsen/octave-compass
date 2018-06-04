@@ -7,7 +7,7 @@ function Menu(props) {
   return (
     <div className={props.className} id='menu'>
       <ChordSelection
-        selectedChords={props.chords}
+        selectedChords={props.selectedChords}
         toggleChord={props.toggleChord}
       />
     </div>
