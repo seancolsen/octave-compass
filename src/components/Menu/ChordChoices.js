@@ -2,9 +2,10 @@ import React from "react";
 import ChordChoice from "components/Menu/ChordChoice";
 import styled from 'styled-components';
 import Chord from "Utils/Music/Chord";
+import ChordSet from "Utils/Music/ChordSet";
 
 function ChordChoices(props) {
-  const chordChoices = Chord.allChords.map(chord =>
+  const chordChoices = new ChordSet(Chord.allChords).orderedChords.map(chord =>
     <ChordChoice
       key={chord.binary}
       chord={chord}

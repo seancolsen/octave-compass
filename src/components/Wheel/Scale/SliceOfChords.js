@@ -18,7 +18,7 @@ export default class SliceOfChords extends Component {
   chordEmblems() {
     let result = [];
     let radialPosition = constellationRadius + this.radialSpacing;
-    this.props.chordSet.chords.forEach((chord, index) => {
+    this.props.chordSet.orderedChords.forEach((chord, index) => {
       const size = chord.emblemSize * circleRadius;
       radialPosition -= size + this.radialSpacing;
       result.push(

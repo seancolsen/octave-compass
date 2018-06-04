@@ -9,6 +9,10 @@ const majorAndDiminished = new ChordSet([
   majorChord,
   diminishedChord
 ]);
+const dominant7AndMajor = new ChordSet([
+  dominant7Chord,
+  majorChord,
+]);
 
 test('count', () => {
   expect(majorAndDiminished.count).toBe(2);
@@ -36,4 +40,11 @@ test('removeChord', () => {
 test('toggleChord', () => {
   expect(majorAndDiminished.toggleChord(majorChord).count).toBe(1);
   expect(majorAndDiminished.toggleChord(dominant7Chord).count).toBe(3);
+});
+
+test('orderedChords', () => {
+  expect(dominant7AndMajor.orderedChords.map(c => c.defaultName))
+    .toEqual(['major', 'dominant 7']);
+  expect(majorAndDiminished.orderedChords.map(c => c.defaultName))
+    .toEqual(['major', 'diminished']);
 });

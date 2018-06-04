@@ -24,6 +24,23 @@ export default class ChordSet {
   }
 
   /**
+   * Compare two chords to determine how they should be sorted.
+   *
+   * @param {Chord} chordA
+   * @param {Chord} chordB
+   */
+  static chordSortOrder(chordA, chordB) {
+    return chordA.weight - chordB.weight;
+  }
+
+  /**
+   * Return an array of the chords in this set, correctly sorted.
+   */
+  get orderedChords() {
+    return this.chords.slice(0).sort(ChordSet.chordSortOrder);
+  }
+
+  /**
    * If you stack all the emblems, end to end, how big would they be?
    *
    * @return {number}
