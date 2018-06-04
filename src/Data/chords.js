@@ -27,7 +27,7 @@ export const chords = [
     symbol: 'sus2',
   },
   {
-    binary: 0b000010010001,
+    binary: 0b000010100001,
     name: "suspended 4",
     weight: 2.5,
     emblemSize: 0.8,
