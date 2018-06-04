@@ -11,7 +11,7 @@ export default class ChordSet {
   chords = [];
 
   constructor(chords) {
-    this.chords = chords;
+    this.chords = ChordSet.uniqueChords(ChordSet.sortedChords(chords));
   }
 
   /**
@@ -24,6 +24,30 @@ export default class ChordSet {
   }
 
   /**
+   * Given an array of Chords, return an array of the same Chords, but with
+   * duplicates removed.
+   *
+   * @param {Chord[]} chords
+   * @return {Chord[]}
+   */
+  static uniqueChords(chords) {
+    const binaryValues = chords.map(chord => chord.binary);
+    return chords.filter((chord, index) =>
+      binaryValues.indexOf(chord.binary) === index
+    );
+  }
+
+  /**
+   * Sort an array of chords.
+   *
+   * @param {Chord[]} chords
+   * @return {Chord[]}
+   */
+  static sortedChords(chords) {
+    return chords.slice(0).sort(ChordSet.chordSortOrder);
+  }
+
+  /**
    * Compare two chords to determine how they should be sorted.
    *
    * @param {Chord} chordA
@@ -31,13 +55,6 @@ export default class ChordSet {
    */
   static chordSortOrder(chordA, chordB) {
     return chordA.weight - chordB.weight;
-  }
-
-  /**
-   * Return an array of the chords in this set, correctly sorted.
-   */
-  get orderedChords() {
-    return this.chords.slice(0).sort(ChordSet.chordSortOrder);
   }
 
   /**

@@ -5,7 +5,7 @@ import Chord from "Utils/Music/Chord";
 import ChordSet from "Utils/Music/ChordSet";
 
 function ChordChoices(props) {
-  const chordChoices = new ChordSet(Chord.allChords).orderedChords.map(chord =>
+  const chordChoices = new ChordSet(Chord.allChords).chords.map(chord =>
     <ChordChoice
       key={chord.binary}
       chord={chord}
