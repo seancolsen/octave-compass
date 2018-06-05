@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ChordEmblem from "components/common/ChordEmblem";
+import ChordInScale from "components/Wheel/Scale/ChordInScale";
 
 const constellationRadius = 295;
 const maxRadialSpacing = 5;
@@ -15,14 +15,14 @@ export default class SliceOfChords extends Component {
     return Math.min(spacing, maxRadialSpacing);
   }
 
-  chordEmblems() {
+  chords() {
     let result = [];
     let radialPosition = constellationRadius + this.radialSpacing;
     this.props.chordSet.chords.forEach((chord, index) => {
       const size = chord.emblemSize * circleRadius;
       radialPosition -= size + this.radialSpacing;
       result.push(
-        <ChordEmblem
+        <ChordInScale
           key={index}
           radialPosition={radialPosition}
           size={size}
@@ -39,7 +39,7 @@ export default class SliceOfChords extends Component {
   }
 
   render() {
-    return <g>{this.chordEmblems()}</g>;
+    return <g>{this.chords()}</g>;
   }
 
 }
