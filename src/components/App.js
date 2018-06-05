@@ -9,7 +9,6 @@ import Wheel from "components/Wheel";
 import Notation from "components/Notation";
 import Menu from "components/Menu";
 import ChordSet from "Utils/Music/ChordSet";
-import Chord from "Utils/Music/Chord";
 
 export default class App extends Component {
 
@@ -18,26 +17,9 @@ export default class App extends Component {
     this.state = {
       tonalCenter: 0,
       intervalSet: IntervalSetFactory.fromBinary(0b101010110101),
-      selectedChords: this.initialChordSet(),
+      selectedChords: ChordSet.fromDefaultChords,
       clef: 'treble',
     };
-  }
-
-  /**
-   * Generate a chord set that the app will use as the chords initially
-   * selected.
-   *
-   * @return {ChordSet}
-   */
-  initialChordSet() {
-    const chordNames = [
-      'major',
-      'minor',
-      'dominant 7',
-      'diminished',
-    ];
-    const initialChords = chordNames.map(name => Chord.fromName(name));
-    return new ChordSet(initialChords);
   }
 
   /**
@@ -95,6 +77,17 @@ export default class App extends Component {
     this.setState({
       selectedChords: this.state.selectedChords.toggleChord(chord),
     })
+  }
+
+  /**
+   * Replace the selected chords (in state) with the given ChordSet.
+   *
+   * @param chordSet
+   */
+  setChordSet(chordSet) {
+    this.setState({
+      selectedChords: chordSet,
+    });
   }
 
   /**
@@ -159,6 +152,7 @@ export default class App extends Component {
         />
         <Menu
           selectedChords={this.state.selectedChords}
+          setChordSet={chordSet => this.setChordSet(chordSet)}
           toggleChord={chord => this.toggleChord(chord)}
           intervalSet={this.state.intervalSet}
         />

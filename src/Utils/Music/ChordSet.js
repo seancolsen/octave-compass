@@ -124,6 +124,41 @@ export default class ChordSet {
   }
 
   /**
+   * Return a ChordSet containing all the possible chords.
+   *
+   * @return {ChordSet}
+   */
+  static get fromAllChords() {
+    return new ChordSet(Chord.allChords);
+  }
+
+  /**
+   * Return a new ChordSet based on an array of chord names.
+   *
+   * @param {string[]} chordNames
+   * @return {ChordSet}
+   */
+  static fromChordNames(chordNames) {
+    return new ChordSet(chordNames.map(name => Chord.fromName(name)));
+  }
+
+  /**
+   * Return the default set of chords that the app should have selected when it
+   * starts.
+   *
+   * @return {ChordSet}
+   */
+  static get fromDefaultChords() {
+    return ChordSet.fromChordNames([
+      'major',
+      'minor',
+      'dominant 7',
+      'diminished',
+      'augmented',
+    ]);
+  }
+
+  /**
    * Return a ChordSet that contains all the chords within the given
    * IntervalSet, at any ordinal.
    *
@@ -131,9 +166,8 @@ export default class ChordSet {
    * @return {ChordSet}
    */
   static fromContainingIntervalSet(intervalSet) {
-    const fullChordSet = new ChordSet(Chord.allChords);
     const ordinalChordSets = OrdinalChordSet.arrayFromIntervalSet(
-      intervalSet, fullChordSet
+      intervalSet, ChordSet.fromAllChords
     );
     const chordSets = ordinalChordSets.map(ocs => ocs.chordSet);
     return ChordSet.fromUnion(chordSets);

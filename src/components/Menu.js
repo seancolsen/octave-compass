@@ -3,11 +3,11 @@ import ChordSelection from "components/Menu/ChordSelection";
 import styled from 'styled-components';
 
 function Menu(props) {
-
   return (
     <div className={props.className} id='menu'>
       <ChordSelection
         selectedChords={props.selectedChords}
+        setChordSet={props.setChordSet}
         toggleChord={props.toggleChord}
         intervalSet={props.intervalSet}
       />

@@ -86,7 +86,21 @@ test('fromContainingIntervalSet dominant7Chord', () => {
 test('fromContainingIntervalSet chromatic', () => {
   const chordsInChromatic =
     ChordSet.fromContainingIntervalSet(IntervalSet.chromatic).chords;
-  const allChords = new ChordSet(Chord.allChords).chords;
   expect(chordsInChromatic.map(chord => chord.defaultName))
-    .toEqual(allChords.map(chord => chord.defaultName));
+    .toEqual(ChordSet.fromAllChords.chords.map(chord => chord.defaultName));
+});
+
+test('fromAllChords', () => {
+  expect(ChordSet.fromAllChords.count).toBeGreaterThan(5);
+});
+
+test('fromChordNames', () => {
+  expect(ChordSet.fromChordNames([
+    'major',
+    'minor',
+  ]).count).toBe(2);
+});
+
+test('fromDefaultChords', () => {
+  expect(ChordSet.fromDefaultChords.count).toBeGreaterThan(1);
 });
