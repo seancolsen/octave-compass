@@ -20,7 +20,7 @@ export const chords = [
   {
     binary: 0b000010000101,
     name: "suspended 2",
-    weight: 2.5,
+    weight: 3,
     emblemSize: 0.8,
     textSizeFactor: 0.9,
     color: '#18c0ce',
@@ -29,7 +29,7 @@ export const chords = [
   {
     binary: 0b000010100001,
     name: "suspended 4",
-    weight: 2.5,
+    weight: 4,
     emblemSize: 0.8,
     textSizeFactor: 0.9,
     color: '#1bceb1',
@@ -38,7 +38,7 @@ export const chords = [
   {
     binary: 0b000001001001,
     name: "diminished",
-    weight: 3,
+    weight: 5,
     emblemSize: 0.5,
     textSizeFactor: 1.7,
     color: '#ba5319',
@@ -47,7 +47,7 @@ export const chords = [
   {
     binary: 0b010010010001,
     name: "dominant 7",
-    weight: 4,
+    weight: 6,
     emblemSize: 0.7,
     textSizeFactor: 1.5,
     color: '#551654',
@@ -56,7 +56,7 @@ export const chords = [
   {
     binary: 0b100010010001,
     name: "major 7",
-    weight: 5,
+    weight: 7,
     emblemSize: 0.6,
     textSizeFactor: 1,
     color: '#9149aa',
@@ -65,7 +65,7 @@ export const chords = [
   {
     binary: 0b010010001001,
     name: "minor 7",
-    weight: 6,
+    weight: 8,
     emblemSize: 0.6,
     textSizeFactor: 1,
     color: '#9a6b2b',
@@ -74,7 +74,7 @@ export const chords = [
   {
     binary: 0b100010001001,
     name: "minor-major 7",
-    weight: 6,
+    weight: 9,
     emblemSize: 0.6,
     textSizeFactor: 0.85,
     color: '#85800c',
@@ -83,7 +83,7 @@ export const chords = [
   {
     binary: 0b001010001001,
     name: "minor 6",
-    weight: 7,
+    weight: 10,
     emblemSize: 0.6,
     textSizeFactor: 1.15,
     color: '#9a225c',
@@ -92,7 +92,7 @@ export const chords = [
   {
     binary: 0b000100010001,
     name: "augmented",
-    weight: 8,
+    weight: 11,
     emblemSize: 0.5,
     textSizeFactor: 2,
     color: '#b7a18d',
@@ -101,7 +101,7 @@ export const chords = [
   {
     binary: 0b010100010001,
     name: "augmented 7",
-    weight: 9,
+    weight: 12,
     emblemSize: 0.6,
     textSizeFactor: 1.2,
     color: '#8d786a',
@@ -110,7 +110,7 @@ export const chords = [
   {
     binary: 0b100100010001,
     name: "augmented major 7",
-    weight: 9,
+    weight: 13,
     emblemSize: 0.6,
     textSizeFactor: 1,
     color: '#748d64',
@@ -119,7 +119,7 @@ export const chords = [
   {
     binary: 0b001001001001,
     name: "diminished 7",
-    weight: 10,
+    weight: 14,
     emblemSize: 0.5,
     textSizeFactor: 1.5,
     color: '#5f4f46',
