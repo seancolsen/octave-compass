@@ -1,6 +1,5 @@
 import {musicTheory} from "Data/musicTheory";
 import Scalar from "Utils/Math/Scalar";
-import OrdinalChordSet from "Utils/Music/OrdinalChordSet";
 
 const divisions = musicTheory.octaveDivisions;
 
@@ -251,24 +250,6 @@ export default class IntervalSet {
    */
   get compliment() {
     return this.toggleBinaryIntervals(IntervalSet.chromaticBinary);
-  }
-
-  /**
-   * For each of the given chords, return the chords that exist within this
-   * interval set.
-   *
-   * @param {ChordSet} setOfPossibleChords
-   *
-   * @return {OrdinalChordSet[]}
-   */
-  ordinalChordSets(setOfPossibleChords) {
-    let result = [];
-    this.ordinals.forEach(ordinal => {
-      result.push(
-        OrdinalChordSet.fromIntervalSet(this, ordinal, setOfPossibleChords)
-      );
-    });
-    return result;
   }
 
   /**

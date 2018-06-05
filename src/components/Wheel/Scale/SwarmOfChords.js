@@ -1,8 +1,10 @@
 import React from 'react';
 import SliceOfChords from "components/Wheel/Scale/SliceOfChords";
+import OrdinalChordSet from "Utils/Music/OrdinalChordSet";
 
 export default function SwarmOfChords(props) {
-  const ordinalChordSets = props.intervalSet.ordinalChordSets(
+  const ordinalChordSets = OrdinalChordSet.arrayFromIntervalSet(
+    props.intervalSet,
     props.selectedChords
   );
   const slices = ordinalChordSets.map((ordinalChordSet, index) =>

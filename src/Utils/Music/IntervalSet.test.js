@@ -112,14 +112,6 @@ test('compliment', () => {
     .toBe(0b000000000000);
 });
 
-test('ordinalChordSets', () => {
-  const intervalSet = IntervalSet.fromBinary(0b101010110101);
-  const setOfPossibleChords = new ChordSet([Chord.fromName('major')]);
-  const ordinalChordSets = intervalSet.ordinalChordSets(setOfPossibleChords);
-  expect(ordinalChordSets.map(ocs => ocs.chordSet.count))
-    .toEqual([1, 0, 0, 1, 1, 0, 0]);
-});
-
 test('count', () => {
   expect(IntervalSet.fromBinary(0b111111111111).count).toBe(12);
   expect(IntervalSet.fromBinary(0b101010110101).count).toBe(7);

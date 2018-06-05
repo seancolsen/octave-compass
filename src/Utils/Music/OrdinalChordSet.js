@@ -33,7 +33,9 @@ export default class OrdinalChordSet {
    * @param {ChordSet} setOfPossibleChords
    * @return {OrdinalChordSet}
    */
-  static fromIntervalSet(intervalSet, ordinal, setOfPossibleChords) {
+  static fromOrdinalWithinIntervalSet(
+    intervalSet, ordinal, setOfPossibleChords
+  ) {
     let chords = [];
     setOfPossibleChords.chords.forEach(chord => {
       const shiftedChord = chord.shift(ordinal);
@@ -43,6 +45,24 @@ export default class OrdinalChordSet {
     });
     const chordSet = new ChordSet(chords);
     return new OrdinalChordSet(chordSet, ordinal);
+  }
+
+  /**
+   * Return an array of OrdinalChordSets. Each element in the array holds the
+   * chords that exist at one ordinal of the given IntervalSet.
+   *
+   * @param {IntervalSet} intervalSet
+   * @param {ChordSet} setOfPossibleChords
+   * @return {OrdinalChordSet[]}
+   */
+  static arrayFromIntervalSet(intervalSet, setOfPossibleChords) {
+    let result = [];
+    intervalSet.ordinals.forEach(ordinal => {
+      result.push(OrdinalChordSet.fromOrdinalWithinIntervalSet(
+        intervalSet, ordinal, setOfPossibleChords
+      ));
+    });
+    return result;
   }
 
 }
