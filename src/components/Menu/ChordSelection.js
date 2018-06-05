@@ -12,6 +12,7 @@ export default function ChordSelection(props) {
       <ChordChoices
         selectedChords={props.selectedChords}
         toggleChord={props.toggleChord}
+        intervalSet={props.intervalSet}
       />
     </div>
   );

@@ -1,5 +1,6 @@
 import ChordSet from "Utils/Music/ChordSet";
 import Chord from "Utils/Music/Chord";
+import IntervalSet from "Utils/Music/IntervalSet";
 
 const majorChord = Chord.fromBinary(0b000010010001);
 const anotherMajorChord = Chord.fromBinary(0b000010010001);
@@ -67,4 +68,25 @@ test('ensure that chords are sorted and unique', () => {
     .toEqual(['major', 'diminished']);
   expect(majorAndMajorAndDiminished.chords.map(c => c.defaultName))
     .toEqual(['major', 'diminished']);
+});
+
+test('fromUnion', () => {
+  expect(ChordSet.fromUnion([dominant7AndMajor, majorAndDiminished]).chords
+    .map(chord => chord.defaultName)
+  ).toEqual(['major', 'diminished', 'dominant 7'])
+});
+
+test('fromContainingIntervalSet dominant7Chord', () => {
+  const dominant7Chord = IntervalSet.fromBinary(0b010010010001);
+  const chordSet = ChordSet.fromContainingIntervalSet(dominant7Chord);
+  expect(chordSet.chords.map(chord => chord.defaultName))
+    .toEqual(['major', 'diminished', 'dominant 7']);
+});
+
+test('fromContainingIntervalSet chromatic', () => {
+  const chordsInChromatic =
+    ChordSet.fromContainingIntervalSet(IntervalSet.chromatic).chords;
+  const allChords = new ChordSet(Chord.allChords).chords;
+  expect(chordsInChromatic.map(chord => chord.defaultName))
+    .toEqual(allChords.map(chord => chord.defaultName));
 });

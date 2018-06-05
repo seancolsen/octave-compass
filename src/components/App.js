@@ -160,6 +160,7 @@ export default class App extends Component {
         <Menu
           selectedChords={this.state.selectedChords}
           toggleChord={chord => this.toggleChord(chord)}
+          intervalSet={this.state.intervalSet}
         />
       </div>
     );

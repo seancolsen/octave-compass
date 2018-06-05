@@ -1,3 +1,6 @@
+import Chord from "Utils/Music/Chord";
+import OrdinalChordSet from "Utils/Music/OrdinalChordSet";
+
 /**
  * This represents a set of chords.
  */
@@ -118,6 +121,34 @@ export default class ChordSet {
   toggleChord(chord) {
     return this.containsChord(chord) ?
       this.removeChord(chord) : this.addChord(chord);
+  }
+
+  /**
+   * Return a ChordSet that contains all the chords within the given
+   * IntervalSet, at any ordinal.
+   *
+   * @param {IntervalSet} intervalSet
+   * @return {ChordSet}
+   */
+  static fromContainingIntervalSet(intervalSet) {
+    const fullChordSet = new ChordSet(Chord.allChords);
+    const ordinalChordSets = OrdinalChordSet.arrayFromIntervalSet(
+      intervalSet, fullChordSet
+    );
+    const chordSets = ordinalChordSets.map(ocs => ocs.chordSet);
+    return ChordSet.fromUnion(chordSets);
+  }
+
+  /**
+   * Given an array of ChordSets, return one ChordSet that contains all the
+   * Chords contained in all the given ChordSets.
+   *
+   * @param {ChordSet[]} chordSets
+   */
+  static fromUnion(chordSets) {
+    const chords = chordSets.map(chordSet => chordSet.chords);
+    const flattenedChords = [].concat(...chords);
+    return new ChordSet(flattenedChords);
   }
 
 }

@@ -9,6 +9,7 @@ function Menu(props) {
       <ChordSelection
         selectedChords={props.selectedChords}
         toggleChord={props.toggleChord}
+        intervalSet={props.intervalSet}
       />
     </div>
   );
