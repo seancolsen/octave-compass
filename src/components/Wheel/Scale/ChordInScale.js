@@ -3,8 +3,7 @@ import IrPoint from "Utils/Geometry/IrPoint";
 import styled from 'styled-components';
 import Angle from "Utils/Geometry/Angle";
 import ChordEmblem from "components/common/ChordEmblem";
-
-const fontSizeToEmblemSizeRatio = 0.85;
+import OrdinalChord from "Utils/Music/OrdinalChord";
 
 const HighlightableG = styled.g`
   & * {
@@ -26,8 +25,10 @@ const NonHighlightableG = styled.g`
 export default class ChordInScale extends Component {
 
   handleMouseDown(e) {
-    const shiftedChord = this.props.chord.shift(this.props.interval);
-    this.props.playIntervals(shiftedChord.ordinals);
+    const ordinalChord = new OrdinalChord(
+      this.props.interval, this.props.chord
+    );
+    this.props.playOrdinalChord(ordinalChord);
   }
 
   render() {
