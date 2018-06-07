@@ -5,6 +5,7 @@ import IrPoint from "Utils/Geometry/IrPoint";
 import XyPoint from "Utils/Geometry/XyPoint";
 import Base from 'components/Wheel/Base';
 import ShadowFilter from "components/Wheel/common/ShadowFilter";
+import OrdinalChordLog from "Utils/Music/OrdinalChordLog";
 
 /**
  * The width and height of the square SVG view box in user units (basically SVG
@@ -24,6 +25,7 @@ export default class Wheel extends Component {
       componentsRotating: [],
       keyboardIsRotating: false,
       scaleIsRotating: false,
+      ordinalChordsPlayed: new OrdinalChordLog(),
     };
   }
 
@@ -97,6 +99,13 @@ export default class Wheel extends Component {
     });
   }
 
+  playOrdinalChord(ordinalChord) {
+    this.setState({
+      ordinalChordsPlayed: this.state.ordinalChordsPlayed.add(ordinalChord),
+    });
+    this.props.playIntervals(ordinalChord.intervalSet.ordinals);
+  }
+
   render() {
     return (
       <div id='wheel'>
@@ -143,7 +152,8 @@ export default class Wheel extends Component {
             intervalSet={this.props.intervalSet}
             selectedChords={this.props.selectedChords}
             somethingIsRotating={this.somethingIsRotating()}
-            playIntervals={this.props.playIntervals}
+            playOrdinalChord={(oc) => this.playOrdinalChord(oc)}
+            ordinalChordsPlayed={this.state.ordinalChordsPlayed}
           />
 
         </svg>
