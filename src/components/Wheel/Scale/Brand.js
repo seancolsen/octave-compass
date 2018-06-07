@@ -5,6 +5,7 @@ import Angle from "Utils/Geometry/Angle";
 const StyledText = styled.text`
   font-size: 50px;
   fill: white;
+  cursor: grab;
 `;
 
 export default function Brand(props) {
