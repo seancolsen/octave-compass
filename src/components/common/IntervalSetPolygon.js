@@ -11,6 +11,8 @@ export default function IntervalSetPolygon(props) {
     <Polygon
       className={props.className}
       points={points}
+      fill={props.fill}
+      opacity={props.opacity}
     />
   );
 }
