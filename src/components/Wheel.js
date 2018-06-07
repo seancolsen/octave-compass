@@ -85,8 +85,8 @@ export default class Wheel extends Component {
   }
 
   /**
-   * Called frequently, any time we have the slightest inkling that the user is
-   * (no longer?) rotating anything.
+   * Called frequently, any time we have an indication that the user is not
+   * rotating anything.
    */
   stopRotating() {
     this.state.componentsRotating.forEach(component => {

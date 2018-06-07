@@ -8,36 +8,12 @@ const tieRadius = 348;
 const tieSpan = 0.2;
 const tieWidth = 50;
 
-const ActiveG = styled.g`
-  opacity: 1;
-  & * {
-    cursor: pointer;
-  }
-  &:hover {
-    filter: url('#playing-highlight');
-  }
-`;
-
-const InactiveG = styled.g`
-  opacity: 0.25;
-  & * {
-    cursor: grab;
-  }
-`;
-
 const LabelTie = styled(Arc)`
   stroke: ${props => props.color};
   stroke-width: ${tieWidth}px;
 `;
 
 export default class KeyLabelSet extends Component {
-
-  handleMouseDown(event) {
-    if (!this.props.playNotes) {
-      return;
-    }
-    this.props.playNotes([this.props.pitch.note.id]);
-  }
 
   /**
    * Return a LabelTie if needed
@@ -76,7 +52,6 @@ export default class KeyLabelSet extends Component {
           interval={interval}
           rotation={this.props.rotation}
           color={this.props.pitch.note.color}
-          active={this.props.active}
           parenthetical={nameCount > 1 && name.modifier.name === 'natural'}
         >
           {name.unicode}
@@ -88,15 +63,11 @@ export default class KeyLabelSet extends Component {
 
   render() {
     const names = this.props.pitch.note.namesToUseForLabels;
-    const G = this.props.active ? ActiveG : InactiveG;
     return (
-      <G
-        active={this.props.active}
-        onMouseDown={e => this.handleMouseDown(e)}
-      >
+      <g className={this.props.className}>
         {this.labelTie(names.length)}
         <g>{this.labels(names)}</g>
-      </G>
+      </g>
     );
   }
 

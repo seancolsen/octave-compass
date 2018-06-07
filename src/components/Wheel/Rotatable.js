@@ -56,7 +56,6 @@ export default function Rotatable(WrappedComponent) {
           <WrappedComponent rotation={this.state.rotation} {...this.props} />
         </Group>
       );
-
     }
 
   };

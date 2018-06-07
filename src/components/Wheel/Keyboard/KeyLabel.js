@@ -14,6 +14,7 @@ const StyledText = styled.text`
   font-size: ${props => props.parenthetical ? '34px' : '42px'};
   font-weight: ${props => props.parenthetical ? 'normal' : 'bold'};;
   fill: ${props => (props.color === 'white') ? 'black' : 'white'};
+  stroke: none;
 `;
 
 export default function KeyLabel(props) {

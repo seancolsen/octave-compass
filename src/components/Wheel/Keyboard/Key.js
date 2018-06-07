@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Scalar from 'Utils/Math/Scalar';
 import Polygon from 'components/Wheel/common/Polygon';
 import IrPoint from "Utils/Geometry/IrPoint";
@@ -12,37 +12,66 @@ const Background = styled(Polygon)`
   fill: ${p => p.active ? '#e1e1e1' : '#b7b7b7'};
   stroke: #a7a7a7;
   stroke-width: 3px;
-  cursor: grab;
 `;
 
-export default function Key(props) {
-  const shape = [
-    [-0.5, outerRadius * Scalar.rFactorAtEdge],
-    [0, outerRadius],
-    [0.5, outerRadius * Scalar.rFactorAtEdge],
-    [0.5, innerRadius * Scalar.rFactorAtEdge],
-    [0, innerRadius],
-    [-0.5, innerRadius * Scalar.rFactorAtEdge],
-  ];
-  const points = shape.map(ir =>
-    IrPoint.fromArray(ir).plus({i: props.pitch.note.id})
-  );
-  return (
-    <g>
+const InactiveG = styled.g`
+  & * {
+    cursor: grab;
+  }
+`;
 
-      <Background
-        points={points}
-        active={props.active}
-      />
+const StyledKeyLabelSet = styled(KeyLabelSet)`
+  opacity: ${p => p.active ? '1' : '0.25'};
+`;
 
-      <KeyLabelSet
-        pitch={props.pitch}
-        ordinal={props.ordinal}
-        rotation={props.rotation}
-        active={props.active}
-        playNotes={props.playNotes}
-      />
+const ActiveG = styled.g`
+  & * {
+    cursor: pointer;
+  }
+  &:hover > ${StyledKeyLabelSet} {
+    filter: url('#playing-highlight');
+    stroke: yellow;
+    stroke-width: 2px;
+  }
+`;
 
-    </g>
-  );
+export default class Key extends Component {
+
+  handleMouseDown(event) {
+    if (!this.props.playNotes) {
+      return;
+    }
+    this.props.playNotes([this.props.pitch.note.id]);
+    event.stopPropagation();
+  }
+
+  render() {
+    const shape = [
+      [-0.5, outerRadius * Scalar.rFactorAtEdge],
+      [0, outerRadius],
+      [0.5, outerRadius * Scalar.rFactorAtEdge],
+      [0.5, innerRadius * Scalar.rFactorAtEdge],
+      [0, innerRadius],
+      [-0.5, innerRadius * Scalar.rFactorAtEdge],
+    ];
+    const points = shape.map(ir =>
+      IrPoint.fromArray(ir).plus({i: this.props.pitch.note.id})
+    );
+    const G = this.props.active ? ActiveG : InactiveG;
+    return (
+      <G onMouseDown={e => this.handleMouseDown(e)}>
+        <Background
+          points={points}
+          active={this.props.active}
+        />
+        <StyledKeyLabelSet
+          pitch={this.props.pitch}
+          ordinal={this.props.ordinal}
+          rotation={this.props.rotation}
+          active={this.props.active}
+          playNotes={this.props.playNotes}
+        />
+      </G>
+    );
+  }
 }

@@ -29,6 +29,7 @@ export default class ChordInScale extends Component {
       this.props.interval, this.props.chord
     );
     this.props.playOrdinalChord(ordinalChord);
+    e.stopPropagation();
   }
 
   render() {
