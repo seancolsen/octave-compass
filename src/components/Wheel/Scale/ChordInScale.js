@@ -24,12 +24,13 @@ const NonHighlightableG = styled.g`
 
 export default class ChordInScale extends Component {
 
-  handleMouseDown(e) {
+  handleMouseDownOrTouchStart(event) {
+    event.preventDefault();
     const ordinalChord = new OrdinalChord(
       this.props.interval, this.props.chord
     );
     this.props.playOrdinalChord(ordinalChord);
-    e.stopPropagation();
+    event.stopPropagation();
   }
 
   render() {
@@ -43,7 +44,9 @@ export default class ChordInScale extends Component {
       <G
         transform={transform}
         className={this.props.className}
-        onMouseDown={e => this.handleMouseDown(e)}
+        onMouseDown={e => this.handleMouseDownOrTouchStart(e)}
+        onTouchStart={e => this.handleMouseDownOrTouchStart(e)}
+        onTouchEnd={e => e.preventDefault()}
       >
         <ChordEmblem
           size={this.props.size}

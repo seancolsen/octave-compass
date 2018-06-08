@@ -5,7 +5,11 @@ export default function Group(props) {
   let rotation = Angle.iToD(props.rotation || 0);
   let transformString = `rotate(${rotation})`;
   return (
-    <g onMouseDown={props.onMouseDown} transform={transformString}>
+    <g
+      onMouseDown={props.onMouseDown}
+      onTouchStart={props.onTouchStart}
+      transform={transformString}
+    >
       {props.children}
     </g>
   );

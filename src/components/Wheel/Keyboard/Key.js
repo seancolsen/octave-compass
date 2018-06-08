@@ -37,7 +37,8 @@ const ActiveG = styled.g`
 
 export default class Key extends Component {
 
-  handleMouseDown(event) {
+  handleMouseDownOrTouchStart(event) {
+    event.preventDefault();
     if (!this.props.playNotes) {
       return;
     }
@@ -59,7 +60,11 @@ export default class Key extends Component {
     );
     const G = this.props.active ? ActiveG : InactiveG;
     return (
-      <G onMouseDown={e => this.handleMouseDown(e)}>
+      <G
+        onMouseDown={e => this.handleMouseDownOrTouchStart(e)}
+        onTouchStart={e => this.handleMouseDownOrTouchStart(e)}
+        onTouchEnd={e => e.preventDefault()}
+      >
         <Background
           points={points}
           active={this.props.active}

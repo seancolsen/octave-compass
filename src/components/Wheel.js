@@ -6,6 +6,7 @@ import XyPoint from "Utils/Geometry/XyPoint";
 import Base from 'components/Wheel/Base';
 import ShadowFilter from "components/Wheel/common/ShadowFilter";
 import OrdinalChordLog from "Utils/Music/OrdinalChordLog";
+import styled from 'styled-components';
 
 /**
  * The width and height of the square SVG view box in user units (basically SVG
@@ -16,6 +17,12 @@ import OrdinalChordLog from "Utils/Music/OrdinalChordLog";
  * @type {number}
  */
 const BOX_SIZE = 1000;
+
+const Container = styled.div`
+  & * {
+    touch-action: none;
+  }
+`;
 
 export default class Wheel extends Component {
 
@@ -44,15 +51,25 @@ export default class Wheel extends Component {
   /**
    * Compute the angle of the mouse as an interval
    *
-   * @param {object} event
+   * @param {object} mouseEvent
    * @return {number}
    */
-  static grabAngle(event) {
-    let target = event.target;
+  static grabAngleFromMouseEvent(mouseEvent) {
+    let target = mouseEvent.target;
     let svg = (target.tagName === "svg") ? target : target.viewportElement;
     let svgRect = svg.getBoundingClientRect();
-    let cursor = new XyPoint(event.clientX, event.clientY);
+    let cursor = new XyPoint(mouseEvent.clientX, mouseEvent.clientY);
     return IrPoint.fromCursor(svgRect, BOX_SIZE, cursor).i;
+  }
+
+  /**
+   * Compute the angle of the first touch as an interval
+   *
+   * @param {object} touchEvent
+   * @return {number}
+   */
+  static grabAngleFromTouchEvent(touchEvent) {
+    return Wheel.grabAngleFromMouseEvent(touchEvent.touches[0]);
   }
 
   startRotating(component, name) {
@@ -68,20 +85,21 @@ export default class Wheel extends Component {
     this.setState(state);
   }
 
-  /**
-   * Called as the mouse moves when the user is rotating something.
-   *
-   * @param {object} event
-   *   The mouseMove event
-   */
-  handleMouseMove(event) {
+  setRotationFromGrabAngle(grabAngle) {
     this.state.componentsRotating.forEach(component => {
-      let angleDragged =
-        Wheel.grabAngle(event) - component.state.initialGrabAngle;
+      let angleDragged = grabAngle - component.state.initialGrabAngle;
       component.setState({
         rotation: component.state.rotationWhenGrabbed + angleDragged,
       });
     });
+  }
+
+  handleMouseMove(event) {
+    this.setRotationFromGrabAngle(Wheel.grabAngleFromMouseEvent(event));
+  }
+
+  handleTouchMove(event) {
+    this.setRotationFromGrabAngle(Wheel.grabAngleFromTouchEvent(event));
   }
 
   /**
@@ -108,12 +126,16 @@ export default class Wheel extends Component {
 
   render() {
     return (
-      <div id='wheel'>
+      <Container id='wheel'>
         <svg
           viewBox={`-${BOX_SIZE/2} -${BOX_SIZE/2} ${BOX_SIZE} ${BOX_SIZE}`}
-          onMouseMove={(event) => this.handleMouseMove(event)}
-          onMouseLeave={() => this.stopRotating()}
-          onMouseUp={() => this.stopRotating()}
+          onMouseMove={e => this.handleMouseMove(e)}
+          onTouchMove={e => this.handleTouchMove(e)}
+          onMouseLeave={e => this.stopRotating()}
+          onMouseUp={e => this.stopRotating()}
+          onTouchEnd={e => this.stopRotating()}
+          onTouchCancel={e => this.stopRotating()}
+          style={{touchAction: 'none'}}
         >
 
           <ShadowFilter
@@ -157,7 +179,7 @@ export default class Wheel extends Component {
           />
 
         </svg>
-      </div>
+      </Container>
     );
   }
 }
