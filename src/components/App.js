@@ -117,6 +117,7 @@ export default class App extends Component {
 
   componentDidMount() {
     this.updateStateFromUrl();
+    window.addEventListener('popstate', () => this.updateStateFromUrl());
   }
 
   updateStateFromUrl() {

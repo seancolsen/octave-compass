@@ -21,6 +21,17 @@ export default class Url {
   }
 
   /**
+   * Test two URL paths for equality.
+   *
+   * @param {string} a
+   * @param {string} b
+   * @return {boolean}
+   */
+  static pathsAreEqual(a, b) {
+    return Url.normalize(a) === Url.normalize(b);
+  }
+
+  /**
    * Parse a URL to determine the state that it represents.
    *
    * @param {string} url

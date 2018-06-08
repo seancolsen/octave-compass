@@ -28,16 +28,23 @@ export default class Marquee extends Component {
   }
 
   updateWindow() {
-    // Set page title
-    const appTitle = 'Octave Compass';
-    const title = `${this.windowTitle()} | ${appTitle}`;
-    document.title = title;
-
-    // Set URL
+    // Compute URL
     const url = Url.generate(
       this.props.intervalSet,
       this.props.noteSet.tonalCenterId
     );
+
+    // Bail out if non further updates are needed
+    if (Url.pathsAreEqual(window.location.pathname, url)) {
+      return;
+    }
+
+    // Update page title
+    const appTitle = 'Octave Compass';
+    const title = `${this.windowTitle()} | ${appTitle}`;
+    document.title = title;
+
+    // Update URL
     window.history.pushState(null, title, url);
   }
 
