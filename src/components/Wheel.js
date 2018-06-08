@@ -7,6 +7,7 @@ import Base from 'components/Wheel/Base';
 import ShadowFilter from "components/Wheel/common/ShadowFilter";
 import OrdinalChordLog from "Utils/Music/OrdinalChordLog";
 import styled from 'styled-components';
+import Scalar from "Utils/Math/Scalar";
 
 /**
  * The width and height of the square SVG view box in user units (basically SVG
@@ -171,6 +172,9 @@ export default class Wheel extends Component {
           <Scale
             startRotating={component => this.startRotating(component, 'Scale')}
             afterRotating={rotation => this.props.shiftIntervalSet(rotation)}
+            validRestingRotationValues={
+              this.props.intervalSet.ordinals.map(o => Scalar.wrapToOctave(-o))
+            }
             intervalSet={this.props.intervalSet}
             selectedChords={this.props.selectedChords}
             somethingIsRotating={this.somethingIsRotating()}

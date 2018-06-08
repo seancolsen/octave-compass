@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import Group from 'components/Wheel/common/Group';
 import Scalar from "Utils/Math/Scalar";
-import {musicTheory} from "Data/musicTheory";
 import Wheel from "components/Wheel";
+import Ordinal from "Utils/Music/Ordinal";
 
 export default function Rotatable(WrappedComponent) {
 
@@ -16,6 +16,21 @@ export default function Rotatable(WrappedComponent) {
         rotationWhenGrabbed: null,
         initialGrabAngle: null,
       }
+    }
+
+    /**
+     * When the user is done rotating this object, use this function to
+     * determine the nearest valid resting rotation value.
+     *
+     * @return {number}
+     */
+    restingRotation() {
+      const rotation = Scalar.wrapToOctave(this.state.rotation);
+      const validValues = this.props.validRestingRotationValues;
+      if (!validValues) {
+        return Math.round(Scalar.wrapToOctave(rotation));
+      }
+      return Ordinal.nearestValid(rotation, validValues);
     }
 
     handleMouseDown(event) {
@@ -44,15 +59,11 @@ export default function Rotatable(WrappedComponent) {
       if (!this.state.isRotating) {
         return;
       }
-      const wholeRotation = Math.round(Scalar.wrap(
-        this.state.rotation,
-        musicTheory.octaveDivisions
-      ));
       this.setState({
         isRotating: false,
         rotation: 0,
       });
-      this.props.afterRotating(wholeRotation);
+      this.props.afterRotating(this.restingRotation());
     }
 
     render() {
