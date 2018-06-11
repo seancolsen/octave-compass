@@ -1,14 +1,9 @@
 import React, {Component} from 'react';
-import Scalar from 'Utils/Math/Scalar';
-import Polygon from 'components/Wheel/common/Polygon';
-import IrPoint from "Utils/Geometry/IrPoint";
+import KeyPolygon from 'components/Wheel/Keyboard/common/KeyPolygon';
 import styled from 'styled-components';
 import KeyLabelSet from "components/Wheel/Keyboard/KeyLabelSet";
 
-const innerRadius = 308;
-const outerRadius = 400;
-
-const Background = styled(Polygon)`
+const StyledKeyPolygon = styled(KeyPolygon)`
   fill: ${p => p.active ? '#e1e1e1' : '#b7b7b7'};
   stroke: #a7a7a7;
   stroke-width: 3px;
@@ -47,17 +42,6 @@ export default class Key extends Component {
   }
 
   render() {
-    const shape = [
-      [-0.5, outerRadius * Scalar.rFactorAtEdge],
-      [0, outerRadius],
-      [0.5, outerRadius * Scalar.rFactorAtEdge],
-      [0.5, innerRadius * Scalar.rFactorAtEdge],
-      [0, innerRadius],
-      [-0.5, innerRadius * Scalar.rFactorAtEdge],
-    ];
-    const points = shape.map(ir =>
-      IrPoint.fromArray(ir).plus({i: this.props.pitch.note.id})
-    );
     const G = this.props.active ? ActiveG : InactiveG;
     return (
       <G
@@ -65,8 +49,8 @@ export default class Key extends Component {
         onTouchStart={e => this.handleMouseDownOrTouchStart(e)}
         onTouchEnd={e => e.preventDefault()}
       >
-        <Background
-          points={points}
+        <StyledKeyPolygon
+          pitch={this.props.pitch}
           active={this.props.active}
         />
         <StyledKeyLabelSet
