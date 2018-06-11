@@ -34,7 +34,7 @@ export default class Marquee extends Component {
       this.props.noteSet.tonalCenterId
     );
 
-    // Bail out if non further updates are needed
+    // Bail out if no further updates are needed
     if (Url.pathsAreEqual(window.location.pathname, url)) {
       return;
     }
