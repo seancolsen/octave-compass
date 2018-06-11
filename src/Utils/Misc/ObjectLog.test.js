@@ -5,10 +5,14 @@ test('constructor empty', () => {
   expect(ol.log.size).toBe(0);
 });
 
-test('add single entries', () => {
+test('add', () => {
   let ol = new ObjectLog();
+  ol.add();
+  expect(ol.log.size).toBe(0);
   ol = ol.add("foo");
   expect(ol.log.size).toBe(1);
+  ol = ol.add("foo", 'baz', 'bat');
+  expect(ol.log.size).toBe(4);
 });
 
 test('maxKey', () => {

@@ -51,13 +51,16 @@ export default class ObjectLog {
   /**
    * Return a new ObjectLog with one more object added to the log.
    *
-   * @param {object} object
+   * @param objects
    * @return {ObjectLog}
    */
-  add(object) {
-    const maxKey = this.maxKey + 1;
+  add(...objects) {
+    let maxKey = this.maxKey;
     let newLog = new Map(this.log);
-    newLog.set(maxKey, object);
+    objects.forEach(object => {
+      maxKey ++;
+      newLog.set(maxKey, object);
+    });
     return new ObjectLog(newLog, maxKey, this.maxEntries);
   }
 
