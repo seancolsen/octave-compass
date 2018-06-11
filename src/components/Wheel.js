@@ -5,7 +5,7 @@ import IrPoint from "Utils/Geometry/IrPoint";
 import XyPoint from "Utils/Geometry/XyPoint";
 import Base from 'components/Wheel/Base';
 import ShadowFilter from "components/Wheel/common/ShadowFilter";
-import OrdinalChordLog from "Utils/Music/OrdinalChordLog";
+import ObjectLog from "Utils/Misc/ObjectLog";
 import styled from 'styled-components';
 import Scalar from "Utils/Math/Scalar";
 
@@ -33,7 +33,7 @@ export default class Wheel extends Component {
       componentsRotating: [],
       keyboardIsRotating: false,
       scaleIsRotating: false,
-      ordinalChordsPlayed: new OrdinalChordLog(),
+      ordinalChordsPlayed: new ObjectLog(),
     };
   }
 
