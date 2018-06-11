@@ -9,6 +9,7 @@ import Wheel from "components/Wheel";
 import Notation from "components/Notation";
 import Menu from "components/Menu";
 import ChordSet from "Utils/Music/ChordSet";
+import ObjectLog from "Utils/Misc/ObjectLog";
 
 export default class App extends Component {
 
@@ -19,6 +20,7 @@ export default class App extends Component {
       intervalSet: IntervalSetFactory.fromBinary(0b101010110101),
       selectedChords: ChordSet.fromDefaultChords,
       clef: 'treble',
+      ordinalChordsPlayed: new ObjectLog(),
     };
   }
 
@@ -115,6 +117,18 @@ export default class App extends Component {
     this.playNotes(notes);
   }
 
+  /**
+   * Play a chord and highlight it.
+   *
+   * @param {OrdinalChord} ordinalChord
+   */
+  playOrdinalChord(ordinalChord) {
+    this.setState({
+      ordinalChordsPlayed: this.state.ordinalChordsPlayed.add(ordinalChord),
+    });
+    this.playIntervals(ordinalChord.intervalSet.ordinals);
+  }
+
   componentDidMount() {
     this.updateStateFromUrl();
     window.addEventListener('popstate', () => this.updateStateFromUrl());
@@ -146,6 +160,8 @@ export default class App extends Component {
           selectedChords={this.state.selectedChords}
           playNotes={noteIds => this.playNotes(noteIds)}
           playIntervals={ordinals => this.playIntervals(ordinals)}
+          playOrdinalChord={oc => this.playOrdinalChord(oc)}
+          ordinalChordsPlayed={this.state.ordinalChordsPlayed}
         />
         <Notation
           pitchSet={this.pitchSet()}

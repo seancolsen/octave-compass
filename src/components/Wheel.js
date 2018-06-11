@@ -5,7 +5,6 @@ import IrPoint from "Utils/Geometry/IrPoint";
 import XyPoint from "Utils/Geometry/XyPoint";
 import Base from 'components/Wheel/Base';
 import ShadowFilter from "components/Wheel/common/ShadowFilter";
-import ObjectLog from "Utils/Misc/ObjectLog";
 import styled from 'styled-components';
 import Scalar from "Utils/Math/Scalar";
 
@@ -33,7 +32,6 @@ export default class Wheel extends Component {
       componentsRotating: [],
       keyboardIsRotating: false,
       scaleIsRotating: false,
-      ordinalChordsPlayed: new ObjectLog(),
     };
   }
 
@@ -118,13 +116,6 @@ export default class Wheel extends Component {
     });
   }
 
-  playOrdinalChord(ordinalChord) {
-    this.setState({
-      ordinalChordsPlayed: this.state.ordinalChordsPlayed.add(ordinalChord),
-    });
-    this.props.playIntervals(ordinalChord.intervalSet.ordinals);
-  }
-
   render() {
     return (
       <Container id='wheel'>
@@ -178,8 +169,8 @@ export default class Wheel extends Component {
             intervalSet={this.props.intervalSet}
             selectedChords={this.props.selectedChords}
             somethingIsRotating={this.somethingIsRotating()}
-            playOrdinalChord={(oc) => this.playOrdinalChord(oc)}
-            ordinalChordsPlayed={this.state.ordinalChordsPlayed}
+            playOrdinalChord={this.props.playOrdinalChord}
+            ordinalChordsPlayed={this.props.ordinalChordsPlayed}
           />
 
         </svg>
