@@ -1,5 +1,6 @@
 import IntervalSetFactory from "Utils/Music/IntervalSetFactory";
 import Scalar from "Utils/Math/Scalar";
+import IntervalSetBinary from "Utils/Music/IntervalSetBinary";
 
 const separator = '-';
 const defaultIntervalSetBin = 0b101010110101;
@@ -40,14 +41,16 @@ export default class Url {
    */
   static parse(url) {
     const parts = Url.normalize(url).split(separator);
-    const intervalSetBin = parseInt(parts[0], 10) || defaultIntervalSetBin;
-    const intervalSet = IntervalSetFactory.fromBinary(intervalSetBin);
-    const tonalCenter = parseInt(parts[1], 10) || defaultTonalCenter;
-    const validIntervalSet = intervalSet.activateIntervalOrdinal(0);
-    const validTonalCenter = Scalar.wrapToOctave(tonalCenter);
+    const parsedIntervalSetBin =
+      parseInt(parts[0], 10) || defaultIntervalSetBin;
+    const validIntervalSetBin =
+      IntervalSetBinary.guaranteedToContainTonalCenter(parsedIntervalSetBin);
+    const intervalSet = IntervalSetFactory.fromBinary(validIntervalSetBin);
+    const parsedTonalCenter = parseInt(parts[1], 10) || defaultTonalCenter;
+    const tonalCenter = Scalar.wrapToOctave(parsedTonalCenter);
     return {
-      intervalSet: validIntervalSet,
-      tonalCenter: validTonalCenter,
+      intervalSet: intervalSet,
+      tonalCenter: tonalCenter,
     };
   }
 
