@@ -9,6 +9,17 @@ const checkboxRadius = 430;
 const arcRadius = 430;
 const arcSpan = 0.5;
 
+const StyledIntervalLabel = styled(IntervalLabel)``;
+
+const StyledG = styled.g`
+  & * {
+    cursor: ${p => p.clickable ? 'pointer' : 'default'};
+  }
+  &:hover ${StyledIntervalLabel} {
+    text-decoration: ${p => p.clickable ? 'underline' : 'none'};
+  }
+`;
+
 const Background = styled(Arc)`
   stroke-width: 130px;
   stroke: ${props => (props.active) ? 'white' : '#e4e4e4'};
@@ -16,12 +27,18 @@ const Background = styled(Arc)`
   stroke-linecap: butt;
 `;
 
-const StyledIntervalLabel = styled(IntervalLabel)``;
-
-function BaseInterval(props) {
+export default function BaseInterval(props) {
   const point = (new IrPoint(props.interval, checkboxRadius)).toXy();
+  const clickable = props.interval !== 0;
   return (
-    <g onClick={props.onClick} className={props.className}>
+    <StyledG
+      clickable={clickable}
+      onClick={() => clickable ?
+        props.toggleInterval(props.interval) :
+        null
+      }
+      className={props.className}
+    >
       <Background
         startInterval={props.interval - arcSpan}
         endInterval={props.interval + arcSpan}
@@ -33,16 +50,13 @@ function BaseInterval(props) {
         label={props.label}
         active={props.active}
       />
-      <SvgCheckbox x={point.x} y={point.y} checked={props.active}/>
-    </g>
+        <SvgCheckbox
+          x={point.x}
+          y={point.y}
+          checked={props.active}
+          clickable={clickable}
+        />
+    </StyledG>
   );
 }
 
-export default styled(BaseInterval)`
-  & * {
-    cursor: pointer;
-  }
-  &:hover ${StyledIntervalLabel} {
-    text-decoration: underline;
-  }
-`;

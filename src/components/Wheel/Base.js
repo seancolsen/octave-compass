@@ -23,7 +23,7 @@ export default class Base extends Component {
         interval={ordinal}
         label={name}
         active={this.intervalIsActive(ordinal)}
-        onClick={() => this.props.toggleInterval(ordinal)}
+        toggleInterval={this.props.toggleInterval}
       />
     );
   }

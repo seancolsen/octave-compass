@@ -6,24 +6,26 @@ const checkMarkCharacter = '✔';
 
 const StyledRect = styled.rect`
   fill: ${props => (props.checked) ? 'white' : '#ddd'};
-  stroke: #666;
+  stroke: ${p => p.clickable ? '#666' : '#BBB'};
   stroke-width: 2px;
 `;
 
 const StyledText = styled.text`
   font-size: 35px;
   font-family: 'Roboto', sans-serif;
+  fill: ${p => p.clickable ? 'black' : '#BBB'};
 `;
 
 export default class SvgCheckbox extends Component {
 
-  static checkMark() {
+  checkMark() {
     return (
       <StyledText
         x={1}
         y={5}
         dominantBaseline={'middle'} // TODO address lack of IE support
         textAnchor={'middle'}
+        clickable={this.props.clickable}
       >
         {checkMarkCharacter}
       </StyledText>
@@ -39,8 +41,9 @@ export default class SvgCheckbox extends Component {
           width={size} height={size}
           rx={size / 5} ry={size / 5}
           checked={this.props.checked}
+          clickable={this.props.clickable}
         />
-        {this.props.checked ? SvgCheckbox.checkMark() : null}
+        {this.props.checked ? this.checkMark() : null}
       </g>
     );
   }
