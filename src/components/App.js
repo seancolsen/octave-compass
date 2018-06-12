@@ -10,6 +10,7 @@ import WithComputedState from "components/WithComputedState";
 import WithAudio from "components/WithAudio";
 import RouteProcessor from "components/RouteProcessor";
 import Url from "Utils/Text/Url";
+import Modal from 'react-modal';
 
 export default class App extends React.Component {
 
@@ -21,6 +22,7 @@ export default class App extends React.Component {
       intervalSet: stateFromUrl.intervalSet,
       selectedChords: ChordSet.fromDefaultChords,
       clef: 'treble',
+      modalIsOpen: false,
     };
   }
 
@@ -72,11 +74,10 @@ export default class App extends React.Component {
     });
   };
 
-  setOrientation = (intervalSet, tonalCenter) => {
+  toggleModal = () => {
     this.setState({
-      intervalSet: intervalSet,
-      tonalCenter: tonalCenter,
-    });
+      modalIsOpen: !this.state.modalIsOpen,
+    })
   };
 
   render() {
@@ -104,6 +105,7 @@ export default class App extends React.Component {
                 title={computedState.title}
                 inversionText={computedState.inversionText}
                 isNamed={computedState.isNamed}
+                showMore={this.toggleModal}
               />
               <Wheel
                 shiftTonalCenter={this.shiftTonalCenter}
@@ -128,6 +130,19 @@ export default class App extends React.Component {
                 toggleChord={this.toggleChord}
                 intervalSet={intervalSet}
               />
+              <Modal
+                isOpen={this.state.modalIsOpen}
+                onRequestClose={this.toggleModal}
+                ariaHideApp={false}
+              >
+                <Marquee
+                  intervalSet={intervalSet}
+                  title={computedState.title}
+                  inversionText={computedState.inversionText}
+                  isNamed={computedState.isNamed}
+                  isWithinModal={true}
+                />
+              </Modal>
             </div>
           )}</WithAudio>
         </React.Fragment>
