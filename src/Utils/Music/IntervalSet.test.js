@@ -1,19 +1,5 @@
 import IntervalSet from 'Utils/Music/IntervalSet';
 
-test('ordinalsToBinary', () => {
-  expect(IntervalSet.ordinalsToBinary([])).toEqual(0b0);
-  expect(IntervalSet.ordinalsToBinary([0])).toEqual(0b1);
-  expect(IntervalSet.ordinalsToBinary([1])).toEqual(0b10);
-  expect(IntervalSet.ordinalsToBinary([0, 4, 7])).toEqual(0b000010010001);
-});
-
-test('binaryToOrdinals', () => {
-  expect(IntervalSet.binaryToOrdinals(0b0)).toEqual([]);
-  expect(IntervalSet.binaryToOrdinals(0b1)).toEqual([0]);
-  expect(IntervalSet.binaryToOrdinals(0b10)).toEqual([1]);
-  expect(IntervalSet.binaryToOrdinals(0b000010010001)).toEqual([0, 4, 7]);
-});
-
 test('ordinals empty', () => {
   expect(IntervalSet.fromBinary(0b000000000000).ordinals).toEqual([]);
 });
@@ -92,12 +78,6 @@ test('toggleBinaryIntervals', () => {
     .toBe(0b010000010001);
 });
 
-test('activateBinaryIntervals', () => {
-  expect(IntervalSet.fromBinary(0b000010010001)
-    .activateBinaryIntervals(0b010010000000).binary)
-    .toBe(0b010010010001);
-});
-
 test('toggleIntervalOrdinal', () => {
   expect(IntervalSet.fromBinary(0b000010010001).toggleIntervalOrdinal(10).binary)
     .toBe(0b010010010001);
@@ -105,18 +85,6 @@ test('toggleIntervalOrdinal', () => {
     .toBe(0b000000010001);
   expect(IntervalSet.fromBinary(0b000010010001).toggleIntervalOrdinal(0).binary)
     .toBe(0b000010010000);
-});
-
-test('activateIntervalOrdinal', () => {
-  expect(IntervalSet.fromBinary(0b000010010001)
-    .activateIntervalOrdinal(10).binary
-  ).toBe(0b010010010001);
-  expect(IntervalSet.fromBinary(0b000010010001)
-    .activateIntervalOrdinal(7).binary
-  ).toBe(0b000010010001);
-  expect(IntervalSet.fromBinary(0b000010010000)
-    .activateIntervalOrdinal(0).binary
-  ).toBe(0b000010010001);
 });
 
 test('compliment', () => {

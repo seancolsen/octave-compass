@@ -1,5 +1,6 @@
 import {musicTheory} from "Data/musicTheory";
 import Scalar from "Utils/Math/Scalar";
+import IntervalSetBinary from "Utils/Music/IntervalSetBinary";
 
 const divisions = musicTheory.octaveDivisions;
 
@@ -58,7 +59,7 @@ export default class IntervalSet {
    * @param {{}} intervalSetData
    */
   constructor(intervalSetData) {
-    this.binary = IntervalSet.onlyChromatic(intervalSetData.binary);
+    this.binary = IntervalSetBinary.onlyChromatic(intervalSetData.binary);
   }
 
   /**
@@ -79,7 +80,7 @@ export default class IntervalSet {
    * @return {IntervalSet}
    */
   static fromOrdinals(ordinals) {
-    return IntervalSet.fromBinary(IntervalSet.ordinalsToBinary(ordinals));
+    return IntervalSet.fromBinary(IntervalSetBinary.fromOrdinals(ordinals));
   }
 
   /**
@@ -88,64 +89,7 @@ export default class IntervalSet {
    * @return {IntervalSet}
    */
   static get chromatic() {
-    return IntervalSet.fromBinary(IntervalSet.chromaticBinary);
-  }
-
-  /**
-   * Convert one interval ordinal to a binary representation of that interval.
-   *
-   * @param {int} ordinal
-   * @return {int}
-   */
-  static ordinalToBinary(ordinal) {
-    return Math.pow(2, ordinal);
-  }
-
-  /**
-   * Convert an array of interval ordinals to a binary representation of those
-   * intervals.
-   *
-   * @param {int[]} ordinals
-   * @return {int}
-   */
-  static ordinalsToBinary(ordinals) {
-    return ordinals.map(IntervalSet.ordinalToBinary).reduce((a, b) => a + b, 0);
-  }
-
-  /**
-   * Convert a binary representation of intervals to an array of interval
-   * ordinals.
-   *
-   * @param {int} binary
-   * @return {int[]}
-   */
-  static binaryToOrdinals(binary) {
-    let result = [];
-    IntervalSet.chromaticOrdinals.forEach(ordinal => {
-      if (IntervalSet.binaryContainsOrdinal(binary, ordinal)) {
-        result.push(ordinal);
-      }
-    });
-    return result;
-  }
-
-  /**
-   * Return true if the given binary interval set contains the given ordinal.
-   *
-   * @param {int} binary
-   * @param {int} ordinal
-   * @return {boolean}
-   */
-  static binaryContainsOrdinal(binary, ordinal) {
-    return (binary & IntervalSet.ordinalToBinary(ordinal)) > 0;
-  }
-
-  /**
-   *
-   * @return {int}
-   */
-  static get chromaticBinary() {
-    return Math.pow(2, divisions) - 1
+    return IntervalSet.fromBinary(IntervalSetBinary.chromatic);
   }
 
   /**
@@ -157,35 +101,13 @@ export default class IntervalSet {
   }
 
   /**
-   * Apply a bit mask to a binary interval representation.
-   *
-   * @param binary
-   * @param mask
-   * @return {number}
-   */
-  static maskBinary(binary, mask) {
-    return binary & mask;
-  }
-
-  /**
-   * Return a binary interval set with intervals eliminated that fall outside
-   * the chromatic set.
-   *
-   * @param binary
-   * @return {number}
-   */
-  static onlyChromatic(binary) {
-    return IntervalSet.maskBinary(binary, IntervalSet.chromaticBinary);
-  }
-
-  /**
    * Return an array of interval ordinals present in this set.
    *
    * @return {int[]}
    *   e.g [0, 4, 7] for a major chord
    */
   get ordinals() {
-    return IntervalSet.binaryToOrdinals(this.binary);
+    return IntervalSetBinary.toOrdinals(this.binary);
   }
 
   /**
@@ -195,7 +117,7 @@ export default class IntervalSet {
    * @return {boolean}
    */
   isActive(interval) {
-    return IntervalSet.binaryContainsOrdinal(this.binary, interval);
+    return IntervalSetBinary.containsOrdinal(this.binary, interval);
   }
 
   /**
@@ -260,29 +182,7 @@ export default class IntervalSet {
    * @return {IntervalSet}
    */
   toggleIntervalOrdinal(ordinal) {
-    return this.toggleBinaryIntervals(IntervalSet.ordinalToBinary(ordinal));
-  }
-
-  /**
-   * Return a new interval set with intervals activated where the given binary
-   * bits are true.
-   *
-   * @param {int} binary
-   * @return {IntervalSet}
-   */
-  activateBinaryIntervals(binary) {
-    return IntervalSet.fromBinary(this.binary | binary);
-  }
-
-  /**
-   * Return a new IntervalSet with one interval toggled, as specified by its
-   * ordinal.
-   *
-   * @param ordinal
-   * @return {IntervalSet}
-   */
-  activateIntervalOrdinal(ordinal) {
-    return this.activateBinaryIntervals(IntervalSet.ordinalToBinary(ordinal));
+    return this.toggleBinaryIntervals(IntervalSetBinary.fromOrdinal(ordinal));
   }
 
   /**
@@ -292,7 +192,7 @@ export default class IntervalSet {
    * @return {IntervalSet}
    */
   get compliment() {
-    return this.toggleBinaryIntervals(IntervalSet.chromaticBinary);
+    return this.toggleBinaryIntervals(IntervalSetBinary.chromatic);
   }
 
   /**
