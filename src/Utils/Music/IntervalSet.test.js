@@ -1,6 +1,4 @@
 import IntervalSet from 'Utils/Music/IntervalSet';
-import Chord from "Utils/Music/Chord";
-import ChordSet from "Utils/Music/ChordSet";
 
 test('ordinalsToBinary', () => {
   expect(IntervalSet.ordinalsToBinary([])).toEqual(0b0);
@@ -134,4 +132,9 @@ test('inversionsToBeIdenticalTo', () => {
   expect(major0.inversionsToBeIdenticalTo(major1)).toBe(1);
   expect(major0.inversionsToBeIdenticalTo(major2)).toBe(2);
   expect(major0.inversionsToBeIdenticalTo(diminished0)).toBeNull();
+});
+
+test('all binary values should be masked against chromatic', () => {
+  expect(IntervalSet.fromBinary(0b111111111111111111).binary)
+    .toBe(0b111111111111);
 });

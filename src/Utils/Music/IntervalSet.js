@@ -58,7 +58,7 @@ export default class IntervalSet {
    * @param {{}} intervalSetData
    */
   constructor(intervalSetData) {
-    this.binary = intervalSetData.binary;
+    this.binary = IntervalSet.onlyChromatic(intervalSetData.binary);
   }
 
   /**
@@ -157,6 +157,28 @@ export default class IntervalSet {
   }
 
   /**
+   * Apply a bit mask to a binary interval representation.
+   *
+   * @param binary
+   * @param mask
+   * @return {number}
+   */
+  static maskBinary(binary, mask) {
+    return binary & mask;
+  }
+
+  /**
+   * Return a binary interval set with intervals eliminated that fall outside
+   * the chromatic set.
+   *
+   * @param binary
+   * @return {number}
+   */
+  static onlyChromatic(binary) {
+    return IntervalSet.maskBinary(binary, IntervalSet.chromaticBinary);
+  }
+
+  /**
    * Return an array of interval ordinals present in this set.
    *
    * @return {int[]}
@@ -216,8 +238,7 @@ export default class IntervalSet {
     const shift = Scalar.wrap(Math.round(shiftAmount), divisions);
     const shiftToWrap = divisions - shift;
     const allBits = (this.binary << shift) | (this.binary >> shiftToWrap);
-    const mask = IntervalSet.chromaticBinary;
-    return IntervalSet.fromBinary(allBits & mask);
+    return IntervalSet.fromBinary(allBits);
   }
 
   /**
