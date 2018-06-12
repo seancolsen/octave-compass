@@ -92,6 +92,12 @@ test('toggleBinaryIntervals', () => {
     .toBe(0b010000010001);
 });
 
+test('activateBinaryIntervals', () => {
+  expect(IntervalSet.fromBinary(0b000010010001)
+    .activateBinaryIntervals(0b010010000000).binary)
+    .toBe(0b010010010001);
+});
+
 test('toggleIntervalOrdinal', () => {
   expect(IntervalSet.fromBinary(0b000010010001).toggleIntervalOrdinal(10).binary)
     .toBe(0b010010010001);
@@ -99,6 +105,18 @@ test('toggleIntervalOrdinal', () => {
     .toBe(0b000000010001);
   expect(IntervalSet.fromBinary(0b000010010001).toggleIntervalOrdinal(0).binary)
     .toBe(0b000010010000);
+});
+
+test('activateIntervalOrdinal', () => {
+  expect(IntervalSet.fromBinary(0b000010010001)
+    .activateIntervalOrdinal(10).binary
+  ).toBe(0b010010010001);
+  expect(IntervalSet.fromBinary(0b000010010001)
+    .activateIntervalOrdinal(7).binary
+  ).toBe(0b000010010001);
+  expect(IntervalSet.fromBinary(0b000010010000)
+    .activateIntervalOrdinal(0).binary
+  ).toBe(0b000010010001);
 });
 
 test('compliment', () => {

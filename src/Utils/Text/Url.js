@@ -1,4 +1,5 @@
 import IntervalSetFactory from "Utils/Music/IntervalSetFactory";
+import Scalar from "Utils/Math/Scalar";
 
 const separator = '-';
 const defaultIntervalSetBin = 0b101010110101;
@@ -42,9 +43,11 @@ export default class Url {
     const intervalSetBin = parseInt(parts[0], 10) || defaultIntervalSetBin;
     const intervalSet = IntervalSetFactory.fromBinary(intervalSetBin);
     const tonalCenter = parseInt(parts[1], 10) || defaultTonalCenter;
+    const validIntervalSet = intervalSet.activateIntervalOrdinal(0);
+    const validTonalCenter = Scalar.wrapToOctave(tonalCenter);
     return {
-      intervalSet: intervalSet,
-      tonalCenter: tonalCenter,
+      intervalSet: validIntervalSet,
+      tonalCenter: validTonalCenter,
     };
   }
 

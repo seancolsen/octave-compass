@@ -264,6 +264,28 @@ export default class IntervalSet {
   }
 
   /**
+   * Return a new interval set with intervals activated where the given binary
+   * bits are true.
+   *
+   * @param {int} binary
+   * @return {IntervalSet}
+   */
+  activateBinaryIntervals(binary) {
+    return IntervalSet.fromBinary(this.binary | binary);
+  }
+
+  /**
+   * Return a new IntervalSet with one interval toggled, as specified by its
+   * ordinal.
+   *
+   * @param ordinal
+   * @return {IntervalSet}
+   */
+  activateIntervalOrdinal(ordinal) {
+    return this.activateBinaryIntervals(IntervalSet.ordinalToBinary(ordinal));
+  }
+
+  /**
    * Return a new interval set that contains all the intervals this set
    * doesn't contain.
    *
