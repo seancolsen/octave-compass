@@ -50,12 +50,12 @@ export default function BaseInterval(props) {
         label={props.label}
         active={props.active}
       />
-        <SvgCheckbox
-          x={point.x}
-          y={point.y}
-          checked={props.active}
-          clickable={clickable}
-        />
+      <SvgCheckbox
+        x={point.x}
+        y={point.y}
+        checked={props.active}
+        clickable={clickable}
+      />
     </StyledG>
   );
 }
