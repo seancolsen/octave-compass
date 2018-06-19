@@ -5,14 +5,18 @@ import Angle from "Utils/Geometry/Angle";
 import ChordEmblem from "components/common/ChordEmblem";
 import OrdinalChord from "Utils/Music/OrdinalChord";
 
+const Background = styled.circle`
+    stroke: #e1e1e1;
+    stroke-width: 5px;
+`;
+
 const HighlightableG = styled.g`
   & * {
     cursor: pointer;
   }
-  &:hover circle {
-    filter: url('#playing-highlight');
-    stroke: yellow;
-    stroke-width: 2px;
+  &:hover ${Background} {
+    stroke: white;
+    stroke-width: 15px;
   }
 `;
 
@@ -48,6 +52,7 @@ export default class ChordInScale extends Component {
         onTouchStart={e => this.handleMouseDownOrTouchStart(e)}
         onTouchEnd={e => e.preventDefault()}
       >
+        <Background cx={0} cy={0} r={this.props.size} />
         <ChordEmblem
           size={this.props.size}
           chord={this.props.chord}

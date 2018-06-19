@@ -23,10 +23,8 @@ const ActiveG = styled.g`
   & * {
     cursor: pointer;
   }
-  &:hover > ${StyledKeyLabelSet} {
-    filter: url('#playing-highlight');
-    stroke: yellow;
-    stroke-width: 2px;
+  &:hover > ${StyledKeyPolygon} {
+    fill: #f2f2d2;
   }
 `;
 
