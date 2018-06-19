@@ -12,7 +12,6 @@ const StyledRect = styled.rect`
 
 const StyledText = styled.text`
   font-size: 35px;
-  font-family: 'Roboto', sans-serif;
   fill: ${p => p.clickable ? 'black' : '#BBB'};
 `;
 

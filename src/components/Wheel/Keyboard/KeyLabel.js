@@ -12,7 +12,7 @@ const StyledRect = styled.rect`
 
 const StyledText = styled.text`
   font-size: ${props => props.parenthetical ? '34px' : '42px'};
-  font-weight: ${props => props.parenthetical ? 'normal' : 'bold'};;
+  font-weight: ${props => props.parenthetical ? 'normal' : 'bold'};
   fill: ${props => (props.color === 'white') ? 'black' : 'white'};
   stroke: none;
 `;

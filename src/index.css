@@ -1,10 +1,17 @@
-@import url('https://fonts.googleapis.com/css?family=Spectral:400,800|Roboto');
+@import url('https://fonts.googleapis.com/css?family=Spectral:400,800');
+
+@font-face {
+  font-family: 'freeserifmusic';
+  src: url('FreeSerifMusic.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
 body {
   margin: 0;
   padding: 0;
   background: #e4e4e4;
-  font-family: 'Spectral', serif;
+  font-family: 'Spectral', 'freeserifmusic', serif;
 }
 
 svg text {
