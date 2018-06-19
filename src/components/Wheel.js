@@ -4,9 +4,9 @@ import Scale from "components/Wheel/Scale";
 import IrPoint from "Utils/Geometry/IrPoint";
 import XyPoint from "Utils/Geometry/XyPoint";
 import Base from 'components/Wheel/Base';
-import ShadowFilter from "components/Wheel/common/ShadowFilter";
 import styled from 'styled-components';
 import Scalar from "Utils/Math/Scalar";
+import BlurFilter from "components/Wheel/BlurFilter";
 
 /**
  * The width and height of the square SVG view box in user units (basically SVG
@@ -130,18 +130,7 @@ export default class Wheel extends Component {
           style={{touchAction: 'none'}}
         >
 
-          <ShadowFilter
-            id='drop-shadow'
-            color='#000'
-            size='15'
-            bounds={1.2}
-          />
-          <ShadowFilter
-            id='playing-highlight'
-            color='yellow'
-            size='25'
-            bounds={3}
-          />
+          <BlurFilter id='blur' size='15' bounds='3' />
 
           <Base
             intervalSet={this.props.intervalSet}

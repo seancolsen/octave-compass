@@ -7,9 +7,15 @@ import styled from "styled-components";
 import OrdinalChordSet from "Utils/Music/OrdinalChordSet";
 import ChordPolygons from "components/Wheel/Scale/ChordPolygons";
 
+const Shadow = styled(IntervalSetPolygon)`
+  fill: black;
+  stroke: black;
+  stroke-width: 3px;
+  filter: url(#blur);
+`;
+
 const Background = styled(IntervalSetPolygon)`
   fill: #E1E1E1;
-  filter: url(#drop-shadow);
   stroke: #f7f7f7;
   stroke-width: 3px;
   cursor: grab;
@@ -22,6 +28,7 @@ function Scale(props) {
   );
   return (
     <g>
+      <Shadow intervalSet={props.intervalSet}/>
       <Background intervalSet={props.intervalSet}/>
       <Brand rotation={props.rotation}/>
       <ChordPolygons
