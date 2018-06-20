@@ -38,6 +38,7 @@ export default function Rotatable(WrappedComponent) {
     }
 
     handleTouchStart(event) {
+      event.preventDefault();
       this.startRotating(Wheel.grabAngleFromTouchEvent(event));
     }
 

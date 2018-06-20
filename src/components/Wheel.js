@@ -98,6 +98,7 @@ export default class Wheel extends Component {
   }
 
   handleTouchMove(event) {
+    event.preventDefault();
     this.setRotationFromGrabAngle(Wheel.grabAngleFromTouchEvent(event));
   }
 

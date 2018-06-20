@@ -31,6 +31,8 @@ body,
 #app {
   height: 100vh;
   overflow: hidden;
+  width: 100%;
+  position: fixed;
 }
 
 #wheel {
