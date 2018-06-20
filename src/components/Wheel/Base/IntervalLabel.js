@@ -43,7 +43,7 @@ export default class IntervalLabel extends Component {
           endInterval={this.props.interval + (arcSpan * (b ? -1 : 1))}
         />
         <StyledText active={this.props.active} textAnchor={'middle'}>
-          <textPath href={`#${id}`} startOffset={'50%'}>
+          <textPath xlinkHref={`#${id}`} href={`#${id}`} startOffset={'50%'}>
             {this.props.label}
           </textPath>
         </StyledText>
