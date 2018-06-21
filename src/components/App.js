@@ -9,17 +9,31 @@ import ChordSet from "Utils/Music/ChordSet";
 import WithComputedState from "components/WithComputedState";
 import WithAudio from "components/WithAudio";
 import RouteProcessor from "components/RouteProcessor";
+import Url from "Utils/Text/Url";
 
 export default class App extends React.Component {
 
   constructor(props) {
     super(props);
+    const stateFromUrl = App.stateFromUrl();
     this.state = {
-      tonalCenter: 0,
-      intervalSet: IntervalSetFactory.fromBinary(0b101010110101),
+      tonalCenter: stateFromUrl.tonalCenter,
+      intervalSet: stateFromUrl.intervalSet,
       selectedChords: ChordSet.fromDefaultChords,
       clef: 'treble',
     };
+  }
+
+  static stateFromUrl() {
+    return Url.parse(window.location.pathname);
+  }
+
+  updateStateFromUrl() {
+    this.setState(App.stateFromUrl());
+  }
+
+  componentDidMount() {
+    window.addEventListener('popstate', () => this.updateStateFromUrl());
   }
 
   shiftTonalCenter = (intervalDiff) => {
@@ -78,7 +92,6 @@ export default class App extends React.Component {
           <RouteProcessor
             intervalSet={intervalSet}
             tonalCenter={tonalCenter}
-            setOrientation={this.setOrientation}
             windowTitle={computedState.title}
           />
           <WithAudio
