@@ -10,7 +10,7 @@ import WithComputedState from "components/WithComputedState";
 import WithAudio from "components/WithAudio";
 import RouteProcessor from "components/RouteProcessor";
 import Url from "Utils/Text/Url";
-import Modal from 'react-modal';
+import Modal from 'react-responsive-modal';
 
 export default class App extends React.Component {
 
@@ -131,9 +131,8 @@ export default class App extends React.Component {
                 intervalSet={intervalSet}
               />
               <Modal
-                isOpen={this.state.modalIsOpen}
-                onRequestClose={this.toggleModal}
-                ariaHideApp={false}
+                open={this.state.modalIsOpen}
+                onClose={this.toggleModal}
               >
                 <Marquee
                   intervalSet={intervalSet}
