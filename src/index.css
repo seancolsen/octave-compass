@@ -11,7 +11,25 @@ body {
   margin: 0;
   padding: 0;
   background: #e4e4e4;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  text-align: center;
+}
+
+body, button {
   font-family: 'Spectral', 'freeserifmusic', serif;
+  font-size: 1.7vmax;
+}
+
+h2 {
+  font-size: 2.2vmax;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 2.2vmax;
 }
 
 svg text {
