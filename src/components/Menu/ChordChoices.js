@@ -32,4 +32,5 @@ class ChordChoices extends Component {
 export default styled(ChordChoices)`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 `;
