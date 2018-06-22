@@ -1,16 +1,12 @@
 import React from "react";
 import IntervalSetFactory from "Utils/Music/IntervalSetFactory";
 import Scalar from "Utils/Math/Scalar";
-import Marquee from "components/Marquee";
-import Wheel from "components/Wheel";
-import Notation from "components/Notation";
-import Menu from "components/Menu";
 import ChordSet from "Utils/Music/ChordSet";
 import WithComputedState from "components/WithComputedState";
 import WithAudio from "components/WithAudio";
 import RouteProcessor from "components/RouteProcessor";
 import Url from "Utils/Text/Url";
-import Modal from 'react-responsive-modal';
+import Layout from "components/Layout";
 
 export default class App extends React.Component {
 
@@ -99,50 +95,22 @@ export default class App extends React.Component {
             pitchSet={computedState.pitchSet}
             tonalCenter={tonalCenter}
           >{ audio => (
-            <div id='app' className="App">
-              <Marquee
-                intervalSet={intervalSet}
-                title={computedState.title}
-                inversionText={computedState.inversionText}
-                isNamed={computedState.isNamed}
-                showMore={this.toggleModal}
-              />
-              <Wheel
-                shiftTonalCenter={this.shiftTonalCenter}
-                shiftIntervalSet={this.shiftIntervalSet}
-                intervalSet={intervalSet}
-                tonalCenter={tonalCenter}
-                pitchSet={computedState.pitchSet}
-                toggleInterval={this.toggleInterval}
-                selectedChords={selectedChords}
-                playNotes={audio.playNotes}
-                playIntervals={audio.playIntervals}
-                playOrdinalChord={audio.playOrdinalChord}
-                ordinalChordsPlayed={audio.ordinalChordsPlayed}
-              />
-              <Notation
-                pitchSet={computedState.pitchSet}
-                clef={clef}
-              />
-              <Menu
-                selectedChords={selectedChords}
-                setChordSet={this.setChordSet}
-                toggleChord={this.toggleChord}
-                intervalSet={intervalSet}
-              />
-              <Modal
-                open={this.state.modalIsOpen}
-                onClose={this.toggleModal}
-              >
-                <Marquee
-                  intervalSet={intervalSet}
-                  title={computedState.title}
-                  inversionText={computedState.inversionText}
-                  isNamed={computedState.isNamed}
-                  isWithinModal={true}
-                />
-              </Modal>
-            </div>
+            <Layout
+              intervalSet={intervalSet}
+              tonalCenter={tonalCenter}
+              selectedChords={selectedChords}
+              clef={clef}
+              setChordSet={this.setChordSet}
+              shiftIntervalSet={this.shiftIntervalSet}
+              shiftTonalCenter={this.shiftTonalCenter}
+              toggleChord={this.toggleChord}
+              toggleInterval={this.toggleInterval}
+              inversionText={computedState.inversionText}
+              isNamed={computedState.isNamed}
+              pitchSet={computedState.pitchSet}
+              title={computedState.title}
+              audio={audio}
+            />
           )}</WithAudio>
         </React.Fragment>
       )}</WithComputedState>
