@@ -46,16 +46,43 @@ svg text::selection {
 
 body,
 #root,
-#app {
+#app,
+#layout {
   height: 100vh;
   overflow: hidden;
   width: 100%;
   position: fixed;
 }
 
-#wheel {
+#wheel-container {
   overflow: hidden;
   text-align: center;
+  position: relative;
+}
+
+#wheel-container #wheel {
+width: 100%;
+}
+
+#wheel-container .corner {
+  position: absolute;
+  margin: 1vmax;
+}
+
+#wheel-container .top {
+  top: 0;
+}
+
+#wheel-container .bottom {
+  bottom: 0;
+}
+
+#wheel-container .left {
+  left: 0;
+}
+
+#wheel-container .right {
+  right: 0;
 }
 
 #wheel svg {
@@ -64,24 +91,13 @@ body,
   max-height: 100%;
 }
 
-#app {
+#layout {
   display: grid;
-  /*grid-gap: 2vmin;*/
   grid-template-rows: auto 1fr auto auto;
 }
 
-#notation {
-  padding: 10px;
-}
-
-#notation svg {
-  background: white;
-  border-radius: 1.5vmin;
-  box-shadow: inset 0 0 2vmin #999999;
-}
-
 @media (min-aspect-ratio: 1/1) {
-  #app {
+  #layout {
     grid-auto-flow: column;
     grid-template-columns: 75vh auto;
     grid-template-rows: 10vh 75vh 15vh;
@@ -93,12 +109,12 @@ body,
 }
 
 @media (min-aspect-ratio: 3/2) {
-  #app {
+  #layout {
     grid-template-columns: 100vh 1fr;
     grid-template-rows: 1fr 10fr 30fr;
   }
 
-  #wheel {
+  #wheel-container {
     order: -1;
     grid-row: 1 / -1;
   }

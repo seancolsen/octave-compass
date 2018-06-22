@@ -4,6 +4,7 @@ import Wheel from "components/Wheel";
 import Notation from "components/Notation";
 import Menu from "components/Menu";
 import Modal from 'react-responsive-modal';
+import Toolbar from "components/Toolbar";
 
 export default class Layout extends React.Component {
 
@@ -25,48 +26,88 @@ export default class Layout extends React.Component {
   render() {
     return (
       <div id='app' className="App">
-        <Marquee
-          intervalSet={this.props.intervalSet}
-          title={this.props.title}
-          inversionText={this.props.inversionText}
-          isNamed={this.props.isNamed}
-          showMore={() => this.openModal('marquee')}
-        />
-        <Wheel
-          shiftTonalCenter={this.props.shiftTonalCenter}
-          shiftIntervalSet={this.props.shiftIntervalSet}
-          intervalSet={this.props.intervalSet}
-          tonalCenter={this.props.tonalCenter}
-          pitchSet={this.props.pitchSet}
-          toggleInterval={this.props.toggleInterval}
-          selectedChords={this.props.selectedChords}
-          playNotes={this.props.audio.playNotes}
-          playIntervals={this.props.audio.playIntervals}
-          playOrdinalChord={this.props.audio.playOrdinalChord}
-          ordinalChordsPlayed={this.props.audio.ordinalChordsPlayed}
-        />
-        <Notation
-          pitchSet={this.props.pitchSet}
-          clef={this.props.clef}
-        />
-        <Menu
-          selectedChords={this.props.selectedChords}
-          setChordSet={this.props.setChordSet}
-          toggleChord={this.props.toggleChord}
-          intervalSet={this.props.intervalSet}
-        />
-        <Modal
-          open={this.state.modal === 'marquee'}
-          onClose={this.closeModal}
-        >
+        <div id='layout'>
           <Marquee
             intervalSet={this.props.intervalSet}
             title={this.props.title}
             inversionText={this.props.inversionText}
             isNamed={this.props.isNamed}
-            isWithinModal={true}
+            showMore={() => this.openModal('marquee')}
           />
-        </Modal>
+          <div id='wheel-container'>
+            <Wheel
+              shiftTonalCenter={this.props.shiftTonalCenter}
+              shiftIntervalSet={this.props.shiftIntervalSet}
+              intervalSet={this.props.intervalSet}
+              tonalCenter={this.props.tonalCenter}
+              pitchSet={this.props.pitchSet}
+              toggleInterval={this.props.toggleInterval}
+              selectedChords={this.props.selectedChords}
+              playNotes={this.props.audio.playNotes}
+              playIntervals={this.props.audio.playIntervals}
+              playOrdinalChord={this.props.audio.playOrdinalChord}
+              ordinalChordsPlayed={this.props.audio.ordinalChordsPlayed}
+            />
+            {/* TODO
+            <button
+              className="corner top left"
+            >
+              Play
+            </button>*/}
+            {/* TODO
+            <button
+              className="corner top right"
+            >
+              Tour
+            </button>*/}
+            <button
+              className="corner bottom left"
+              onClick={() => this.openModal('notation')}
+            >
+              Notation
+            </button>
+            <button
+              className="corner bottom right"
+            >
+              About
+            </button>
+          </div>
+          <Toolbar
+
+          />
+          <Menu
+            selectedChords={this.props.selectedChords}
+            setChordSet={this.props.setChordSet}
+            toggleChord={this.props.toggleChord}
+            intervalSet={this.props.intervalSet}
+          />
+        </div>
+        <div id='modals'>
+          <Modal
+            open={this.state.modal === 'marquee'}
+            onClose={this.closeModal}
+          >
+            <Marquee
+              intervalSet={this.props.intervalSet}
+              title={this.props.title}
+              inversionText={this.props.inversionText}
+              isNamed={this.props.isNamed}
+              isWithinModal={true}
+            />
+          </Modal>
+          <Modal
+            open={this.state.modal === 'notation'}
+            onClose={this.closeModal}
+          >
+            <div>
+              <h2>{this.props.title}</h2>
+              <Notation
+                pitchSet={this.props.pitchSet}
+                clef={this.props.clef}
+              />
+            </div>
+          </Modal>
+        </div>
       </div>
     );
   }
