@@ -28,7 +28,7 @@ export default class Layout extends React.Component {
   buttons() {
     return {
       Staff: (props) => <Button
-        onClick={() => this.props.showNotation()}
+        onClick={() => this.openModal('notation')}
         icon='music'
         label={'staff'}
         {...props}
