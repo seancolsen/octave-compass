@@ -25,7 +25,6 @@ export default class App extends React.Component {
       intervalSet: stateFromUrl.intervalSet,
       selectedChords: ChordSet.fromDefaultChords,
       clef: 'treble',
-      modalIsOpen: false,
     };
   }
 
@@ -75,12 +74,6 @@ export default class App extends React.Component {
     this.setState({
       selectedChords: chordSet,
     });
-  };
-
-  toggleModal = () => {
-    this.setState({
-      modalIsOpen: !this.state.modalIsOpen,
-    })
   };
 
   render() {
