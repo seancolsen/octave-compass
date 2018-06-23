@@ -185,4 +185,18 @@ export default class ChordSet {
     return new ChordSet(flattenedChords);
   }
 
+  /**
+   * Compare this ChordSet to the given ChordSet. If the two contain all the
+   * same chords, then return true. Return false otherwise.
+   *
+   * @param {ChordSet} chordSet
+   * @return {boolean}
+   */
+  equals(chordSet) {
+    return this.count === chordSet.count &&
+      this.chords.every((chord, index) =>
+        chord.binary === chordSet.chords[index].binary
+      );
+  }
+
 }

@@ -5,6 +5,7 @@ import Notation from "components/Notation";
 import Menu from "components/Menu";
 import Modal from 'react-responsive-modal';
 import Toolbar from "components/Toolbar";
+import Button from 'components/common/Button';
 
 export default class Layout extends React.Component {
 
@@ -49,31 +50,34 @@ export default class Layout extends React.Component {
               ordinalChordsPlayed={this.props.audio.ordinalChordsPlayed}
             />
             {/* TODO
-            <button
+            <Button
               className="corner top left"
             >
               Play
-            </button>*/}
+            </Button>*/}
             {/* TODO
-            <button
+            <Button
               className="corner top right"
             >
               Tour
-            </button>*/}
-            <button
+            </Button>*/}
+            <Button
               className="corner bottom left"
               onClick={() => this.openModal('notation')}
+              icon='music'
             >
-              Notation
-            </button>
-            <button
+              Staff
+            </Button>
+            <Button
               className="corner bottom right"
+              icon={['fab', 'github']}
             >
               About
-            </button>
+            </Button>
           </div>
           <Toolbar
-
+            shiftTonalCenter={this.props.shiftTonalCenter}
+            shiftIntervalSet={this.props.shiftIntervalSet}
           />
           <Menu
             selectedChords={this.props.selectedChords}

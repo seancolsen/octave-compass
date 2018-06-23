@@ -104,3 +104,15 @@ test('fromChordNames', () => {
 test('fromDefaultChords', () => {
   expect(ChordSet.fromDefaultChords.count).toBeGreaterThan(1);
 });
+
+test('equals', () => {
+  const setA = ChordSet.fromChordNames(['major', 'diminished']);
+  const setB = ChordSet.fromChordNames(['diminished', 'major']);
+  const setC = ChordSet.fromChordNames(['major', 'augmented']);
+  expect(setA.equals(setB)).toBe(true);
+  expect(setB.equals(setA)).toBe(true);
+  expect(setA.equals(setC)).toBe(false);
+  expect(setC.equals(setA)).toBe(false);
+  expect(setB.equals(setC)).toBe(false);
+  expect(setC.equals(setB)).toBe(false);
+});
