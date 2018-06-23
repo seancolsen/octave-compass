@@ -21,6 +21,7 @@ const StyledA = styled.a`
 `;
 
 export default function Button(props) {
+  const content = props.label || props.children;
   return (
     <StyledA {...props}>
       <div>
@@ -28,7 +29,7 @@ export default function Button(props) {
           <FontAwesomeIcon icon={props.icon} color={'#454545'} />
         }
       </div>
-      <div>{props.children}</div>
+      <div>{content}</div>
     </StyledA>
   )
 }

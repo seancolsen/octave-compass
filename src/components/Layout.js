@@ -5,7 +5,6 @@ import Notation from "components/Notation";
 import Menu from "components/Menu";
 import Modal from 'react-responsive-modal';
 import Toolbar from "components/Toolbar";
-import Button from 'components/common/Button';
 
 export default class Layout extends React.Component {
 
@@ -35,6 +34,11 @@ export default class Layout extends React.Component {
             isNamed={this.props.isNamed}
             showMore={() => this.openModal('marquee')}
           />
+          <Toolbar
+            shiftTonalCenter={this.props.shiftTonalCenter}
+            shiftIntervalSet={this.props.shiftIntervalSet}
+            showNotation={() => this.openModal('notation')}
+          />
           <div id='wheel-container'>
             <Wheel
               shiftTonalCenter={this.props.shiftTonalCenter}
@@ -49,38 +53,7 @@ export default class Layout extends React.Component {
               playOrdinalChord={this.props.audio.playOrdinalChord}
               ordinalChordsPlayed={this.props.audio.ordinalChordsPlayed}
             />
-            {/* TODO
-            <Button
-              className="corner top left"
-            >
-              Play
-            </Button>*/}
-            {/* TODO
-            <Button
-              className="corner top right"
-            >
-              Tour
-            </Button>*/}
-            <Button
-              className="corner bottom left"
-              onClick={() => this.openModal('notation')}
-              icon='music'
-            >
-              staff
-            </Button>
-            <Button
-              className="corner bottom right"
-              icon={['fab', 'github']}
-              href={'https://github.com/seanmadsen/octave-compass'}
-              target={'_blank'}
-            >
-              about
-            </Button>
           </div>
-          <Toolbar
-            shiftTonalCenter={this.props.shiftTonalCenter}
-            shiftIntervalSet={this.props.shiftIntervalSet}
-          />
           <Menu
             selectedChords={this.props.selectedChords}
             setChordSet={this.props.setChordSet}

@@ -91,16 +91,32 @@ width: 100%;
   max-height: 100%;
 }
 
+/**
+ * Responsive stuff
+ *
+ * Start with tall narrow windows.
+ * Add overrides for progressively greater aspect ratios
+ */
+
 #layout {
   display: grid;
-  grid-template-rows: auto 1fr auto auto;
+  grid-template-rows: auto auto 100vw auto;
 }
 
-@media (min-aspect-ratio: 1/1) {
+@media (min-aspect-ratio: 65/100) {
+  #layout {
+    grid-template-rows: auto auto 75vw auto;
+  }
+  #wheel svg {
+    width: 75vw;
+  }
+}
+
+@media (min-aspect-ratio: 90/100) {
   #layout {
     grid-auto-flow: column;
     grid-template-columns: 75vh auto;
-    grid-template-rows: 10vh 75vh 15vh;
+    grid-template-rows: 10vh 15vh 75vh;
   }
 
   #menu {
@@ -108,14 +124,30 @@ width: 100%;
   }
 }
 
-@media (min-aspect-ratio: 3/2) {
+@media (min-aspect-ratio: 140/100) {
+  #layout {
+    grid-template-columns: 85vh auto;
+    grid-template-rows: 15vh 85vh;
+  }
+
+
+  #wheel-container {
+    grid-row: 2;
+    grid-column: 1
+  }
+
+  #menu {
+    grid-row: auto;
+  }
+}
+
+@media (min-aspect-ratio: 180/100) {
   #layout {
     grid-template-columns: 100vh 1fr;
     grid-template-rows: 1fr 10fr 30fr;
   }
 
   #wheel-container {
-    order: -1;
     grid-row: 1 / -1;
   }
 
