@@ -37,6 +37,7 @@ export default class Layout extends React.Component {
           <Toolbar
             shiftTonalCenter={this.props.shiftTonalCenter}
             shiftIntervalSet={this.props.shiftIntervalSet}
+            shiftMode={this.props.shiftMode}
             showNotation={() => this.openModal('notation')}
           />
           <div id='wheel-container'>

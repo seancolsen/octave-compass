@@ -51,8 +51,17 @@ export default class App extends React.Component {
     this.setState({
       intervalSet:
         IntervalSetFactory.fromIntervalSet(
-        this.state.intervalSet.shift(rotation)
-      ),
+          this.state.intervalSet.shift(rotation)
+        ),
+    });
+  };
+
+  shiftMode = (amount) => {
+    this.setState({
+      intervalSet:
+        IntervalSetFactory.fromIntervalSet(
+          this.state.intervalSet.modeShift(amount)
+        ),
     });
   };
 
@@ -102,6 +111,7 @@ export default class App extends React.Component {
               clef={clef}
               setChordSet={this.setChordSet}
               shiftIntervalSet={this.shiftIntervalSet}
+              shiftMode={this.shiftMode}
               shiftTonalCenter={this.shiftTonalCenter}
               toggleChord={this.toggleChord}
               toggleInterval={this.toggleInterval}

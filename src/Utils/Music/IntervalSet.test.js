@@ -124,3 +124,15 @@ test('all binary values should be masked against chromatic', () => {
   expect(IntervalSet.fromBinary(0b111111111111111111).binary)
     .toBe(0b111111111111);
 });
+
+test('modeShift', () => {
+  expect(IntervalSet.fromBinary(2873).modeShift(0).binary).toBe(2873);
+  expect(IntervalSet.fromBinary(2873).modeShift(1).binary).toBe(871);
+  expect(IntervalSet.fromBinary(2873).modeShift(-1).binary).toBe(1651);
+  expect(IntervalSet.fromBinary(2873).modeShift(6).binary).toBe(1651);
+  expect(IntervalSet.fromBinary(2873).modeShift(7).binary).toBe(2873);
+});
+
+test('modeShift of a set without a tonal center should go to the first available ordinal', () => {
+  expect(IntervalSet.fromBinary(2872).modeShift(0).binary).toBe(359);
+});

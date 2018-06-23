@@ -31,9 +31,10 @@ export default function Toolbar(props) {
       />
       <TwoWayButton
         label='Mode'
-        stepFunction={props.shiftIntervalSet}
+        stepFunction={props.shiftMode}
         buttonLabels={['prev', 'next']}
         icons={['caret-left', 'caret-right']}
+        inverted
       />
       <Button
         className="corner bottom right"

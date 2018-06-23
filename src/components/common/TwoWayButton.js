@@ -20,7 +20,7 @@ const Container = styled.div`
 `;
 
 export default function TwoWayButton(props) {
-  const sign = props.invert ? 1 : -1;
+  const sign = props.inverted ? 1 : -1;
   const buttonLabels = props.buttonLabels || ['-', '+'];
   const icons = props.icons || [];
   return (

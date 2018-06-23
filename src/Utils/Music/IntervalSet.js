@@ -164,6 +164,17 @@ export default class IntervalSet {
   }
 
   /**
+   * Shift this interval set to a different mode of itself.
+   *
+   * @param {number} amount
+   * @return {IntervalSet}
+   */
+  modeShift(amount) {
+    const ordinal = Scalar.wrap(amount, this.count);
+    return this.shift(-this.ordinals[ordinal]);
+  }
+
+  /**
    * Return a new interval set with intervals toggled where the given binary
    * bits are true.
    *
