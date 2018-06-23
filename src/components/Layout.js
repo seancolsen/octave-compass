@@ -5,6 +5,8 @@ import Notation from "components/Notation";
 import Menu from "components/Menu";
 import Modal from 'react-responsive-modal';
 import Toolbar from "components/Toolbar";
+import TwoWayButton from "components/common/TwoWayButton";
+import Button from "components/common/Button";
 
 export default class Layout extends React.Component {
 
@@ -23,7 +25,41 @@ export default class Layout extends React.Component {
     this.setState({modal: modalName});
   };
 
+  buttons() {
+    return {
+      Staff: (props) => <Button
+        onClick={() => this.props.showNotation()}
+        icon='music'
+        label={'staff'}
+        {...props}
+      />,
+      Transpose: (props) => <TwoWayButton
+        label='Transpose'
+        stepFunction={this.props.shiftTonalCenter}
+        buttonLabels={['down', 'up']}
+        icons={['minus', 'plus']}
+        {...props}
+      />,
+      Mode: (props) => <TwoWayButton
+        label='Mode'
+        stepFunction={this.props.shiftMode}
+        buttonLabels={['prev', 'next']}
+        icons={['caret-left', 'caret-right']}
+        inverted
+        {...props}
+      />,
+      About: (props) => <Button
+        icon={['fab', 'github']}
+        href={'https://github.com/seanmadsen/octave-compass'}
+        target={'_blank'}
+        label={'about'}
+        {...props}
+      />
+    };
+  }
+
   render() {
+    const Buttons = this.buttons();
     return (
       <div id='app' className="App">
         <div id='layout'>
@@ -35,10 +71,7 @@ export default class Layout extends React.Component {
             showMore={() => this.openModal('marquee')}
           />
           <Toolbar
-            shiftTonalCenter={this.props.shiftTonalCenter}
-            shiftIntervalSet={this.props.shiftIntervalSet}
-            shiftMode={this.props.shiftMode}
-            showNotation={() => this.openModal('notation')}
+            buttons={Buttons}
           />
           <div id='wheel-container'>
             <Wheel
@@ -54,6 +87,12 @@ export default class Layout extends React.Component {
               playOrdinalChord={this.props.audio.playOrdinalChord}
               ordinalChordsPlayed={this.props.audio.ordinalChordsPlayed}
             />
+            <div id='overlaid-buttons'>
+              <Buttons.Staff className='corner bottom left'/>
+              <Buttons.Transpose className='corner top left'/>
+              <Buttons.Mode className='corner top right'/>
+              <Buttons.About className='corner bottom right'/>
+            </div>
           </div>
           <Menu
             selectedChords={this.props.selectedChords}

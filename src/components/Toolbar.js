@@ -1,10 +1,7 @@
 import React from 'react';
-import TwoWayButton from "components/common/TwoWayButton";
 import styled from 'styled-components';
-import Button from "components/common/Button";
 
-
-const Container = styled.div`
+const FlexContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,35 +12,16 @@ const Container = styled.div`
 `;
 
 export default function Toolbar(props) {
+  const {Staff,  Transpose,  Mode,  About} = props.buttons;
   return (
-    <Container id={'toolbar'}>
-      <Button
-        className="corner bottom left"
-        onClick={() => props.showNotation()}
-        icon='music'
-        label={'staff'}
-      />
-      <TwoWayButton
-        label='Transpose'
-        stepFunction={props.shiftTonalCenter}
-        buttonLabels={['down', 'up']}
-        icons={['minus', 'plus']}
-      />
-      <TwoWayButton
-        label='Mode'
-        stepFunction={props.shiftMode}
-        buttonLabels={['prev', 'next']}
-        icons={['caret-left', 'caret-right']}
-        inverted
-      />
-      <Button
-        className="corner bottom right"
-        icon={['fab', 'github']}
-        href={'https://github.com/seanmadsen/octave-compass'}
-        target={'_blank'}
-        label={'about'}
-      />
-    </Container>
+    <div id='toolbar'>
+      <FlexContainer>
+        <Staff />
+        <Transpose />
+        <Mode />
+        <About />
+      </FlexContainer>
+    </div>
   );
 }
 
