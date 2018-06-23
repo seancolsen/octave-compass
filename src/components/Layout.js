@@ -71,6 +71,8 @@ export default class Layout extends React.Component {
             <Button
               className="corner bottom right"
               icon={['fab', 'github']}
+              href={'https://github.com/seanmadsen/octave-compass'}
+              target={'_blank'}
             >
               about
             </Button>

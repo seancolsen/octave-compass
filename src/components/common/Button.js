@@ -11,6 +11,9 @@ const StyledA = styled.a`
   display: inline-block;
   line-height: 1.7vmax;
   text-align: center;
+  outline: none;
+  color: black;
+  text-decoration: none;
   &:hover {
     text-decoration: underline;
     background-color: white;
