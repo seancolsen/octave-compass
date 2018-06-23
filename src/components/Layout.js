@@ -66,13 +66,13 @@ export default class Layout extends React.Component {
               onClick={() => this.openModal('notation')}
               icon='music'
             >
-              Staff
+              staff
             </Button>
             <Button
               className="corner bottom right"
               icon={['fab', 'github']}
             >
-              About
+              about
             </Button>
           </div>
           <Toolbar
