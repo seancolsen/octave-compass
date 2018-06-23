@@ -11,7 +11,7 @@ const StyledRect = styled.rect`
 `;
 
 const StyledText = styled.text`
-  font-size: 35px;
+  font-size: 25px;
   fill: ${p => p.clickable ? 'black' : '#BBB'};
 `;
 

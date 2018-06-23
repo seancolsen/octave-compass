@@ -21,10 +21,10 @@ function ChordChoice(props) {
 }
 
 export default styled(ChordChoice)`
-  margin: 5px;
-  padding: 5px;
-  border-radius: 5px;
-  border: solid 5px transparent;
+  margin: 0.4vmax;
+  padding: 0.4vmax;
+  border-radius: 0.4vmax;
+  border: solid 0.4vmax transparent;
   background: ${p => p.selected ? 'white' : 'none'};
   &, 
   & * {
@@ -32,7 +32,7 @@ export default styled(ChordChoice)`
   }
   & svg {
     display: block;
-    width: 30px;
+    width: 3.5vmax;
     margin: auto;
   }
   &:hover {
