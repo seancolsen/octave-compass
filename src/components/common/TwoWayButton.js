@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Button from 'components/common/Button';
 
 const Label = styled.div`
-  
+  text-align: center;
 `;
 
 const Container = styled.div`
