@@ -12,7 +12,7 @@ const Container = styled.div`
   grid-template-rows: auto auto;
   grid-column-gap: 0.4vmax;
   padding: 0.7vmin;
-  border: solid 0.2vmax #d3d3d3;
+  border: solid 1px #c4c4c4;
   border-radius: 0.4vmax;
   & ${Label} {
     grid-column: 1 / span 2;
