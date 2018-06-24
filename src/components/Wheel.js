@@ -30,21 +30,17 @@ export default class Wheel extends Component {
     super(props);
     this.state = {
       componentsRotating: [],
-      keyboardIsRotating: false,
-      scaleIsRotating: false,
     };
   }
 
-  setKeyboardIsRotating(bool) {
-    this.setState({keyboardIsRotating: bool});
-  }
-
-  setScaleIsRotating(bool) {
-    this.setState({scaleIsRotating: bool});
-  }
-
   somethingIsRotating() {
-    return this.state.keyboardIsRotating || this.state.scaleIsRotating;
+    return this.state.componentsRotating.length > 0;
+  }
+
+  scaleIsRotating() {
+    return this.state.componentsRotating.some(component =>
+      component instanceof Scale
+    );
   }
 
   /**
@@ -71,16 +67,10 @@ export default class Wheel extends Component {
     return Wheel.grabAngleFromMouseEvent(touchEvent.touches[0]);
   }
 
-  startRotating(component, name) {
+  startRotating(component) {
     let state = {
       componentsRotating: this.state.componentsRotating.concat(component)
     };
-    if (name === 'Keyboard') {
-      state.keyboardIsRotating = true;
-    }
-    if (name === 'Scale') {
-      state.scaleIsRotating = true;
-    }
     this.setState(state);
   }
 
@@ -110,11 +100,7 @@ export default class Wheel extends Component {
     this.state.componentsRotating.forEach(component => {
       component.stopRotating();
     });
-    this.setState({
-      componentsRotating: [],
-      keyboardIsRotating: false,
-      scaleIsRotating: false,
-    });
+    this.setState({componentsRotating: []});
   }
 
   render() {
@@ -137,12 +123,12 @@ export default class Wheel extends Component {
             intervalSet={this.props.intervalSet}
             isRotating={!!this.state.elementRotating}
             toggleInterval={this.props.toggleInterval}
-            scaleIsRotating={this.state.scaleIsRotating}
+            scaleIsRotating={this.scaleIsRotating()}
           />
 
           <Keyboard
-            startRotating={component => this.startRotating(component, 'Keyboard')}
-            afterRotating={rotation => this.props.shiftTonalCenter(rotation)}
+            startRotating={component => this.startRotating(component)}
+            afterRotating={this.props.shiftTonalCenter}
             intervalSet={this.props.intervalSet}
             tonalCenter={this.props.tonalCenter}
             pitchSet={this.props.pitchSet}
@@ -151,8 +137,8 @@ export default class Wheel extends Component {
           />
 
           <Scale
-            startRotating={component => this.startRotating(component, 'Scale')}
-            afterRotating={rotation => this.props.shiftIntervalSet(rotation)}
+            startRotating={component => this.startRotating(component)}
+            afterRotating={this.props.shiftIntervalSet}
             validRestingRotationValues={
               this.props.intervalSet.ordinals.map(o => Scalar.wrapToOctave(-o))
             }
