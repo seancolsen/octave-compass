@@ -1,9 +1,8 @@
 import React from 'react';
-import Rotatable from "components/Wheel/Rotatable";
 import KeySet from "components/Wheel/Keyboard/KeySet";
 import Angle from "Utils/Geometry/Angle";
 
-function Keyboard(props) {
+export default function Keyboard(props) {
   const rotation = props.rotation - props.tonalCenter;
   const transform = `rotate(${Angle.iToD(-props.tonalCenter)})`;
   return (
@@ -22,5 +21,3 @@ function Keyboard(props) {
     </g>
   );
 }
-
-export default Rotatable(Keyboard);

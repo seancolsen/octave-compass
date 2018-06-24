@@ -1,5 +1,4 @@
 import React from 'react';
-import Rotatable from "components/Wheel/Rotatable";
 import SwarmOfChords from "components/Wheel/Scale/SwarmOfChords";
 import Brand from "components/Wheel/Scale/Brand";
 import IntervalSetPolygon from "components/common/IntervalSetPolygon";
@@ -21,7 +20,7 @@ const Background = styled(IntervalSetPolygon)`
   cursor: grab;
 `;
 
-function Scale(props) {
+export default function Scale(props) {
   const ordinalChordSets = OrdinalChordSet.arrayFromIntervalSet(
     props.intervalSet,
     props.selectedChords
@@ -44,5 +43,3 @@ function Scale(props) {
     </g>
   );
 }
-
-export default Rotatable(Scale);

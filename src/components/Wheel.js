@@ -7,6 +7,7 @@ import Base from 'components/Wheel/Base';
 import styled from 'styled-components';
 import Scalar from "Utils/Math/Scalar";
 import BlurFilter from "components/Wheel/BlurFilter";
+import Rotatable from "components/Wheel/Rotatable";
 
 /**
  * The width and height of the square SVG view box in user units (basically SVG
@@ -122,28 +123,36 @@ export default class Wheel extends Component {
             scaleIsRotating={this.scaleIsRotating()}
           />
 
-          <Keyboard
+          <Rotatable
             startRotating={component => this.startRotating(component)}
             afterRotating={this.props.shiftTonalCenter}
-            intervalSet={this.props.intervalSet}
-            tonalCenter={this.props.tonalCenter}
-            pitchSet={this.props.pitchSet}
-            somethingIsRotating={this.somethingIsRotating()}
-            playNotes={this.props.playNotes}
-          />
+          >{ rotation => (
+            <Keyboard
+              rotation={rotation}
+              intervalSet={this.props.intervalSet}
+              tonalCenter={this.props.tonalCenter}
+              pitchSet={this.props.pitchSet}
+              somethingIsRotating={this.somethingIsRotating()}
+              playNotes={this.props.playNotes}
+            />
+          )}</Rotatable>
 
-          <Scale
+          <Rotatable
             startRotating={component => this.startRotating(component)}
             afterRotating={this.props.shiftIntervalSet}
             validRestingRotationValues={
               this.props.intervalSet.ordinals.map(o => Scalar.wrapToOctave(-o))
             }
-            intervalSet={this.props.intervalSet}
-            selectedChords={this.props.selectedChords}
-            somethingIsRotating={this.somethingIsRotating()}
-            playOrdinalChord={this.props.playOrdinalChord}
-            ordinalChordsPlayed={this.props.ordinalChordsPlayed}
-          />
+          >{ rotation => (
+            <Scale
+              rotation={rotation}
+              intervalSet={this.props.intervalSet}
+              selectedChords={this.props.selectedChords}
+              somethingIsRotating={this.somethingIsRotating()}
+              playOrdinalChord={this.props.playOrdinalChord}
+              ordinalChordsPlayed={this.props.ordinalChordsPlayed}
+            />
+          )}</Rotatable>
 
         </svg>
       </Container>
