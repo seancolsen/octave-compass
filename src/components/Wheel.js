@@ -68,18 +68,14 @@ export default class Wheel extends Component {
   }
 
   startRotating(component) {
-    let state = {
+    this.setState({
       componentsRotating: this.state.componentsRotating.concat(component)
-    };
-    this.setState(state);
+    });
   }
 
   setRotationFromGrabAngle(grabAngle) {
     this.state.componentsRotating.forEach(component => {
-      let angleDragged = grabAngle - component.state.initialGrabAngle;
-      component.setState({
-        rotation: component.state.rotationWhenGrabbed + angleDragged,
-      });
+      component.setRotationFromGrabAngle(grabAngle);
     });
   }
 

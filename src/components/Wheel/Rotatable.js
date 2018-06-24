@@ -56,6 +56,15 @@ export default function Rotatable(WrappedComponent) {
       this.props.startRotating(this);
     }
 
+    setRotation(rotation) {
+      this.setState({rotation: rotation});
+    }
+
+    setRotationFromGrabAngle(grabAngle) {
+      let angleDragged = grabAngle - this.state.initialGrabAngle;
+      this.setRotation(this.state.rotationWhenGrabbed + angleDragged);
+    }
+
     stopRotating() {
       if (!this.state.isRotating) {
         return;
