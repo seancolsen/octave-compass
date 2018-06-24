@@ -154,18 +154,22 @@ width: 100%;
   }
 }
 
-@media (min-aspect-ratio: 140/100) {
+@media (min-aspect-ratio: 120/100) {
   #layout {
-    grid-template-columns: 85vh auto;
-    grid-template-rows: 15vh 85vh;
+    grid-template-columns: 87vh auto;
+    grid-template-rows: 13vh 87vh;
   }
   #wheel-container {
     grid-row: 2;
     grid-column: 1
   }
+  #toolbar {
+    margin-bottom: -9vmax;
+  }
   #menu {
     grid-row: auto;
-    margin-top: 3vmax;
+    margin-top: 9vmax;
+    padding: 0 2vmax;
   }
 }
 
@@ -174,10 +178,14 @@ width: 100%;
     grid-template-columns: 100vh 1fr;
     grid-template-rows: 1fr 10fr 30fr;
   }
+
+  #toolbar {
+    margin-bottom: 0;
+  }
   #wheel-container {
     grid-row: 1 / -1;
   }
   #menu {
-    margin-top: 0;
+    margin: 0;
   }
 }
