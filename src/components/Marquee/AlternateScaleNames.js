@@ -6,12 +6,6 @@ const Aka = styled.span`
   color: #333;
 `;
 
-const ShowMoreLink = styled.a`
-  text-decoration: underline;
-  cursor: pointer;
-  color: #2d5da6;
-`;
-
 export default class AlternateScaleNames extends Component {
 
   showMore = (event) => {
@@ -46,9 +40,9 @@ export default class AlternateScaleNames extends Component {
         { length > 1 &&
           <Fragment>
             <span>, and </span>
-            <ShowMoreLink onClick={this.showMore}>
+            <a onClick={this.showMore}>
               {length - 1} other name{length > 2 && 's'}...
-            </ShowMoreLink>
+            </a>
           </Fragment>
         }
       </Subtitle>

@@ -5,11 +5,18 @@ import styled from 'styled-components';
 import Button from "components/common/Button";
 
 const Heading = styled.div`
-  display: grid;
-  grid: 1fr / auto auto;
-  grid-gap: 2vmax;
-  align-items: start;
+  display: flex;
+  align-items: baseline;
+  align-content: center;
   justify-content: center;
+  flex-wrap: wrap;
+  & > * {
+    margin: 0 1vmax 0.5vmax 1vmax;
+  }
+`;
+
+const StyledA = styled.a`
+  font-style: italic;
 `;
 
 export default function ChordSelection(props) {
@@ -20,20 +27,18 @@ export default function ChordSelection(props) {
       <Heading>
         <h2>Chords in scale</h2>
         { defaultChordsAreSelected &&
-          <Button
+          <StyledA
             onClick={e => props.setChordSet(ChordSet.fromAllChords)}
-            icon='eye'
           >
             show all
-          </Button>
+          </StyledA>
         }
         { !defaultChordsAreSelected &&
-          <Button
+          <StyledA
             onClick={e => props.setChordSet(ChordSet.fromDefaultChords)}
-            icon='undo'
           >
             Show default
-          </Button>
+          </StyledA>
         }
       </Heading>
       <ChordChoices

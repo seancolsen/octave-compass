@@ -8,11 +8,11 @@ import RouteProcessor from "components/RouteProcessor";
 import Url from "Utils/Text/Url";
 import Layout from "components/Layout";
 import {library} from '@fortawesome/fontawesome-svg-core'
-import {faEye, faPlus, faMinus, faUndo, faMusic, faCaretLeft, faCaretRight}
+import {faPlus, faMinus, faMusic, faCaretLeft, faCaretRight}
   from '@fortawesome/free-solid-svg-icons'
 import {faGithub} from '@fortawesome/free-brands-svg-icons'
 
-library.add(faEye, faPlus, faMinus, faUndo, faMusic, faCaretLeft, faCaretRight,
+library.add(faPlus, faMinus, faMusic, faCaretLeft, faCaretRight,
   faGithub);
 
 export default class App extends React.Component {
