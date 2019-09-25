@@ -3,25 +3,37 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
-    "@fortawesome/free-brands-svg-icons": "^5.1.0-11",
-    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-brands-svg-icons": "^5.11.2",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "0.1.0-11",
     "i": "^0.3.6",
-    "npm": "^6.1.0",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "npm": "^6.11.3",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-motion": "^0.5.2",
-    "react-responsive-modal": "^3.0.3",
-    "react-scripts": "1.1.4",
-    "styled-components": "^3.2.6",
+    "react-responsive-modal": "^3.6.0",
+    "react-scripts": "^3.1.2",
+    "styled-components": "^3.4.10",
     "tone": "^0.12.80",
-    "vexflow": "^1.2.84"
+    "vexflow": "^1.2.89"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
