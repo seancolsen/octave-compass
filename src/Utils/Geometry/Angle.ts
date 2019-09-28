@@ -1,5 +1,5 @@
-import {musicTheory} from "Data/musicTheory";
-import Scalar from "Utils/Math/Scalar";
+import {musicTheory} from "./../../Data/musicTheory";
+import Scalar from "./../Math/Scalar";
 
 const PI = Math.PI;
 const CIRCLE_DEGREES = 360;
@@ -21,7 +21,7 @@ export default class Angle {
    * @param {number} i
    * @returns {number}
    */
-  static iToD(i) {
+  static iToD(i: number): number {
     return CIRCLE_DEGREES * i / musicTheory.octaveDivisions;
   }
 
@@ -31,7 +31,7 @@ export default class Angle {
    * @param {number} d
    * @returns {number}
    */
-  static dToI(d) {
+  static dToI(d: number): number {
     return musicTheory.octaveDivisions * d / (CIRCLE_DEGREES);
   }
 
@@ -43,7 +43,7 @@ export default class Angle {
    * @param {number} p
    * @returns {number}
    */
-  static pToI(p) {
+  static pToI(p: number): number {
     return Scalar.wrap(musicTheory.octaveDivisions * (5 / 4 - p / (2 * PI)), 12);
   }
 
@@ -55,7 +55,7 @@ export default class Angle {
    * @param {number} i
    * @returns {number}
    */
-  static iToP(i) {
+  static iToP(i: number): number {
     return Scalar.wrap((2 + 1 / 2) * PI - i * 2 * PI / musicTheory.octaveDivisions, 2 * PI);
   }
 
