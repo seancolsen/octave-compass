@@ -1,4 +1,4 @@
-import CustomMath from "./CustomMath";
+import {CustomMath} from "./CustomMath";
 
 test('valueFrequency', () => {
   expect(CustomMath.valueFrequency(['a', 'a', 'b', 'b', 'b', 'c']))
@@ -37,4 +37,11 @@ test('linearInterpolate', () => {
   expect(li(-1, {in:-1, out: 1}, {in: 3, out:-19})).toBe(1);
   expect(li(3, {in:-1, out: 1}, {in: 3, out:-19})).toBe(-19);
   expect(li(0, {in:-1, out: 1}, {in: 3, out:-19})).toBe(-4);
+});
+
+test('valuesAreWithinThreshold', () => {
+  expect(CustomMath.valuesAreWithinThreshold(0, 0)).toBeTruthy();
+  expect(CustomMath.valuesAreWithinThreshold(0, 1)).toBeFalsy();
+  expect(CustomMath.valuesAreWithinThreshold(1, 1.05, 0.1)).toBeTruthy();
+  expect(CustomMath.valuesAreWithinThreshold(1, 1.15, 0.1)).toBeFalsy();
 });

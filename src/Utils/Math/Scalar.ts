@@ -4,7 +4,7 @@ const PI = Math.PI;
 /**
  * Helper functions to deal with plain scalar numbers
  */
-export default class Scalar {
+export class Scalar {
 
   /**
    * Ensure that `value` is within range between 0 and `max`. If `value` is

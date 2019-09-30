@@ -1,42 +1,45 @@
-import Scalar from "Utils/Math/Scalar";
-import PrPoint from "Utils/Geometry/PrPoint";
+import { Scalar } from "./../Math/Scalar";
+import { PrPoint } from "./PrPoint";
+import { IrPoint } from "./IrPoint";
+import { Point } from './Point';
+import { CustomMath } from "../Math/CustomMath";
 
 const PI = Math.PI;
+
+export type XCoordinate = number;
+export type YCoordinate = number;
+export type XyPointArray = [XCoordinate, YCoordinate];
+
 /**
  * CARTESIAN COORDINATE SYSTEM
  *
  * Our cartesian coordinate system within this app considers the positive y
  * axis to be pointing down. We do this to match the way that SVG works.
- *
  */
-export default class XyPoint {
+export class XyPoint extends Point {
 
   /**
    * Create a new point in XY space.
-   *
-   * @param {number} x
-   * @param {number} y
    */
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
+  constructor(public x: XCoordinate, public y: YCoordinate) {
+    super();
+  }
+
+  roughlyEquals(xyPoint: XyPoint) {
+    return CustomMath.valuesAreWithinThreshold(this.x, xyPoint.x) && 
+      CustomMath.valuesAreWithinThreshold(this.y, xyPoint.y);
   }
 
   /**
    * Create a new XY point, given an array of X and Y coordinates.
-   *
-   * @param {[number, number]} xy
-   * @returns {XyPoint}
    */
-  static fromArray(xy) {
+  static fromArray(xy: XyPointArray) {
     let [x, y] = xy;
     return new XyPoint(x, y);
   }
 
   /**
    * Convert this point to a PR point.
-   *
-   * @returns {PrPoint}
    */
   toPr() {
     let x = this.x;
@@ -48,8 +51,6 @@ export default class XyPoint {
 
   /**
    * Convert this point to an IR point.
-   *
-   * @returns {IrPoint}
    */
   toIr() {
     return this.toPr().toIr();
@@ -58,8 +59,6 @@ export default class XyPoint {
   /**
    * Convert this point to a string representation, with X and Y separated by
    * one comma.
-   *
-   * @return {string}
    */
   toString() {
     return `${this.x},${this.y}`;
@@ -68,22 +67,16 @@ export default class XyPoint {
   /**
    * Convert an array of IR points to a string of XY points. This string can
    * then be fed directly into an SVG attribute.
-   *
-   * @param {[IrPoint]} irPoints
-   * @return {string}
    */
-  static stringFromIrArray(irPoints) {
+  static stringFromIrArray(irPoints: IrPoint[]) {
     let xyPoints = irPoints.map((irPoint) => irPoint.toXy());
     return xyPoints.map((point) => point.toString()).join(' ');
   }
 
   /**
    * Vector addition.
-   *
-   * @param {object} xyPoint
-   * @return {XyPoint}
    */
-  plus(xyPoint) {
+  plus(xyPoint: XyPoint) {
     let x = xyPoint.x || 0;
     let y = xyPoint.y || 0;
     return new XyPoint(this.x + x, this.y + y);
@@ -91,10 +84,8 @@ export default class XyPoint {
 
   /**
    * Multiply both coordinates of this point by a scalar number.
-   *
-   * @param {number} factor
    */
-  times(factor) {
+  times(factor: number) {
     return new XyPoint(this.x * factor, this.y * factor);
   }
 

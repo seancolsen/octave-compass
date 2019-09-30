@@ -1,6 +1,9 @@
-import XyPoint from 'Utils/Geometry/XyPoint';
-import IrPoint from 'Utils/Geometry/IrPoint';
-import PrPoint from 'Utils/Geometry/PrPoint';
+import {XyPoint} from './XyPoint';
+import {IrPoint, IrPointArray} from './IrPoint';
+import {PrPoint} from './PrPoint';
+
+import { toBeTheSamePointAs } from './../Testing/JestCustomMatchers';
+expect.extend({toBeTheSamePointAs});
 
 test('toXy', () => {
   let data = [
@@ -10,8 +13,8 @@ test('toXy', () => {
     {in: [9, 1], out: [-1, 0]},
   ];
   data.forEach((d) => {
-    expect(IrPoint.fromArray(d.in).toXy())
-      .toBeTheSamePointAs(XyPoint.fromArray(d.out))
+    expect(IrPoint.fromArray(d.in as IrPointArray).toXy())
+      .toBeTheSamePointAs(XyPoint.fromArray(d.out as IrPointArray))
   });
 });
 
@@ -21,13 +24,13 @@ test('toPr', () => {
 });
 
 test('plus', () => {
-  expect((new IrPoint(4, 1)).plus({r: 0.5}))
+  expect((new IrPoint(4, 1)).plus(new IrPoint(0, 0.5)))
     .toBeTheSamePointAs(new IrPoint(4, 1.5));
-  expect((new IrPoint(3, 1)).plus({i: 2}))
+  expect((new IrPoint(3, 1)).plus(new IrPoint(2, 0)))
     .toBeTheSamePointAs(new IrPoint(5, 1));
-  expect((new IrPoint(3, 1)).plus({i: -1}))
+  expect((new IrPoint(3, 1)).plus(new IrPoint(-1, 0)))
     .toBeTheSamePointAs(new IrPoint(2, 1));
-  expect((new IrPoint(3, 1)).plus({i: -1, r: 0.5}))
+  expect((new IrPoint(3, 1)).plus(new IrPoint(-1, 0.5)))
     .toBeTheSamePointAs(new IrPoint(2, 1.5));
 });
 

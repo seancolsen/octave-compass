@@ -1,6 +1,9 @@
-import XyPoint from 'Utils/Geometry/XyPoint';
-import PrPoint from 'Utils/Geometry/PrPoint';
-import IrPoint from 'Utils/Geometry/IrPoint';
+import {XyPoint} from './XyPoint';
+import {PrPoint, PrPointArray} from './PrPoint';
+import {IrPoint} from './IrPoint';
+
+import { toBeTheSamePointAs } from './../Testing/JestCustomMatchers';
+expect.extend({toBeTheSamePointAs});
 
 const PI = Math.PI;
 
@@ -22,8 +25,8 @@ test('toXy', () => {
     {in: [3 * PI / 2, 1], out: [0, 1]},
   ];
   data.forEach((d) => {
-    expect(PrPoint.fromArray(d.in).toXy())
-      .toBeTheSamePointAs(XyPoint.fromArray(d.out))
+    expect(PrPoint.fromArray(d.in as PrPointArray).toXy())
+      .toBeTheSamePointAs(XyPoint.fromArray(d.out as PrPointArray))
   });
 });
 

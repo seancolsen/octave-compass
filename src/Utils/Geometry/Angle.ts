@@ -1,5 +1,5 @@
 import {musicTheory} from "./../../Data/musicTheory";
-import Scalar from "./../Math/Scalar";
+import {Scalar} from "./../Math/Scalar";
 
 const PI = Math.PI;
 const CIRCLE_DEGREES = 360;
@@ -13,7 +13,7 @@ const CIRCLE_DEGREES = 360;
  * the functions here are simpler. They only deal with scaling. In contrast, the
  * functions `Point.iToP` and `Point.pToI` deal with scaling as well as shifting.
  */
-export default class Angle {
+export class Angle {
 
   /**
    * Convert an interval angle to a degree angle.

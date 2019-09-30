@@ -1,7 +1,7 @@
 interface objectWithNumberValues { [k: string]: number};
 interface inOut {in: number, out: number};
 
-export default class CustomMath {
+export class CustomMath {
 
   /**
    * Count the occurrences of each value in an array. Return an object with the
@@ -38,6 +38,20 @@ export default class CustomMath {
    */
   static linearInterpolate(x: number, p1: inOut, p2: inOut): number {
     return p1.out + (x - p1.in) * (p2.out - p1.out) / (p2.in - p1.in);
+  }
+
+  /**
+   * Test that two values are close to each other. This function exists because
+   * of the errors inherent in floating point math. Sometimes we want to test to
+   * make sure values are "equal" to each other, even if some error creeps in
+   * from floating point math.
+   */
+  static valuesAreWithinThreshold(
+    v1: number, 
+    v2: number, 
+    threshold: number = 0.00000000000001
+  ): boolean {
+    return (Math.abs(v1 - v2) < threshold);
   }
 
 }

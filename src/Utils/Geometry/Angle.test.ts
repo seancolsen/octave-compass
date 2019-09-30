@@ -1,4 +1,4 @@
-import Angle from './Angle';
+import { Angle } from './Angle';
 
 import { toBeRoughly } from './../Testing/JestCustomMatchers';
 expect.extend({toBeRoughly});

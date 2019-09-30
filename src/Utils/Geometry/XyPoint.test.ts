@@ -1,6 +1,9 @@
-import XyPoint from 'Utils/Geometry/XyPoint';
-import PrPoint from 'Utils/Geometry/PrPoint';
-import IrPoint from 'Utils/Geometry/IrPoint';
+import { XyPoint, XyPointArray } from './XyPoint';
+import { PrPoint } from './PrPoint';
+import { IrPoint, IrPointArray } from './IrPoint';
+
+import { toBeTheSamePointAs } from './../Testing/JestCustomMatchers';
+expect.extend({toBeTheSamePointAs});
 
 const PI = Math.PI;
 
@@ -13,8 +16,8 @@ test('toPr', () => {
     {in: [0, 1], out: [3 * PI / 2, 1]},
   ];
   data.forEach((d) => {
-    expect(XyPoint.fromArray(d.in).toPr())
-      .toBeTheSamePointAs(PrPoint.fromArray(d.out))
+    expect(XyPoint.fromArray(d.in as XyPointArray).toPr())
+      .toBeTheSamePointAs(PrPoint.fromArray(d.out as XyPointArray))
   });
 });
 
@@ -26,8 +29,8 @@ test('toIr', () => {
     {in: [-1, 0], out: [9, 1]},
   ];
   data.forEach((d) => {
-    expect(XyPoint.fromArray(d.in).toIr())
-      .toBeTheSamePointAs(IrPoint.fromArray(d.out))
+    expect(XyPoint.fromArray(d.in as XyPointArray).toIr())
+      .toBeTheSamePointAs(IrPoint.fromArray(d.out as XyPointArray))
   });
 });
 
@@ -37,8 +40,8 @@ test('toString', () => {
 
 test('stringFromIrArray', () => {
   let irPoints = [
-    [0, 0],
-    [3, 1],
-  ].map(coords => IrPoint.fromArray(coords));
+    [0, 0] as IrPointArray,
+    [3, 1] as IrPointArray,
+  ].map(coords => IrPoint.fromArray(coords as XyPointArray));
   expect(XyPoint.stringFromIrArray(irPoints)).toBe('0,0 1,0');
 });

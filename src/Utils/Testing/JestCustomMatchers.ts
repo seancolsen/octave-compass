@@ -1,29 +1,8 @@
-function valuesAreWithinThreshold(
-    v1: number, 
-    v2: number, 
-    threshold: number = 0.00000000000001
-  ): boolean {
-  return (Math.abs(v1 - v2) < threshold);
-}
-
-interface NumericalObject {
-  [key: string]: number;
-};
-
-function objectValuesAreWithinThreshold(
-    o1: NumericalObject,
-    o2: NumericalObject
-  ) {
-  let k1 = Object.keys(o1).slice().sort();
-  let k2 = Object.keys(o2).slice().sort();
-  if (k1.length !== k2.length) {
-    return false;
-  }
-  return k1.every(key => valuesAreWithinThreshold(o1[key], o2[key]));
-}
+import { Point } from './../Geometry/Point';
+import { CustomMath } from './../Math/CustomMath';
 
 export function toBeRoughly(received: number, argument: number) {
-  const pass = valuesAreWithinThreshold(received, argument);
+  const pass = CustomMath.valuesAreWithinThreshold(received, argument);
   if (pass) {
     return {
       message: () =>
@@ -48,10 +27,10 @@ declare global {
 }
 
 export function toBeTheSamePointAs(
-    received: NumericalObject,
-    argument: NumericalObject
+    received: Point,
+    argument: Point
   ) {
-  const pass = objectValuesAreWithinThreshold(received, argument);
+  const pass = received.roughlyEquals(argument);
   let r = JSON.stringify(received);
   let a = JSON.stringify(argument);
   let not = pass ? 'not' : '';
@@ -65,7 +44,7 @@ export function toBeTheSamePointAs(
 declare global {
   namespace jest {
     interface Matchers<R> {
-      toBeTheSamePointAs(a: NumericalObject): R;
+      toBeTheSamePointAs(a: Point): R;
     }
   }
 }
