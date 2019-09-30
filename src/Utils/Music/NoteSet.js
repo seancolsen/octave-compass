@@ -106,7 +106,7 @@ export default class NoteSet {
    *
    */
   get possibleNoteNameSets() {
-    return CustomMath.cartesianProduct(...this.possibleModifiersForEachNoteName)
+    return CustomMath.cartesianProduct(this.possibleModifiersForEachNoteName)
       .map(modifierKeys => NoteNameSet.fromModifiers(this, modifierKeys));
   }
 

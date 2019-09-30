@@ -17,9 +17,6 @@ export default class Angle {
 
   /**
    * Convert an interval angle to a degree angle.
-   *
-   * @param {number} i
-   * @returns {number}
    */
   static iToD(i: number): number {
     return CIRCLE_DEGREES * i / musicTheory.octaveDivisions;
@@ -27,9 +24,6 @@ export default class Angle {
 
   /**
    * Convert a degree angle to an interval angle.
-   *
-   * @param {number} d
-   * @returns {number}
    */
   static dToI(d: number): number {
     return musicTheory.octaveDivisions * d / (CIRCLE_DEGREES);
@@ -39,9 +33,6 @@ export default class Angle {
    * Convert a "phi" coordinate `p` (as part of the standard polar coordinate
    * system) in radians to an "interval" coordinate `i` (as part of our custom
    * constellation coordinate system).
-   *
-   * @param {number} p
-   * @returns {number}
    */
   static pToI(p: number): number {
     return Scalar.wrap(musicTheory.octaveDivisions * (5 / 4 - p / (2 * PI)), 12);
@@ -51,9 +42,6 @@ export default class Angle {
    * Convert an "interval" coordinate `i` (as part of our custom constellation
    * coordinate system) to a "phi" coordinate `p` (as part of the standard polar
    * coordinate system) in radians.
-   *
-   * @param {number} i
-   * @returns {number}
    */
   static iToP(i: number): number {
     return Scalar.wrap((2 + 1 / 2) * PI - i * 2 * PI / musicTheory.octaveDivisions, 2 * PI);

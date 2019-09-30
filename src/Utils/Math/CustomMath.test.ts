@@ -1,4 +1,4 @@
-import CustomMath from "Utils/Math/CustomMath";
+import CustomMath from "./CustomMath";
 
 test('valueFrequency', () => {
   expect(CustomMath.valueFrequency(['a', 'a', 'b', 'b', 'b', 'c']))
@@ -6,11 +6,11 @@ test('valueFrequency', () => {
 });
 
 test('cartesianProduct', () => {
-  expect(CustomMath.cartesianProduct(
+  expect(CustomMath.cartesianProduct<string>([
     ['a', 'b', 'c'],
     ['d'],
     ['e', 'f']
-  )).toEqual([
+  ])).toEqual([
     ['a', 'd', 'e'],
     ['a', 'd', 'f'],
     ['b', 'd', 'e'],
@@ -20,9 +20,9 @@ test('cartesianProduct', () => {
   ]);
 });
 
-test('cartesianProduct with spread', () => {
+test('cartesianProduct 2', () => {
   const array = [['a', 'b'], ['c', 'd']];
-  expect(CustomMath.cartesianProduct(...array)).toEqual([
+  expect(CustomMath.cartesianProduct(array)).toEqual([
     ['a', 'c'],
     ['a', 'd'],
     ['b', 'c'],

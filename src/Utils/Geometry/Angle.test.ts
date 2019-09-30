@@ -1,4 +1,7 @@
-import Angle from 'Utils/Geometry/Angle';
+import Angle from './Angle';
+
+import { toBeRoughly } from './../Testing/JestCustomMatchers';
+expect.extend({toBeRoughly});
 
 const PI = Math.PI;
 

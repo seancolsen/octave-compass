@@ -1,6 +1,9 @@
 import Note from "Utils/Music/Note";
 import Pitch from "Utils/Music/Pitch";
 
+import { toBeRoughly } from './../Testing/JestCustomMatchers';
+expect.extend({toBeRoughly});
+
 const noteC = new Note(0);
 const noteA = new Note(9);
 const noteB = new Note(11);
