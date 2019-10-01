@@ -1,5 +1,5 @@
-import Note from "Utils/Music/Note";
-import Pitch from "Utils/Music/Pitch";
+import { Note } from "./Note";
+import { Pitch } from "./Pitch";
 
 import { toBeRoughly } from './../Testing/JestCustomMatchers';
 expect.extend({toBeRoughly});

@@ -1,5 +1,5 @@
-import {musicTheory} from "Data/musicTheory";
-import IntervalSet from "Utils/Music/IntervalSet";
+import { musicTheory } from "./../../Data/musicTheory";
+import { IntervalSet } from "./IntervalSet";
 
 const divisions = musicTheory.octaveDivisions;
 
@@ -7,26 +7,20 @@ const divisions = musicTheory.octaveDivisions;
  * Static functions to deal with integer numbers as binary representations of
  * IntervalSets
  */
-export default class IntervalSetBinary {
+export class IntervalSetBinary {
 
   /**
    * Convert one interval ordinal to a binary representation of that interval.
-   *
-   * @param {int} ordinal
-   * @return {int}
    */
-  static fromOrdinal(ordinal) {
+  static fromOrdinal(ordinal: number): number {
     return Math.pow(2, ordinal);
   }
 
   /**
    * Convert an array of interval ordinals to a binary representation of those
    * intervals.
-   *
-   * @param {int[]} ordinals
-   * @return {int}
    */
-  static fromOrdinals(ordinals) {
+  static fromOrdinals(ordinals: number[]): number {
     return ordinals
       .map(IntervalSetBinary.fromOrdinal)
       .reduce((a, b) => a + b, 0);
@@ -35,12 +29,9 @@ export default class IntervalSetBinary {
   /**
    * Convert a binary representation of intervals to an array of interval
    * ordinals.
-   *
-   * @param {int} binary
-   * @return {int[]}
    */
-  static toOrdinals(binary) {
-    let result = [];
+  static toOrdinals(binary: number): number[] {
+    let result: number[] = [];
     IntervalSet.chromaticOrdinals.forEach(ordinal => {
       if (IntervalSetBinary.containsOrdinal(binary, ordinal)) {
         result.push(ordinal);
@@ -51,18 +42,13 @@ export default class IntervalSetBinary {
 
   /**
    * Return true if the given binary interval set contains the given ordinal.
-   *
-   * @param {int} binary
-   * @param {int} ordinal
-   * @return {boolean}
    */
-  static containsOrdinal(binary, ordinal) {
+  static containsOrdinal(binary: number, ordinal: number): boolean {
     return (binary & IntervalSetBinary.fromOrdinal(ordinal)) > 0;
   }
 
   /**
-   *
-   * @return {int}
+   * Return the interval set to represent the chromatic scale (all notes).
    */
   static get chromatic() {
     return Math.pow(2, divisions) - 1
@@ -70,36 +56,25 @@ export default class IntervalSetBinary {
 
   /**
    * Apply a bit mask to a binary interval representation.
-   *
-   * @param binary
-   * @param mask
-   * @return {number}
    */
-  static mask(binary, mask) {
+  static mask(binary: number, mask: number): number {
     return binary & mask;
   }
 
   /**
    * Return a binary interval set with intervals eliminated that fall outside
    * the chromatic set.
-   *
-   * @param binary
-   * @return {number}
    */
-  static onlyChromatic(binary) {
+  static onlyChromatic(binary: number): number {
     return IntervalSetBinary.mask(binary, IntervalSetBinary.chromatic);
   }
 
   /**
    * Return a binary interval set with the tonal center activated even if
    * it's inactive in the given set.
-   *
-   * @param {int} binary
-   * @return {int}
    */
-  static guaranteedToContainTonalCenter(binary) {
+  static guaranteedToContainTonalCenter(binary: number): number {
     return binary | 1;
   }
-
 
 }

@@ -1,4 +1,4 @@
-import Note from "Utils/Music/Note";
+import { Note } from "./Note";
 
 const noteC = new Note(0);
 const noteDFlat = new Note(1);

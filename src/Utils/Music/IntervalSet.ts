@@ -1,6 +1,6 @@
-import {musicTheory} from "Data/musicTheory";
-import Scalar from "Utils/Math/Scalar";
-import IntervalSetBinary from "Utils/Music/IntervalSetBinary";
+import { musicTheory } from "./../../Data/musicTheory";
+import { Scalar } from "./../Math/Scalar";
+import { IntervalSetBinary } from "./IntervalSetBinary";
 
 const divisions = musicTheory.octaveDivisions;
 
@@ -33,130 +33,109 @@ const divisions = musicTheory.octaveDivisions;
  *   (interval 0), a major third (interval 5), and a perfect fifth (interval 7).
  *
  */
-export default class IntervalSet {
+export class IntervalSet {
 
   /**
    * Possible names for this IntervalSet. We intentionally don't fill this array
    * in this class. The sub-classes are the ones which do that work.
-   *
-   * @type {string[]}
    */
-  names = [];
+  names: string[] = [];
 
   /**
    * This property is set by child classes. Scales and chords have names,
    * sometimes multiple names. The defaultName represents the primary name
    * that we display.
-   *
-   * @type {string|null}
    */
-  defaultName = null;
+  defaultName: string | null = null;
+
+  /**
+   * The binary representaion of this IntervalSet (as explained in IntervalSet
+   * docs).
+   */
+  binary: number;
 
   /**
    * This constructor takes a kind of funny format in order to be similar to the
    * constructors of Scale and Chord which inherit from this class.
-   *
-   * @param {{}} intervalSetData
    */
-  constructor(intervalSetData) {
+  constructor(intervalSetData: {'binary': number}) {
     this.binary = IntervalSetBinary.onlyChromatic(intervalSetData.binary);
   }
 
   /**
    * Return a new IntervalSet with the binary intervals as specified.
-   *
-   * @param {int} binary
    */
-  static fromBinary(binary) {
+  static fromBinary(binary: number) {
     return new IntervalSet({binary: binary});
   }
 
   /**
    * Return a new IntervalSet, given the ordinals for its intervals.
    *
-   * @param {int[]} ordinals
-   *   e.g. [0, 4, 7] for a major chord
-   *
-   * @return {IntervalSet}
+   * @param ordinals - e.g. [0, 4, 7] for a major chord
    */
-  static fromOrdinals(ordinals) {
+  static fromOrdinals(ordinals: number[]): IntervalSet {
     return IntervalSet.fromBinary(IntervalSetBinary.fromOrdinals(ordinals));
   }
 
   /**
    * Return an interval set containing all the intervals.
-   *
-   * @return {IntervalSet}
    */
-  static get chromatic() {
+  static get chromatic(): IntervalSet {
     return IntervalSet.fromBinary(IntervalSetBinary.chromatic);
   }
 
-  /**
-   *
-   * @return {int[]}
-   */
-  static get chromaticOrdinals() {
+  static get chromaticOrdinals(): number[] {
     return [...Array(divisions).keys()];
   }
 
   /**
    * Return an array of interval ordinals present in this set.
    *
-   * @return {int[]}
-   *   e.g [0, 4, 7] for a major chord
+   * @return e.g [0, 4, 7] for a major chord
    */
-  get ordinals() {
+  get ordinals(): number[] {
     return IntervalSetBinary.toOrdinals(this.binary);
   }
 
   /**
    * Test whether the given interval is active within this interval set.
-   *
-   * @param {int} interval
-   * @return {boolean}
    */
-  isActive(interval) {
+  isActive(interval: number): boolean {
     return IntervalSetBinary.containsOrdinal(this.binary, interval);
   }
 
   /**
    * Return true if the given set is a subset of this set.
-   *
-   * @param {IntervalSet} intervalSet
-   * @return {boolean}
    */
-  contains(intervalSet) {
+  contains(intervalSet: IntervalSet): boolean {
     return (this.binary & intervalSet.binary) === intervalSet.binary;
   }
 
   /**
    * Return true if all of the intervals in this set match all of the intervals
    * in the given set.
-   *
-   * @param {IntervalSet} intervalSet
    */
-  isIdenticalTo(intervalSet) {
+  isIdenticalTo(intervalSet: IntervalSet): boolean {
     return this.binary === intervalSet.binary;
   }
 
   /**
-   *
-   * @return {*|string}
+   * Return a name for every scale. If we have a name for this interval set,
+   * then use that. If the scale doesn't have a known name, then return
+   * something like ('Scale 647') by using the base-10 integer equal to the
+   * binary representation of the scale.
    */
-  get displayName() {
-    return this.defaultName || 'Scale ' + parseInt(this.binary, 10);
+  get displayName(): string {
+    return this.defaultName || `Scale ${this.binary}`;
   }
 
   /**
    * Left-shift the bits of the binary intervals by the number of bits given,
    * and wrap the bit around the right side. This corresponds to rotating the
    * scale clockwise by the number of intervals given.
-   *
-   * @param {int} shiftAmount
-   * @return {IntervalSet}
    */
-  shift(shiftAmount) {
+  shift(shiftAmount: number): IntervalSet {
     const shift = Scalar.wrap(Math.round(shiftAmount), divisions);
     const shiftToWrap = divisions - shift;
     const allBits = (this.binary << shift) | (this.binary >> shiftToWrap);
@@ -165,11 +144,8 @@ export default class IntervalSet {
 
   /**
    * Shift this interval set to a different mode of itself.
-   *
-   * @param {number} amount
-   * @return {IntervalSet}
    */
-  modeShift(amount) {
+  modeShift(amount: number): IntervalSet {
     const ordinal = Scalar.wrap(amount, this.count);
     return this.shift(-this.ordinals[ordinal]);
   }
@@ -177,41 +153,31 @@ export default class IntervalSet {
   /**
    * Return a new interval set with intervals toggled where the given binary
    * bits are true.
-   *
-   * @param {int} binary
-   * @return {IntervalSet}
    */
-  toggleBinaryIntervals(binary) {
+  toggleBinaryIntervals(binary: number): IntervalSet {
     return IntervalSet.fromBinary(this.binary ^ binary);
   }
 
   /**
    * Return a new IntervalSet with one interval toggled, as specified by its
    * ordinal.
-   *
-   * @param ordinal
-   * @return {IntervalSet}
    */
-  toggleIntervalOrdinal(ordinal) {
+  toggleIntervalOrdinal(ordinal: number): IntervalSet {
     return this.toggleBinaryIntervals(IntervalSetBinary.fromOrdinal(ordinal));
   }
 
   /**
    * Return a new interval set that contains all the intervals this set
    * doesn't contain.
-   *
-   * @return {IntervalSet}
    */
-  get compliment() {
+  get compliment(): IntervalSet {
     return this.toggleBinaryIntervals(IntervalSetBinary.chromatic);
   }
 
   /**
    * How many intervals in in this set?
-   *
-   * @return {number}
    */
-  get count() {
+  get count(): number {
     return this.ordinals.length;
   }
 
@@ -220,10 +186,8 @@ export default class IntervalSet {
    * By "inversion" here, we mean inversion in the sense of a chord. The first
    * inversion is produced by shifting this interval down just enough to place
    * its "1 ordinal" in the "0 ordinal" position.
-   *
-   * @return {IntervalSet[]}
    */
-  get inversions() {
+  get inversions(): IntervalSet[] {
     return this.ordinals.map(ordinal => this.shift(-ordinal));
   }
 
@@ -234,14 +198,13 @@ export default class IntervalSet {
    * IntervalSet can be shifted to become the given intervalSet, then return
    * null.
    *
-   * @param {IntervalSet} intervalSet
-   * @return {int}
-   *   e.g.
-   *     - 0 if this chord and the given chord are identical
-   *     - 1 if this chord can become the given chord when inverted once
-   *     - null if the two chords are not inversions of each other
+   * @return e.g.
+   *   - 0 if this chord and the given chord are identical
+   *   - 1 if this chord can become the given chord when inverted once
+   *   - 2, 3, 4... and so on.
+   *   - null if the two chords are not inversions of each other
    */
-  inversionsToBeIdenticalTo(intervalSet) {
+  inversionsToBeIdenticalTo(intervalSet: IntervalSet): number | null {
     // For performance, abandon early if we have a count mismatch.
     if (this.count !== intervalSet.count) {
       return null;

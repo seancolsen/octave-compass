@@ -1,4 +1,4 @@
-import IntervalSet from 'Utils/Music/IntervalSet';
+import { IntervalSet } from './IntervalSet';
 
 test('ordinals empty', () => {
   expect(IntervalSet.fromBinary(0b000000000000).ordinals).toEqual([]);
@@ -63,7 +63,7 @@ test('fromArray major chord', () => {
 });
 
 test('fromArray empty set', () => {
-  const ordinals = [];
+  const ordinals: number[] = [];
   expect(IntervalSet.fromOrdinals(ordinals).ordinals).toEqual(ordinals);
 });
 

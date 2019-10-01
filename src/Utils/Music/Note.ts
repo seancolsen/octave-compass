@@ -1,74 +1,57 @@
-import {musicTheory} from "Data/musicTheory";
-import NoteName from "Utils/Music/NoteName";
+import { musicTheory } from "./../../Data/musicTheory";
+import { NoteName } from "./NoteName";
 
-export default class Note {
+export class Note {
 
   /**
    * C is 0. Id numbers increase from there.
-   *
-   * @type {int}
    */
-  id;
+  id: number;
 
-  /**
-   * @type {{string: NoteName}}
-   */
-  possibleNames = {};
+  possibleNames: { [k: string]: NoteName; } = {};
 
   /**
    * Notes are initialized without names because the name of the note depends on
    * context within the set of notes.
-   *
-   * @type {NoteName}
    */
-  name;
+  name: NoteName | undefined;
 
-  constructor(id) {
+  constructor(id: number) {
     this.id = id;
-    const noteData = musicTheory.notes[id];
-    Object.entries(noteData.names).forEach(([modifier, base]) => {
+    Object.entries(musicTheory.notes[id].names).forEach(([modifier, base]) => {
       this.possibleNames[modifier] = new NoteName(this, modifier, base);
     });
   }
 
   /**
    * Check to see if this note has a name of the given modifier type.
-   *
-   * @param {string} modifier
    */
-  canBeNamedAs(modifier) {
+  canBeNamedAs(modifier: string) {
     return this.possibleNames.hasOwnProperty(modifier)
   }
 
   /**
    * Compute the color of the note, as displayed on a piano.
-   *
-   * @return {string}
    */
-  get color() {
+  get color(): string {
     return this.canBeNamedAs('natural') ? 'white' : 'black';
   }
 
   /**
    * Return a NoteName for this note which uses the given modifier.
    *
-   * @param {string} modifier
-   *   e.g. "flat"
-   * @return {NoteName}
+   * @param modifier e.g. "flat"
    */
-  getNameUsing(modifier) {
+  getNameUsing(modifier: string): NoteName {
     return this.possibleNames[modifier];
   }
 
   /**
    * Return a copy of this Note, with a name added, using the given modifier.
    *
-   * @param {string} modifier
-   *   e.g. "sharp"
-   *
-   * @return {Note}
+   * @param modifier e.g. "sharp"
    */
-  namedUsing(modifier) {
+  namedUsing(modifier: string): Note {
     if (!this.canBeNamedAs(modifier)) {
       throw new Error(`Cannot name note ${this.id} as ${modifier}`);
     }
@@ -81,19 +64,17 @@ export default class Note {
    * Try to return a NoteName for this note that will look good when placed
    * alongside other notes that consistently use the given direction. If this
    * note has a natural name, then we use that no matter what. If this note has
-   * no natural natural name and the direction is 'none', then there's no
+   * no natural natural name and the direction is `null`, then there's no
    * clear choice for how to name the note, so we return `null`.
    *
-   * @param {null|string} direction
-   *   e.g. 'sharp', 'flat', 'natural', null
-   * @param {null|string} fallback
-   *   A name type to use if `direction` isn't available
+   * @param direction e.g. 'sharp', 'flat', 'natural', null
+   * @param fallback A name type to use if `direction` isn't available
    */
-  getNameToMatch(direction, fallback = null) {
+  getNameToMatch(direction: null | string, fallback: null | string = null) {
     if (this.canBeNamedAs('natural')) {
       return this.possibleNames.natural;
     }
-    if (this.canBeNamedAs(direction)) {
+    if (direction && this.canBeNamedAs(direction)) {
       return this.possibleNames[direction];
     }
     if (fallback && this.canBeNamedAs(fallback)) {
@@ -105,12 +86,8 @@ export default class Note {
   /**
    * Return a copy of this note with a name added to match the given direction,
    * if possible
-   *
-   * @param {string} direction
-   * @param {string|null} fallback
-   * @return {Note}
    */
-  namedToMatch(direction, fallback = null) {
+  namedToMatch(direction: string, fallback: string | null = null): Note {
     const name = this.getNameToMatch(direction, fallback);
     if (!name) {
       return this;
@@ -120,11 +97,7 @@ export default class Note {
     return result;
   }
 
-  /**
-   *
-   * @return {NoteName[]}
-   */
-  get namesToUseForLabels() {
+  get namesToUseForLabels(): NoteName[] {
     if (!this.name) {
       if (this.canBeNamedAs('natural')) {
         return [this.possibleNames.natural];
@@ -140,21 +113,20 @@ export default class Note {
     return [this.name];
   }
 
-  /**
-   * @return {string}
-   */
-  get nameToUseForLabels() {
+  get nameToUseForLabels(): string {
     return this.namesToUseForLabels.map(name => name.unicode).join('/');
   }
 
   /**
    * If this note already has a name, then return it. Otherwise, return a "flat"
    * name.
-   *
-   * @return {NoteName}
    */
-  get guaranteedName() {
-    return this.name || this.getNameToMatch('flat');
+  get guaranteedName(): NoteName {
+    // We use a non-null assertion operator here to tell Typescript that this
+    // function won't return null. This is safe because, based on the note data,
+    // `this.getNameToMatch('flat')` is definitely not going to return null
+    // since every note either has a natural name (prefered) or a flat name.
+    return this.name || this.getNameToMatch('flat')!;
   }
 
 }

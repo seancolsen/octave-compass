@@ -1,25 +1,21 @@
-import Modifier from "Utils/Music/Modifier";
+import { Modifier } from "./Modifier";
+import { Note } from './Note';
 
-export default class NoteName {
-
-  /**
-   * @type {Note}
-   *   A back-reference to the note object that contains this NoteName
-   */
-  note;
+export class NoteName {
 
   /**
-   * @type {Modifier}
+   * A back-reference to the note object that contains this NoteName
    */
-  modifier;
+  note: Note;
+
+  modifier: Modifier;
 
   /**
-   * @type {string}
-   *   This will always be one character e.g. "C"
+   * This will always be one character e.g. "C"
    */
-  baseName;
+  baseName: string;
 
-  constructor(note, modifierName, baseName) {
+  constructor(note: Note, modifierName: string, baseName: string) {
     this.note = note;
     this.modifier = new Modifier(modifierName);
     this.baseName = baseName;
@@ -27,43 +23,37 @@ export default class NoteName {
 
   /**
    * Return a pretty version of this note name (e.g. "B♭").
-   *
-   * @return {string}
    */
-  get unicode() {
+  get unicode(): string {
     return `${this.baseName}${this.modifier.unicode}`;
   }
 
   /**
    * Return a fully spelled-out version of this note name (e.g. "B flat").
-   *
-   * @return {string}
    */
-  get spelledOut() {
+  get spelledOut(): string {
     const phrase = this.modifier.english;
     return phrase ? `${this.baseName} ${phrase}` : this.baseName;
   }
 
   /**
    * Return an ASCII-compatible version of this note name (e.g. "Bb")
-   *
-   * @return {string}
    */
-  get ascii() {
+  get ascii(): string {
     return `${this.baseName}${this.modifier.ascii}`;
   }
 
   /**
-   * @return {string}
+   * e.g. 'flat'
    */
-  get direction() {
+  get direction(): string {
     return this.modifier.direction;
   }
 
   /**
-   * @return {boolean}
+   * Return true if we have a double flat or double sharp.
    */
-  get isDouble() {
+  get isDouble(): boolean {
     return this.modifier.isDouble;
   }
 
@@ -75,10 +65,8 @@ export default class NoteName {
    * This function returns an integer that indicates how the note name is
    * traversing the octave. Most cases are 0. But a note like "C♭" or "C𝄫" is
    * 1 because the name is in the octave above the pitch.
-   *
-   * @return {int}
    */
-  get octaveBoundaryTraversal() {
+  get octaveBoundaryTraversal(): number {
     if (this.baseName === 'C' && this.direction === 'flat') {
       return 1;
     }

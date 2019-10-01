@@ -8,7 +8,15 @@
  *
  */
 
-export const musicTheory = {
+type StringMap = { [k: string]: string };
+type NotesData = { [k: number]: { names: StringMap } };
+type MusicTheoryData = {
+  octaveDivisions: number,
+  notes: NotesData,
+  intervals: string[],
+};
+
+export const musicTheory: MusicTheoryData = {
 
   octaveDivisions: 12,
 

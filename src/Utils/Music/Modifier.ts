@@ -1,4 +1,8 @@
-const modifiers = {
+interface ModifierData {
+  [k: string]: string;
+}
+
+const modifiers: { [k: string]: ModifierData } = {
   'natural': {
     unicode: '',
     ascii: '',
@@ -26,9 +30,31 @@ const modifiers = {
   },
 };
 
-export default class Modifier {
+export class Modifier {
 
-  constructor(modifierName) {
+  /**
+   * A machine-readable name for the modifier (e.g. 'doubleSharp')
+   */
+  name: string;
+
+  /**
+   * The fancy-looking unicode character for the musical notation of the 
+   * modifier (e.g. '♭')
+   */
+  unicode: string;
+
+  /**
+   * An ASCII representation of the musical notation for the modifier (e.g. '#')
+   */
+  ascii: string;
+
+  /**
+   * The (lowercase) English language representation for the modifier
+   * (e.g. 'double flat')
+   */
+  english: string;
+  
+  constructor(modifierName: string) {
     this.name = modifierName;
     this.unicode = modifiers[modifierName].unicode;
     this.ascii = modifiers[modifierName].ascii;
@@ -37,17 +63,13 @@ export default class Modifier {
 
   /**
    * Return true if this modifier is doubleSharp or doubleFlat.
-   *
-   * @return {boolean}
    */
-  get isDouble() {
+  get isDouble(): boolean {
     return this.name.includes('double');
   }
 
   /**
    * Which way is this modifier pointing
-   *
-   * @return {string}
    */
   get direction() {
     return (

@@ -1,4 +1,4 @@
-import Ordinal from "Utils/Music/Ordinal";
+import { Ordinal } from "./Ordinal";
 
 test('distance', () => {
   expect(Ordinal.distance(1, 1)).toBe(0);

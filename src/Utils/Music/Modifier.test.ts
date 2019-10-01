@@ -1,4 +1,4 @@
-import Modifier from "Utils/Music/Modifier";
+import { Modifier } from "./Modifier";
 
 test('constructor', () => {
   expect((new Modifier('sharp')).ascii).toBe('#');

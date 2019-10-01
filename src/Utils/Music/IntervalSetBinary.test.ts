@@ -1,4 +1,4 @@
-import IntervalSetBinary from "Utils/Music/IntervalSetBinary";
+import { IntervalSetBinary } from "./IntervalSetBinary";
 
 test('fromOrdinals', () => {
   expect(IntervalSetBinary.fromOrdinals([])).toEqual(0b0);
