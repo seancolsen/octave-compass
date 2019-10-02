@@ -1,5 +1,5 @@
-import Url from "Utils/Text/Url";
-import IntervalSet from "Utils/Music/IntervalSet";
+import { Url } from "./Url";
+import { IntervalSet } from "./../Music/IntervalSet";
 
 test('normalize' , () => {
   expect(Url.normalize(' /234-8 ')).toBe('234-8');
