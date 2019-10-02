@@ -65,7 +65,7 @@ test('named C major scale', () => {
   const intervalSet = IntervalSet.fromBinary(0b101010110101);
   const rotation = 0;
   const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
-  const names = noteSet.named.nameSet.noteNames;
+  const names = noteSet.named.nameSet!.noteNames;
   expect(names.map(n => n.unicode))
     .toEqual(['C', 'D', 'E', 'F', 'G', 'A', 'B']);
 });
@@ -74,7 +74,7 @@ test('named complex scale', () => {
   const intervalSet = IntervalSet.fromBinary(0b010111001101);
   const rotation = -1;
   const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
-  const names = noteSet.named.nameSet.noteNames;
+  const names = noteSet.named.nameSet!.noteNames;
   expect(names.map(n => n.unicode))
     .toEqual(['C♯', 'D♯', 'E', 'F𝄪', 'G♯', 'A', 'B']);
 });
@@ -83,7 +83,7 @@ test('note names are stored within the notes', () => {
   const intervalSet = IntervalSet.fromBinary(0b000010010001);
   const rotation = 0;
   const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
-  expect(noteSet.named.notes.map(note => note.name.unicode))
+  expect(noteSet.named.notes.map(note => note.name!.unicode))
     .toEqual(['C', 'E', 'G']);
 });
 
@@ -106,7 +106,7 @@ test('toIntervalSet with rotation', () => {
 test('directionallyNamed', () => {
   expect(
     NoteSet.chromatic.directionallyNamed('flat').notes
-    .map(note => note.name.spelledOut)
+    .map(note => note.name!.spelledOut)
   ).toEqual([
     'C',
     'D flat',
@@ -127,7 +127,7 @@ test('compliment', () => {
   const intervalSet = IntervalSet.fromBinary(0b101010110101);
   const rotation = 2; // B flat major scale
   const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
-  expect(noteSet.named.compliment.notes.map(note => note.name.spelledOut))
+  expect(noteSet.named.compliment.notes.map(note => note.name!.spelledOut))
     .toEqual(['D flat', 'E', 'G flat', 'A flat', 'B']);
 });
 
