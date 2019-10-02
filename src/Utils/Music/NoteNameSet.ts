@@ -1,4 +1,6 @@
-import CustomMath from "Utils/Math/CustomMath";
+import { CustomMath } from './../Math/CustomMath';
+import { NoteName } from './NoteName';
+import { NoteSet } from './NoteSet';
 
 const demeritFactors = {
   accidentalInsteadOfNatural: 1,
@@ -7,22 +9,13 @@ const demeritFactors = {
   duplicateBaseNames: 7,
 };
 
-export default class NoteNameSet {
+export class NoteNameSet {
 
-  /**
-   * @type {NoteName[]}
-   */
-  noteNames = [];
+  noteNames: NoteName[] = [];
 
-  /**
-   * @type {number}
-   */
-  demerits = 0;
+  demerits: number = 0;
 
-  /**
-   * @param {NoteName[]} noteNames
-   */
-  constructor(noteNames) {
+  constructor(noteNames: NoteName[]) {
     this.noteNames = noteNames;
     this.demerits = this.calculateDemerits();
   }
@@ -32,11 +25,8 @@ export default class NoteNameSet {
    * according to the supplied array of modifiers. Each modifier should
    * correspond to a Note within the NoteSet, and the array indexes should be
    * the same between the modifiers and the Notes.
-   *
-   * @param {NoteSet} noteSet
-   * @param {string[]} modifierKeys
    */
-  static fromModifiers(noteSet, modifierKeys) {
+  static fromModifiers(noteSet: NoteSet, modifierKeys: string[]) {
     const noteNames = noteSet.notes.map((note, index) =>
       note.possibleNames[modifierKeys[index]]
     );
@@ -50,7 +40,7 @@ export default class NoteNameSet {
    *
    * @return {null|string}
    */
-  get direction() {
+  get direction(): null | string {
     const sharps = this.noteNames.filter(n => n.direction === 'sharp').length;
     const flats = this.noteNames.filter(n => n.direction === 'flat').length;
     if (sharps === 0 && flats === 0) {
@@ -68,7 +58,7 @@ export default class NoteNameSet {
   /**
    * @return {number}
    */
-  calculateDemerits() {
+  calculateDemerits(): number {
     return (
       this.accidentalInsteadOfNaturalDemerits +
       this.mixOfSharpsAndFlatsDemerits +
@@ -84,7 +74,7 @@ export default class NoteNameSet {
    *
    * @return {number}
    */
-  get accidentalInsteadOfNaturalDemerits() {
+  get accidentalInsteadOfNaturalDemerits(): number {
     return this.noteNames.filter(noteName =>
       noteName.note.possibleNames.hasOwnProperty('natural') &&
       noteName.direction !== 'none'
@@ -98,7 +88,7 @@ export default class NoteNameSet {
    *
    * @return {number}
    */
-  get mixOfSharpsAndFlatsDemerits() {
+  get mixOfSharpsAndFlatsDemerits(): number {
     return (!this.direction) ? demeritFactors.mixOfSharpsAndFlats : 0;
   }
 
@@ -108,7 +98,7 @@ export default class NoteNameSet {
    *
    * @return {number}
    */
-  get doubleModifierDemerits() {
+  get doubleModifierDemerits(): number {
     return this.noteNames.filter(n => n.isDouble)
       .length * demeritFactors.doubleModifier;
   }
@@ -121,7 +111,7 @@ export default class NoteNameSet {
    *
    * @return {number}
    */
-  get duplicateBaseNamesDemerits() {
+  get duplicateBaseNamesDemerits(): number {
     const baseNames = this.noteNames.map(name => name.baseName);
     const baseNameFrequency = CustomMath.valueFrequency(baseNames);
     const extraBaseNameCount = Object.entries(baseNameFrequency)

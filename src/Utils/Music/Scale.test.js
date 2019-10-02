@@ -1,4 +1,4 @@
-import Scale from 'Utils/Music/Scale';
+import { Scale } from './Scale';
 
 test('fromBinary', () => {
   expect(Scale.fromBinary(0b101010110101).binary).toBe(0b101010110101);

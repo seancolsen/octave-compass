@@ -1,4 +1,15 @@
-export const chords = [
+export interface ChordData {
+  binary: number;
+  name: string;
+  weight: number;
+  emblemSize: number;
+  textSizeFactor: number;
+  color: string;
+  symbol: string;
+  inversion?: number | null | undefined;
+}
+
+export const chords: ChordData[] = [
   {
     binary: 0b000010010001,
     name: "major",

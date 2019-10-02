@@ -1,4 +1,4 @@
-import Chord from "Utils/Music/Chord";
+import { Chord } from "./Chord";
 
 const major0Binary = 0b000010010001;
 const major1Binary = 0b000100001001;

@@ -1,6 +1,6 @@
-import ChordSet from "Utils/Music/ChordSet";
-import Chord from "Utils/Music/Chord";
-import IntervalSet from "Utils/Music/IntervalSet";
+import { ChordSet } from "./ChordSet";
+import { Chord } from "./Chord";
+import { IntervalSet } from "./IntervalSet";
 
 const majorChord = Chord.fromBinary(0b000010010001);
 const anotherMajorChord = Chord.fromBinary(0b000010010001);

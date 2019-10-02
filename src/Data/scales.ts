@@ -1,6 +1,5 @@
-export const scales = {
+export const scales: { [k: number]: string[] } = {
   0b000011000111: [
-
     "Raga Nabhomani",
   ],
   0b000011010011: [

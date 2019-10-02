@@ -1,25 +1,23 @@
-import ChordSet from "Utils/Music/ChordSet";
+import { ChordSet } from "./ChordSet";
+import { IntervalSet } from "./IntervalSet";
+import { Chord } from "./Chord";
 
 /**
  * This represents a set of chords at a given interval within a scale.
  */
-export default class OrdinalChordSet {
+export class OrdinalChordSet {
 
   /**
    * The chords in this set.
-   *
-   * @type {ChordSet}
    */
-  chordSet;
+  chordSet: ChordSet;
 
   /**
    * The interval ordinal at which this chord set exists.
-   *
-   * @type {number}
    */
-  ordinal = 0;
+  ordinal: number = 0;
 
-  constructor(chordSet, ordinal) {
+  constructor(chordSet: ChordSet, ordinal: number) {
     this.chordSet = chordSet;
     this.ordinal = ordinal;
   }
@@ -27,16 +25,11 @@ export default class OrdinalChordSet {
   /**
    * Generate a new chord set which exists at the given ordinal within the
    * given interval set.
-   *
-   * @param {IntervalSet} intervalSet
-   * @param {int} ordinal
-   * @param {ChordSet} setOfPossibleChords
-   * @return {OrdinalChordSet}
    */
   static fromOrdinalWithinIntervalSet(
-    intervalSet, ordinal, setOfPossibleChords
-  ) {
-    let chords = [];
+    intervalSet: IntervalSet, ordinal: number, setOfPossibleChords: ChordSet
+  ): OrdinalChordSet {
+    let chords: Chord[] = [];
     setOfPossibleChords.chords.forEach(chord => {
       const shiftedChord = chord.shift(ordinal);
       if (intervalSet.contains(shiftedChord)) {
@@ -55,8 +48,10 @@ export default class OrdinalChordSet {
    * @param {ChordSet} setOfPossibleChords
    * @return {OrdinalChordSet[]}
    */
-  static arrayFromIntervalSet(intervalSet, setOfPossibleChords) {
-    let result = [];
+  static arrayFromIntervalSet(
+    intervalSet: IntervalSet, setOfPossibleChords: ChordSet
+  ): OrdinalChordSet[] {
+    let result: OrdinalChordSet[] = [];
     intervalSet.ordinals.forEach(ordinal => {
       result.push(OrdinalChordSet.fromOrdinalWithinIntervalSet(
         intervalSet, ordinal, setOfPossibleChords

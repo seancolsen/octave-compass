@@ -1,6 +1,4 @@
-import IntervalSetFactory from "Utils/Music/IntervalSetFactory";
-import IntervalSet from "Utils/Music/IntervalSet";
-import Chord from "Utils/Music/Chord";
+import { IntervalSetFactory } from "./IntervalSetFactory";
 
 test('fromBinary chord', () => {
   const set = IntervalSetFactory.fromBinary(0b000010010001);
@@ -19,4 +17,3 @@ test('fromBinary no chord or scale found', () => {
   expect(set.binary).toBe(0b111111111000);
   expect(set.constructor.name).toBe('IntervalSet');
 });
-

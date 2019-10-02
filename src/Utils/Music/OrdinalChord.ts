@@ -1,19 +1,15 @@
+import { Chord } from "./Chord";
+
 /**
  * Stores a chord at a specific ordinal.
  */
-export default class OrdinalChord {
+export class OrdinalChord {
 
-  /**
-   * @type {int}
-   */
-  ordinal;
+  ordinal: number;
 
-  /**
-   * @type {Chord}
-   */
-  chord;
+  chord: Chord;
 
-  constructor(ordinal, chord) {
+  constructor(ordinal: number, chord: Chord) {
     this.ordinal = ordinal;
     this.chord = chord;
   }

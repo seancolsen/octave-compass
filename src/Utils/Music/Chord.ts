@@ -1,70 +1,54 @@
-import IntervalSet from "Utils/Music/IntervalSet";
-import {chords as chordsData} from "Data/chords";
+import { IntervalSet } from "./IntervalSet";
+import { chords as chordsData, ChordData } from "./../../Data/chords";
 
-export default class Chord extends IntervalSet {
+export class Chord extends IntervalSet {
 
   /**
    * Chords really only have one name, but this is an array because it should
    * be compatible with IntervalSet.
-   *
-   * @type {string[]}
    */
-  names;
+  names: string[];
 
   /**
    * e.g "major chord"
-   *
-   * @type {string}
    */
-  defaultName;
+  defaultName: string;
 
   /**
    * This string contains SVG markup to display a formatted symbol for this
    * chord.
-   *
-   * @type {string}
    */
-  symbol;
+  symbol: string;
 
   /**
    * The CSS color to use for the emblem.
-   *
-   * @type {string}
    */
-  color;
+  color: string;
 
   /**
    * When multiple chords are displayed together, we sort them by weight,
    * ascending.
-   *
-   * @type {number}
    */
-  weight;
+  weight: number;
 
   /**
    * The radius of the chord emblem.
-   *
-   * @type {number}
    */
-  emblemSize;
+  emblemSize: number;
 
   /**
    * A value of 1 means the default size, which is sized according to the
    * emblem size.
-   *
-   * @type {number}
    */
-  textSizeFactor;
+  textSizeFactor: number;
 
   /**
    * The number of inversions that the named chord will need to undergo in order
    * to match the IntervalSet described by this chord.
-   *
-   * @type {int}
    */
-  inversion;
+  inversion: number;
 
-  constructor(chordData) {
+  constructor(chordData: ChordData) {
     super(chordData);
     this.names = [chordData.name];
     this.defaultName = chordData.name;
@@ -81,26 +65,24 @@ export default class Chord extends IntervalSet {
    *
    * @return {Chord[]}
    */
-  static get allChords() {
+  static get allChords(): Chord[] {
     return chordsData.map(entry => new Chord(entry));
   }
 
   /**
    * Given the binary intervals of a chord, search for the definition of that
    * chord and return a Chord object if possible.
-   *
-   * @param {int} binary
-   * @return {Chord}
+   * 
    * @throws {Error} if the chord can not be found
    */
-  static fromBinary(binary) {
+  static fromBinary(binary: number): Chord {
     const thisIntervalSet = IntervalSet.fromBinary(binary);
-    let inversion = null;
+    let inversion: number | undefined | null = undefined;
     const chordDataEntry = chordsData.find(data => {
       const possibleIntervalSet = IntervalSet.fromBinary(data.binary);
       inversion = possibleIntervalSet
         .inversionsToBeIdenticalTo(thisIntervalSet);
-      return Number.isInteger(inversion);
+      return inversion != null;
     });
     if (!chordDataEntry) {
       throw new Error("Unknown chord");
@@ -118,7 +100,7 @@ export default class Chord extends IntervalSet {
    *
    * @param {string} name
    */
-  static fromName(name) {
+  static fromName(name: string) {
     const chordData = chordsData.find(data => data.name === name);
     if (!chordData) {
       throw new Error("Unknown chord");

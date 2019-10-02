@@ -1,23 +1,19 @@
-import Pitch from "Utils/Music/Pitch";
+import { Pitch } from "./Pitch";
+import { NoteSet } from "./NoteSet";
 
-export default class PitchSet {
+export class PitchSet {
 
-  /**
-   * @type {NoteSet}
-   */
-  noteSet;
+  noteSet: NoteSet;
 
-  /**
-   * @type {Pitch[]}
-   */
-  pitches = [];
+  pitches: Pitch[] = [];
 
-  constructor(noteSet, startingOctave) {
+  constructor(noteSet: NoteSet, startingOctave: number) {
     this.noteSet = noteSet;
     let octave = startingOctave;
-    let previousNoteId = null;
+    let previousNoteId: number | null = null;
     this.noteSet.notes.forEach(note => {
-      if (note.id < previousNoteId) {
+      if (previousNoteId && note.id < previousNoteId) {
+        // (When we have wraped around the octave)
         octave++;
       }
       this.pitches.push(new Pitch(note, octave));
@@ -28,10 +24,8 @@ export default class PitchSet {
   /**
    * Return a new PitchSet containing all the pitches within this octave that
    * this pitch set does not contain.
-   *
-   * @return {PitchSet}
    */
-  get compliment() {
+  get compliment(): PitchSet {
     const startingOctave = this.pitches[0].octave;
     return this.noteSet.compliment.pitchSetStartingFrom(startingOctave);
   }

@@ -1,6 +1,6 @@
-import NoteSet from 'Utils/Music/NoteSet';
-import IntervalSet from "Utils/Music/IntervalSet";
-import Note from "Utils/Music/Note";
+import { NoteSet } from './NoteSet';
+import { IntervalSet } from "./IntervalSet";
+import { Note } from "./Note";
 
 test('chromatic', () => {
   expect(NoteSet.chromatic.notes.length).toBe(12);

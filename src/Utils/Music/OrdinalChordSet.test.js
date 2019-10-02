@@ -1,7 +1,7 @@
-import OrdinalChordSet from "Utils/Music/OrdinalChordSet";
-import Chord from "Utils/Music/Chord";
-import IntervalSet from "Utils/Music/IntervalSet";
-import ChordSet from "Utils/Music/ChordSet";
+import { OrdinalChordSet } from "./OrdinalChordSet";
+import { Chord } from "./Chord";
+import { IntervalSet } from "./IntervalSet";
+import { ChordSet } from "./ChordSet";
 
 const majorChord = Chord.fromBinary(0b000010010001);
 const dominant7Chord = Chord.fromBinary(0b010010010001);

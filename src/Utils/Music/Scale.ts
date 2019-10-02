@@ -1,30 +1,31 @@
-import IntervalSet from "Utils/Music/IntervalSet";
-import {scales as allScales} from "Data/scales";
+import { IntervalSet } from "./IntervalSet";
+import { scales as allScales } from "./../../Data/scales";
 
-export default class Scale extends IntervalSet {
+export interface ScaleData {
+  binary: number;
+  names: string[];
+  defaultName: string;
+  alternateNames: string[];
+}
+
+export class Scale extends IntervalSet {
 
   /**
    * All the names that can be used to refer to this scale.
-   *
-   * @type {string[]}
    */
-  names;
+  names: string[];
 
   /**
    * The primary name to display when this scale is selected.
-   *
-   * @type {string}
    */
-  defaultName;
+  defaultName: string;
 
   /**
    * The non-primary names.
-   *
-   * @type {string[]}
    */
-  alternateNames;
+  alternateNames: string[];
 
-  constructor(scaleData) {
+  constructor(scaleData: ScaleData) {
     super(scaleData);
     this.names = scaleData.names;
     this.defaultName = scaleData.defaultName;
@@ -34,22 +35,20 @@ export default class Scale extends IntervalSet {
   /**
    * Given the binary intervals of a scale, search for the definition of that
    * scale and return a Scale object if possible.
-   *
-   * @param {int} binary
-   * @return {Scale}
+   * 
    * @throws {Error} if the scale can not be found
    */
-  static fromBinary(binary) {
+  static fromBinary(binary: number): Scale {
     const scaleEntry = allScales[binary];
     if (!scaleEntry) {
       throw new Error("Unknown scale");
     }
-    const scaleData = {};
-    scaleData.binary = binary;
-    scaleData.names = scaleEntry;
-    scaleData.defaultName = scaleEntry[0];
-    scaleData.alternateNames = scaleEntry.slice(1);
-    return new Scale(scaleData);
+    return new Scale({
+      binary: binary,
+      names: scaleEntry,
+      defaultName: scaleEntry[0],
+      alternateNames: scaleEntry.slice(1),
+    });
   }
 
 }
