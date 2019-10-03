@@ -53,8 +53,25 @@ export class PrPoint extends Point {
     return new XyPoint(x, y);
   }
 
+  /**
+   * Vector addition
+   */
   plus(point: PrPoint) {
     return new PrPoint(this.p + point.p, this.r + point.r);
+  }
+
+  /**
+   * Increment the `p` value of this point.
+   */
+  plusP(p: number) {
+    return this.plus(new PrPoint(p, 0));
+  }
+
+  /**
+   * Increment the `r` value of this point.
+   */
+  plusR(r: number) {
+    return this.plus(new PrPoint(0, r));
   }
 
 }

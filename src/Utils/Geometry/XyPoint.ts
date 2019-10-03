@@ -83,6 +83,20 @@ export class XyPoint extends Point {
   }
 
   /**
+   * Increment the `x` value of this point.
+   */
+  plusX(x: number) {
+    return this.plus(new XyPoint(x, 0));
+  }
+
+  /**
+   * Increment the `y` value of this point.
+   */
+  plusY(y: number) {
+    return this.plus(new XyPoint(0, y));
+  }
+
+  /**
    * Multiply both coordinates of this point by a scalar number.
    */
   times(factor: number) {

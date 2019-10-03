@@ -96,4 +96,18 @@ export class IrPoint extends Point {
     return new IrPoint(this.i + i, this.r + r);
   }
 
+  /**
+   * Increment the `i` value of this point.
+   */
+  plusI(i: number) {
+    return this.plus(new IrPoint(i, 0));
+  }
+
+  /**
+   * Increment the `r` value of this point.
+   */
+  plusR(r: number) {
+    return this.plus(new IrPoint(0, r));
+  }
+
 }
