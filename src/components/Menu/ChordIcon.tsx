@@ -1,7 +1,12 @@
 import React from 'react';
-import ChordEmblem from "components/common/ChordEmblem";
+import { Chord } from '../../Utils/Music/Chord';
+import { ChordEmblem } from '../common/ChordEmblem';
 
-export default function ChordIcon(props) {
+interface Props {
+  chord: Chord;
+}
+
+export function ChordIcon(props: Props) {
   const size = 100;
   return (
     <svg

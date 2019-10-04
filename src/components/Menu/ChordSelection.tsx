@@ -1,8 +1,9 @@
 import React from "react";
-import ChordChoices from "components/Menu/ChordChoices";
-import ChordSet from "Utils/Music/ChordSet";
 import styled from 'styled-components';
-import Button from "components/common/Button";
+import { ChordSet } from "../../Utils/Music/ChordSet";
+import { ChordChoices } from "./ChordChoices";
+import { IntervalSet } from "../../Utils/Music/IntervalSet";
+import { Chord } from "../../Utils/Music/Chord";
 
 const Heading = styled.div`
   display: flex;
@@ -19,7 +20,15 @@ const StyledA = styled.a`
   font-style: italic;
 `;
 
-export default function ChordSelection(props) {
+interface Props {
+  className?: string;
+  setChordSet(cs: ChordSet): void;
+  selectedChords: ChordSet;
+  intervalSet: IntervalSet;
+  toggleChord(c: Chord): void;
+}
+
+export function ChordSelection(props: Props) {
   const defaultChordsAreSelected =
     props.selectedChords.equals(ChordSet.fromDefaultChords);
   return (

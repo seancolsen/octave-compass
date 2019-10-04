@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from './Button';
+import { Button } from './Button';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 const Label = styled.div`
   text-align: center;
@@ -37,7 +38,7 @@ interface Props {
    * The icons displayed for each button. If no value is passed, then no icons
    * will be displayed.
    */
-  icons?: [string, string];
+  icons?: [IconProp, IconProp];
   
   /**
    * The overall label displayed for both buttons.

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 const StyledA = styled.a`
   padding: 0.4vmax 0.7vmax;
@@ -20,7 +21,14 @@ const StyledA = styled.a`
   }
 `;
 
-export default function Button(props) {
+interface Props {
+  label?: string;
+  children?: ReactNode;
+  icon?: IconProp;
+  onClick(): void;
+}
+
+export function Button(props: Props) {
   const content = props.label || props.children;
   return (
     <StyledA {...props}>
