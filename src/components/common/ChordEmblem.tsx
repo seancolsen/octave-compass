@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react';
 import styled from 'styled-components';
+import { Chord } from '../../Utils/Music/Chord';
 
 const fontSizeToEmblemSizeRatio = 0.85;
 
@@ -18,7 +19,12 @@ const Symbol = styled.text`
   }
 `;
 
-export default function ChordEmblem(props) {
+interface Props {
+  size: number;
+  chord: Chord;
+}
+
+export function ChordEmblem(props: Props) {
   const fontSize = props.size * props.chord.textSizeFactor
       * fontSizeToEmblemSizeRatio;
   return (
