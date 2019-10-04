@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { IrPoint } from '../../../Utils/Geometry/IrPoint';
 
-interface Props {
+export interface ArcProps {
   startInterval: number;
   endInterval: number;
   radius: number;
-  className: string;
-  id: string;
+  className?: string;
+  id?: string;
 }
 
-export class Arc extends Component<Props> {
+export class Arc extends Component<ArcProps> {
 
   d() {
     const startInterval = this.props.startInterval;

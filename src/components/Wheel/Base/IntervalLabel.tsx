@@ -1,32 +1,37 @@
 import React, {Component} from 'react';
-import Arc from "components/Wheel/common/Arc";
 import styled from 'styled-components';
-import {musicTheory} from "Data/musicTheory";
+import { Arc, ArcProps } from '../common/Arc';
+import { musicTheory } from '../../../Data/musicTheory';
 
 const upperRadius = 465;
 const lowerRadius = 480;
 const arcSpan = 0.4;
 
-const TextPath = styled(Arc)`
+const TextPath = styled(Arc)<ArcProps>`
   fill: none;
   stroke: none;
 `;
 
-const StyledText = styled.text`
+const StyledText = styled.text<{active: boolean}>`
   fill: ${props => props.active ? 'black' : '#AAA'};
   font-size: 30px;
 `;
 
-export default class IntervalLabel extends Component {
+interface Props {
+  interval: number;
+  className?: string;
+  label: string;
+  active: boolean;
+}
+
+export class IntervalLabel extends Component<Props> {
 
   /**
    * If the interval we're labeling is on the lower half of the wheel, then we
    * want to treat it a bit differently. This function returns true for those
    * "bottom" intervals.
-   *
-   * @return {boolean}
    */
-  isOnBottom() {
+  isOnBottom(): boolean {
     const revolution = this.props.interval / musicTheory.octaveDivisions;
     return (revolution > 0.25) && (revolution < 0.75);
   }

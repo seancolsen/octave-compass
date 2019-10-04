@@ -4,18 +4,25 @@ import styled from "styled-components";
 const size = 30;
 const checkMarkCharacter = '✔';
 
-const StyledRect = styled.rect`
+const StyledRect = styled.rect<{checked: boolean; clickable: boolean}>`
   fill: ${props => (props.checked) ? 'white' : '#ddd'};
   stroke: ${p => p.clickable ? '#666' : '#BBB'};
   stroke-width: 2px;
 `;
 
-const StyledText = styled.text`
+const StyledText = styled.text<{clickable: boolean}>`
   font-size: 25px;
   fill: ${p => p.clickable ? 'black' : '#BBB'};
 `;
 
-export default class SvgCheckbox extends Component {
+interface Props {
+  clickable: boolean;
+  checked: boolean;
+  x: number;
+  y: number;
+}
+
+export class SvgCheckbox extends Component<Props> {
 
   checkMark() {
     return (

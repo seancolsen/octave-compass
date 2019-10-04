@@ -1,9 +1,9 @@
 import React from 'react';
-import SvgCheckbox from "components/Wheel/Base/SvgCheckbox";
-import IrPoint from "Utils/Geometry/IrPoint";
-import Arc from 'components/Wheel/common/Arc';
 import styled from 'styled-components';
-import IntervalLabel from "components/Wheel/Base/IntervalLabel";
+import { IntervalLabel } from './IntervalLabel';
+import { Arc, ArcProps } from '../common/Arc';
+import { IrPoint } from '../../../Utils/Geometry/IrPoint';
+import { SvgCheckbox } from './SvgCheckbox';
 
 const checkboxRadius = 430;
 const arcRadius = 430;
@@ -11,7 +11,7 @@ const arcSpan = 0.5;
 
 const StyledIntervalLabel = styled(IntervalLabel)``;
 
-const StyledG = styled.g`
+const StyledG = styled.g<{clickable: boolean}>`
   & * {
     cursor: ${p => p.clickable ? 'pointer' : 'default'};
   }
@@ -20,14 +20,22 @@ const StyledG = styled.g`
   }
 `;
 
-const Background = styled(Arc)`
+const Background = styled(Arc)<{active: boolean} & ArcProps>`
   stroke-width: 130px;
   stroke: ${props => (props.active) ? 'white' : '#e4e4e4'};
   fill: none;
   stroke-linecap: butt;
 `;
 
-export default function BaseInterval(props) {
+interface Props {
+  className?: string;
+  interval: number;
+  toggleInterval(i: number): void;
+  active: boolean;
+  label: string;
+}
+
+export function BaseInterval(props: Props) {
   const point = (new IrPoint(props.interval, checkboxRadius)).toXy();
   const clickable = props.interval !== 0;
   return (
