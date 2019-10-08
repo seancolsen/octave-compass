@@ -5,7 +5,6 @@ interface Props {
   rotation: number;
   onMouseDown: (event: React.MouseEvent<SVGGElement, MouseEvent>) => void;
   onTouchStart: (event: React.TouchEvent<SVGGElement>) => void;
-  transform: string;
   children: ReactNode
 }
 

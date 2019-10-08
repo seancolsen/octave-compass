@@ -12,7 +12,7 @@ interface Props {
   rotation: number;
 }
 
-export default function Brand(props: Props) {
+export function Brand(props: Props) {
   return (
     <StyledText
       transform={`rotate(${-Angle.iToD(props.rotation)})`}

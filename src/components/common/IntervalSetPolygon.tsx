@@ -5,14 +5,14 @@ import { IntervalSet } from '../../Utils/Music/IntervalSet';
 
 const radius = 310;
 
-interface Props {
+export interface IntervalSetPolygonProps {
   intervalSet: IntervalSet;
   className?: string;
-  fill: string;
-  opacity: string | number;
+  fill?: string;
+  opacity?: string | number;
 }
 
-export function IntervalSetPolygon(props: Props) {
+export function IntervalSetPolygon(props: IntervalSetPolygonProps) {
   const intervals = props.intervalSet.ordinals;
   const points = intervals.map(i => IrPoint.fromArray([i, radius]));
   return (

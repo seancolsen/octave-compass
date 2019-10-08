@@ -1,21 +1,21 @@
-import React, {Component} from 'react';
-import BaseInterval from "components/Wheel/Base/BaseInterval";
-import {musicTheory} from "Data/musicTheory";
+import React, { Component } from 'react';
+import { BaseInterval } from './Base/BaseInterval';
+import { IntervalSet } from '../../Utils/Music/IntervalSet';
+import { musicTheory } from '../../Data/musicTheory';
 
-export default class Base extends Component {
+interface Props {
+  scaleIsRotating: boolean;
+  intervalSet: IntervalSet;
+  toggleInterval(ordinal: number): void;
+}
 
-  /**
-   * @param {int} interval
-   * @return {boolean}
-   */
-  intervalIsActive(interval) {
+export class Base extends Component<Props> {
+
+  intervalIsActive(interval: number): boolean {
     return (this.props.scaleIsRotating) ? false :
       this.props.intervalSet.isActive(interval);
   }
 
-  /**
-   * @return {[BaseInterval]}
-   */
   baseIntervals() {
     return musicTheory.intervals.map((name, ordinal) =>
       <BaseInterval

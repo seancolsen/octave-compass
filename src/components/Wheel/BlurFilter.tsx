@@ -1,6 +1,12 @@
 import React from 'react';
 
-export default function BlurFilter(props) {
+interface Props {
+  bounds?: number;
+  id?: string;
+  size: number;
+}
+
+export function BlurFilter(props: Props) {
   const bounds = props.bounds || 1.2;
   return (
     <filter

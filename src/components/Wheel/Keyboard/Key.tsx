@@ -36,7 +36,7 @@ const ActiveG = styled.g`
 interface KeyProps {
   pitch: Pitch;
   active: boolean;
-  playNotes(n: number[]): void;
+  playNotes?(n: number[]): void;
   rotation: number;
 }
 

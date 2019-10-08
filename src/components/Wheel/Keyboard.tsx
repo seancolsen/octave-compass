@@ -1,8 +1,17 @@
 import React from 'react';
-import KeySet from "components/Wheel/Keyboard/KeySet";
-import Angle from "Utils/Geometry/Angle";
+import { PitchSet } from '../../Utils/Music/PitchSet';
+import { Angle } from '../../Utils/Geometry/Angle';
+import { KeySet } from './Keyboard/KeySet';
 
-export default function Keyboard(props) {
+interface Props {
+  rotation: number;
+  tonalCenter: number;
+  pitchSet: PitchSet;
+  somethingIsRotating: boolean;
+  playNotes(noteIds: number[]): void;
+}
+
+export default function Keyboard(props: Props) {
   const rotation = props.rotation - props.tonalCenter;
   const transform = `rotate(${Angle.iToD(-props.tonalCenter)})`;
   return (
