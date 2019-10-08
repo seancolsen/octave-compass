@@ -1,7 +1,8 @@
 import React from "react";
-import Key from "components/Wheel/Keyboard/Key";
 import styled from 'styled-components';
-import KeyPolygon from "components/Wheel/Keyboard/common/KeyPolygon";
+import { KeyPolygon } from "./common/KeyPolygon";
+import { PitchSet } from "../../../Utils/Music/PitchSet";
+import { Key } from "./Key";
 
 const KeyShadow = styled(KeyPolygon)`
   fill: #000;
@@ -10,7 +11,14 @@ const KeyShadow = styled(KeyPolygon)`
   filter: url('#blur');
 `;
 
-export default function KeySet(props) {
+interface Props {
+  pitchSet: PitchSet;
+  active: boolean;
+  rotation: number;
+  playNotes(n: number[]): void;
+}
+
+export function KeySet(props: Props) {
   const pitches = props.pitchSet.pitches;
   const keyShadows = props.active && pitches.map(pitch =>
     <KeyShadow key={pitch.note.id} pitch={pitch} />

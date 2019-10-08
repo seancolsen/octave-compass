@@ -7,12 +7,12 @@ import { Pitch } from '../../../../Utils/Music/Pitch';
 const innerRadius = 308;
 const outerRadius = 400;
 
-interface Props {
+export interface KeyPolygonProps {
   pitch: Pitch;
-  className: string;
+  className?: string;
 }
 
-export function KeyPolygon(props: Props) {
+export function KeyPolygon(props: KeyPolygonProps) {
   const shape: [number, number][] = [
     [-0.5, outerRadius * Scalar.rFactorAtEdge],
     [0, outerRadius],

@@ -1,31 +1,38 @@
 import React, {Component} from "react";
-import KeyLabel from "components/Wheel/Keyboard/KeyLabel";
-import styled from "styled-components";
-import Arc from "components/Wheel/common/Arc";
+import styled, { StyledComponentClass, ThemedStyledFunction, StyledFunction } from "styled-components";
+import { Arc, ArcProps } from "../common/Arc";
+import { Pitch } from "../../../Utils/Music/Pitch";
+import { NoteName } from "../../../Utils/Music/NoteName";
+import { KeyLabel } from './KeyLabel';
 
 const spread = 0.20;
 const tieRadius = 348;
 const tieSpan = 0.2;
 const tieWidth = 50;
 
-const LabelTie = styled(Arc)`
+type LabelTieProps = {color: string} & ArcProps;
+
+const LabelTie = styled(Arc)<LabelTieProps>`
   stroke: ${props => props.color};
   stroke-width: ${tieWidth}px;
 `;
 
-export default class KeyLabelSet extends Component {
+export interface KeyLabelSetProps {
+  className?: string;
+  pitch: Pitch;
+  rotation: number;
+}
+
+export class KeyLabelSet extends Component<KeyLabelSetProps> {
 
   /**
    * Return a LabelTie if needed
-   *
-   * @param nameCount
-   * @return {LabelTie|null}
    */
-  labelTie(nameCount) {
+  labelTie(nameCount: number): JSX.Element | null {
     if (nameCount < 2) {
       return null;
     }
-    return <LabelTie
+    return <LabelTie 
       startInterval={this.props.pitch.note.id - tieSpan}
       endInterval={this.props.pitch.note.id + tieSpan}
       color={this.props.pitch.note.color}
@@ -39,8 +46,8 @@ export default class KeyLabelSet extends Component {
    * @param {NoteName[]} names
    * @return {KeyLabel[]}
    */
-  labels(names) {
-    let result = [];
+  labels(names: NoteName[]): JSX.Element[] {
+    let result: JSX.Element[] = [];
     const nameCount = names.length;
     names.forEach((name, index) => {
       const discreteWidth = nameCount - 1;

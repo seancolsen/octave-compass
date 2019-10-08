@@ -4,7 +4,7 @@ import { IrPoint } from '../../../Utils/Geometry/IrPoint';
 
 interface Props {
   points: IrPoint[];
-  className: string;
+  className?: string;
   fill?: string;
   opacity?: string;
 }

@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-import KeyPolygon from 'components/Wheel/Keyboard/common/KeyPolygon';
 import styled from 'styled-components';
-import KeyLabelSet from "components/Wheel/Keyboard/KeyLabelSet";
+import { KeyPolygon, KeyPolygonProps } from './common/KeyPolygon';
+import { KeyLabelSet, KeyLabelSetProps } from './KeyLabelSet';
+import { Pitch } from '../../../Utils/Music/Pitch';
 
-const StyledKeyPolygon = styled(KeyPolygon)`
+const StyledKeyPolygon = styled(KeyPolygon)<
+  {active: boolean} & KeyPolygonProps
+>`
   fill: ${p => p.active ? '#e1e1e1' : '#b7b7b7'};
   stroke: #a7a7a7;
   stroke-width: 3px;
@@ -15,8 +18,10 @@ const InactiveG = styled.g`
   }
 `;
 
-const StyledKeyLabelSet = styled(KeyLabelSet)`
-  opacity: ${p => p.active ? '1' : '0.25'};
+const StyledKeyLabelSet = styled(KeyLabelSet)<
+  {active: boolean} & KeyLabelSetProps
+>`
+opacity: ${p => p.active ? '1' : '0.25'};
 `;
 
 const ActiveG = styled.g`
@@ -28,9 +33,16 @@ const ActiveG = styled.g`
   }
 `;
 
-export default class Key extends Component {
+interface KeyProps {
+  pitch: Pitch;
+  active: boolean;
+  playNotes(n: number[]): void;
+  rotation: number;
+}
 
-  handleMouseDownOrTouchStart(event) {
+export class Key extends Component<KeyProps> {
+
+  handleMouseDownOrTouchStart(event: React.MouseEvent | React.TouchEvent) {
     event.preventDefault();
     if (!this.props.playNotes) {
       return;
@@ -53,10 +65,13 @@ export default class Key extends Component {
         />
         <StyledKeyLabelSet
           pitch={this.props.pitch}
-          ordinal={this.props.ordinal}
           rotation={this.props.rotation}
           active={this.props.active}
-          playNotes={this.props.playNotes}
+          // TODO: Remove these lines if everything is working okay.
+          // I commented these out when converting to Typescript, and it seems
+          // like probably these lines are unnecessary. 
+          // ordinal={this.props.ordinal}
+          // playNotes={this.props.playNotes}
         />
       </G>
     );
