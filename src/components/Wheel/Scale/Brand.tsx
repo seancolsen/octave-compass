@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Angle from "Utils/Geometry/Angle";
+import { Angle } from '../../../Utils/Geometry/Angle';
 
 const StyledText = styled.text`
   font-size: 50px;
@@ -8,7 +8,11 @@ const StyledText = styled.text`
   cursor: grab;
 `;
 
-export default function Brand(props) {
+interface Props {
+  rotation: number;
+}
+
+export default function Brand(props: Props) {
   return (
     <StyledText
       transform={`rotate(${-Angle.iToD(props.rotation)})`}

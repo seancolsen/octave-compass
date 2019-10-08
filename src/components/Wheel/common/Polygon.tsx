@@ -6,7 +6,7 @@ interface Props {
   points: IrPoint[];
   className?: string;
   fill?: string;
-  opacity?: string;
+  opacity?: string | number;
 }
 
 export function Polygon(props: Props) {

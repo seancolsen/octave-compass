@@ -1,7 +1,9 @@
 import React from 'react';
-import ChordPolygon from "components/Wheel/Scale/ChordPolygons/ChordPolygon";
-import Angle from "Utils/Geometry/Angle";
 import styled from "styled-components";
+import { ObjectLog } from '../../../Utils/Misc/ObjectLog';
+import { OrdinalChord } from '../../../Utils/Music/OrdinalChord';
+import { ChordPolygon } from './ChordPolygons/ChordPolygon';
+import { Angle } from '../../../Utils/Geometry/Angle';
 
 const StyledG = styled.g`
   & * {
@@ -9,7 +11,12 @@ const StyledG = styled.g`
   }
 `;
 
-export default function ChordPolygons(props) {
+interface Props {
+  rotation: number;
+  ordinalChordsPlayed: ObjectLog<OrdinalChord>;
+}
+
+export function ChordPolygons(props: Props) {
   let transform = `rotate(${-Angle.iToD(props.rotation)})`;
   return (
     <StyledG transform={transform}>

@@ -7,9 +7,9 @@ const radius = 310;
 
 interface Props {
   intervalSet: IntervalSet;
-  className: string;
+  className?: string;
   fill: string;
-  opacity: string;
+  opacity: string | number;
 }
 
 export function IntervalSetPolygon(props: Props) {

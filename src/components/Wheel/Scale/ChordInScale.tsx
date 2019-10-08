@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import IrPoint from "Utils/Geometry/IrPoint";
 import styled from 'styled-components';
-import Angle from "Utils/Geometry/Angle";
-import ChordEmblem from "components/common/ChordEmblem";
-import OrdinalChord from "Utils/Music/OrdinalChord";
+import { OrdinalChord } from '../../../Utils/Music/OrdinalChord';
+import { Chord } from '../../../Utils/Music/Chord';
+import { IrPoint } from '../../../Utils/Geometry/IrPoint';
+import { Angle } from '../../../Utils/Geometry/Angle';
+import { ChordEmblem } from '../../common/ChordEmblem';
 
 const Background = styled.circle`
     stroke: #e1e1e1;
@@ -26,9 +27,20 @@ const NonHighlightableG = styled.g`
   }
 `;
 
-export default class ChordInScale extends Component {
+interface Props {
+  interval: number;
+  chord: Chord;
+  radialPosition: number;
+  rotation: number;
+  somethingIsRotating: boolean;
+  className?: string;
+  size: number;
+  playOrdinalChord(oc: OrdinalChord): void;
+}
 
-  handleMouseDownOrTouchStart(event) {
+export class ChordInScale extends Component<Props> {
+
+  handleMouseDownOrTouchStart(event: React.MouseEvent | React.TouchEvent) {
     event.preventDefault();
     const ordinalChord = new OrdinalChord(
       this.props.interval, this.props.chord
