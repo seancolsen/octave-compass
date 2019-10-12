@@ -1,7 +1,14 @@
 import React from 'react';
-import Url from "Utils/Text/Url";
+import { Url } from "../Utils/Text/Url";
+import { IntervalSet } from '../Utils/Music/IntervalSet';
 
-export default class RouteProcessor extends React.Component {
+interface Props {
+  intervalSet: IntervalSet;
+  tonalCenter: number;
+  windowTitle: string;
+}
+
+export class RouteProcessor extends React.Component<Props> {
 
   componentDidMount() {
     this.updateWindow();

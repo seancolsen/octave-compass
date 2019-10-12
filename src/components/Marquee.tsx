@@ -1,18 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
-import AlternateScaleNames from "components/Marquee/AlternateScaleNames";
+import { AlternateScaleNames } from './Marquee/AlternateScaleNames';
+import { Scale } from '../Utils/Music/Scale';
 
-export default function Marquee(props) {
+interface Props {
+  intervalSet: Scale;
+  showMore(): void;
+  title: string;
+  isWithinModal: boolean;
+  isNamed: boolean;
+  className?: string;
+  inversionText?: string;
+}
+
+export function Marquee(props: Props) {
 
   const TitleElement = props.isWithinModal ? 'h2' : 'h1';
-  const Title = styled(TitleElement)`
+
+  const Title = styled(TitleElement)<{isNamed: boolean}>`
     text-align: center;
     font-style: ${p => p.isNamed ? 'default' : 'italic'};
   `;
 
   return (
     <div className={props.className} id='marquee'>
-      <Title isNamed={props.isNamed} isWithinModal={props.isWithinModal}>
+      <Title isNamed={props.isNamed}>
         {props.title}
         {props.inversionText && <em>{props.inversionText}</em>}
       </Title>

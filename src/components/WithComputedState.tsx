@@ -1,7 +1,9 @@
 import React from 'react';
-import NoteSet from "Utils/Music/NoteSet";
-import Chord from "Utils/Music/Chord";
-import Scale from "Utils/Music/Scale";
+import { IntervalSet } from '../Utils/Music/IntervalSet';
+import { NoteSet } from '../Utils/Music/NoteSet';
+import { Chord } from '../Utils/Music/Chord';
+import { Scale } from '../Utils/Music/Scale';
+import { PitchSet } from '../Utils/Music/PitchSet';
 
 const ordinalAbbreviations = [
   '0th',
@@ -12,11 +14,32 @@ const ordinalAbbreviations = [
   '5th',
 ];
 
-export default class WithComputedState extends React.Component {
+interface ComputedState {
+  noteSet: NoteSet;
+  tonalCenterName: string;
+  pitchSet: PitchSet;
+  title: string;
+  inversionText: string | null;
+  isNamed: boolean;
+}
 
-  tonalCenterName(noteSet) {
-    const inversion = this.props.intervalSet.inversion || 0;
-    const rootNote = noteSet.rootNote(inversion);
+interface Props {
+  intervalSet: IntervalSet;
+  tonalCenter: number;
+  children(state: ComputedState): React.Component;
+}
+
+export class WithComputedState extends React.Component<Props> {
+
+  inversion() {
+    if (this.props.intervalSet instanceof Chord) {
+      return this.props.intervalSet.inversion;
+    }
+    return null;
+  }
+  
+  tonalCenterName(noteSet: NoteSet) {
+    const rootNote = noteSet.rootNote(this.inversion() || 0);
     return rootNote.nameToUseForLabels;
   }
 
@@ -27,7 +50,7 @@ export default class WithComputedState extends React.Component {
     ).namedIfFeasible;
   }
 
-  pitchSet(noteSet) {
+  pitchSet(noteSet: NoteSet) {
     //const clef = this.props.clef;
     // TODO: Set octave based on clef
     const octave = 4;
@@ -35,7 +58,7 @@ export default class WithComputedState extends React.Component {
   }
 
   inversionText() {
-    const inversion = this.props.intervalSet.inversion;
+    const inversion = this.inversion();
     if (!inversion) {
       return null;
     }
@@ -48,7 +71,7 @@ export default class WithComputedState extends React.Component {
       this.props.intervalSet instanceof Scale;
   }
 
-  title(tonalCenterName) {
+  title(tonalCenterName: string) {
     const displayName = this.props.intervalSet.displayName;
     if (this.props.intervalSet instanceof Chord) {
       return `${tonalCenterName} ${displayName} chord`
@@ -62,7 +85,7 @@ export default class WithComputedState extends React.Component {
   }
 
   render() {
-    let computedState = {};
+    let computedState = {} as ComputedState;
     computedState.noteSet = this.noteSet();
     computedState.tonalCenterName = this.tonalCenterName(computedState.noteSet);
     computedState.pitchSet = this.pitchSet(computedState.noteSet);
