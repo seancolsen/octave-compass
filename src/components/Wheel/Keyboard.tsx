@@ -11,7 +11,7 @@ interface Props {
   playNotes(noteIds: number[]): void;
 }
 
-export default function Keyboard(props: Props) {
+export function Keyboard(props: Props) {
   const rotation = props.rotation - props.tonalCenter;
   const transform = `rotate(${Angle.iToD(-props.tonalCenter)})`;
   return (

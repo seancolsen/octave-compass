@@ -1,21 +1,20 @@
 import React, {Component} from 'react';
-import Keyboard from "components/Wheel/Keyboard";
-import Scale from "components/Wheel/Scale";
-import IrPoint from "Utils/Geometry/IrPoint";
-import XyPoint from "Utils/Geometry/XyPoint";
-import Base from 'components/Wheel/Base';
 import styled from 'styled-components';
-import Scalar from "Utils/Math/Scalar";
-import BlurFilter from "components/Wheel/BlurFilter";
-import Rotatable from "components/Wheel/Rotatable";
+import { IrPoint } from '../Utils/Geometry/IrPoint';
+import { XyPoint } from '../Utils/Geometry/XyPoint';
+import { BlurFilter } from './Wheel/BlurFilter';
+import { IntervalSet } from '../Utils/Music/IntervalSet';
+import { Keyboard } from './Wheel/Keyboard';
+import { Scale } from '../Utils/Music/Scale';
+import { Scalar } from '../Utils/Math/Scalar';
+import { Base } from './Wheel/Base';
+import { Rotatable } from './Wheel/Rotatable';
 
 /**
  * The width and height of the square SVG view box in user units (basically SVG
  * pixels). This number is a bit arbitrary since the SVG is then scaled, but
  * all other numerical measurements within the SVG should be considered
  * relative to this value.
- *
- * @type {number}
  */
 const BOX_SIZE = 1000;
 
@@ -25,9 +24,18 @@ const Container = styled.div`
   }
 `;
 
-export default class Wheel extends Component {
+interface Props {
+  intervalSet: IntervalSet;
+  toggleInterval(ordinal: number): void;
+}
 
-  constructor(props) {
+interface State {
+  componentsRotating: Component[];
+}
+
+export class Wheel extends Component<Props, State> {
+
+  constructor(props: Props) {
     super(props);
     this.state = {
       componentsRotating: [],
@@ -46,13 +54,13 @@ export default class Wheel extends Component {
 
   /**
    * Compute the angle of the mouse as an interval
-   *
-   * @param {object} mouseEvent
-   * @return {number}
    */
-  static grabAngleFromMouseEvent(mouseEvent) {
-    let target = mouseEvent.target;
+  static grabAngleFromMouseEvent(mouseEvent: React.MouseEvent) {
+    let target = mouseEvent.currentTarget as SVGElement;
     let svg = (target.tagName === "svg") ? target : target.viewportElement;
+    if (!svg) {
+      throw new Error('Unable to find target SVG element from mouse event');
+    }
     let svgRect = svg.getBoundingClientRect();
     let cursor = new XyPoint(mouseEvent.clientX, mouseEvent.clientY);
     return IrPoint.fromCursor(svgRect, BOX_SIZE, cursor).i;
@@ -60,31 +68,28 @@ export default class Wheel extends Component {
 
   /**
    * Compute the angle of the first touch as an interval
-   *
-   * @param {object} touchEvent
-   * @return {number}
    */
-  static grabAngleFromTouchEvent(touchEvent) {
+  static grabAngleFromTouchEvent(touchEvent: React.TouchEvent) {
     return Wheel.grabAngleFromMouseEvent(touchEvent.touches[0]);
   }
 
-  startRotating(component) {
+  startRotating(component: Component) {
     this.setState({
       componentsRotating: this.state.componentsRotating.concat(component)
     });
   }
 
-  setRotationFromGrabAngle(grabAngle) {
+  setRotationFromGrabAngle(grabAngle: number) {
     this.state.componentsRotating.forEach(component => {
       component.setRotationFromGrabAngle(grabAngle);
     });
   }
 
-  handleMouseMove(event) {
+  handleMouseMove(event: React.MouseEvent) {
     this.setRotationFromGrabAngle(Wheel.grabAngleFromMouseEvent(event));
   }
 
-  handleTouchMove(event) {
+  handleTouchMove(event: React.TouchEvent) {
     event.preventDefault();
     this.setRotationFromGrabAngle(Wheel.grabAngleFromTouchEvent(event));
   }
@@ -114,7 +119,7 @@ export default class Wheel extends Component {
           style={{touchAction: 'none'}}
         >
 
-          <BlurFilter id='blur' size='15' bounds='3' />
+          <BlurFilter id='blur' size={15} bounds={3} />
 
           <Base
             intervalSet={this.props.intervalSet}
@@ -124,9 +129,9 @@ export default class Wheel extends Component {
           />
 
           <Rotatable
-            startRotating={component => this.startRotating(component)}
+            startRotating={(component: Component) => this.startRotating(component)}
             afterRotating={this.props.shiftTonalCenter}
-          >{ rotation => (
+          >{ (rotation: number) => (
             <Keyboard
               rotation={rotation}
               intervalSet={this.props.intervalSet}
@@ -138,12 +143,14 @@ export default class Wheel extends Component {
           )}</Rotatable>
 
           <Rotatable
-            startRotating={component => this.startRotating(component)}
+            startRotating={
+              (component: Component) => this.startRotating(component)
+            }
             afterRotating={this.props.shiftIntervalSet}
             validRestingRotationValues={
-              this.props.intervalSet.ordinals.map(o => Scalar.wrapToOctave(-o))
+              this.props.intervalSet.ordinals.map((o: number) => Scalar.wrapToOctave(-o))
             }
-          >{ rotation => (
+          >{ (rotation: number) => (
             <Scale
               rotation={rotation}
               intervalSet={this.props.intervalSet}

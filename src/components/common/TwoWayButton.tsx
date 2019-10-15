@@ -25,7 +25,7 @@ interface Props {
    * When true, swap the `-1` and `1` values that are passed to `stepFunction`
    * when pressing one of the two buttons.
    */
-  inverted: boolean;
+  inverted?: boolean;
 
   /**
    * The individual labels displayed for each button. If no value is passed,

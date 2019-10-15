@@ -1,16 +1,46 @@
 import React from 'react';
-import Marquee from "components/Marquee";
-import Wheel from "components/Wheel";
-import Notation from "components/Notation";
-import Menu from "components/Menu";
 import Modal from 'react-responsive-modal';
-import Toolbar from "components/Toolbar";
-import TwoWayButton from "components/common/TwoWayButton";
-import Button from "components/common/Button";
+import { Marquee } from "./Marquee";
+import { Wheel } from "./Wheel";
+import { Notation } from "./Notation";
+import { Menu } from "./Menu";
+import { Toolbar, Buttons } from "./Toolbar";
+import { TwoWayButton } from "./common/TwoWayButton";
+import { Button } from "./common/Button";
+import { IntervalSet } from '../Utils/Music/IntervalSet';
+import { ChordSet } from '../Utils/Music/ChordSet';
+import { Audio } from './WithAudio';
+import { Chord } from '../Utils/Music/Chord';
+import { PitchSet } from '../Utils/Music/PitchSet';
 
-export default class Layout extends React.Component {
+interface Props {
+  intervalSet: IntervalSet;
+  tonalCenter: number;
+  selectedChords: ChordSet;
+  clef: string;
+  setChordSet(cs: ChordSet): void;
+  shiftIntervalSet(rotation: number): void;
+  shiftMode(amount: number): void;
+  shiftTonalCenter(intervalDiff: number): void;
+  toggleChord(chord: Chord): void ;
+  toggleInterval(ordinal: number): void;
+  inversionText?: string;
+  isNamed: boolean;
+  pitchSet: PitchSet;
+  title: string;
+  audio: Audio;
+}
 
-  constructor(props) {
+type Modal = 'marquee' | 'notation' | null;
+interface State {
+  modal: Modal;
+}
+
+export class Layout extends React.Component<Props, State> {
+
+  state: State;
+
+  constructor(props: Props) {
     super(props);
     this.state = {
       modal: null,
@@ -21,11 +51,11 @@ export default class Layout extends React.Component {
     this.setState({modal: null});
   };
 
-  openModal = (modalName) => {
+  openModal = (modalName: Modal) => {
     this.setState({modal: modalName});
   };
 
-  buttons() {
+  buttons(): Buttons {
     return {
       Staff: (props) => <Button
         onClick={() => this.openModal('notation')}

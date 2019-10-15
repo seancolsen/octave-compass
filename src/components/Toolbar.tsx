@@ -18,13 +18,15 @@ const InnerContainer = styled(FlexContainer)<{wrap?: string}>`
   }
 `;
 
+export interface Buttons {
+  Staff: React.FunctionComponent,
+  Transpose: React.FunctionComponent,
+  Mode: React.FunctionComponent,
+  About: React.FunctionComponent,
+}
+
 interface Props {
-  buttons: {
-    Staff: React.FunctionComponent,
-    Transpose: React.FunctionComponent,
-    Mode: React.FunctionComponent,
-    About: React.FunctionComponent,
-  }
+  buttons: Buttons
 }
 
 export function Toolbar(props: Props) {

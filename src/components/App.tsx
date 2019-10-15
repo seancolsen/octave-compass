@@ -1,23 +1,38 @@
 import React from "react";
-import IntervalSetFactory from "Utils/Music/IntervalSetFactory";
-import Scalar from "Utils/Math/Scalar";
-import ChordSet from "Utils/Music/ChordSet";
-import WithComputedState from "components/WithComputedState";
-import WithAudio from "components/WithAudio";
-import RouteProcessor from "components/RouteProcessor";
-import Url from "Utils/Text/Url";
-import Layout from "components/Layout";
-import {library} from '@fortawesome/fontawesome-svg-core'
-import {faPlus, faMinus, faMusic, faCaretLeft, faCaretRight}
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faPlus, faMinus, faMusic, faCaretLeft, faCaretRight }
   from '@fortawesome/free-solid-svg-icons'
 import {faGithub} from '@fortawesome/free-brands-svg-icons'
+import { IntervalSet } from "../Utils/Music/IntervalSet";
+import { IntervalSetFactory } from "../Utils/Music/IntervalSetFactory";
+import { Scalar } from "../Utils/Math/Scalar";
+import { ChordSet } from "../Utils/Music/ChordSet";
+import { WithComputedState } from "./WithComputedState";
+import { WithAudio } from "./WithAudio";
+import { RouteProcessor } from "./RouteProcessor";
+import { Url } from "../Utils/Text/Url";
+import { Layout } from "./Layout";
+import { Chord } from "../Utils/Music/Chord";
 
 library.add(faPlus, faMinus, faMusic, faCaretLeft, faCaretRight,
   faGithub);
 
-export default class App extends React.Component {
+interface Props {
 
-  constructor(props) {
+}
+
+interface State {
+  tonalCenter: number,
+  intervalSet: IntervalSet,
+  selectedChords: ChordSet,
+  clef: string,
+}
+
+export default class App extends React.Component<Props, State> {
+
+  state: State;
+
+  constructor(props: Props) {
     super(props);
     const stateFromUrl = App.stateFromUrl();
     this.state = {
@@ -40,14 +55,14 @@ export default class App extends React.Component {
     window.addEventListener('popstate', () => this.updateStateFromUrl());
   }
 
-  shiftTonalCenter = (intervalDiff) => {
+  shiftTonalCenter = (intervalDiff: number) => {
     const tc = Scalar.wrapToOctave(this.state.tonalCenter - intervalDiff);
     this.setState({
       tonalCenter: tc,
     })
   };
 
-  shiftIntervalSet = (rotation) => {
+  shiftIntervalSet = (rotation: number) => {
     this.setState({
       intervalSet:
         IntervalSetFactory.fromIntervalSet(
@@ -56,7 +71,7 @@ export default class App extends React.Component {
     });
   };
 
-  shiftMode = (amount) => {
+  shiftMode = (amount: number) => {
     this.setState({
       intervalSet:
         IntervalSetFactory.fromIntervalSet(
@@ -65,7 +80,7 @@ export default class App extends React.Component {
     });
   };
 
-  toggleInterval = (ordinal) => {
+  toggleInterval = (ordinal: number) => {
     this.setState({
       intervalSet: IntervalSetFactory.fromIntervalSet(
         this.state.intervalSet.toggleIntervalOrdinal(ordinal)
@@ -73,13 +88,13 @@ export default class App extends React.Component {
     });
   };
 
-  toggleChord = (chord) => {
+  toggleChord = (chord: Chord) => {
     this.setState({
       selectedChords: this.state.selectedChords.toggleChord(chord),
     })
   };
 
-  setChordSet = (chordSet) => {
+  setChordSet = (chordSet: ChordSet) => {
     this.setState({
       selectedChords: chordSet,
     });

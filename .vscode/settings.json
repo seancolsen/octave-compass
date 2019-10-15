@@ -1,7 +1,10 @@
 {
     "editor.tabSize": 2,
     "cSpell.words": [
+        "Backends",
+        "Tickables",
         "fontawesome",
-        "fortawesome"
+        "fortawesome",
+        "vexflow"
     ]
 }

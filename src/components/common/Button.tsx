@@ -25,7 +25,9 @@ interface Props {
   label?: string;
   children?: ReactNode;
   icon?: IconProp;
-  onClick(): void;
+  onClick?(): void;
+  href?: string;
+  target?: string;
 }
 
 export function Button(props: Props) {

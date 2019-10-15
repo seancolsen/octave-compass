@@ -19,14 +19,15 @@ interface ComputedState {
   tonalCenterName: string;
   pitchSet: PitchSet;
   title: string;
-  inversionText: string | null;
+  inversionText?: string;
   isNamed: boolean;
 }
 
 interface Props {
   intervalSet: IntervalSet;
   tonalCenter: number;
-  children(state: ComputedState): React.Component;
+  clef: string;
+  children(state: ComputedState): JSX.Element;
 }
 
 export class WithComputedState extends React.Component<Props> {
@@ -60,7 +61,7 @@ export class WithComputedState extends React.Component<Props> {
   inversionText() {
     const inversion = this.inversion();
     if (!inversion) {
-      return null;
+      return undefined;
     }
     const ordinalAbbreviation = ordinalAbbreviations[inversion];
     return ` (${ordinalAbbreviation} inversion)`;

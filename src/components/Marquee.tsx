@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AlternateScaleNames } from './Marquee/AlternateScaleNames';
-import { Scale } from '../Utils/Music/Scale';
+import { IntervalSet } from '../Utils/Music/IntervalSet';
 
 interface Props {
-  intervalSet: Scale;
-  showMore(): void;
+  intervalSet: IntervalSet;
+  showMore?(): void;
   title: string;
-  isWithinModal: boolean;
+  isWithinModal?: boolean;
   isNamed: boolean;
   className?: string;
   inversionText?: string;

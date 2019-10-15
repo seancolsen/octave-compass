@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import styled from "styled-components";
 import { Subtitle } from "./Subtitle";
+import { IntervalSet } from '../../Utils/Music/IntervalSet';
 import { Scale } from '../../Utils/Music/Scale';
 
 const Aka = styled.span`
@@ -9,22 +10,27 @@ const Aka = styled.span`
 
 interface Props {
   /**
-   * The scale that we're naming
+   * The IntervalSet that we're naming. The type is IntervalSet here (and not
+   * Scale) so that we can accept many input values. If the value given here
+   * ends up being an instance of Scale, then we'll see if it has alternate
+   * names. If the value given is only an IntervalSet (and not specifically a
+   * scale), the we don't bother listing any alternate names because we know it
+   * won't have any.
    */
-  intervalSet: Scale;
+  intervalSet: IntervalSet;
 
   /**
    * When true, format the list to look good within a modal dialog. This means
    * it will take up more screen space. When false use simpler formatting and
    * take up less screen space.
    */
-  isWithinModal: boolean;
+  isWithinModal?: boolean;
 
   /**
    * Function to execute when the user clicks the "Show more" link within the
    * list of alternate scale names.
    */
-  showMore(): void;
+  showMore?(): void;
 }
 
 /**
@@ -37,11 +43,17 @@ export class AlternateScaleNames extends Component<Props> {
 
   showMore = (event: React.MouseEvent) => {
     event.preventDefault();
-    this.props.showMore();
+    if (this.props.showMore) {
+      this.props.showMore();
+    }
   };
 
   render() {
-    const alternateNames = this.props.intervalSet.alternateNames || [];
+    let alternateNames: string[] = [];
+    if (this.props.intervalSet instanceof Scale ) {
+      alternateNames = this.props.intervalSet.alternateNames;
+    }
+    
     const length = alternateNames.length;
     if (length === 0) {
       return <Subtitle/>;
