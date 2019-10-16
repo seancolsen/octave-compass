@@ -4,9 +4,7 @@ import { KeyPolygon, KeyPolygonProps } from './common/KeyPolygon';
 import { KeyLabelSet, KeyLabelSetProps } from './KeyLabelSet';
 import { Pitch } from '../../../Utils/Music/Pitch';
 
-const StyledKeyPolygon = styled(KeyPolygon)<
-  {active: boolean} & KeyPolygonProps
->`
+const StyledKeyPolygon = styled(KeyPolygon)<{active: boolean} & KeyPolygonProps>`
   fill: ${p => p.active ? '#e1e1e1' : '#b7b7b7'};
   stroke: #a7a7a7;
   stroke-width: 3px;
@@ -18,9 +16,7 @@ const InactiveG = styled.g`
   }
 `;
 
-const StyledKeyLabelSet = styled(KeyLabelSet)<
-  {active: boolean} & KeyLabelSetProps
->`
+const StyledKeyLabelSet = styled(KeyLabelSet)<{active: boolean} & KeyLabelSetProps>`
 opacity: ${p => p.active ? '1' : '0.25'};
 `;
 

@@ -13,9 +13,9 @@ interface State {
 }
 
 export interface Audio extends State {
-  playNotes(noteIds: number[]): void,
-  playIntervals(ordinals: number[]): void,
-  playOrdinalChord(ordinalChord: OrdinalChord): void,
+  playNotes(noteIds: number[]): void;
+  playIntervals(ordinals: number[]): void;
+  playOrdinalChord(ordinalChord: OrdinalChord): void;
 }
 
 interface Props {

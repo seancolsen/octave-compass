@@ -18,11 +18,15 @@ const InnerContainer = styled(FlexContainer)<{wrap?: string}>`
   }
 `;
 
+interface ButtonsProps {
+  className?: string;
+}
+
 export interface Buttons {
-  Staff: React.FunctionComponent,
-  Transpose: React.FunctionComponent,
-  Mode: React.FunctionComponent,
-  About: React.FunctionComponent,
+  Staff: React.FunctionComponent<ButtonsProps>,
+  Transpose: React.FunctionComponent<ButtonsProps>,
+  Mode: React.FunctionComponent<ButtonsProps>,
+  About: React.FunctionComponent<ButtonsProps>,
 }
 
 interface Props {

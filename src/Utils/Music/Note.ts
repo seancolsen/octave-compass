@@ -87,7 +87,7 @@ export class Note {
    * Return a copy of this note with a name added to match the given direction,
    * if possible
    */
-  namedToMatch(direction: string, fallback: string | null = null): Note {
+  namedToMatch(direction: string | null, fallback: string | null = null): Note {
     const name = this.getNameToMatch(direction, fallback);
     if (!name) {
       return this;

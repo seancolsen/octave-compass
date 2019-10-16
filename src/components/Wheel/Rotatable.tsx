@@ -5,7 +5,7 @@ import { Wheel } from '../Wheel';
 import { Group } from './common/Group';
 
 interface Props {
-  validRestingRotationValues: number[];
+  validRestingRotationValues?: number[];
   children(rotation: number): ReactNode;
   startRotating(component: Component): void;
   afterRotating(restingRotation: number): void;

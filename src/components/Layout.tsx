@@ -113,7 +113,6 @@ export class Layout extends React.Component<Props, State> {
               toggleInterval={this.props.toggleInterval}
               selectedChords={this.props.selectedChords}
               playNotes={this.props.audio.playNotes}
-              playIntervals={this.props.audio.playIntervals}
               playOrdinalChord={this.props.audio.playOrdinalChord}
               ordinalChordsPlayed={this.props.audio.ordinalChordsPlayed}
             />

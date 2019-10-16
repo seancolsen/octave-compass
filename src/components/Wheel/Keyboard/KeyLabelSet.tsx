@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import styled, { StyledComponentClass, ThemedStyledFunction, StyledFunction } from "styled-components";
+import styled from "styled-components";
 import { Arc, ArcProps } from "../common/Arc";
 import { Pitch } from "../../../Utils/Music/Pitch";
 import { NoteName } from "../../../Utils/Music/NoteName";

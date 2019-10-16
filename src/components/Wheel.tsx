@@ -9,6 +9,11 @@ import { Scale } from '../Utils/Music/Scale';
 import { Scalar } from '../Utils/Math/Scalar';
 import { Base } from './Wheel/Base';
 import { Rotatable } from './Wheel/Rotatable';
+import { PitchSet } from '../Utils/Music/PitchSet';
+import { ScaleComponent } from './Wheel/ScaleComponent';
+import { ChordSet } from '../Utils/Music/ChordSet';
+import { OrdinalChord } from '../Utils/Music/OrdinalChord';
+import { ObjectLog } from '../Utils/Misc/ObjectLog';
 
 /**
  * The width and height of the square SVG view box in user units (basically SVG
@@ -27,10 +32,18 @@ const Container = styled.div`
 interface Props {
   intervalSet: IntervalSet;
   toggleInterval(ordinal: number): void;
+  tonalCenter: number;
+  pitchSet: PitchSet;
+  playNotes(noteIds: number[]): void;
+  shiftTonalCenter(intervalDiff: number): void;
+  shiftIntervalSet(rotation: number): void;
+  selectedChords: ChordSet;
+  playOrdinalChord(ordinalChord: OrdinalChord): void;
+  ordinalChordsPlayed: ObjectLog<OrdinalChord>;
 }
 
 interface State {
-  componentsRotating: Component[];
+  componentsRotating: Rotatable[];
 }
 
 export class Wheel extends Component<Props, State> {
@@ -55,13 +68,13 @@ export class Wheel extends Component<Props, State> {
   /**
    * Compute the angle of the mouse as an interval
    */
-  static grabAngleFromMouseEvent(mouseEvent: React.MouseEvent) {
-    let target = mouseEvent.currentTarget as SVGElement;
+  static grabAngleFromMouseEvent(mouseEvent: React.MouseEvent | React.Touch) {
+    let target = mouseEvent.target as SVGElement;
     let svg = (target.tagName === "svg") ? target : target.viewportElement;
     if (!svg) {
       throw new Error('Unable to find target SVG element from mouse event');
     }
-    let svgRect = svg.getBoundingClientRect();
+    let svgRect = svg.getBoundingClientRect() as DOMRect;
     let cursor = new XyPoint(mouseEvent.clientX, mouseEvent.clientY);
     return IrPoint.fromCursor(svgRect, BOX_SIZE, cursor).i;
   }
@@ -73,7 +86,7 @@ export class Wheel extends Component<Props, State> {
     return Wheel.grabAngleFromMouseEvent(touchEvent.touches[0]);
   }
 
-  startRotating(component: Component) {
+  startRotating(component: Rotatable) {
     this.setState({
       componentsRotating: this.state.componentsRotating.concat(component)
     });
@@ -123,18 +136,16 @@ export class Wheel extends Component<Props, State> {
 
           <Base
             intervalSet={this.props.intervalSet}
-            isRotating={!!this.state.elementRotating}
             toggleInterval={this.props.toggleInterval}
             scaleIsRotating={this.scaleIsRotating()}
           />
 
           <Rotatable
-            startRotating={(component: Component) => this.startRotating(component)}
+            startRotating={(component: Rotatable) => this.startRotating(component)}
             afterRotating={this.props.shiftTonalCenter}
           >{ (rotation: number) => (
             <Keyboard
               rotation={rotation}
-              intervalSet={this.props.intervalSet}
               tonalCenter={this.props.tonalCenter}
               pitchSet={this.props.pitchSet}
               somethingIsRotating={this.somethingIsRotating()}
@@ -144,14 +155,14 @@ export class Wheel extends Component<Props, State> {
 
           <Rotatable
             startRotating={
-              (component: Component) => this.startRotating(component)
+              (component: Rotatable) => this.startRotating(component)
             }
             afterRotating={this.props.shiftIntervalSet}
             validRestingRotationValues={
               this.props.intervalSet.ordinals.map((o: number) => Scalar.wrapToOctave(-o))
             }
           >{ (rotation: number) => (
-            <Scale
+            <ScaleComponent
               rotation={rotation}
               intervalSet={this.props.intervalSet}
               selectedChords={this.props.selectedChords}

@@ -88,6 +88,7 @@ export class Notation extends Component<Props> {
     }
 
     // Set up renderer
+    // @ts-ignore because https://github.com/DefinitelyTyped/DefinitelyTyped/issues/39079
     let renderer = new VF.Renderer(containingDiv, VF.Renderer.Backends.SVG);
     let context = renderer.getContext();
 

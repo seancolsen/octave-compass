@@ -137,7 +137,7 @@ export class NoteSet {
    * given direction.
    */
   directionallyNamed(
-    direction: string, fallback: null | string = null
+    direction: string | null, fallback: null | string = null
   ): NoteSet {
     let result = new NoteSet(this.notes);
     result.notes.forEach((note, index, notes) => {

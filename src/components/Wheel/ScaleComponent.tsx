@@ -33,7 +33,7 @@ interface Props {
   playOrdinalChord(oc: OrdinalChord): void;
 }
 
-export default function Scale(props: Props) {
+export function ScaleComponent(props: Props) {
   const ordinalChordSets = OrdinalChordSet.arrayFromIntervalSet(
     props.intervalSet,
     props.selectedChords

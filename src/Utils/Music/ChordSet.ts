@@ -143,7 +143,7 @@ export class ChordSet {
    */
   static fromUnion(chordSets: ChordSet[]) {
     const chords = chordSets.map(chordSet => chordSet.chords);
-    const flattenedChords = [].concat(...chords);
+    const flattenedChords = chords.flat();
     return new ChordSet(flattenedChords);
   }
 
