@@ -2,7 +2,6 @@ import React from 'react';
 import styled from "styled-components";
 import { IntervalSetPolygon, IntervalSetPolygonProps } from '../common/IntervalSetPolygon';
 import { OrdinalChordSet } from '../../Utils/Music/OrdinalChordSet';
-import { Brand } from './Scale/Brand';
 import { ChordPolygons } from './Scale/ChordPolygons';
 import { SwarmOfChords } from './Scale/SwarmOfChords';
 import { IntervalSet } from '../../Utils/Music/IntervalSet';
@@ -42,7 +41,6 @@ export function ScaleComponent(props: Props) {
     <g>
       <Shadow intervalSet={props.intervalSet}/>
       <Background intervalSet={props.intervalSet}/>
-      <Brand rotation={props.rotation}/>
       <ChordPolygons
         ordinalChordsPlayed={props.ordinalChordsPlayed}
         rotation={props.rotation}
