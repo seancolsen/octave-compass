@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { KeyPolygon, KeyPolygonProps } from './common/KeyPolygon';
 import { KeyLabelSet, KeyLabelSetProps } from './KeyLabelSet';
@@ -36,40 +36,35 @@ interface KeyProps {
   rotation: number;
 }
 
-export class Key extends Component<KeyProps> {
+export function Key(props: KeyProps) {
 
-  handleMouseDownOrTouchStart(event: React.MouseEvent | React.TouchEvent) {
+  type GenericEvent = React.MouseEvent | React.TouchEvent;
+  const handleMouseDownOrTouchStart = (event: GenericEvent) => {
     event.preventDefault();
-    if (!this.props.playNotes) {
+    if (!props.playNotes) {
       return;
     }
-    this.props.playNotes([this.props.pitch.note.id]);
+    props.playNotes([props.pitch.note.id]);
     event.stopPropagation();
   }
 
-  render() {
-    const G = this.props.active ? ActiveG : InactiveG;
-    return (
-      <G
-        onMouseDown={e => this.handleMouseDownOrTouchStart(e)}
-        onTouchStart={e => this.handleMouseDownOrTouchStart(e)}
-        onTouchEnd={e => e.preventDefault()}
-      >
-        <StyledKeyPolygon
-          pitch={this.props.pitch}
-          active={this.props.active}
-        />
-        <StyledKeyLabelSet
-          pitch={this.props.pitch}
-          rotation={this.props.rotation}
-          active={this.props.active}
-          // TODO: Remove these lines if everything is working okay.
-          // I commented these out when converting to Typescript, and it seems
-          // like probably these lines are unnecessary. 
-          // ordinal={this.props.ordinal}
-          // playNotes={this.props.playNotes}
-        />
-      </G>
-    );
-  }
+  const G = props.active ? ActiveG : InactiveG;
+  
+  return (
+    <G
+      onMouseDown={e => handleMouseDownOrTouchStart(e)}
+      onTouchStart={e => handleMouseDownOrTouchStart(e)}
+      onTouchEnd={e => e.preventDefault()}
+    >
+      <StyledKeyPolygon
+        pitch={props.pitch}
+        active={props.active}
+      />
+      <StyledKeyLabelSet
+        pitch={props.pitch}
+        rotation={props.rotation}
+        active={props.active}
+      />
+    </G>
+  );
 }

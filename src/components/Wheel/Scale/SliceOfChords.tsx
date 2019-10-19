@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ChordSet } from '../../../Utils/Music/ChordSet';
 import { OrdinalChord } from '../../../Utils/Music/OrdinalChord';
 import { ChordInScale } from './ChordInScale';
@@ -16,40 +16,38 @@ interface Props {
   playOrdinalChord(oc: OrdinalChord): void;
 }
 
-export class SliceOfChords extends Component<Props> {
+export function SliceOfChords(props: Props) {
 
-  get radialSpacing() {
-    const total = this.props.chordSet.totalEmblemSize * circleRadius * 2;
+  const radialSpacing = (() => {
+    const total = props.chordSet.totalEmblemSize * circleRadius * 2;
     const overShoot = constellationRadius - centerDeadZone - total;
-    const spacing = overShoot / (this.props.chordSet.count - 1);
+    const spacing = overShoot / (props.chordSet.count - 1);
     return Math.min(spacing, maxRadialSpacing);
-  }
+  })();
 
-  chords(): JSX.Element[] {
+  const chords = (() => {
     let result: JSX.Element[] = [];
-    let radialPosition = constellationRadius + this.radialSpacing;
-    this.props.chordSet.chords.forEach((chord, index) => {
+    let radialPosition = constellationRadius + radialSpacing;
+    props.chordSet.chords.forEach((chord, index) => {
       const size = chord.emblemSize * circleRadius;
-      radialPosition -= size + this.radialSpacing;
+      radialPosition -= size + radialSpacing;
       result.push(
         <ChordInScale
           key={index}
           radialPosition={radialPosition}
           size={size}
           chord={chord}
-          interval={this.props.ordinal}
-          rotation={this.props.rotation}
-          somethingIsRotating={this.props.somethingIsRotating}
-          playOrdinalChord={this.props.playOrdinalChord}
+          interval={props.ordinal}
+          rotation={props.rotation}
+          somethingIsRotating={props.somethingIsRotating}
+          playOrdinalChord={props.playOrdinalChord}
         />
       );
       radialPosition -= size;
     });
     return result;
-  }
+  })();
 
-  render() {
-    return <g>{this.chords()}</g>;
-  }
+  return <g>{chords}</g>;
 
 }

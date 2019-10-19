@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import styled from "styled-components";
 import { Subtitle } from "./Subtitle";
 import { IntervalSet } from '../../Utils/Music/IntervalSet';
@@ -39,54 +39,51 @@ interface Props {
  * Depending on context, this list may appear as a bulleted list or as a simple
  * coma separated list.
  */
-export class AlternateScaleNames extends Component<Props> {
+export function AlternateScaleNames(props: Props) {
 
-  showMore = (event: React.MouseEvent) => {
+  const showMore = (event: React.MouseEvent) => {
     event.preventDefault();
-    if (this.props.showMore) {
-      this.props.showMore();
+    if (props.showMore) {
+      props.showMore();
     }
   };
 
-  render() {
-    let alternateNames: string[] = [];
-    if (this.props.intervalSet instanceof Scale ) {
-      alternateNames = this.props.intervalSet.alternateNames;
-    }
-    
-    const length = alternateNames.length;
-    if (length === 0) {
-      return <Subtitle/>;
-    }
+  let alternateNames: string[] = [];
+  if (props.intervalSet instanceof Scale ) {
+    alternateNames = props.intervalSet.alternateNames;
+  }
+  
+  const length = alternateNames.length;
+  if (length === 0) {
+    return <Subtitle/>;
+  }
 
 
-    if (this.props.isWithinModal) {
-      const names = alternateNames.map((name, i) =>
-        <li key={i}>{name}</li>
-      );
-      return (
-        <div>
-          <div>Alternate names:</div>
-          <ul>{names}</ul>
-        </div>
-      );
-    }
-
+  if (props.isWithinModal) {
+    const names = alternateNames.map((name, i) =>
+      <li key={i}>{name}</li>
+    );
     return (
-      <Subtitle>
-        <Aka>Also know as: </Aka>
-        {alternateNames[0]}
-        { length > 1 &&
-          <Fragment>
-            <span>, and </span>
-            <a onClick={this.showMore}>
-              {length - 1} other name{length > 2 && 's'}...
-            </a>
-          </Fragment>
-        }
-      </Subtitle>
-
+      <div>
+        <div>Alternate names:</div>
+        <ul>{names}</ul>
+      </div>
     );
   }
+
+  return (
+    <Subtitle>
+      <Aka>Also know as: </Aka>
+      {alternateNames[0]}
+      { length > 1 &&
+        <Fragment>
+          <span>, and </span>
+          <a onClick={showMore}>
+            {length - 1} other name{length > 2 && 's'}...
+          </a>
+        </Fragment>
+      }
+    </Subtitle>
+  );
 
 }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BaseInterval } from './Base/BaseInterval';
 import { IntervalSet } from '../../Utils/Music/IntervalSet';
 import { musicTheory } from '../../Data/musicTheory';
@@ -9,27 +9,22 @@ interface Props {
   toggleInterval(ordinal: number): void;
 }
 
-export class Base extends Component<Props> {
+export function Base(props: Props) {
 
-  intervalIsActive(interval: number): boolean {
-    return (this.props.scaleIsRotating) ? false :
-      this.props.intervalSet.isActive(interval);
-  }
+  const intervalIsActive = (interval: number): boolean => (
+    props.scaleIsRotating ? false : props.intervalSet.isActive(interval)
+  )
 
-  baseIntervals() {
-    return musicTheory.intervals.map((name, ordinal) =>
-      <BaseInterval
-        key={ordinal}
-        interval={ordinal}
-        label={name}
-        active={this.intervalIsActive(ordinal)}
-        toggleInterval={this.props.toggleInterval}
-      />
-    );
-  }
+  const baseIntervals = musicTheory.intervals.map((name, ordinal) =>
+    <BaseInterval
+      key={ordinal}
+      interval={ordinal}
+      label={name}
+      active={intervalIsActive(ordinal)}
+      toggleInterval={props.toggleInterval}
+    />
+  );
 
-  render() {
-    return <g>{this.baseIntervals()}</g>;
-  }
+  return <g>{baseIntervals}</g>;
 
 }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { IrPoint } from '../../../Utils/Geometry/IrPoint';
 
 export interface ArcProps {
@@ -9,12 +9,12 @@ export interface ArcProps {
   id?: string;
 }
 
-export class Arc extends Component<ArcProps> {
+export function Arc(props: ArcProps) {
 
-  d() {
-    const startInterval = this.props.startInterval;
-    const endInterval = this.props.endInterval;
-    const radius = this.props.radius;
+  const d = (() => {
+    const startInterval = props.startInterval;
+    const endInterval = props.endInterval;
+    const radius = props.radius;
     const startPoint = (new IrPoint(startInterval, radius)).toXy();
     const endPoint = (new IrPoint(endInterval, radius)).toXy();
     const sweepFlag = startInterval < endInterval ? 1 : 0;
@@ -22,12 +22,10 @@ export class Arc extends Component<ArcProps> {
       "M", startPoint.x, startPoint.y,
       "A", radius, radius, 0, 0, sweepFlag, endPoint.x, endPoint.y
     ].join(" ");
-  }
+  })();
 
-  render() {
-    return (
-      <path d={this.d()} className={this.props.className} id={this.props.id}/>
-    );
-  }
+  return (
+    <path d={d} className={props.className} id={props.id}/>
+  );
 
 }

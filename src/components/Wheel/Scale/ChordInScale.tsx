@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { OrdinalChord } from '../../../Utils/Music/OrdinalChord';
 import { Chord } from '../../../Utils/Music/Chord';
@@ -38,39 +38,40 @@ interface Props {
   playOrdinalChord(oc: OrdinalChord): void;
 }
 
-export class ChordInScale extends Component<Props> {
+export function ChordInScale(props: Props) {
 
-  handleMouseDownOrTouchStart(event: React.MouseEvent | React.TouchEvent) {
+  type GenericEvent = React.MouseEvent | React.TouchEvent;
+  const handleMouseDownOrTouchStart = (event: GenericEvent) => {
     event.preventDefault();
     const ordinalChord = new OrdinalChord(
-      this.props.interval, this.props.chord
+      props.interval, props.chord
     );
-    this.props.playOrdinalChord(ordinalChord);
+    props.playOrdinalChord(ordinalChord);
     event.stopPropagation();
   }
 
-  render() {
-    const point = new IrPoint(this.props.interval, this.props.radialPosition)
-      .toXy();
-    const rotation = -Angle.iToD(this.props.rotation);
-    let transform = `translate(${point.x} ${point.y}) rotate(${rotation})`;
-    const G = this.props.somethingIsRotating ?
-      NonHighlightableG : HighlightableG;
-    return (
-      <G
-        transform={transform}
-        className={this.props.className}
-        onMouseDown={e => this.handleMouseDownOrTouchStart(e)}
-        onTouchStart={e => this.handleMouseDownOrTouchStart(e)}
-        onTouchEnd={e => e.preventDefault()}
-      >
-        <Background cx={0} cy={0} r={this.props.size} />
-        <ChordEmblem
-          size={this.props.size}
-          chord={this.props.chord}
-        />
-      </G>
-    );
-  }
+  const transform = (() => {
+    const point = new IrPoint(props.interval, props.radialPosition).toXy();
+    const rotation = -Angle.iToD(props.rotation);
+    return `translate(${point.x} ${point.y}) rotate(${rotation})`;
+  })();
+
+  const G = props.somethingIsRotating ? NonHighlightableG : HighlightableG;
+
+  return (
+    <G
+      transform={transform}
+      className={props.className}
+      onMouseDown={e => handleMouseDownOrTouchStart(e)}
+      onTouchStart={e => handleMouseDownOrTouchStart(e)}
+      onTouchEnd={e => e.preventDefault()}
+    >
+      <Background cx={0} cy={0} r={props.size} />
+      <ChordEmblem
+        size={props.size}
+        chord={props.chord}
+      />
+    </G>
+  );
 
 }

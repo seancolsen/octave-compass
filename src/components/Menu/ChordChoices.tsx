@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import styled from 'styled-components';
 import { IntervalSet } from "../../Utils/Music/IntervalSet";
 import { Chord } from "../../Utils/Music/Chord";
@@ -18,28 +18,23 @@ interface Props {
   toggleChord(c: Chord): void;
 }
 
-export class ChordChoices extends Component<Props> {
+export function ChordChoices(props: Props) {
 
-  chordsInScale() {
-    return ChordSet.fromContainingIntervalSet(this.props.intervalSet).chords;
-  }
+  const chordSet = ChordSet.fromContainingIntervalSet(props.intervalSet);
+  const chordsInScale = chordSet.chords;
+  const chordChoices = chordsInScale.map(chord =>
+    <ChordChoice
+      key={chord.binary}
+      chord={chord}
+      toggleChord={props.toggleChord}
+      selected={props.selectedChords.containsChord(chord)}
+    />
+  );
 
-  chordChoices() {
-    return this.chordsInScale().map(chord =>
-      <ChordChoice
-        key={chord.binary} // TODO: Seems like this prop isn't needed. Try deleting.
-        chord={chord}
-        toggleChord={this.props.toggleChord}
-        selected={this.props.selectedChords.containsChord(chord)}
-      />
-    );
-  }
+  return (
+    <Container className={props.className}>
+      {chordChoices}
+    </Container>
+  );
 
-  render() {
-    return (
-      <Container className={this.props.className}>
-        {this.chordChoices()}
-      </Container>
-    );
-  }
 }

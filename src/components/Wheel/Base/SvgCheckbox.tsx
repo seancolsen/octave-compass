@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import styled from "styled-components";
 
 const size = 30;
@@ -22,36 +22,33 @@ interface Props {
   y: number;
 }
 
-export class SvgCheckbox extends Component<Props> {
+export function SvgCheckbox(props: Props) {
 
-  checkMark() {
-    return (
-      <StyledText
-        x={1}
-        y={5}
-        dominantBaseline={'middle'} // TODO address lack of IE support
-        textAnchor={'middle'}
-        clickable={this.props.clickable}
-      >
-        {checkMarkCharacter}
-      </StyledText>
-    );
-  }
+  const checkMark = (
+    <StyledText
+      x={1}
+      y={5}
+      dominantBaseline={'middle'} // TODO address lack of IE support
+      textAnchor={'middle'}
+      clickable={props.clickable}
+    >
+      {checkMarkCharacter}
+    </StyledText>
+  );
 
-  render() {
-    const transform = `translate(${this.props.x} ${this.props.y})`;
-    return (
-      <g transform={transform}>
-        <StyledRect
-          x={-size / 2} y={-size / 2}
-          width={size} height={size}
-          rx={size / 5} ry={size / 5}
-          checked={this.props.checked}
-          clickable={this.props.clickable}
-        />
-        {this.props.checked ? this.checkMark() : null}
-      </g>
-    );
-  }
+  const transform = `translate(${props.x} ${props.y})`;
+
+  return (
+    <g transform={transform}>
+      <StyledRect
+        x={-size / 2} y={-size / 2}
+        width={size} height={size}
+        rx={size / 5} ry={size / 5}
+        checked={props.checked}
+        clickable={props.clickable}
+      />
+      {props.checked ? checkMark : null}
+    </g>
+  );
 
 }
