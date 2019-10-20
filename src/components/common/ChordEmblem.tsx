@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Chord } from '../../Utils/Music/Chord';
 
@@ -28,7 +28,7 @@ export function ChordEmblem(props: Props) {
   const fontSize = props.size * props.chord.textSizeFactor
       * fontSizeToEmblemSizeRatio;
   return (
-    <Fragment>
+    <>
       <Background
         cx={0} cy={0}
         r={props.size}
@@ -41,6 +41,6 @@ export function ChordEmblem(props: Props) {
         textAnchor={'middle'}
         fontSize={fontSize}
       />
-    </Fragment>
+    </>
   );
 }

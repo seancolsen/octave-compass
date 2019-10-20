@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from "styled-components";
 import { Subtitle } from "./Subtitle";
 import { IntervalSet } from '../../Utils/Music/IntervalSet';
@@ -76,12 +76,12 @@ export function AlternateScaleNames(props: Props) {
       <Aka>Also know as: </Aka>
       {alternateNames[0]}
       { length > 1 &&
-        <Fragment>
+        <>
           <span>, and </span>
           <a onClick={showMore}>
             {length - 1} other name{length > 2 && 's'}...
           </a>
-        </Fragment>
+        </>
       }
     </Subtitle>
   );

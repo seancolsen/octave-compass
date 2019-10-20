@@ -109,7 +109,7 @@ export default class App extends React.Component<Props, State> {
         tonalCenter={tonalCenter}
         clef={clef}
       >{ computedState => (
-        <React.Fragment>
+        <>
           <RouteProcessor
             intervalSet={intervalSet}
             tonalCenter={tonalCenter}
@@ -137,7 +137,7 @@ export default class App extends React.Component<Props, State> {
               audio={audio}
             />
           )}</WithAudio>
-        </React.Fragment>
+        </>
       )}</WithComputedState>
     );
   }
