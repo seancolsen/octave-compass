@@ -7,12 +7,10 @@ import { PitchSet } from '../Utils/Music/PitchSet';
 // TODO: import type definitions for tone.js when they become available
 // @ts-ignore
 import Tone from "tone";
+import { StoreContext } from './Store';
 
-interface State {
+export interface Audio {
   ordinalChordsPlayed: ObjectLog<OrdinalChord>;
-}
-
-export interface Audio extends State {
   playNotes(noteIds: number[]): void;
   playIntervals(ordinals: number[]): void;
   playOrdinalChord(ordinalChord: OrdinalChord): void;
@@ -20,26 +18,21 @@ export interface Audio extends State {
 
 interface Props {
   pitchSet: PitchSet;
-  tonalCenter: number;
   children(audio: Audio): JSX.Element;
 }
 
-export class WithAudio extends React.Component<Props, State> {
-
-  state: State;
+export function WithAudio(props: Props) {
+  const [ordinalChordsPlayed, setOrdinalChordsPlayed] = 
+    React.useState(new ObjectLog<OrdinalChord>());
+  const store = React.useContext(StoreContext);
   
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      ordinalChordsPlayed: new ObjectLog(),
-    };
-  }
+  const audio = {ordinalChordsPlayed} as Audio;
 
   /**
    * Generate sound for an array of notes, given their IDs.
    */
-  playNotes = (noteIds: number[]) => {
-    const pitches = this.props.pitchSet.pitches.filter(pitch =>
+  audio.playNotes = (noteIds: number[]) => {
+    const pitches = props.pitchSet.pitches.filter(pitch =>
       noteIds.includes(pitch.note.id)
     ).map(pitch => pitch.frequency);
     const synth = new Tone.PolySynth(pitches.length, Tone.Synth).toMaster();
@@ -49,29 +42,20 @@ export class WithAudio extends React.Component<Props, State> {
   /**
    * Generate sound for an array of intervals, given their ordinals.
    */
-  playIntervals = (ordinals: number[]) => {
+  audio.playIntervals = (ordinals: number[]) => {
     const notes = ordinals.map(ordinal =>
-      Scalar.wrapToOctave(ordinal + this.props.tonalCenter)
+      Scalar.wrapToOctave(ordinal + store.tonalCenter)
     );
-    this.playNotes(notes);
+    audio.playNotes(notes);
   };
 
   /**
    * Play a chord and highlight it.
    */
-  playOrdinalChord = (ordinalChord: OrdinalChord) => {
-    this.setState({
-      ordinalChordsPlayed: this.state.ordinalChordsPlayed.add(ordinalChord),
-    });
-    this.playIntervals(ordinalChord.intervalSet.ordinals);
+  audio.playOrdinalChord = (ordinalChord: OrdinalChord) => {
+    setOrdinalChordsPlayed(ordinalChordsPlayed.add(ordinalChord));
+    audio.playIntervals(ordinalChord.intervalSet.ordinals);
   };
 
-  render() {
-    return this.props.children({
-      ordinalChordsPlayed: this.state.ordinalChordsPlayed,
-      playNotes: this.playNotes,
-      playIntervals: this.playIntervals,
-      playOrdinalChord: this.playOrdinalChord,
-    });
-  }
+  return props.children(audio);
 }

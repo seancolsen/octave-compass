@@ -1,9 +1,9 @@
 import React from 'react';
-import { IntervalSet } from '../Utils/Music/IntervalSet';
 import { NoteSet } from '../Utils/Music/NoteSet';
 import { Chord } from '../Utils/Music/Chord';
 import { Scale } from '../Utils/Music/Scale';
 import { PitchSet } from '../Utils/Music/PitchSet';
+import { StoreContext } from './Store';
 
 const ordinalAbbreviations = [
   '0th',
@@ -24,76 +24,44 @@ interface ComputedState {
 }
 
 interface Props {
-  intervalSet: IntervalSet;
-  tonalCenter: number;
-  clef: string;
   children(state: ComputedState): JSX.Element;
 }
 
-export class WithComputedState extends React.Component<Props> {
-
-  inversion() {
-    if (this.props.intervalSet instanceof Chord) {
-      return this.props.intervalSet.inversion;
-    }
-    return null;
-  }
+export function WithComputedState(props: Props) {
+  let computedState = {} as ComputedState;
+  const store = React.useContext(StoreContext);
+  const inversion = store.intervalSet instanceof Chord
+    ? store.intervalSet.inversion
+    : null;
   
-  tonalCenterName(noteSet: NoteSet) {
-    const rootNote = noteSet.rootNote(this.inversion() || 0);
-    return rootNote.nameToUseForLabels;
-  }
+  computedState.noteSet = NoteSet
+    .fromIntervalSet(store.intervalSet, -store.tonalCenter)
+    .namedIfFeasible;
 
-  noteSet() {
-    return NoteSet.fromIntervalSet(
-      this.props.intervalSet,
-      -this.props.tonalCenter
-    ).namedIfFeasible;
-  }
+  computedState.tonalCenterName = computedState
+    .noteSet.rootNote(inversion || 0).nameToUseForLabels;
 
-  pitchSet(noteSet: NoteSet) {
-    //const clef = this.props.clef;
-    // TODO: Set octave based on clef
-    const octave = 4;
-    return noteSet.pitchSetStartingFrom(octave);
-  }
+  computedState.pitchSet = computedState.noteSet.pitchSetStartingFrom(4);
 
-  inversionText() {
-    const inversion = this.inversion();
-    if (!inversion) {
-      return undefined;
+  computedState.inversionText = inversion
+    ? ` (${ordinalAbbreviations[inversion]} inversion)`
+    : undefined;
+
+  computedState.isNamed = store.intervalSet instanceof Chord ||
+      store.intervalSet instanceof Scale;
+
+  computedState.title = (() => {
+    const displayName = store.intervalSet.displayName;
+    if (store.intervalSet instanceof Chord) {
+      return `${computedState.tonalCenterName} ${displayName} chord`
     }
-    const ordinalAbbreviation = ordinalAbbreviations[inversion];
-    return ` (${ordinalAbbreviation} inversion)`;
-  }
-
-  isNamed() {
-    return this.props.intervalSet instanceof Chord ||
-      this.props.intervalSet instanceof Scale;
-  }
-
-  title(tonalCenterName: string) {
-    const displayName = this.props.intervalSet.displayName;
-    if (this.props.intervalSet instanceof Chord) {
-      return `${tonalCenterName} ${displayName} chord`
-    }
-    else if (this.props.intervalSet instanceof Scale) {
-      return `${tonalCenterName} ${displayName} Scale`;
+    else if (store.intervalSet instanceof Scale) {
+      return `${computedState.tonalCenterName} ${displayName} Scale`;
     }
     else {
-      return `${displayName} in ${tonalCenterName}`;
+      return `${displayName} in ${computedState.tonalCenterName}`;
     }
-  }
+  })();
 
-  render() {
-    let computedState = {} as ComputedState;
-    computedState.noteSet = this.noteSet();
-    computedState.tonalCenterName = this.tonalCenterName(computedState.noteSet);
-    computedState.pitchSet = this.pitchSet(computedState.noteSet);
-    computedState.title = this.title(computedState.tonalCenterName);
-    computedState.inversionText = this.inversionText();
-    computedState.isNamed = this.isNamed();
-    return this.props.children(computedState);
-  }
-
+  return props.children(computedState);
 }

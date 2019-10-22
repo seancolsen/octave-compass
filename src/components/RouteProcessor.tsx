@@ -1,10 +1,8 @@
 import React from 'react';
 import { Url } from "../Utils/Text/Url";
-import { IntervalSet } from '../Utils/Music/IntervalSet';
+import { StoreContext } from './Store';
 
 interface Props {
-  intervalSet: IntervalSet;
-  tonalCenter: number;
   windowTitle: string;
 }
 
@@ -19,11 +17,11 @@ export class RouteProcessor extends React.Component<Props> {
   }
 
   updateWindow() {
+
+    const store = React.useContext(StoreContext); // FIXME
+    
     // Compute URL
-    const url = Url.generate(
-      this.props.intervalSet,
-      this.props.tonalCenter
-    );
+    const url = Url.generate(store.intervalSet, store.tonalCenter);
 
     // Update page title
     const appTitle = 'Octave Compass';

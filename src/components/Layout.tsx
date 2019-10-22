@@ -7,23 +7,11 @@ import { Menu } from "./Menu";
 import { Toolbar, Buttons } from "./Toolbar";
 import { TwoWayButton } from "./common/TwoWayButton";
 import { Button } from "./common/Button";
-import { IntervalSet } from '../Utils/Music/IntervalSet';
-import { ChordSet } from '../Utils/Music/ChordSet';
 import { Audio } from './WithAudio';
-import { Chord } from '../Utils/Music/Chord';
 import { PitchSet } from '../Utils/Music/PitchSet';
+import { StoreContext } from './Store';
 
 interface Props {
-  intervalSet: IntervalSet;
-  tonalCenter: number;
-  selectedChords: ChordSet;
-  clef: string;
-  setChordSet(cs: ChordSet): void;
-  shiftIntervalSet(rotation: number): void;
-  shiftMode(amount: number): void;
-  shiftTonalCenter(intervalDiff: number): void;
-  toggleChord(chord: Chord): void ;
-  toggleInterval(ordinal: number): void;
   inversionText?: string;
   isNamed: boolean;
   pitchSet: PitchSet;
@@ -32,131 +20,109 @@ interface Props {
 }
 
 type Modal = 'marquee' | 'notation' | null;
-interface State {
-  modal: Modal;
-}
 
-export class Layout extends React.Component<Props, State> {
+export function Layout(props: Props) {
+  const store = React.useContext(StoreContext);
+  const [modal, setModal] = React.useState<Modal>(null);
 
-  state: State;
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      modal: null,
-    }
+  const buttons: Buttons = {
+    Staff: (props) => <Button
+      onClick={() => setModal('notation')}
+      icon='music'
+      label={'staff'}
+      {...props}
+    />,
+    Transpose: (props) => <TwoWayButton
+      label='Transpose'
+      stepFunction={store.shiftTonalCenter}
+      buttonLabels={['down', 'up']}
+      icons={['minus', 'plus']}
+      {...props}
+    />,
+    Mode: (props) => <TwoWayButton
+      label='Mode'
+      stepFunction={store.shiftMode}
+      buttonLabels={['prev', 'next']}
+      icons={['caret-left', 'caret-right']}
+      inverted
+      {...props}
+    />,
+    About: (props) => <Button
+      icon={['fab', 'github']}
+      href={'https://github.com/seanmadsen/octave-compass'}
+      target={'_blank'}
+      label={'about'}
+      {...props}
+    />
   }
 
-  closeModal = () => {
-    this.setState({modal: null});
-  };
-
-  openModal = (modalName: Modal) => {
-    this.setState({modal: modalName});
-  };
-
-  buttons(): Buttons {
-    return {
-      Staff: (props) => <Button
-        onClick={() => this.openModal('notation')}
-        icon='music'
-        label={'staff'}
-        {...props}
-      />,
-      Transpose: (props) => <TwoWayButton
-        label='Transpose'
-        stepFunction={this.props.shiftTonalCenter}
-        buttonLabels={['down', 'up']}
-        icons={['minus', 'plus']}
-        {...props}
-      />,
-      Mode: (props) => <TwoWayButton
-        label='Mode'
-        stepFunction={this.props.shiftMode}
-        buttonLabels={['prev', 'next']}
-        icons={['caret-left', 'caret-right']}
-        inverted
-        {...props}
-      />,
-      About: (props) => <Button
-        icon={['fab', 'github']}
-        href={'https://github.com/seanmadsen/octave-compass'}
-        target={'_blank'}
-        label={'about'}
-        {...props}
-      />
-    };
-  }
-
-  render() {
-    const Buttons = this.buttons();
-    return (
-      <div id='app' className="App">
-        <div id='layout'>
-          <Marquee
-            intervalSet={this.props.intervalSet}
-            title={this.props.title}
-            inversionText={this.props.inversionText}
-            isNamed={this.props.isNamed}
-            showMore={() => this.openModal('marquee')}
+  return (
+    <div id='app' className="App">
+      <div id='layout'>
+        <Marquee
+          intervalSet={store.intervalSet}
+          title={props.title}
+          inversionText={props.inversionText}
+          isNamed={props.isNamed}
+          showMore={() => setModal('marquee')}
+        />
+        <Toolbar
+          buttons={buttons}
+        />
+        <div id='wheel-container'>
+          <Wheel
+            shiftTonalCenter={store.shiftTonalCenter}
+            shiftIntervalSet={store.shiftIntervalSet}
+            intervalSet={store.intervalSet}
+            tonalCenter={store.tonalCenter}
+            pitchSet={props.pitchSet}
+            toggleInterval={store.toggleInterval}
+            selectedChords={store.selectedChords}
+            playNotes={props.audio.playNotes}
+            playOrdinalChord={props.audio.playOrdinalChord}
+            ordinalChordsPlayed={props.audio.ordinalChordsPlayed}
           />
-          <Toolbar
-            buttons={Buttons}
-          />
-          <div id='wheel-container'>
-            <Wheel
-              shiftTonalCenter={this.props.shiftTonalCenter}
-              shiftIntervalSet={this.props.shiftIntervalSet}
-              intervalSet={this.props.intervalSet}
-              tonalCenter={this.props.tonalCenter}
-              pitchSet={this.props.pitchSet}
-              toggleInterval={this.props.toggleInterval}
-              selectedChords={this.props.selectedChords}
-              playNotes={this.props.audio.playNotes}
-              playOrdinalChord={this.props.audio.playOrdinalChord}
-              ordinalChordsPlayed={this.props.audio.ordinalChordsPlayed}
-            />
-            <div id='overlaid-buttons'>
-              <Buttons.Staff className='corner bottom left'/>
-              <Buttons.Transpose className='corner top left'/>
-              <Buttons.Mode className='corner top right'/>
-              <Buttons.About className='corner bottom right'/>
-            </div>
+          <div id='overlaid-buttons'>
+            <buttons.Staff className='corner bottom left'/>
+            <buttons.Transpose className='corner top left'/>
+            <buttons.Mode className='corner top right'/>
+            <buttons.About className='corner bottom right'/>
           </div>
-          <Menu
-            selectedChords={this.props.selectedChords}
-            setChordSet={this.props.setChordSet}
-            toggleChord={this.props.toggleChord}
-            intervalSet={this.props.intervalSet}
-          />
         </div>
-        <div id='modals'>
-          <Modal
-            open={this.state.modal === 'marquee'}
-            onClose={this.closeModal}
-          >
-            <Marquee
-              intervalSet={this.props.intervalSet}
-              title={this.props.title}
-              inversionText={this.props.inversionText}
-              isNamed={this.props.isNamed}
-              isWithinModal={true}
-            />
-          </Modal>
-          <Modal
-            open={this.state.modal === 'notation'}
-            onClose={this.closeModal}
-          >
-            <div>
-              <h2>{this.props.title}</h2>
-              <Notation
-                pitchSet={this.props.pitchSet}
-                clef={this.props.clef}
-              />
-            </div>
-          </Modal>
-        </div>
+        <Menu
+          selectedChords={store.selectedChords}
+          setChordSet={store.setSelectedChords}
+          toggleChord={store.toggleSelectedChord}
+          intervalSet={store.intervalSet}
+        />
       </div>
-    );
-  }
+      <div id='modals'>
+        <Modal
+          open={modal === 'marquee'}
+          onClose={() => setModal(null)}
+        >
+          <Marquee
+            intervalSet={store.intervalSet}
+            title={props.title}
+            inversionText={props.inversionText}
+            isNamed={props.isNamed}
+            isWithinModal={true}
+          />
+        </Modal>
+        <Modal
+          open={modal === 'notation'}
+          onClose={() => setModal(null)}
+        >
+          <div>
+            <h2>{props.title}</h2>
+            <Notation
+              pitchSet={props.pitchSet}
+              clef={store.clef}
+            />
+          </div>
+        </Modal>
+      </div>
+    </div>
+  );
+
 }
