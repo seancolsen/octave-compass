@@ -89,12 +89,7 @@ export function Layout(props: Props) {
             <buttons.About className='corner bottom right'/>
           </div>
         </div>
-        <Menu
-          selectedChords={store.selectedChords}
-          setChordSet={store.setSelectedChords}
-          toggleChord={store.toggleSelectedChord}
-          intervalSet={store.intervalSet}
-        />
+        <Menu/>
       </div>
       <div id='modals'>
         <Modal

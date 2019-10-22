@@ -2,6 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import { ChordIcon } from "./ChordIcon";
 import { Chord } from "../../Utils/Music/Chord";
+import { StoreContext } from "../Store";
 
 const ChordName = styled.div``;
 
@@ -36,18 +37,14 @@ interface Props {
   chord: Chord;
   className?: string;
   selected: boolean;
-
-  /**
-   * This function is executed when clicking on the ChordChoice. 
-   */
-  toggleChord(c: Chord): void;
 }
 
 export function ChordChoice(props: Props) {
+  const store = React.useContext(StoreContext);
   return (
     <StyledDiv
       className={props.className}
-      onClick={(e) => props.toggleChord(props.chord)}
+      onClick={(e) => store.toggleSelectedChord(props.chord)}
       selected={props.selected}
     >
       <ChordIcon
