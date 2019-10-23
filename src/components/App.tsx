@@ -3,7 +3,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPlus, faMinus, faMusic, faCaretLeft, faCaretRight }
   from '@fortawesome/free-solid-svg-icons'
 import {faGithub} from '@fortawesome/free-brands-svg-icons'
-import { WithComputedState } from "./WithComputedState";
 import { WithAudio } from "./WithAudio";
 import { RouteProcessor } from "./RouteProcessor";
 import { Layout } from "./Layout";
@@ -36,24 +35,14 @@ export default class App extends React.Component {
 
     return (
       <StoreProvider>
-        <WithComputedState>{ computedState => (
-          <>
-            {/* <RouteProcessor
-              windowTitle={computedState.title}
-            /> */}
-            <WithAudio
-              pitchSet={computedState.pitchSet}
-            >{ audio => (
-              <Layout
-                inversionText={computedState.inversionText}
-                isNamed={computedState.isNamed}
-                pitchSet={computedState.pitchSet}
-                title={computedState.title}
-                audio={audio}
-              />
-            )}</WithAudio>
-          </>
-        )}</WithComputedState>
+        <>
+          {/* <RouteProcessor
+            windowTitle={computedState.title}
+          /> */}
+          <WithAudio>{ audio => (
+            <Layout audio={audio}/>
+          )}</WithAudio>
+        </>
       </StoreProvider>
     );
   }

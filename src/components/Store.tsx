@@ -1,9 +1,21 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import { IntervalSet } from '../Utils/Music/IntervalSet';
 import { ChordSet } from '../Utils/Music/ChordSet';
 import { Scalar } from '../Utils/Math/Scalar';
 import { IntervalSetFactory } from '../Utils/Music/IntervalSetFactory';
 import { Chord } from '../Utils/Music/Chord';
+import { NoteSet } from '../Utils/Music/NoteSet';
+import { PitchSet } from '../Utils/Music/PitchSet';
+import { Scale } from '../Utils/Music/Scale';
+
+const ordinalAbbreviations = [
+  '0th',
+  '1st',
+  '2nd',
+  '3rd',
+  '4th',
+  '5th',
+];
 
 interface State {
   tonalCenter: number,
@@ -13,6 +25,13 @@ interface State {
 };
 
 interface Context extends State {
+  noteSet: NoteSet;
+  inversion: number | null;
+  tonalCenterName: string;
+  pitchSet: PitchSet;
+  title: string;
+  inversionText?: string;
+  isNamed: boolean;
   shiftTonalCenter: (intervalDiff: number) => void;
   shiftIntervalSet: (rotation: number) => void;
   shiftMode: (amount: number) => void;
@@ -47,6 +66,48 @@ export function StoreProvider(props: {children: JSX.Element}) {
     clef,
   } as Context;
 
+  context.noteSet = useMemo(() => (
+    NoteSet.fromIntervalSet(context.intervalSet, -context.tonalCenter)
+      .namedIfFeasible
+  ), [context.intervalSet, context.tonalCenter]);
+
+  context.inversion = useMemo(() => (
+    context.intervalSet instanceof Chord
+      ? context.intervalSet.inversion
+      : null
+  ), [context.intervalSet]);
+  
+  context.tonalCenterName = useMemo(() => (
+    context.noteSet.rootNote(context.inversion || 0).nameToUseForLabels
+  ), [context.intervalSet, context.tonalCenter]);
+  
+  context.pitchSet = useMemo(() => (
+    context.noteSet.pitchSetStartingFrom(4)
+  ), [context.intervalSet, context.tonalCenter]);
+  
+  context.title = useMemo(() => {
+    const displayName = context.intervalSet.displayName;
+    if (context.intervalSet instanceof Chord) {
+      return `${context.tonalCenterName} ${displayName} chord`
+    }
+    else if (context.intervalSet instanceof Scale) {
+      return `${context.tonalCenterName} ${displayName} Scale`;
+    }
+    else {
+      return `${displayName} in ${context.tonalCenterName}`;
+    }
+  }, [context.intervalSet, context.tonalCenter]);
+  
+  context.inversionText = useMemo(() => (
+    context.inversion
+      ? ` (${ordinalAbbreviations[context.inversion]} inversion)`
+      : undefined
+  ), [context.inversion]);
+  
+  context.isNamed = useMemo(() => (
+    context.intervalSet instanceof Chord || context.intervalSet instanceof Scale
+  ), [context.intervalSet]);
+  
   context.shiftTonalCenter = (intervalDiff: number) => {
     setTonalCenter(Scalar.wrapToOctave(tonalCenter - intervalDiff))
   };

@@ -8,14 +8,9 @@ import { Toolbar, Buttons } from "./Toolbar";
 import { TwoWayButton } from "./common/TwoWayButton";
 import { Button } from "./common/Button";
 import { Audio } from './WithAudio';
-import { PitchSet } from '../Utils/Music/PitchSet';
 import { StoreContext } from './Store';
 
 interface Props {
-  inversionText?: string;
-  isNamed: boolean;
-  pitchSet: PitchSet;
-  title: string;
   audio: Audio;
 }
 
@@ -61,9 +56,9 @@ export function Layout(props: Props) {
       <div id='layout'>
         <Marquee
           intervalSet={store.intervalSet}
-          title={props.title}
-          inversionText={props.inversionText}
-          isNamed={props.isNamed}
+          title={store.title}
+          inversionText={store.inversionText}
+          isNamed={store.isNamed}
           showMore={() => setModal('marquee')}
         />
         <Toolbar
@@ -75,7 +70,7 @@ export function Layout(props: Props) {
             shiftIntervalSet={store.shiftIntervalSet}
             intervalSet={store.intervalSet}
             tonalCenter={store.tonalCenter}
-            pitchSet={props.pitchSet}
+            pitchSet={store.pitchSet}
             toggleInterval={store.toggleInterval}
             selectedChords={store.selectedChords}
             playNotes={props.audio.playNotes}
@@ -98,9 +93,9 @@ export function Layout(props: Props) {
         >
           <Marquee
             intervalSet={store.intervalSet}
-            title={props.title}
-            inversionText={props.inversionText}
-            isNamed={props.isNamed}
+            title={store.title}
+            inversionText={store.inversionText}
+            isNamed={store.isNamed}
             isWithinModal={true}
           />
         </Modal>
@@ -109,9 +104,9 @@ export function Layout(props: Props) {
           onClose={() => setModal(null)}
         >
           <div>
-            <h2>{props.title}</h2>
+            <h2>{store.title}</h2>
             <Notation
-              pitchSet={props.pitchSet}
+              pitchSet={store.pitchSet}
               clef={store.clef}
             />
           </div>

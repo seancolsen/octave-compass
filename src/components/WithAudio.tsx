@@ -2,7 +2,6 @@ import React from 'react';
 import { Scalar } from "../Utils/Math/Scalar";
 import { ObjectLog } from '../Utils/Misc/ObjectLog';
 import { OrdinalChord } from '../Utils/Music/OrdinalChord';
-import { PitchSet } from '../Utils/Music/PitchSet';
 
 // TODO: import type definitions for tone.js when they become available
 // @ts-ignore
@@ -17,7 +16,6 @@ export interface Audio {
 }
 
 interface Props {
-  pitchSet: PitchSet;
   children(audio: Audio): JSX.Element;
 }
 
@@ -32,7 +30,7 @@ export function WithAudio(props: Props) {
    * Generate sound for an array of notes, given their IDs.
    */
   audio.playNotes = (noteIds: number[]) => {
-    const pitches = props.pitchSet.pitches.filter(pitch =>
+    const pitches = store.pitchSet.pitches.filter(pitch =>
       noteIds.includes(pitch.note.id)
     ).map(pitch => pitch.frequency);
     const synth = new Tone.PolySynth(pitches.length, Tone.Synth).toMaster();
