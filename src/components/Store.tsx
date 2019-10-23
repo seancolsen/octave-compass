@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { IntervalSet } from '../Utils/Music/IntervalSet';
 import { ChordSet } from '../Utils/Music/ChordSet';
 import { Scalar } from '../Utils/Math/Scalar';
@@ -25,60 +25,49 @@ export const StoreContext = React.createContext<Context>({} as Context);
 
 export function StoreProvider(props: {children: JSX.Element}) {
 
-  const [state, setState] = React.useState<State>({
-  tonalCenter: 0, // TODO set via URL
-  intervalSet: IntervalSet.fromBinary(2741), // TODO set via URL
-  selectedChords: ChordSet.fromDefaultChords,
-  clef: 'treble',
-  });
+  const [tonalCenter, setTonalCenter] = useState<number>(0);
+  const [intervalSet, setIntervalSet] = useState(IntervalSet.fromBinary(2741));
+  const [selectedChords, setSelectedChords] = useState(ChordSet.fromDefaultChords);
+  const [clef, setClef] = 'treble';
 
-  function setPartialState(partialState: Partial<State>) {
-    setState({...state, ...partialState});
+  /**
+   * Set the intervalSet and try to figure out what Scale or Chord it is in the
+   * process.
+   */
+  function setIntervalSetSmartly(i: IntervalSet) {
+    setIntervalSet(IntervalSetFactory.fromIntervalSet(i));
   }
 
   // Partially fill up the context object by starting out with all the state
   // values.
-  let context = state as Context;
+  let context = {
+    tonalCenter,
+    intervalSet,
+    selectedChords,
+    clef,
+  } as Context;
 
   context.shiftTonalCenter = (intervalDiff: number) => {
-    setPartialState({
-      tonalCenter: Scalar.wrapToOctave(state.tonalCenter - intervalDiff),
-    })
+    setTonalCenter(Scalar.wrapToOctave(tonalCenter - intervalDiff))
   };
 
   context.shiftIntervalSet = (rotation: number) => {
-    setPartialState({
-      intervalSet:
-        IntervalSetFactory.fromIntervalSet(state.intervalSet.shift(rotation)),
-    });
+    setIntervalSetSmartly(intervalSet.shift(rotation))
   };
 
   context.shiftMode = (amount: number) => {
-    setPartialState({
-      intervalSet:
-        IntervalSetFactory.fromIntervalSet(state.intervalSet.modeShift(amount)),
-    });
+    setIntervalSetSmartly(intervalSet.modeShift(amount));
   };
 
   context.toggleInterval = (ordinal: number) => {
-    setPartialState({
-      intervalSet: IntervalSetFactory.fromIntervalSet(
-        state.intervalSet.toggleIntervalOrdinal(ordinal)
-      ),
-    });
+    setIntervalSetSmartly(intervalSet.toggleIntervalOrdinal(ordinal))
   };
 
   context.toggleSelectedChord = (chord: Chord) => {
-    setPartialState({
-      selectedChords: state.selectedChords.toggleChord(chord),
-    })
+    setSelectedChords(selectedChords.toggleChord(chord));
   };
 
-  context.setSelectedChords = (selectedChords: ChordSet) => {
-    setPartialState({
-      selectedChords: selectedChords,
-    });
-  };
+  context.setSelectedChords = setSelectedChords;
 
   return (
     <StoreContext.Provider value={context}>
