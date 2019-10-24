@@ -54,25 +54,10 @@ export function Layout(props: Props) {
   return (
     <div id='app' className="App">
       <div id='layout'>
-        <Marquee
-          intervalSet={store.intervalSet}
-          title={store.title}
-          inversionText={store.inversionText}
-          isNamed={store.isNamed}
-          showMore={() => setModal('marquee')}
-        />
-        <Toolbar
-          buttons={buttons}
-        />
+        <Marquee showMore={() => setModal('marquee')}/>
+        <Toolbar buttons={buttons}/>
         <div id='wheel-container'>
           <Wheel
-            shiftTonalCenter={store.shiftTonalCenter}
-            shiftIntervalSet={store.shiftIntervalSet}
-            intervalSet={store.intervalSet}
-            tonalCenter={store.tonalCenter}
-            pitchSet={store.pitchSet}
-            toggleInterval={store.toggleInterval}
-            selectedChords={store.selectedChords}
             playNotes={props.audio.playNotes}
             playOrdinalChord={props.audio.playOrdinalChord}
             ordinalChordsPlayed={props.audio.ordinalChordsPlayed}
@@ -91,13 +76,7 @@ export function Layout(props: Props) {
           open={modal === 'marquee'}
           onClose={() => setModal(null)}
         >
-          <Marquee
-            intervalSet={store.intervalSet}
-            title={store.title}
-            inversionText={store.inversionText}
-            isNamed={store.isNamed}
-            isWithinModal={true}
-          />
+          <Marquee isWithinModal={true}/>
         </Modal>
         <Modal
           open={modal === 'notation'}

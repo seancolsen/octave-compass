@@ -4,10 +4,9 @@ import { IntervalSetPolygon, IntervalSetPolygonProps } from '../common/IntervalS
 import { OrdinalChordSet } from '../../Utils/Music/OrdinalChordSet';
 import { ChordPolygons } from './Scale/ChordPolygons';
 import { SwarmOfChords } from './Scale/SwarmOfChords';
-import { IntervalSet } from '../../Utils/Music/IntervalSet';
-import { ChordSet } from '../../Utils/Music/ChordSet';
 import { OrdinalChord } from '../../Utils/Music/OrdinalChord';
 import { ObjectLog } from '../../Utils/Misc/ObjectLog';
+import { StoreContext } from '../Store';
 
 const Shadow = styled(IntervalSetPolygon)<IntervalSetPolygonProps>`
   fill: black;
@@ -24,8 +23,6 @@ const Background = styled(IntervalSetPolygon)<IntervalSetPolygonProps>`
 `;
 
 interface Props {
-  intervalSet: IntervalSet;
-  selectedChords: ChordSet;
   rotation: number;
   ordinalChordsPlayed: ObjectLog<OrdinalChord>;
   somethingIsRotating: boolean;
@@ -33,14 +30,15 @@ interface Props {
 }
 
 export function ScaleComponent(props: Props) {
+  const store = React.useContext(StoreContext);
   const ordinalChordSets = OrdinalChordSet.arrayFromIntervalSet(
-    props.intervalSet,
-    props.selectedChords
+    store.intervalSet,
+    store.selectedChords
   );
   return (
     <g>
-      <Shadow intervalSet={props.intervalSet}/>
-      <Background intervalSet={props.intervalSet}/>
+      <Shadow intervalSet={store.intervalSet}/>
+      <Background intervalSet={store.intervalSet}/>
       <ChordPolygons
         ordinalChordsPlayed={props.ordinalChordsPlayed}
         rotation={props.rotation}

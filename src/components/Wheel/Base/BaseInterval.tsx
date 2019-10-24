@@ -4,6 +4,7 @@ import { IntervalLabel } from './IntervalLabel';
 import { Arc, ArcProps } from '../common/Arc';
 import { IrPoint } from '../../../Utils/Geometry/IrPoint';
 import { SvgCheckbox } from './SvgCheckbox';
+import { StoreContext } from '../../Store';
 
 const checkboxRadius = 430;
 const arcRadius = 430;
@@ -30,19 +31,19 @@ const Background = styled(Arc)<{active: boolean} & ArcProps>`
 interface Props {
   className?: string;
   interval: number;
-  toggleInterval(i: number): void;
   active: boolean;
   label: string;
 }
 
 export function BaseInterval(props: Props) {
+  const store = React.useContext(StoreContext);
   const point = (new IrPoint(props.interval, checkboxRadius)).toXy();
   const clickable = props.interval !== 0;
   return (
     <StyledG
       clickable={clickable}
       onClick={() => clickable ?
-        props.toggleInterval(props.interval) :
+        store.toggleInterval(props.interval) :
         null
       }
       className={props.className}

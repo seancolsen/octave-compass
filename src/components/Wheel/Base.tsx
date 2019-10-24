@@ -1,18 +1,17 @@
 import React from 'react';
 import { BaseInterval } from './Base/BaseInterval';
-import { IntervalSet } from '../../Utils/Music/IntervalSet';
 import { musicTheory } from '../../Data/musicTheory';
+import { StoreContext } from '../Store';
 
 interface Props {
   scaleIsRotating: boolean;
-  intervalSet: IntervalSet;
-  toggleInterval(ordinal: number): void;
 }
 
 export function Base(props: Props) {
+  const store = React.useContext(StoreContext);
 
   const intervalIsActive = (interval: number): boolean => (
-    props.scaleIsRotating ? false : props.intervalSet.isActive(interval)
+    props.scaleIsRotating ? false : store.intervalSet.isActive(interval)
   )
 
   const baseIntervals = musicTheory.intervals.map((name, ordinal) =>
@@ -21,7 +20,6 @@ export function Base(props: Props) {
       interval={ordinal}
       label={name}
       active={intervalIsActive(ordinal)}
-      toggleInterval={props.toggleInterval}
     />
   );
 

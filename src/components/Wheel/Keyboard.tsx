@@ -1,28 +1,27 @@
 import React from 'react';
-import { PitchSet } from '../../Utils/Music/PitchSet';
 import { Angle } from '../../Utils/Geometry/Angle';
 import { KeySet } from './Keyboard/KeySet';
+import { StoreContext } from '../Store';
 
 interface Props {
   rotation: number;
-  tonalCenter: number;
-  pitchSet: PitchSet;
   somethingIsRotating: boolean;
   playNotes(noteIds: number[]): void;
 }
 
 export function Keyboard(props: Props) {
-  const rotation = props.rotation - props.tonalCenter;
-  const transform = `rotate(${Angle.iToD(-props.tonalCenter)})`;
+  const store = React.useContext(StoreContext);
+  const rotation = props.rotation - store.tonalCenter;
+  const transform = `rotate(${Angle.iToD(-store.tonalCenter)})`;
   return (
     <g transform={transform}>
       <KeySet
-        pitchSet={props.pitchSet.compliment}
+        pitchSet={store.pitchSet.compliment}
         active={false}
         rotation={rotation}
       />
       <KeySet
-        pitchSet={props.pitchSet}
+        pitchSet={store.pitchSet}
         active={!props.somethingIsRotating}
         rotation={rotation}
         playNotes={props.playNotes}

@@ -88,7 +88,6 @@ export class NoteSet {
    * note name sets is `3^7 = 2187`.
    */
   get possibleNoteNameSets() {
-    console.log('NoteSet.possibleNoteNameSets() ran')
     return CustomMath.cartesianProduct(this.possibleModifiersForEachNoteName)
       .map(modifierKeys => NoteNameSet.fromModifiers(this, modifierKeys));
   }
