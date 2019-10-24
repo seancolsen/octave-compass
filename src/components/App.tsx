@@ -7,43 +7,25 @@ import { WithAudio } from "./WithAudio";
 import { RouteProcessor } from "./RouteProcessor";
 import { Layout } from "./Layout";
 import { StoreProvider } from "./Store";
+import { Url } from './../Utils/Text/Url';
 
 library.add(faPlus, faMinus, faMusic, faCaretLeft, faCaretRight,
   faGithub);
 
-export default class App extends React.Component {
-
-
-  // constructor(props: Props) {
-  //   super(props);
-  //   const stateFromUrl = App.stateFromUrl();
-  // }
-
-  // static stateFromUrl() {
-  //   return Url.parse(window.location.pathname);
-  // }
-
-  // updateStateFromUrl() {
-  //   this.setState(App.stateFromUrl());
-  // }
-
-  // componentDidMount() {
-  //   window.addEventListener('popstate', () => this.updateStateFromUrl());
-  // }
-
-  render() {
-
-    return (
-      <StoreProvider>
-        <>
-          {/* <RouteProcessor
-            windowTitle={computedState.title}
-          /> */}
-          <WithAudio>{ audio => (
-            <Layout audio={audio}/>
-          )}</WithAudio>
-        </>
-      </StoreProvider>
-    );
-  }
+export default function App() {
+  let initialValuesFromUrl = Url.parse(window.location.pathname);
+  
+  return (
+    <StoreProvider
+      initialTonalCenter={initialValuesFromUrl.tonalCenter}
+      initialIntervalSet={initialValuesFromUrl.intervalSet}
+    >
+      <>
+        <RouteProcessor/>
+        <WithAudio>{ audio => (
+          <Layout audio={audio}/>
+        )}</WithAudio>
+      </>
+    </StoreProvider>
+  );
 }

@@ -17,6 +17,12 @@ const ordinalAbbreviations = [
   '5th',
 ];
 
+interface Props {
+  initialTonalCenter?: number;
+  initialIntervalSet?: IntervalSet;
+  children: JSX.Element
+}
+
 interface State {
   tonalCenter: number,
   intervalSet: IntervalSet,
@@ -32,6 +38,8 @@ interface Context extends State {
   title: string;
   inversionText?: string;
   isNamed: boolean;
+  setTonalCenter: (tonalCenter: number) => void;
+  setIntervalSet: (intervalSet: IntervalSet) => void;
   shiftTonalCenter: (intervalDiff: number) => void;
   shiftIntervalSet: (rotation: number) => void;
   shiftMode: (amount: number) => void;
@@ -42,11 +50,15 @@ interface Context extends State {
 
 export const StoreContext = React.createContext<Context>({} as Context);
 
-export function StoreProvider(props: {children: JSX.Element}) {
+export function StoreProvider(props: Props) {
 
-  const [tonalCenter, setTonalCenter] = useState<number>(0);
-  const [intervalSet, setIntervalSet] = useState(IntervalSet.fromBinary(2741));
-  const [selectedChords, setSelectedChords] = useState(ChordSet.fromDefaultChords);
+  const initialTonalCenter = props.initialTonalCenter || 0;
+  const initialIntervalSet = props.initialIntervalSet
+    || IntervalSet.fromBinary(2741);
+  const [tonalCenter, setTonalCenter] = useState(initialTonalCenter);
+  const [intervalSet, setIntervalSet] = useState(initialIntervalSet);
+  const [selectedChords, setSelectedChords] = 
+    useState(ChordSet.fromDefaultChords);
   const [clef, setClef] = 'treble';
 
   /**
@@ -129,6 +141,8 @@ export function StoreProvider(props: {children: JSX.Element}) {
   };
 
   context.setSelectedChords = setSelectedChords;
+  context.setTonalCenter = setTonalCenter;
+  context.setIntervalSet = setIntervalSet;
 
   return (
     <StoreContext.Provider value={context}>

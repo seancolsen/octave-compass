@@ -2,30 +2,34 @@ import React from 'react';
 import { Url } from "../Utils/Text/Url";
 import { StoreContext } from './Store';
 
-interface Props {
-  windowTitle: string;
-}
+export function RouteProcessor() {
+  const store = React.useContext(StoreContext);
 
-export class RouteProcessor extends React.Component<Props> {
-
-  componentDidMount() {
-    this.updateWindow();
+  const updateStateFromUrl = () => {
+    const newState = Url.parse(window.location.pathname);
+    store.setTonalCenter(newState.tonalCenter);
+    store.setIntervalSet(newState.intervalSet);
   }
 
-  componentDidUpdate() {
-    this.updateWindow();
-  }
+  /**
+   * Ensure that "forward" and "back" buttons work correctly.
+   */
+  React.useEffect(() => {
+    window.addEventListener('popstate', updateStateFromUrl);
+  // [] is given as dependencies because the function updateStateFromUrl should
+  // remain constant regardless of any changes to application state.
+  }, []);
 
-  updateWindow() {
-
-    const store = React.useContext(StoreContext); // FIXME
-    
+  /**
+   * Set the URL and page title according to the application state.
+   */
+  React.useEffect(() => {
     // Compute URL
     const url = Url.generate(store.intervalSet, store.tonalCenter);
 
     // Update page title
     const appTitle = 'Octave Compass';
-    const title = `${this.props.windowTitle} | ${appTitle}`;
+    const title = `${store.title} | ${appTitle}`;
     document.title = title;
 
     // Bail out if no further updates are needed
@@ -35,10 +39,7 @@ export class RouteProcessor extends React.Component<Props> {
 
     // Update URL
     window.history.pushState(null, title, url);
-  }
-
-  render() {
-    return null;
-  }
-
+  }, [store.intervalSet, store.tonalCenter]);
+  
+  return null;
 }
