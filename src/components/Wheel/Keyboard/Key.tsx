@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { KeyPolygon, KeyPolygonProps } from './common/KeyPolygon';
 import { KeyLabelSet, KeyLabelSetProps } from './KeyLabelSet';
 import { Pitch } from '../../../Utils/Music/Pitch';
+import { StoreContext } from '../../Store';
 
 const StyledKeyPolygon = styled(KeyPolygon)<{active: boolean} & KeyPolygonProps>`
   fill: ${p => p.active ? '#e1e1e1' : '#b7b7b7'};
@@ -32,19 +33,19 @@ const ActiveG = styled.g`
 interface KeyProps {
   pitch: Pitch;
   active: boolean;
-  playNotes?(n: number[]): void;
   rotation: number;
 }
 
 export function Key(props: KeyProps) {
+  const store = useContext(StoreContext);
 
   type GenericEvent = React.MouseEvent | React.TouchEvent;
   const handleMouseDownOrTouchStart = (event: GenericEvent) => {
     event.preventDefault();
-    if (!props.playNotes) {
+    if (!props.active) {
       return;
     }
-    props.playNotes([props.pitch.note.id]);
+    store.playNotes([props.pitch.note.id]);
     event.stopPropagation();
   }
 

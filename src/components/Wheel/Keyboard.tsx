@@ -6,7 +6,6 @@ import { StoreContext } from '../Store';
 interface Props {
   rotation: number;
   somethingIsRotating: boolean;
-  playNotes(noteIds: number[]): void;
 }
 
 export function Keyboard(props: Props) {
@@ -24,7 +23,6 @@ export function Keyboard(props: Props) {
         pitchSet={store.pitchSet}
         active={!props.somethingIsRotating}
         rotation={rotation}
-        playNotes={props.playNotes}
       />
     </g>
   );

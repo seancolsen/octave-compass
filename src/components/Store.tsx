@@ -7,6 +7,8 @@ import { Chord } from '../Utils/Music/Chord';
 import { NoteSet } from '../Utils/Music/NoteSet';
 import { PitchSet } from '../Utils/Music/PitchSet';
 import { Scale } from '../Utils/Music/Scale';
+import { useAudio } from './useAudio';
+import { OrdinalChord } from '../Utils/Music/OrdinalChord';
 
 const ordinalAbbreviations = [
   '0th',
@@ -30,7 +32,7 @@ interface State {
   clef: string,
 };
 
-interface Context extends State {
+interface Store extends State {
   noteSet: NoteSet;
   inversion: number | null;
   tonalCenterName: string;
@@ -46,9 +48,11 @@ interface Context extends State {
   toggleInterval: (ordinal: number) => void;
   toggleSelectedChord: (chord: Chord) => void;
   setSelectedChords: (chordSet: ChordSet) => void;
+  playNotes(noteIds: number[]): void;
+  playOrdinalChord(ordinalChord: OrdinalChord): void;
 };
 
-export const StoreContext = React.createContext<Context>({} as Context);
+export const StoreContext = React.createContext<Store>({} as Store);
 
 export function StoreProvider(props: Props) {
 
@@ -61,6 +65,8 @@ export function StoreProvider(props: Props) {
     useState(ChordSet.fromDefaultChords);
   const [clef, setClef] = 'treble';
 
+  const audio = useAudio();
+
   /**
    * Set the intervalSet and try to figure out what Scale or Chord it is in the
    * process.
@@ -71,81 +77,101 @@ export function StoreProvider(props: Props) {
 
   // Partially fill up the context object by starting out with all the state
   // values.
-  let context = {
+  let store = {
     tonalCenter,
     intervalSet,
     selectedChords,
     clef,
-  } as Context;
+  } as Store;
 
-  context.noteSet = useMemo(() => (
-    NoteSet.fromIntervalSet(context.intervalSet, -context.tonalCenter)
+  store.noteSet = useMemo(() => (
+    NoteSet.fromIntervalSet(store.intervalSet, -store.tonalCenter)
       .namedIfFeasible
-  ), [context.intervalSet, context.tonalCenter]);
+  ), [store.intervalSet, store.tonalCenter]);
 
-  context.inversion = useMemo(() => (
-    context.intervalSet instanceof Chord
-      ? context.intervalSet.inversion
+  store.inversion = useMemo(() => (
+    store.intervalSet instanceof Chord
+      ? store.intervalSet.inversion
       : null
-  ), [context.intervalSet]);
+  ), [store.intervalSet]);
   
-  context.tonalCenterName = useMemo(() => (
-    context.noteSet.rootNote(context.inversion || 0).nameToUseForLabels
-  ), [context.intervalSet, context.tonalCenter]);
+  store.tonalCenterName = useMemo(() => (
+    store.noteSet.rootNote(store.inversion || 0).nameToUseForLabels
+  ), [store.intervalSet, store.tonalCenter]);
   
-  context.pitchSet = useMemo(() => (
-    context.noteSet.pitchSetStartingFrom(4)
-  ), [context.intervalSet, context.tonalCenter]);
+  store.pitchSet = useMemo(() => (
+    store.noteSet.pitchSetStartingFrom(4)
+  ), [store.intervalSet, store.tonalCenter]);
   
-  context.title = useMemo(() => {
-    const displayName = context.intervalSet.displayName;
-    if (context.intervalSet instanceof Chord) {
-      return `${context.tonalCenterName} ${displayName} chord`
+  store.title = useMemo(() => {
+    const displayName = store.intervalSet.displayName;
+    if (store.intervalSet instanceof Chord) {
+      return `${store.tonalCenterName} ${displayName} chord`
     }
-    else if (context.intervalSet instanceof Scale) {
-      return `${context.tonalCenterName} ${displayName} Scale`;
+    else if (store.intervalSet instanceof Scale) {
+      return `${store.tonalCenterName} ${displayName} Scale`;
     }
     else {
-      return `${displayName} in ${context.tonalCenterName}`;
+      return `${displayName} in ${store.tonalCenterName}`;
     }
-  }, [context.intervalSet, context.tonalCenter]);
+  }, [store.intervalSet, store.tonalCenter]);
   
-  context.inversionText = useMemo(() => (
-    context.inversion
-      ? ` (${ordinalAbbreviations[context.inversion]} inversion)`
+  store.inversionText = useMemo(() => (
+    store.inversion
+      ? ` (${ordinalAbbreviations[store.inversion]} inversion)`
       : undefined
-  ), [context.inversion]);
+  ), [store.inversion]);
   
-  context.isNamed = useMemo(() => (
-    context.intervalSet instanceof Chord || context.intervalSet instanceof Scale
-  ), [context.intervalSet]);
+  store.isNamed = useMemo(() => (
+    store.intervalSet instanceof Chord || store.intervalSet instanceof Scale
+  ), [store.intervalSet]);
   
-  context.shiftTonalCenter = (intervalDiff: number) => {
+  store.shiftTonalCenter = (intervalDiff: number) => {
     setTonalCenter(Scalar.wrapToOctave(tonalCenter - intervalDiff))
   };
 
-  context.shiftIntervalSet = (rotation: number) => {
+  store.shiftIntervalSet = (rotation: number) => {
     setIntervalSetSmartly(intervalSet.shift(rotation))
   };
 
-  context.shiftMode = (amount: number) => {
+  store.shiftMode = (amount: number) => {
     setIntervalSetSmartly(intervalSet.modeShift(amount));
   };
 
-  context.toggleInterval = (ordinal: number) => {
+  store.toggleInterval = (ordinal: number) => {
     setIntervalSetSmartly(intervalSet.toggleIntervalOrdinal(ordinal))
   };
 
-  context.toggleSelectedChord = (chord: Chord) => {
+  store.toggleSelectedChord = (chord: Chord) => {
     setSelectedChords(selectedChords.toggleChord(chord));
   };
 
-  context.setSelectedChords = setSelectedChords;
-  context.setTonalCenter = setTonalCenter;
-  context.setIntervalSet = setIntervalSet;
+  store.setSelectedChords = setSelectedChords;
+  store.setTonalCenter = setTonalCenter;
+  store.setIntervalSet = setIntervalSet;
+
+  store.playNotes = (noteIds: number[]) => {
+    const pitches = store.pitchSet.pitches.filter(pitch =>
+      noteIds.includes(pitch.note.id)
+    );
+    audio.playPitches(pitches);
+    // TODO: highlight
+  }
+
+  const playIntervals = (ordinals: number[]) => {
+    const notes = ordinals.map(ordinal =>
+      Scalar.wrapToOctave(ordinal + store.tonalCenter)
+    );
+    store.playNotes(notes);
+  };
+  
+  store.playOrdinalChord = (ordinalChord: OrdinalChord) => {
+    playIntervals(ordinalChord.intervalSet.ordinals);
+    // TODO: highlight
+  }
 
   return (
-    <StoreContext.Provider value={context}>
+    <StoreContext.Provider value={store}>
       {props.children}
     </StoreContext.Provider>
   );

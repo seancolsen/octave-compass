@@ -7,16 +7,11 @@ import { Menu } from "./Menu";
 import { Toolbar, Buttons } from "./Toolbar";
 import { TwoWayButton } from "./common/TwoWayButton";
 import { Button } from "./common/Button";
-import { Audio } from './WithAudio';
 import { StoreContext } from './Store';
-
-interface Props {
-  audio: Audio;
-}
 
 type Modal = 'marquee' | 'notation' | null;
 
-export function Layout(props: Props) {
+export function Layout() {
   const store = React.useContext(StoreContext);
   const [modal, setModal] = React.useState<Modal>(null);
 
@@ -57,11 +52,7 @@ export function Layout(props: Props) {
         <Marquee showMore={() => setModal('marquee')}/>
         <Toolbar buttons={buttons}/>
         <div id='wheel-container'>
-          <Wheel
-            playNotes={props.audio.playNotes}
-            playOrdinalChord={props.audio.playOrdinalChord}
-            ordinalChordsPlayed={props.audio.ordinalChordsPlayed}
-          />
+          <Wheel/>
           <div id='overlaid-buttons'>
             <buttons.Staff className='corner bottom left'/>
             <buttons.Transpose className='corner top left'/>

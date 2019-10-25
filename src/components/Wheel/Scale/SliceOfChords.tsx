@@ -1,6 +1,5 @@
 import React from 'react';
 import { ChordSet } from '../../../Utils/Music/ChordSet';
-import { OrdinalChord } from '../../../Utils/Music/OrdinalChord';
 import { ChordInScale } from './ChordInScale';
 
 const constellationRadius = 295;
@@ -13,7 +12,6 @@ interface Props {
   ordinal: number;
   rotation: number;
   somethingIsRotating: boolean;
-  playOrdinalChord(oc: OrdinalChord): void;
 }
 
 export function SliceOfChords(props: Props) {
@@ -40,7 +38,6 @@ export function SliceOfChords(props: Props) {
           interval={props.ordinal}
           rotation={props.rotation}
           somethingIsRotating={props.somethingIsRotating}
-          playOrdinalChord={props.playOrdinalChord}
         />
       );
       radialPosition -= size;

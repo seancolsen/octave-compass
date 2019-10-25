@@ -15,7 +15,6 @@ interface Props {
   pitchSet: PitchSet;
   active: boolean;
   rotation: number;
-  playNotes?(n: number[]): void;
 }
 
 export function KeySet(props: Props) {
@@ -29,7 +28,6 @@ export function KeySet(props: Props) {
       pitch={pitch}
       rotation={props.rotation}
       active={props.active}
-      playNotes={props.playNotes}
     />
   );
 

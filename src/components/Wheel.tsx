@@ -9,8 +9,6 @@ import { Scalar } from '../Utils/Math/Scalar';
 import { Base } from './Wheel/Base';
 import { Rotatable } from './Wheel/Rotatable';
 import { ScaleComponent } from './Wheel/ScaleComponent';
-import { OrdinalChord } from '../Utils/Music/OrdinalChord';
-import { ObjectLog } from '../Utils/Misc/ObjectLog';
 import { StoreContext } from './Store';
 
 /**
@@ -27,19 +25,13 @@ const Container = styled.div`
   }
 `;
 
-interface Props {
-  playNotes(noteIds: number[]): void;
-  playOrdinalChord(ordinalChord: OrdinalChord): void;
-  ordinalChordsPlayed: ObjectLog<OrdinalChord>;
-}
-
 interface State {
   componentsRotating: Rotatable[];
 }
 
-export class Wheel extends Component<Props, State> {
+export class Wheel extends Component<{}, State> {
 
-  constructor(props: Props) {
+  constructor(props: {}) {
     super(props);
     this.state = {
       componentsRotating: [],
@@ -138,7 +130,6 @@ export class Wheel extends Component<Props, State> {
                 <Keyboard
                   rotation={rotation}
                   somethingIsRotating={this.somethingIsRotating()}
-                  playNotes={this.props.playNotes}
                 />
               )}</Rotatable>
 
@@ -154,8 +145,6 @@ export class Wheel extends Component<Props, State> {
                 <ScaleComponent
                   rotation={rotation}
                   somethingIsRotating={this.somethingIsRotating()}
-                  playOrdinalChord={this.props.playOrdinalChord}
-                  ordinalChordsPlayed={this.props.ordinalChordsPlayed}
                 />
               )}</Rotatable>
 

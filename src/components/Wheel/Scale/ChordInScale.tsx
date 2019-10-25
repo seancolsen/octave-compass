@@ -5,6 +5,7 @@ import { Chord } from '../../../Utils/Music/Chord';
 import { IrPoint } from '../../../Utils/Geometry/IrPoint';
 import { Angle } from '../../../Utils/Geometry/Angle';
 import { ChordEmblem } from '../../common/ChordEmblem';
+import { StoreContext } from '../../Store';
 
 const Background = styled.circle`
     stroke: #e1e1e1;
@@ -35,10 +36,10 @@ interface Props {
   somethingIsRotating: boolean;
   className?: string;
   size: number;
-  playOrdinalChord(oc: OrdinalChord): void;
 }
 
 export function ChordInScale(props: Props) {
+  const store = React.useContext(StoreContext);
 
   type GenericEvent = React.MouseEvent | React.TouchEvent;
   const handleMouseDownOrTouchStart = (event: GenericEvent) => {
@@ -46,7 +47,7 @@ export function ChordInScale(props: Props) {
     const ordinalChord = new OrdinalChord(
       props.interval, props.chord
     );
-    props.playOrdinalChord(ordinalChord);
+    store.playOrdinalChord(ordinalChord);
     event.stopPropagation();
   }
 

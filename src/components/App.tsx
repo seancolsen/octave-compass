@@ -3,7 +3,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPlus, faMinus, faMusic, faCaretLeft, faCaretRight }
   from '@fortawesome/free-solid-svg-icons'
 import {faGithub} from '@fortawesome/free-brands-svg-icons'
-import { WithAudio } from "./WithAudio";
 import { RouteProcessor } from "./RouteProcessor";
 import { Layout } from "./Layout";
 import { StoreProvider } from "./Store";
@@ -14,7 +13,7 @@ library.add(faPlus, faMinus, faMusic, faCaretLeft, faCaretRight,
 
 export default function App() {
   let initialValuesFromUrl = Url.parse(window.location.pathname);
-  
+
   return (
     <StoreProvider
       initialTonalCenter={initialValuesFromUrl.tonalCenter}
@@ -22,9 +21,7 @@ export default function App() {
     >
       <>
         <RouteProcessor/>
-        <WithAudio>{ audio => (
-          <Layout audio={audio}/>
-        )}</WithAudio>
+        <Layout/>
       </>
     </StoreProvider>
   );
