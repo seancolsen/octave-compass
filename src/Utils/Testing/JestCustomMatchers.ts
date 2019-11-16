@@ -20,7 +20,7 @@ export function toBeRoughly(received: number, argument: number) {
 
 declare global {
   namespace jest {
-    interface Matchers<R> {
+    interface Matchers<R, T> {
       toBeRoughly(a: number): R;
     }
   }
@@ -43,7 +43,7 @@ export function toBeTheSamePointAs(
 
 declare global {
   namespace jest {
-    interface Matchers<R> {
+    interface Matchers<R, T> {
       toBeTheSamePointAs(a: Point): R;
     }
   }
