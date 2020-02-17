@@ -3,21 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.25",
-    "@fortawesome/free-brands-svg-icons": "^5.11.2",
-    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/fontawesome-svg-core": "^1.2.26",
+    "@fortawesome/free-brands-svg-icons": "^5.12.0",
+    "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@fortawesome/react-fontawesome": "0.1.0-11",
-    "@types/node": "^12.12.7",
+    "@types/node": "^12.12.26",
     "@types/vexflow": "^1.2.33",
     "i": "^0.3.6",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "react-motion": "^0.5.2",
     "react-responsive-modal": "^3.6.0",
-    "react-scripts": "^3.2.0",
+    "react-scripts": "^3.3.1",
     "styled-components": "^3.4.10",
     "tone": "^0.12.80",
-    "vexflow": "^1.2.89"
+    "vexflow": "^1.2.90"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -38,14 +38,14 @@
     ]
   },
   "devDependencies": {
-    "@types/jest": "^24.0.22",
-    "@types/react": "^16.9.11",
-    "@types/react-dom": "^16.9.4",
+    "@types/jest": "^24.9.1",
+    "@types/react": "^16.9.19",
+    "@types/react-dom": "^16.9.5",
     "@types/react-motion": "0.0.29",
-    "@types/styled-components": "^4.4.0",
+    "@types/styled-components": "^4.4.2",
     "awesome-typescript-loader": "^5.2.1",
     "source-map-loader": "^0.2.4",
-    "ts-jest": "^24.1.0",
-    "typescript": "^3.7.2"
+    "ts-jest": "^24.3.0",
+    "typescript": "^3.7.5"
   }
 }
