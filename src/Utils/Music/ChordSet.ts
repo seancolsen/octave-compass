@@ -120,8 +120,6 @@ export class ChordSet {
       'major',
       'minor',
       'dominant 7',
-      'diminished',
-      'augmented',
     ]);
   }
 
