@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 import { IntervalSet } from '../Utils/Music/IntervalSet';
 import { ChordSet } from '../Utils/Music/ChordSet';
 import { Scalar } from '../Utils/Math/Scalar';
@@ -10,35 +10,23 @@ import { useAudio } from './useAudio';
 import { OrdinalChord } from '../Utils/Music/OrdinalChord';
 import {useLocalStore} from 'mobx-react-lite';
 
+export interface StoreInitialValues {
+  tonalCenter: number,
+  intervalSet: IntervalSet,
+};
 
-// interface State {
-//   tonalCenter: number,
-//   intervalSet: IntervalSet,
-//   selectedChords: ChordSet,
-//   clef: string,
-// };
+/**
+ * Sometimes the initial values come from the URL and can be anything. But when
+ * we don't have those values supplied from the URL (e.g. when the user goes to
+ * the site without any specific path or during automated tests where we don't
+ * have the context object) then we'll use these values as default.
+ */
+const defaultInitialValues: StoreInitialValues = {
+  tonalCenter: 0,
+  intervalSet: IntervalSet.fromBinary(2741),
+}
 
-// interface Store extends State {
-//   noteSet: NoteSet;
-//   inversion: number | null;
-//   tonalCenterName: string;
-//   pitchSet: PitchSet;
-//   title: string;
-//   inversionText?: string;
-//   isNamed: boolean;
-//   setTonalCenter: (tonalCenter: number) => void;
-//   setIntervalSet: (intervalSet: IntervalSet) => void;
-//   shiftTonalCenter: (intervalDiff: number) => void;
-//   shiftIntervalSet: (rotation: number) => void;
-//   shiftMode: (amount: number) => void;
-//   toggleInterval: (ordinal: number) => void;
-//   toggleSelectedChord: (chord: Chord) => void;
-//   setSelectedChords: (chordSet: ChordSet) => void;
-//   playNotes(noteIds: number[]): void;
-//   playOrdinalChord(ordinalChord: OrdinalChord): void;
-// };
-
-function createStore() {
+function createStore(initialValues: StoreInitialValues) {
 
   const audio = useAudio();
 
@@ -48,12 +36,12 @@ function createStore() {
      * The note at the top of the wheel, as an integer. 0 means C, 1 means C
      * and so on. 
      */
-    tonalCenter: 0,
+    tonalCenter: initialValues.tonalCenter,
 
     /**
      * Which intervals are enabled/disabled.
      */
-    intervalSet: IntervalSet.fromBinary(2741),
+    intervalSet: initialValues.intervalSet,
 
     /**
      * Which chords are displayed to the user.
@@ -178,13 +166,16 @@ function createStore() {
 } // createStore
 
 
-const StoreContext = React.createContext(createStore());
+const StoreContext = React.createContext(createStore(defaultInitialValues));
 
-export const StoreProvider = ({children}: {children: JSX.Element}) => {
-  const store = useLocalStore(createStore);
-  
+interface StoreProviderProps {
+  initialValues: StoreInitialValues,
+};
+
+export const StoreProvider: FunctionComponent<StoreProviderProps> = (props) => {
+  const store = useLocalStore(() => createStore(props.initialValues));
   return <StoreContext.Provider value={store}>
-    {children}
+    {props.children}
   </StoreContext.Provider>
 }
 

@@ -1,3 +1,4 @@
+import { StoreInitialValues } from "./../../components/Store";
 import { IntervalSetFactory } from "./../Music/IntervalSetFactory";
 import { Scalar } from "./../Math/Scalar";
 import { IntervalSetBinary } from "./../Music/IntervalSetBinary";
@@ -6,11 +7,6 @@ import { IntervalSet } from "../Music/IntervalSet";
 const separator = '-';
 const defaultIntervalSetBin = 0b101010110101;
 const defaultTonalCenter = 0;
-
-export interface ParseResult {
-  intervalSet: IntervalSet;
-  tonalCenter: number;
-}
 
 /**
  * This app keeps the browser URL in sync with some of the state values. This
@@ -34,9 +30,11 @@ export class Url {
   }
 
   /**
-   * Parse a URL to determine the state that it represents.
+   * Parse a URL to determine the state that it represents. Output an object
+   * that can be fed directly into the initial values needed for the global
+   * application store.
    */
-  static parse(url: string): ParseResult {
+  static parse(url: string): StoreInitialValues {
     const parts = Url.normalize(url).split(separator);
     const parsedIntervalSetBin =
       parseInt(parts[0], 10) || defaultIntervalSetBin;

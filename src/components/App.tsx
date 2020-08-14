@@ -15,10 +15,7 @@ export default function App() {
   let initialValuesFromUrl = Url.parse(window.location.pathname);
 
   return (
-    <StoreProvider
-      initialTonalCenter={initialValuesFromUrl.tonalCenter}
-      initialIntervalSet={initialValuesFromUrl.intervalSet}
-    >
+    <StoreProvider initialValues={initialValuesFromUrl} >
       <>
         <RouteProcessor/>
         <Layout/>
