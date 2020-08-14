@@ -146,9 +146,11 @@ function createStore(initialValues: StoreInitialValues) {
         noteIds.includes(pitch.note.id)
       );
       audio.playPitches(pitches);
-      // TODO: highlight
     },
-  
+
+    /**
+     * Generate audio from the given ordinals!
+     */
     playIntervals(ordinals: number[]) {
       const notes = ordinals.map(ordinal =>
         Scalar.wrapToOctave(ordinal + this.tonalCenter)
@@ -156,9 +158,51 @@ function createStore(initialValues: StoreInitialValues) {
       this.playNotes(notes);
     },
     
+    /**
+     * Generate audio of a chord within the scale.
+     */
     playOrdinalChord(ordinalChord: OrdinalChord) {
       this.playIntervals(ordinalChord.intervalSet.ordinals);
-      // TODO: highlight
+    },
+
+    /**
+     * E.g. when rotating the outer keyboard.
+     */
+    shiftTonalCenter(intervalDiff: number) {
+      this.tonalCenter = Scalar.wrapToOctave(this.tonalCenter - intervalDiff);
+    },
+  
+    /**
+     * Rotate the inner scale polygon clockwise by the number (of half steps)
+     * given. Note that it may fall on an intervalSet without a tonal center.
+     */
+    shiftIntervalSet(rotation: number) {
+      this.setIntervalSetSmartly(this.intervalSet.shift(rotation));
+    },
+  
+    /**
+     * Rotate the inner scale polygon clockwise. When 1 is given as an argument,
+     * rotate the polygon clockwise to its next vertex. When 2 is given, go 2
+     * vertices and so on.
+     */
+    shiftMode(amount: number) {
+      this.setIntervalSetSmartly(this.intervalSet.modeShift(amount));
+    },
+  
+    /**
+     * Turn on/off one interval within the set.
+     */
+    toggleInterval(ordinal: number) {
+      this.setIntervalSetSmartly(
+        this.intervalSet.toggleIntervalOrdinal(ordinal)
+      );
+    },
+  
+    /**
+     * Turn on/off a type of chord to display within the scale.
+     */
+    toggleSelectedChord(chord: Chord) {
+      this.selectedChords = this.selectedChords.toggleChord(chord);
     },
 
   }; // return
