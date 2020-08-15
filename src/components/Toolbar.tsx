@@ -23,7 +23,6 @@ interface ButtonsProps {
 }
 
 export interface Buttons {
-  Staff: React.FunctionComponent<ButtonsProps>,
   Transpose: React.FunctionComponent<ButtonsProps>,
   Mode: React.FunctionComponent<ButtonsProps>,
   About: React.FunctionComponent<ButtonsProps>,
@@ -34,12 +33,11 @@ interface Props {
 }
 
 export function Toolbar(props: Props) {
-  const {Staff, Transpose, Mode, About} = props.buttons;
+  const {Transpose, Mode, About} = props.buttons;
   return (
     <div id='toolbar'>
       <OuterContainer>
         <InnerContainer wrap='wrap-reverse'>
-          <Staff />
           <Transpose />
         </InnerContainer>
         <InnerContainer wrap='wrap'>
