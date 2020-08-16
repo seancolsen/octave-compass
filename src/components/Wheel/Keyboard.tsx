@@ -2,13 +2,14 @@ import React from 'react';
 import { Angle } from '../../Utils/Geometry/Angle';
 import { KeySet } from './Keyboard/KeySet';
 import { useStore } from '../Store';
+import { observer } from 'mobx-react-lite';
 
 interface Props {
   rotation: number;
   somethingIsRotating: boolean;
 }
 
-export function Keyboard(props: Props) {
+export const Keyboard = observer((props: Props) => {
   const store = useStore();
   const rotation = props.rotation - store.tonalCenter;
   const transform = `rotate(${Angle.iToD(-store.tonalCenter)})`;
@@ -26,4 +27,4 @@ export function Keyboard(props: Props) {
       />
     </g>
   );
-}
+})

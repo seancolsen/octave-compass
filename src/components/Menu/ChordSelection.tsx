@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ChordSet } from "../../Utils/Music/ChordSet";
 import { ChordChoices } from "./ChordChoices";
 import { useStore } from "../Store";
+import { useObserver } from "mobx-react-lite";
 
 const Heading = styled.div`
   display: flex;
@@ -25,8 +26,8 @@ interface Props {
 
 export function ChordSelection(props: Props) {
   const store = useStore();
-  const defaultChordsAreSelected =
-    store.selectedChords.equals(ChordSet.fromDefaultChords);
+  const defaultChordsAreSelected = useObserver(() =>
+    store.selectedChords.equals(ChordSet.fromDefaultChords));
   return (
     <div className={props.className}>
       <Heading>

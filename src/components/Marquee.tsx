@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { AlternateScaleNames } from './Marquee/AlternateScaleNames';
 import { useStore } from './Store';
+import { useObserver } from 'mobx-react-lite';
 
 interface Props {
   showMore?(): void;
@@ -19,7 +20,7 @@ export function Marquee(props: Props) {
     font-style: ${store.isNamed ? 'default' : 'italic'};
   `;
 
-  return (
+  return useObserver(() => (
     <div className={props.className} id='marquee'>
       <Title>
         {store.title}
@@ -31,5 +32,5 @@ export function Marquee(props: Props) {
         isWithinModal={props.isWithinModal}
       />
     </div>
-  );
+  ));
 }

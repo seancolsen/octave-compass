@@ -201,6 +201,30 @@ const createStore = (initialValues: StoreInitialValues, audio: Audio) => ({
     this.selectedChords = this.selectedChords.toggleChord(chord);
   },
 
+  /**
+   * With Mobx, this function isn't necessary, but we provide it for backwards
+   * compatibility with components that use a store with setter functions.
+   */
+  setIntervalSet(intervalSet: IntervalSet) {
+    this.intervalSet = intervalSet;
+  },
+
+  /**
+   * With Mobx, this function isn't necessary, but we provide it for backwards
+   * compatibility with components that use a store with setter functions.
+   */
+  setTonalCenter(tonalCenter: number) {
+    this.tonalCenter = tonalCenter;
+  },
+  
+  /**
+   * With Mobx, this function isn't necessary, but we provide it for backwards
+   * compatibility with components that use a store with setter functions.
+   */
+  setSelectedChords(chordSet: ChordSet) {
+    this.selectedChords = chordSet;
+  },
+
 }); // createStore
 
 // Use dummy audio here since this will only be used when running tests

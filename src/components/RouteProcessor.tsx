@@ -1,8 +1,10 @@
 import React from 'react';
 import { Url } from "../Utils/Text/Url";
 import { useStore } from './Store';
+import { observer } from 'mobx-react-lite';
 
-export function RouteProcessor() {
+export const RouteProcessor = observer(() => {
+
   const store = useStore();
 
   const updateStateFromUrl = () => {
@@ -42,4 +44,4 @@ export function RouteProcessor() {
   }, [store.intervalSet, store.tonalCenter]);
   
   return null;
-}
+});

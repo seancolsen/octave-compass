@@ -4,6 +4,7 @@ import { IntervalSetPolygon, IntervalSetPolygonProps } from '../common/IntervalS
 import { OrdinalChordSet } from '../../Utils/Music/OrdinalChordSet';
 import { SwarmOfChords } from './Scale/SwarmOfChords';
 import { useStore } from '../Store';
+import { observer } from 'mobx-react-lite';
 
 const Shadow = styled(IntervalSetPolygon)<IntervalSetPolygonProps>`
   fill: black;
@@ -24,7 +25,7 @@ interface Props {
   somethingIsRotating: boolean;
 }
 
-export function ScaleComponent(props: Props) {
+export const ScaleComponent = observer((props: Props) => {
   const store = useStore();
   const ordinalChordSets = OrdinalChordSet.arrayFromIntervalSet(
     store.intervalSet,
@@ -46,4 +47,4 @@ export function ScaleComponent(props: Props) {
       />
     </g>
   );
-}
+});

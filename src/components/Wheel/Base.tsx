@@ -2,12 +2,13 @@ import React from 'react';
 import { BaseInterval } from './Base/BaseInterval';
 import { musicTheory } from '../../Data/musicTheory';
 import { useStore } from '../Store';
+import { observer } from 'mobx-react-lite';
 
 interface Props {
   scaleIsRotating: boolean;
-}
+};
 
-export function Base(props: Props) {
+export const Base = observer((props: Props) => {
   const store = useStore();
 
   const intervalIsActive = (interval: number): boolean => (
@@ -25,4 +26,4 @@ export function Base(props: Props) {
 
   return <g>{baseIntervals}</g>;
 
-}
+});

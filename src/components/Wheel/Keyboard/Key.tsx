@@ -37,7 +37,7 @@ interface KeyProps {
 }
 
 export function Key(props: KeyProps) {
-  const store = useContext(StoreContext);
+  const store = useStore();
 
   type GenericEvent = React.MouseEvent | React.TouchEvent;
   const handleMouseDownOrTouchStart = (event: GenericEvent) => {

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ChordSet } from "../../Utils/Music/ChordSet";
 import { ChordChoice } from "./ChordChoice";
 import { useStore } from "../Store";
+import { observer } from "mobx-react-lite";
 
 const Container = styled.div`
 display: flex;
@@ -14,7 +15,7 @@ interface Props {
   className?: string;
 }
 
-export function ChordChoices(props: Props) {
+export const ChordChoices = observer<Props>((props: Props) => {
   const store = useStore();
   const chordSet = ChordSet.fromContainingIntervalSet(store.intervalSet);
   const chordsInScale = chordSet.chords;
@@ -32,4 +33,4 @@ export function ChordChoices(props: Props) {
     </Container>
   );
 
-}
+});
