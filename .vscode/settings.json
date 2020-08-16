@@ -5,6 +5,7 @@
         "Tickables",
         "fontawesome",
         "fortawesome",
+        "mobx",
         "vexflow"
     ]
 }

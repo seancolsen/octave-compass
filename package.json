@@ -10,6 +10,8 @@
     "@types/node": "^12.12.39",
     "@types/vexflow": "^1.2.34",
     "i": "^0.3.6",
+    "mobx": "^5.15.5",
+    "mobx-react-lite": "^2.0.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-motion": "^0.5.2",
