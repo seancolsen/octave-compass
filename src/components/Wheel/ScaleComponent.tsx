@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { IntervalSetPolygon, IntervalSetPolygonProps } from '../common/IntervalSetPolygon';
 import { OrdinalChordSet } from '../../Utils/Music/OrdinalChordSet';
 import { SwarmOfChords } from './Scale/SwarmOfChords';
-import { StoreContext } from '../Store';
+import { useStore } from '../Store';
 
 const Shadow = styled(IntervalSetPolygon)<IntervalSetPolygonProps>`
   fill: black;
@@ -25,7 +25,7 @@ interface Props {
 }
 
 export function ScaleComponent(props: Props) {
-  const store = React.useContext(StoreContext);
+  const store = useStore();
   const ordinalChordSets = OrdinalChordSet.arrayFromIntervalSet(
     store.intervalSet,
     store.selectedChords

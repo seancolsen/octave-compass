@@ -1,7 +1,7 @@
 import React from 'react';
 import { Angle } from '../../Utils/Geometry/Angle';
 import { KeySet } from './Keyboard/KeySet';
-import { StoreContext } from '../Store';
+import { useStore } from '../Store';
 
 interface Props {
   rotation: number;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function Keyboard(props: Props) {
-  const store = React.useContext(StoreContext);
+  const store = useStore();
   const rotation = props.rotation - store.tonalCenter;
   const transform = `rotate(${Angle.iToD(-store.tonalCenter)})`;
   return (

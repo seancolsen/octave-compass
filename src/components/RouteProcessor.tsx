@@ -1,9 +1,9 @@
 import React from 'react';
 import { Url } from "../Utils/Text/Url";
-import { StoreContext } from './Store';
+import { useStore } from './Store';
 
 export function RouteProcessor() {
-  const store = React.useContext(StoreContext);
+  const store = useStore();
 
   const updateStateFromUrl = () => {
     const newState = Url.parse(window.location.pathname);

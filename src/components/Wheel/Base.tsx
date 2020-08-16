@@ -1,14 +1,14 @@
 import React from 'react';
 import { BaseInterval } from './Base/BaseInterval';
 import { musicTheory } from '../../Data/musicTheory';
-import { StoreContext } from '../Store';
+import { useStore } from '../Store';
 
 interface Props {
   scaleIsRotating: boolean;
 }
 
 export function Base(props: Props) {
-  const store = React.useContext(StoreContext);
+  const store = useStore();
 
   const intervalIsActive = (interval: number): boolean => (
     props.scaleIsRotating ? false : store.intervalSet.isActive(interval)

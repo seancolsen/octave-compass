@@ -7,6 +7,7 @@ import { RouteProcessor } from "./RouteProcessor";
 import { Layout } from "./Layout";
 import { StoreProvider } from "./Store";
 import { Url } from './../Utils/Text/Url';
+import { useAudio } from "./useAudio";
 
 library.add(faPlus, faMinus, faMusic, faCaretLeft, faCaretRight,
   faGithub);
@@ -14,8 +15,10 @@ library.add(faPlus, faMinus, faMusic, faCaretLeft, faCaretRight,
 export default function App() {
   let initialValuesFromUrl = Url.parse(window.location.pathname);
 
+  const audio =  useAudio();
+
   return (
-    <StoreProvider initialValues={initialValuesFromUrl} >
+    <StoreProvider initialValues={initialValuesFromUrl} audio={audio} >
       <>
         <RouteProcessor/>
         <Layout/>

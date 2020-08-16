@@ -5,7 +5,7 @@ import { Chord } from '../../../Utils/Music/Chord';
 import { IrPoint } from '../../../Utils/Geometry/IrPoint';
 import { Angle } from '../../../Utils/Geometry/Angle';
 import { ChordEmblem } from '../../common/ChordEmblem';
-import { StoreContext } from '../../Store';
+import { useStore } from '../../Store';
 
 const Background = styled.circle`
     stroke: #e1e1e1;
@@ -39,7 +39,7 @@ interface Props {
 }
 
 export function ChordInScale(props: Props) {
-  const store = React.useContext(StoreContext);
+  const store = useStore();
 
   type GenericEvent = React.MouseEvent | React.TouchEvent;
   const handleMouseDownOrTouchStart = (event: GenericEvent) => {

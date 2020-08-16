@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import { ChordSet } from "../../Utils/Music/ChordSet";
 import { ChordChoice } from "./ChordChoice";
-import { StoreContext } from "../Store";
+import { useStore } from "../Store";
 
 const Container = styled.div`
 display: flex;
@@ -15,7 +15,7 @@ interface Props {
 }
 
 export function ChordChoices(props: Props) {
-  const store = React.useContext(StoreContext);
+  const store = useStore();
   const chordSet = ChordSet.fromContainingIntervalSet(store.intervalSet);
   const chordsInScale = chordSet.chords;
   const chordChoices = chordsInScale.map(chord =>

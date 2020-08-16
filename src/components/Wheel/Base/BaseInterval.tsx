@@ -4,7 +4,7 @@ import { IntervalLabel } from './IntervalLabel';
 import { Arc, ArcProps } from '../common/Arc';
 import { IrPoint } from '../../../Utils/Geometry/IrPoint';
 import { SvgCheckbox } from './SvgCheckbox';
-import { StoreContext } from '../../Store';
+import { useStore } from '../../Store';
 
 const checkboxRadius = 430;
 const arcRadius = 430;
@@ -36,7 +36,7 @@ interface Props {
 }
 
 export function BaseInterval(props: Props) {
-  const store = React.useContext(StoreContext);
+  const store = useStore();
   const point = (new IrPoint(props.interval, checkboxRadius)).toXy();
   const clickable = props.interval !== 0;
   return (

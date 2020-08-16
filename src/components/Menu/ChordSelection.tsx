@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import { ChordSet } from "../../Utils/Music/ChordSet";
 import { ChordChoices } from "./ChordChoices";
-import { StoreContext } from "../Store";
+import { useStore } from "../Store";
 
 const Heading = styled.div`
   display: flex;
@@ -24,7 +24,7 @@ interface Props {
 }
 
 export function ChordSelection(props: Props) {
-  const store = React.useContext(StoreContext);
+  const store = useStore();
   const defaultChordsAreSelected =
     store.selectedChords.equals(ChordSet.fromDefaultChords);
   return (

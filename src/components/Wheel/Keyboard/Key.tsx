@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { KeyPolygon, KeyPolygonProps } from './common/KeyPolygon';
 import { KeyLabelSet, KeyLabelSetProps } from './KeyLabelSet';
 import { Pitch } from '../../../Utils/Music/Pitch';
-import { StoreContext } from '../../Store';
+import { useStore } from '../../Store';
 
 const StyledKeyPolygon = styled(KeyPolygon)<{active: boolean} & KeyPolygonProps>`
   fill: ${p => p.active ? '#e1e1e1' : '#b7b7b7'};

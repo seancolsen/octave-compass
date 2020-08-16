@@ -8,6 +8,10 @@ export interface Audio {
   playPitches: (pitches: Pitch[]) => void;
 }
 
+export const dummyAudio: Audio = {
+  playPitches: () => {},
+};
+
 export function useAudio() {
 
   const audio = {} as Audio;

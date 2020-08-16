@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import { ChordIcon } from "./ChordIcon";
 import { Chord } from "../../Utils/Music/Chord";
-import { StoreContext } from "../Store";
+import { useStore } from "../Store";
 
 const ChordName = styled.div``;
 
@@ -40,7 +40,7 @@ interface Props {
 }
 
 export function ChordChoice(props: Props) {
-  const store = React.useContext(StoreContext);
+  const store = useStore();
   return (
     <StyledDiv
       className={props.className}

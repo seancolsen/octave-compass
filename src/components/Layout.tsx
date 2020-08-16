@@ -6,12 +6,12 @@ import { Menu } from "./Menu";
 import { Toolbar, Buttons } from "./Toolbar";
 import { TwoWayButton } from "./common/TwoWayButton";
 import { Button } from "./common/Button";
-import { StoreContext } from './Store';
+import { useStore } from './Store';
 
 type Modal = 'marquee' | 'notation' | null;
 
 export function Layout() {
-  const store = React.useContext(StoreContext);
+  const store = useStore();
   const [modal, setModal] = React.useState<Modal>(null);
 
   const buttons: Buttons = {

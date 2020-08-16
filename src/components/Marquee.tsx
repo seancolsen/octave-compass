@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AlternateScaleNames } from './Marquee/AlternateScaleNames';
-import { StoreContext } from './Store';
+import { useStore } from './Store';
 
 interface Props {
   showMore?(): void;
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export function Marquee(props: Props) {
-  const store = React.useContext(StoreContext);
+  const store = useStore();
 
   const TitleElement = props.isWithinModal ? 'h2' : 'h1';
 
