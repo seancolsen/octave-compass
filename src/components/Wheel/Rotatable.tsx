@@ -1,7 +1,7 @@
 import React, { Component, ReactNode } from 'react';
 import { Scalar } from '../../Utils/Math/Scalar';
 import { Ordinal } from '../../Utils/Music/Ordinal';
-import { Wheel } from '../Wheel';
+// import { Wheel } from '../Wheel';
 import { Group } from './common/Group';
 
 interface Props {
@@ -44,12 +44,12 @@ export class Rotatable extends Component<Props, State> {
   }
 
   handleMouseDown(event: React.MouseEvent) {
-    this.startRotating(Wheel.grabAngleFromMouseEvent(event));
+    // this.startRotating(Wheel.grabAngleFromMouseEvent(event));
   }
 
   handleTouchStart(event: React.TouchEvent) {
     event.preventDefault();
-    this.startRotating(Wheel.grabAngleFromTouchEvent(event));
+    // this.startRotating(Wheel.grabAngleFromTouchEvent(event));
   }
 
   /**
