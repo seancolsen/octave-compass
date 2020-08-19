@@ -1,5 +1,4 @@
 import { Point } from './Point';
-import { XyPoint } from "./XyPoint";
 import { RCoordinate, PrPoint } from "./PrPoint";
 import { Angle } from "./Angle";
 import { CustomMath } from "../Math/CustomMath";
@@ -46,31 +45,6 @@ export class IrPoint extends Point {
   roughlyEquals(irPoint: IrPoint) {
     return CustomMath.valuesAreWithinThreshold(this.i, irPoint.i) && 
       CustomMath.valuesAreWithinThreshold(this.r, irPoint.r);
-  }
-
-  /**
-   * Convert an XY point in the page space to an IR point in the SVG space.
-   *
-   * @param svgDOMRect
-   *
-   * @param svgBoxSize
-   *   The width of the SVG box within the SVG coordinate system. We assume the
-   *   box is square and assume that the SVG origin is at the center of the SVG
-   *   canvas (since that logic is hard-coded into this app and unlikely to
-   *   change).
-   *
-   * @param cursor
-   */
-  static fromCursor(
-      svgDOMRect: {x: number, y: number, width: number},
-      svgBoxSize: number,
-      cursor:  {x: number, y: number}
-    ) {
-    return (new XyPoint(cursor.x, cursor.y))
-      .plus(new XyPoint(-svgDOMRect.x, -svgDOMRect.y))
-      .times(svgBoxSize / svgDOMRect.width)
-      .plus(new XyPoint(-svgBoxSize / 2, -svgBoxSize / 2))
-      .toIr();
   }
 
   /**

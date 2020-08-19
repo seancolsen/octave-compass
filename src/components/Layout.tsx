@@ -7,6 +7,7 @@ import { Toolbar, Buttons } from "./Toolbar";
 import { TwoWayButton } from "./common/TwoWayButton";
 import { Button } from "./common/Button";
 import { useStore } from './Store';
+import { PointerBroadcaster } from './PointerBroadcaster';
 
 type Modal = 'marquee' | 'notation' | null;
 
@@ -41,27 +42,29 @@ export function Layout() {
 
   return (
     <div id='app' className="App">
-      <div id='layout'>
-        <Marquee showMore={() => setModal('marquee')}/>
-        <Toolbar buttons={buttons}/>
-        <div id='wheel-container'>
-          <Wheel/>
-          <div id='overlaid-buttons'>
-            <buttons.Transpose className='corner top left'/>
-            <buttons.Mode className='corner top right'/>
-            <buttons.About className='corner bottom right'/>
+      <PointerBroadcaster>
+        <div id='layout'>
+          <Marquee showMore={() => setModal('marquee')}/>
+          <Toolbar buttons={buttons}/>
+          <div id='wheel-container'>
+            <Wheel/>
+            <div id='overlaid-buttons'>
+              <buttons.Transpose className='corner top left'/>
+              <buttons.Mode className='corner top right'/>
+              <buttons.About className='corner bottom right'/>
+            </div>
           </div>
+          <Menu/>
         </div>
-        <Menu/>
-      </div>
-      <div id='modals'>
-        <Modal
-          open={modal === 'marquee'}
-          onClose={() => setModal(null)}
-        >
-          <Marquee isWithinModal={true}/>
-        </Modal>
-      </div>
+        <div id='modals'>
+          <Modal
+            open={modal === 'marquee'}
+            onClose={() => setModal(null)}
+          >
+            <Marquee isWithinModal={true}/>
+          </Modal>
+        </div>
+      </PointerBroadcaster>
     </div>
   );
 

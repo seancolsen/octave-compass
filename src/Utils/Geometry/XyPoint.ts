@@ -83,6 +83,20 @@ export class XyPoint extends Point {
   }
 
   /**
+   * Flip around the origin. Equivalent to multiply by -1.
+   */
+  invert() {
+    return new XyPoint(-this.x, -this.y);
+  }
+
+  /**
+   * Vector subtraction.
+   */
+  minus(xyPoint: XyPoint) {
+    return this.plus(xyPoint.invert());
+  }
+
+  /**
    * Increment the `x` value of this point.
    */
   plusX(x: number) {
