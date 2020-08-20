@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Scalar } from '../../Utils/Math/Scalar';
 import { Ordinal } from '../../Utils/Music/Ordinal';
 import { Group } from './common/Group';
@@ -197,7 +197,9 @@ export function useRotator(props: Props) {
     const rotation = state.rotation;
     state.status = 'resting';
     state.rotation = 0; // TODO transition to 0 gradually
-    props.afterRotating(state.currentDetent || rotation);
+    const detent = state.currentDetent ?? rotation;
+    state.currentDetent = null;
+    props.afterRotating(detent);
   };
 
   return {
@@ -227,7 +229,7 @@ export function useRotator(props: Props) {
      * A React component used to wrap the SVG element that we want to rotate.
      */
     Container(p: {children: JSX.Element}) {
-      return useObserver(() => (
+      return (
         <Group
           rotation={state.rotation}
           onMouseDown={(e: React.MouseEvent) => handleMouseDown(e)}
@@ -235,7 +237,7 @@ export function useRotator(props: Props) {
         >
           {p.children}
         </Group>
-      ))
+      );
     }, // Container
 
   }; // return
