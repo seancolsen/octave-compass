@@ -3,6 +3,7 @@ import { PrPoint } from "./PrPoint";
 import { IrPoint } from "./IrPoint";
 import { Point } from './Point';
 import { CustomMath } from "../Math/CustomMath";
+import { musicTheory } from "../../Data/musicTheory";
 
 const PI = Math.PI;
 
@@ -54,6 +55,16 @@ export class XyPoint extends Point {
    */
   toIr() {
     return this.toPr().toIr();
+  }
+
+  /**
+   * Convert this point to an IR point and return only the "I" value.
+   */
+  toI() {
+    let x = this.x;
+    let y = -this.y; // Flip axis, for SVG
+    let o = musicTheory.octaveDivisions;
+    return Scalar.wrap(o * (5 / 4 - Math.atan2(y, x) / (2 * PI)), o)
   }
 
   /**

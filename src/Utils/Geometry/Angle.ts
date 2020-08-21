@@ -35,7 +35,8 @@ export class Angle {
    * constellation coordinate system).
    */
   static pToI(p: number): number {
-    return Scalar.wrap(musicTheory.octaveDivisions * (5 / 4 - p / (2 * PI)), 12);
+    const o = musicTheory.octaveDivisions;
+    return Scalar.wrap(o * (5 / 4 - p / (2 * PI)), o);
   }
 
   /**

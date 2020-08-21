@@ -146,7 +146,7 @@ export function useRotator(props: Props) {
       const event = mouse ?? touch;
       if (!event || !state.center) {return null;}
       const position = new XyPoint(event.pageX, event.pageY);
-      return position.minus(state.center).toIr().i;
+      return position.minus(state.center).toI();
     }
 
   /**

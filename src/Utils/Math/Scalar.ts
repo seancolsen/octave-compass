@@ -8,7 +8,7 @@ export class Scalar {
 
   /**
    * Ensure that `value` is within range between 0 and `max`. If `value` is
-   * negative, then it's shifted up enough to make it positive. If `values` is
+   * negative, then it's shifted up enough to make it positive. If `value` is
    * greater than `max`, then it's shifted down to make it in-range.
    */
   static wrap(value: number, max: number): number {
