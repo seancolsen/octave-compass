@@ -195,16 +195,28 @@ export function useRotator(props: Props) {
     props.afterRotating(detent);
   };
 
-  return {
-
+  interface ContainerProps {
     /**
      * Gives the current rotation as the user interacts with the object. Note
      * that the container component already performs the SVG transform, and 
      * you'll only need to pass this value to children components if you want
-     * them to have additional side-effects from the rotation, like the cars
+     * them to have additional side-effects from the rotation, like the seats
      * on a ferris wheel.
+     * 
+     * Why is this a render prop and not passed directly in the return from
+     * useRotator? Because as the user interacts with the object, this rotation
+     * value gets updated very frequently. Passing it as a render prop allows us
+     * to update only the child component without updating the component calling
+     * the useRotator hook. This is faster. I tried it first by passing rotation
+     * in the return, and although it worked, it was noticeably slower.
      */
-    rotation: state.rotation,
+    rotation: number,
+  }
+  
+  return {
+
+    
+    // rotation: state.rotation,
 
     /**
      * Gives the rotation value at which the object will come to rest after
@@ -221,14 +233,14 @@ export function useRotator(props: Props) {
     /**
      * A React component used to wrap the SVG element that we want to rotate.
      */
-    Container(p: {children: JSX.Element}) {
-      return (
+    Container(props: {children: (props: ContainerProps) => JSX.Element}) {
+      return useObserver(() =>
         <Group
           rotation={state.rotation}
           onMouseDown={(e: React.MouseEvent) => handleMouseDown(e)}
           onTouchStart={(e: React.TouchEvent) => handleTouchStart(e)}
         >
-          {p.children}
+          {props.children({rotation: state.rotation})}
         </Group>
       );
     }, // Container

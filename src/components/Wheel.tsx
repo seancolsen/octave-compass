@@ -7,7 +7,7 @@ import { ScaleComponent } from './Wheel/ScaleComponent';
 import { useRotator } from './Wheel/useRotator';
 import { useStore } from './Store';
 import { Scalar } from '../Utils/Math/Scalar';
-import { useObserver, observer } from 'mobx-react-lite';
+import { observer } from 'mobx-react-lite';
 
 /**
  * The width and height of the square SVG view box in user units (basically SVG
@@ -26,7 +26,7 @@ const Container = styled.div`
 export const Wheel = observer(() => {
 
   const store = useStore();
-  
+
   const keyboardRotator = useRotator({
     afterRotating: store.shiftTonalCenter,
   });
@@ -39,29 +39,32 @@ export const Wheel = observer(() => {
   return (
 
     <Container id='wheel'>
-      <svg viewBox={`-${BOX_SIZE/2} -${BOX_SIZE/2} ${BOX_SIZE} ${BOX_SIZE}`} >
+      <svg viewBox={`-${BOX_SIZE/2} -${BOX_SIZE/2} ${BOX_SIZE} ${BOX_SIZE}`}>
 
         <BlurFilter id='blur' size={15} bounds={3} />
 
         <Base scaleIsRotating={scaleRotator.isRotating} />
         
-        <keyboardRotator.Container>
+        <keyboardRotator.Container>{({rotation}) =>
           <Keyboard
-            rotation={keyboardRotator.rotation}
+            rotation={rotation}
             somethingIsRotating={
               scaleRotator.isRotating || keyboardRotator.isRotating
             }
           />
-        </keyboardRotator.Container>
+        }</keyboardRotator.Container>
 
-        <scaleRotator.Container>
+        <scaleRotator.Container>{({rotation}) =>
           <ScaleComponent
-            rotation={scaleRotator.rotation}
+            rotation={rotation}
             somethingIsRotating={
               scaleRotator.isRotating || keyboardRotator.isRotating
             }
           />
-        </scaleRotator.Container>
+        }</scaleRotator.Container>
+
+        {/* TODO: build this component and then uncomment */}
+        {/* <ModeShiftHelpText currentDetent={scaleRotator.currentDetent}/> */}
 
       </svg>
     </Container>
