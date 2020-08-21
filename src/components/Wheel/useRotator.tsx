@@ -100,19 +100,22 @@ export function useRotator(props: Props) {
 
   const handleMouseDown = (event: React.MouseEvent) => {
     state.touchIdentifier = null;
-    startRotating(event);
+    setCenter(event);
+    state.initialGrabAngle = grabAngleFromEvents(event, null);
+    startRotating();
   };
 
   const handleTouchStart = (event: React.TouchEvent) => {
     event.preventDefault(); // to prevent touch-to-scroll
     const touch = event.changedTouches[0];
     state.touchIdentifier = touch.identifier;
-    startRotating(touch);
+    setCenter(touch);
+    state.initialGrabAngle = grabAngleFromEvents(null, touch);
+    startRotating();
   };
 
-  const startRotating = (event: React.MouseEvent | React.Touch) => {
+  const startRotating = () => {
     state.status = 'rotating';
-    setCenter(event);
     state.rotationWhenGrabbed = state.rotation;
     state.unsubscribeFromPointer = subscribeToPointer(handlePointerBroadcast);
   };
@@ -134,6 +137,19 @@ export function useRotator(props: Props) {
   };
 
   /**
+   * Use one of two events to compute a grab angle
+   */
+  const grabAngleFromEvents = (
+    mouse: React.MouseEvent | null | undefined, 
+    touch: React.Touch | null | undefined
+    ) => {
+      const event = mouse ?? touch;
+      if (!event || !state.center) {return null;}
+      const position = new XyPoint(event.pageX, event.pageY);
+      return position.minus(state.center).toIr().i;
+    }
+
+  /**
    * This is the function that gets called over and over while the user
    * interacts with the object.
    * 
@@ -141,41 +157,18 @@ export function useRotator(props: Props) {
    * The broadcast event sent by the PointerBroadcaster
    */
   const handlePointerBroadcast = (e: PointerBroadcastEvent) => {
-    // Return early if we don't have what we need.
-    const touch = state.touchIdentifier &&
-      e.touchEvent?.touches.item(state.touchIdentifier);
-    const mouse = state.touchIdentifier === null && e.mouseEvent;
-    if (!touch && !mouse) {
-      // This broadcast doesn't match what we're looking for.
-      return;
-    }
-    if (e.isEnd) {
-      transitionToRest();
-      return;
-    }
-
-    // Determine the position from the mouse or touch event.
-    let position = null as XyPoint | null;
-    if (touch) {
-      e.touchEvent?.preventDefault(); // Don't scroll page.
-      position = new XyPoint(touch.clientX, touch.clientY);
-    }
-    else if (mouse) {
-      position = new XyPoint(mouse.clientX, mouse.clientY);
-    }
-    if (!position || !state.center) {
-      // I'm not sure how we'd end up here, but better put this condition in
-      // for safety.
-      return;
-    }
+    const touch = state.touchIdentifier === null ? 
+      null : (e.touchEvent?.touches.item(state.touchIdentifier) || null);
+    const mouse = state.touchIdentifier === null ?
+      (e.mouseEvent || null) : null;
+    const grabAngle = grabAngleFromEvents(mouse, touch);
+    if (!grabAngle) { return; }
+    if (e.isEnd) { transitionToRest(); return; }
+    if (touch) { e.touchEvent?.preventDefault(); /* Don't scroll page. */ }
     
     // Set the rotation.
-    const grabAngle = position.minus(state.center).toIr().i;
-    if (state.initialGrabAngle === null) {
-      state.initialGrabAngle = grabAngle;
-    }
-    const angleDragged = grabAngle - state.initialGrabAngle;
-    state.rotation = (state.rotationWhenGrabbed || 0) + angleDragged;
+    state.rotation = grabAngle +
+      (state.rotationWhenGrabbed || 0) - (state.initialGrabAngle || 0);
     
     // Set the detent.
     state.currentDetent = Scalar.wrapToOctave(
