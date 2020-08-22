@@ -100,6 +100,11 @@ export function useRotator(props: Props) {
 
   const handleMouseDown = (event: React.MouseEvent) => {
     state.touchIdentifier = null;
+    if (event.button !== 0) {
+      event.preventDefault();
+      transitionToRest();
+      return;
+    }
     setCenter(event);
     state.initialGrabAngle = grabAngleFromEvents(event, null);
     startRotating();
