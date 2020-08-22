@@ -1,21 +1,18 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Angle } from '../../../Utils/Geometry/Angle';
 
-interface Props {
-  rotation: number;
-  onMouseDown: (event: React.MouseEvent<SVGGElement, MouseEvent>) => void;
-  onTouchStart: (event: React.TouchEvent<SVGGElement>) => void;
-  children: ReactNode
+interface Props extends React.SVGProps<SVGGElement>{
+  rotation: number | null;
 }
 
 export function Group(props: Props) {
-  let rotation = Angle.iToD(props.rotation || 0);
-  let transformString = `rotate(${rotation})`;
+  const {rotation, ...groupProps} = props;
+  let rotationDeg = Angle.iToD(rotation || 0);
+  let transformString = `rotate${rotationDeg})`;
   return (
     <g
-      onMouseDown={props.onMouseDown}
-      onTouchStart={props.onTouchStart}
       transform={transformString}
+      {...groupProps}
     >
       {props.children}
     </g>

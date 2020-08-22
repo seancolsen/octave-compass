@@ -243,8 +243,7 @@ export function useRotator(props: Props) {
       return useObserver(() =>
         <Group
           rotation={state.rotation}
-          onMouseDown={(e: React.MouseEvent) => handleMouseDown(e)}
-          onTouchStart={(e: React.TouchEvent) => handleTouchStart(e)}
+          onPointerDown={e => {alert(e.clientX);}}
         >
           {props.children({rotation: state.rotation})}
         </Group>
