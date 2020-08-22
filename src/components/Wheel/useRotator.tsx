@@ -105,6 +105,7 @@ export function useRotator(props: Props) {
       transitionToRest();
       return;
     }
+    if (state.status === 'rotating') {return;} // Ignore if already rotating
     setCenter(event);
     state.initialGrabAngle = grabAngleFromEvents(event, null);
     startRotating();
@@ -112,6 +113,7 @@ export function useRotator(props: Props) {
 
   const handleTouchStart = (event: React.TouchEvent) => {
     event.preventDefault(); // to prevent touch-to-scroll
+    if (state.status === 'rotating') {return;} // Ignore if already rotating
     const touch = event.changedTouches[0];
     state.touchIdentifier = touch.identifier;
     setCenter(touch);
@@ -167,8 +169,7 @@ export function useRotator(props: Props) {
     const mouse = state.touchIdentifier === null ?
       (e.mouseEvent || null) : null;
     const grabAngle = grabAngleFromEvents(mouse, touch);
-    if (!grabAngle) { return; }
-    if (e.isEnd) { transitionToRest(); return; }
+    if (!grabAngle || e.isEnd) { transitionToRest(); return; }
     if (touch) { e.touchEvent?.preventDefault(); /* Don't scroll page. */ }
     
     // Set the rotation.
@@ -185,12 +186,12 @@ export function useRotator(props: Props) {
   };
 
   const transitionToRest = () => {
+    state.unsubscribeFromPointer();
     if (state.status !== 'rotating') {
       // If we're at rest or (somehow) already transitioning, then no need to do
       // anything else.
       return;
     }
-    state.unsubscribeFromPointer();
     state.initialGrabAngle = null;
     const rotation = state.rotation;
     state.status = 'resting';
