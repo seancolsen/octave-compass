@@ -4,9 +4,26 @@ import { Ordinal } from '../../Utils/Music/Ordinal';
 import { Group } from './common/Group';
 import { useLocalStore, useObserver } from 'mobx-react-lite';
 import { XyPoint } from '../../Utils/Geometry/XyPoint';
-import { useSubscribeToPointer, PointerBroadcastEvent } from '../PointerBroadcaster';
+
+
+/**
+ * Find the client coordinates of the X/Y center of the SVG element that
+ * contains the element which generated the given event. This function helps us
+ * determine the center of rotation, by assuming that it's at the center of the
+ * SVG -- an assumption that, for the time being is hard-coded into this app.
+ */
+const centerOfContainingSvg = (e: PointerEvent) => {
+  const target = e.target as SVGElement;
+  const svg = (target.tagName === "svg") ? target : target.viewportElement;
+  if (!svg) {
+    throw new Error('Unable to find target SVG element from mouse event');
+  }
+  const r = svg.getBoundingClientRect() as DOMRect;
+  return new XyPoint(r.x + r.height/2, r.y + r.width/2);
+};
 
 interface Props {
+  
   /**
    * This function will be executed after the user finishes rotating the object.
    * 
@@ -39,6 +56,8 @@ interface Props {
  * A hook that helps create drag-to-rotate SVG elements.
  */
 export function useRotator(props: Props) {
+
+  const ref = React.createRef<SVGGElement>();
 
   const state = useLocalStore(() => ({
 
@@ -82,101 +101,76 @@ export function useRotator(props: Props) {
     initialGrabAngle: null as number | null,
 
     /**
-     * Stores the ID of the touch first used to grab the object. This way we can
-     * distinguish the touch used for this object separately from other touches
-     * present while rotating. Null if the user grabs the object via the mouse.
+     * Stores the ID of the pointer used to grab the object.
      */
-    touchIdentifier: null as number | null,
+    pointerId: null as number | null,
 
-    /**
-     * When subscribing to pointer activity, we get an unsubscribe function. We
-     * store that function here so that we can call it later when we want to
-     * unsubscribe.
-     */
-    unsubscribeFromPointer: () => {},
   }));
 
-  const subscribeToPointer = useSubscribeToPointer();
+  /**
+   * We're using native events instead of React events because I couldn't
+   * figure out how to use setPointerCapture with React events. Because we're
+   * using native events, we need to add (and remove, within `tearDown`) the
+   * appropriate event handlers manually.
+   */
+  const setUp = () => {
+    if (!ref.current) {return;}
+    const el = ref.current;
 
-  const handleMouseDown = (event: React.MouseEvent) => {
-    state.touchIdentifier = null;
-    if (event.button !== 0) {
-      event.preventDefault();
+    el.ongotpointercapture = () => console.log('got capture');
+    el.onlostpointercapture = () => console.log('lost capture');
+
+    el.onpointerdown = handlePointerDown;
+    el.onpointerup = handlePointerUp;
+    el.onpointercancel = handlePointerUp;
+  };
+
+  /**
+   * Run setUp() when component mounts.
+   */
+  useEffect(setUp);
+
+  const handlePointerDown = (e: PointerEvent) => {
+    e.preventDefault();
+
+    const okToProceed = 
+      e.button === 0 && // Don't rotate in response to right or middle clicks.
+      (state.status === 'resting' || state.status === 'transitioning') &&
+      !!ref.current; // We need to have a valid ref to the DOM element.
+    if (!okToProceed) {
       transitionToRest();
       return;
     }
-    if (state.status === 'rotating') {return;} // Ignore if already rotating
-    setCenter(event);
-    state.initialGrabAngle = grabAngleFromEvents(event, null);
-    startRotating();
-  };
-
-  const handleTouchStart = (event: React.TouchEvent) => {
-    event.preventDefault(); // to prevent touch-to-scroll
-    if (state.status === 'rotating') {return;} // Ignore if already rotating
-    const touch = event.changedTouches[0];
-    state.touchIdentifier = touch.identifier;
-    setCenter(touch);
-    state.initialGrabAngle = grabAngleFromEvents(null, touch);
-    startRotating();
-  };
-
-  const startRotating = () => {
+    const el = ref.current as SVGGElement; // We know this isn't null from above
+    state.pointerId = e.pointerId;
+    state.center = centerOfContainingSvg(e);
+    state.initialGrabAngle = pointerGrabAngle(e);
     state.status = 'rotating';
     state.rotationWhenGrabbed = state.rotation;
-    state.unsubscribeFromPointer = subscribeToPointer(handlePointerBroadcast);
+    console.log(el);
+    console.log(e.pointerId);
+    console.log(el.setPointerCapture)
+    // el.onpointermove = handlePointerMove;
+    el.setPointerCapture(e.pointerId);
   };
-
-  /**
-   * Figure out where in the page is the center of the object being rotated.
-   * 
-   * Baked into this logic is the assumption that the object will be at the
-   * center of the SVG containing it.
-   */
-  const setCenter = (event: React.MouseEvent | React.Touch) => {
-    const target = event.target as SVGElement;
-    const svg = (target.tagName === "svg") ? target : target.viewportElement;
-    if (!svg) {
-      throw new Error('Unable to find target SVG element from mouse event');
-    }
-    const r = svg.getBoundingClientRect() as DOMRect;
-    state.center = new XyPoint(r.x + r.height/2, r.y + r.width/2);
-  };
-
-  /**
-   * Use one of two events to compute a grab angle
-   */
-  const grabAngleFromEvents = (
-    mouse: React.MouseEvent | null | undefined, 
-    touch: React.Touch | null | undefined
-    ) => {
-      const event = mouse ?? touch;
-      if (!event || !state.center) {return null;}
-      const position = new XyPoint(event.pageX, event.pageY);
-      return position.minus(state.center).toI();
-    }
 
   /**
    * This is the function that gets called over and over while the user
    * interacts with the object.
-   * 
-   * @param e 
-   * The broadcast event sent by the PointerBroadcaster
    */
-  const handlePointerBroadcast = (e: PointerBroadcastEvent) => {
-    const touch = state.touchIdentifier === null ? 
-      null : (e.touchEvent?.touches.item(state.touchIdentifier) || null);
-    const mouse = state.touchIdentifier === null ?
-      (e.mouseEvent || null) : null;
-    const grabAngle = grabAngleFromEvents(mouse, touch);
-    if (!grabAngle || e.isEnd) { transitionToRest(); return; }
-    if (touch) { e.touchEvent?.preventDefault(); /* Don't scroll page. */ }
+  const handlePointerMove = (e: PointerEvent) => {
+    console.log('move');
+    if (state.status !== 'rotating') { return; }
+
+    // if (!ref.current?.hasPointerCapture(e.pointerId)) {return;}
+
+    e.preventDefault();
+    const grabAngle = pointerGrabAngle(e);
+    if (!grabAngle) { transitionToRest(); return; }
     
-    // Set the rotation.
     state.rotation = grabAngle +
       (state.rotationWhenGrabbed || 0) - (state.initialGrabAngle || 0);
     
-    // Set the detent.
     state.currentDetent = Scalar.wrapToOctave(
       props.detents ?
         Ordinal.nearestValid(state.rotation, props.detents) :
@@ -185,8 +179,37 @@ export function useRotator(props: Props) {
     );
   };
 
+  /**
+   * Called when the user releases the object.
+   */
+  const handlePointerUp = (e: PointerEvent) => {
+    // TODO what if a touch different touch is released over this object while
+    // this object is rotating? Can we ignore it by validating e.pointerId?
+
+    
+    transitionToRest();
+  }
+
+  /**
+   * Given a pointer event, and assuming we have already set the position of the
+   * rotation center as `state.center`, then compute the grab angle of the
+   * pointer's position.
+   */
+  const pointerGrabAngle = (e: PointerEvent) => {
+    if (!state.center) {return null;}
+    return (new XyPoint(e.clientX, e.clientY)).minus(state.center).toI();
+  }
+
+  /**
+   * Stop user interaction and transition gradually to the nearest detent.
+   */
   const transitionToRest = () => {
-    state.unsubscribeFromPointer();
+    if (ref.current) {
+      ref.current.onpointermove = null;
+      if (state.pointerId) {
+        ref.current.releasePointerCapture(state.pointerId);
+      }
+    }
     if (state.status !== 'rotating') {
       // If we're at rest or (somehow) already transitioning, then no need to do
       // anything else.
@@ -221,9 +244,6 @@ export function useRotator(props: Props) {
   
   return {
 
-    
-    // rotation: state.rotation,
-
     /**
      * Gives the rotation value at which the object will come to rest after
      * the user releases the object at its current position.
@@ -239,13 +259,13 @@ export function useRotator(props: Props) {
     /**
      * A React component used to wrap the SVG element that we want to rotate.
      */
-    Container(props: {children: (props: ContainerProps) => JSX.Element}) {
+    Container(p: {children: (props: ContainerProps) => JSX.Element}) {
       return useObserver(() =>
         <Group
           rotation={state.rotation}
-          onPointerDown={e => {alert(e.clientX);}}
+          ref={ref}
         >
-          {props.children({rotation: state.rotation})}
+          {p.children({rotation: state.rotation})}
         </Group>
       );
     }, // Container
