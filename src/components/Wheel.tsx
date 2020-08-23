@@ -4,7 +4,7 @@ import { BlurFilter } from './Wheel/BlurFilter';
 import { Keyboard } from './Wheel/Keyboard';
 import { Base } from './Wheel/Base';
 import { ScaleComponent } from './Wheel/ScaleComponent';
-import { useRotator } from './Wheel/useRotator';
+import { Rotator } from './Wheel/Rotator';
 import { useStore } from './Store';
 import { Scalar } from '../Utils/Math/Scalar';
 import { observer } from 'mobx-react-lite';
@@ -27,15 +27,6 @@ export const Wheel = observer(() => {
 
   const store = useStore();
 
-  const keyboardRotator = useRotator({
-    afterRotating: store.shiftTonalCenter,
-  });
-  
-  const scaleRotator = useRotator({
-    afterRotating: store.shiftIntervalSet,
-    detents: store.intervalSet.ordinals.map((o) => Scalar.wrapToOctave(-o)),
-  });
-
   return (
 
     <Container id='wheel'>
@@ -43,25 +34,26 @@ export const Wheel = observer(() => {
 
         <BlurFilter id='blur' size={15} bounds={3} />
 
-        <Base scaleIsRotating={scaleRotator.isRotating} />
+        <Base scaleIsRotating={false} />
         
-        <keyboardRotator.Container>{({rotation}) =>
+        <Rotator
+          afterRotating={store.shiftTonalCenter}
+        >{({rotation, currentDetent}) =>
           <Keyboard
             rotation={rotation}
-            somethingIsRotating={
-              scaleRotator.isRotating || keyboardRotator.isRotating
-            }
+            somethingIsRotating={false}
           />
-        }</keyboardRotator.Container>
+        }</Rotator>
 
-        <scaleRotator.Container>{({rotation}) =>
+        <Rotator
+          detents={store.intervalSet.ordinals.map((o) => Scalar.wrapToOctave(-o))}
+          afterRotating={store.shiftIntervalSet}
+        >{({rotation, currentDetent}) =>
           <ScaleComponent
             rotation={rotation}
-            somethingIsRotating={
-              scaleRotator.isRotating || keyboardRotator.isRotating
-            }
+            somethingIsRotating={false}
           />
-        }</scaleRotator.Container>
+        }</Rotator>
 
         {/* TODO: build this component and then uncomment */}
         {/* <ModeShiftHelpText currentDetent={scaleRotator.currentDetent}/> */}
