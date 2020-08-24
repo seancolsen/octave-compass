@@ -45,6 +45,26 @@ const createStore = (initialValues: StoreInitialValues, audio: Audio) => ({
   selectedChords: ChordSet.fromDefaultChords,
 
   /**
+   * True when the user is manipulating the scale polygon.
+   * 
+   * This store value is redundant with the value stored in the Rotator
+   * component, but this is intentional for performance reasons because we don't
+   * want to re-render the Wheel component as frequently as the Rotator
+   * component.
+   */
+  scaleIsRotating: false,
+
+  /**
+   * True when the user is manipulating the radial keyboard.
+   * 
+   * This store value is redundant with the value stored in the Rotator
+   * component, but this is intentional for performance reasons because we don't
+   * want to re-render the Wheel component as frequently as the Rotator
+   * component.
+   */
+  keyboardIsRotating: false,
+
+  /**
    * The clef to use when rendering a musical staff that contains the notes
    * in the scale.
    */

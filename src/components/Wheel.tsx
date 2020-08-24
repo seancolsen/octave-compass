@@ -34,24 +34,26 @@ export const Wheel = observer(() => {
 
         <BlurFilter id='blur' size={15} bounds={3} />
 
-        <Base scaleIsRotating={false} />
+        <Base scaleIsRotating={store.scaleIsRotating} />
         
         <Rotator
-          afterRotating={store.shiftTonalCenter}
+          onRotationStart={() => store.keyboardIsRotating = true}
+          onRotationRest={r => {store.keyboardIsRotating = false; store.shiftTonalCenter(r)}}
         >{({rotation, currentDetent}) =>
           <Keyboard
             rotation={rotation}
-            somethingIsRotating={false}
+            somethingIsRotating={store.keyboardIsRotating || store.scaleIsRotating}
           />
         }</Rotator>
 
         <Rotator
           detents={store.intervalSet.ordinals.map((o) => Scalar.wrapToOctave(-o))}
-          afterRotating={store.shiftIntervalSet}
+          onRotationStart={() => store.scaleIsRotating = true}
+          onRotationRest={r => {store.scaleIsRotating = false; store.shiftIntervalSet(r)}}
         >{({rotation, currentDetent}) =>
           <ScaleComponent
             rotation={rotation}
-            somethingIsRotating={false}
+            somethingIsRotating={store.keyboardIsRotating || store.scaleIsRotating}
           />
         }</Rotator>
 

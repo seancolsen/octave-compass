@@ -39,6 +39,11 @@ interface RenderProps {
 }
 
 interface Props {
+
+  /**
+   * This function is called when the user grabs the object.
+   */
+  onRotationStart(): void,
   
   /**
    * This function will be executed after the user finishes rotating the object.
@@ -47,7 +52,7 @@ interface Props {
    * The rotation value after the user has released the object, and (if detents
    * are provided) after the object has come to rest at one of the detents.
    */
-  afterRotating(restingRotation: number): void,
+  onRotationRest(restingRotation: number): void,
 
   /**
    * If an array of detent numbers are given, then the rotated object will only
@@ -128,6 +133,7 @@ export const Rotator = (props: Props) => {
       transitionToRest(e);
       return;
     }
+    props.onRotationStart();
     state.center = centerOfContainingSvg(e);
     state.initialGrabAngle = pointerGrabAngle(e);
     state.status = 'rotating';
@@ -175,7 +181,7 @@ export const Rotator = (props: Props) => {
     state.rotation = 0; // TODO transition to 0 gradually
     const detent = state.currentDetent ?? state.rotation;
     state.currentDetent = null;
-    props.afterRotating(detent);
+    props.onRotationRest(detent);
   };
 
   return useObserver(() =>
