@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Scalar } from '../../Utils/Math/Scalar';
 import { Ordinal } from '../../Utils/Music/Ordinal';
 import { Group } from './common/Group';
 import { XyPoint } from '../../Utils/Geometry/XyPoint';
+import { useLocalStore, useObserver } from 'mobx-react-lite';
 
 /**
  * Find the client coordinates of the X/Y center of the SVG element that
@@ -74,63 +75,63 @@ interface Props {
  */
 export const Rotator = (props: Props) => {
 
-  /**
-   * The point (in page space) around which the object rotates. Null when we
-   * don't know yet.
-   */
-  const [center, setCenter] = useState<XyPoint | null>(null);
+  const state = useLocalStore(() => ({
 
-  /**
-   * The current value of rotation, which changes constantly as the user
-   * interacts with the object.
-   */
-  const [rotation, setRotation] = useState(0);
+    /**
+     * The point (in page space) around which the object rotates. Null when we
+     * don't know yet.
+     */
+    center: null as XyPoint | null,
 
-  /**
-   * The rotation value that will be set if the user releases the object at
-   * its current position.
-   */
-  const [currentDetent, setCurrentDetent] = useState<number | null>(null);
+    /**
+     * The current value of rotation, which changes constantly as the user
+     * interacts with the object.
+     */
+    rotation: 0,
 
-  /**
-   * Resting means nothing is happening. Rotating means the user is
-   * interacting with the object. Transitioning means the user has released
-   * the object and the object is automatically moving to the nearest detent.
-   */
-  type StatusOptions = 'resting' | 'rotating' | 'transitioning';
-  const [status, setStatus] = useState<StatusOptions>('resting');
+    /**
+     * The rotation value that will be set if the user releases the object at
+     * its current position.
+     */
+    currentDetent: null as number | null,
 
-  /**
-   * When the object is a rest, its rotation is 0, so the rotation when the
-   * user grabs the object is almost always 0. It will be non-zero in cases
-   * where the user grabs the object during the object's final transition to
-   * the nearest detent after the user releases it.
-   */
-  const [rotationWhenGrabbed, setRotationWhenGrabbed] =
-    useState<number | null>(null);
+    /**
+     * Resting means nothing is happening. Rotating means the user is
+     * interacting with the object. Transitioning means the user has released
+     * the object and the object is automatically moving to the nearest detent.
+     */
+    status: 'resting' as 'resting' | 'rotating' | 'transitioning',
 
-  /**
-   * The angle of the user's mouse or touch at the point of the grab. Will be
-   * null when the user hasn't yet grabbed the object.
-   */
-  const [initialGrabAngle, setInitialGrabAngle] =
-    useState<number | null>(null);
+    /**
+     * When the object is a rest, its rotation is 0, so the rotation when the
+     * user grabs the object is almost always 0. It will be non-zero in cases
+     * where the user grabs the object during the object's final transition to
+     * the nearest detent after the user releases it.
+     */
+    rotationWhenGrabbed: null as number | null,
+
+    /**
+     * The angle of the user's mouse or touch at the point of the grab. Will be
+     * null when the user hasn't yet grabbed the object.
+     */
+    initialGrabAngle: null as number | null,
+
+  }));
 
   const startRotating = (e: React.PointerEvent) => {
     e.preventDefault();
     const el = e.target as SVGGElement;
     el.setPointerCapture(e.pointerId);
-    
-    if (e.button !== 0 || status === 'rotating') {
+    if (e.button !== 0 || state.status === 'rotating') {
       // Don't rotate in response to right-clicks, and also give up if we've got
       // more than one touch.
       transitionToRest(e);
       return;
     }
-    setCenter(centerOfContainingSvg(e));
-    setInitialGrabAngle(pointerGrabAngle(e));
-    setStatus('rotating');
-    setRotationWhenGrabbed(rotation);
+    state.center = centerOfContainingSvg(e);
+    state.initialGrabAngle = pointerGrabAngle(e);
+    state.status = 'rotating';
+    state.rotationWhenGrabbed = state.rotation;
   };
 
   /**
@@ -138,17 +139,17 @@ export const Rotator = (props: Props) => {
    * interacts with the object.
    */
   const updateRotationFromPointer = (e: React.PointerEvent) => {
-    if (status !== 'rotating') { return; }
+    if (state.status !== 'rotating') { return; }
     e.preventDefault();
     const grabAngle = pointerGrabAngle(e);
     if (!grabAngle) { transitionToRest(e); return; }
-    setRotation( grabAngle + (rotationWhenGrabbed||0) - (initialGrabAngle||0) );
-    setCurrentDetent(Scalar.wrapToOctave(
+    state.rotation = grabAngle + (state.rotationWhenGrabbed||0) - (state.initialGrabAngle||0);
+    state.currentDetent = Scalar.wrapToOctave(
       props.detents ?
-        Ordinal.nearestValid(rotation, props.detents) :
+        Ordinal.nearestValid(state.rotation, props.detents) :
         // If we don't have detents then assume integers are detents.
-        Math.round(rotation)
-    ));
+        Math.round(state.rotation)
+    );
   };
 
   /**
@@ -157,42 +158,43 @@ export const Rotator = (props: Props) => {
    * pointer's position.
    */
   const pointerGrabAngle = (e: React.PointerEvent) => {
-    if (!center) {return null;}
-    return (new XyPoint(e.clientX, e.clientY)).minus(center).toI();
+    if (!state.center) {return null;}
+    return (new XyPoint(e.clientX, e.clientY)).minus(state.center).toI();
   }
 
   /**
    * Stop user interaction and transition gradually to the nearest detent.
    */
   const transitionToRest = (e: React.PointerEvent) => {
-    if (status !== 'rotating') {
+    if (state.status !== 'rotating') {
       // If we're at rest or already transitioning, then we're done.
       return;
     }
-    setInitialGrabAngle(null);
-    setStatus('resting');
-    setRotation(0); // TODO transition to 0 gradually
-    const detent = currentDetent ?? rotation;
-    setCurrentDetent(null);
+    state.initialGrabAngle = null;
+    state.status = 'resting';
+    state.rotation = 0; // TODO transition to 0 gradually
+    const detent = state.currentDetent ?? state.rotation;
+    state.currentDetent = null;
     props.afterRotating(detent);
   };
 
-  return (
+  return useObserver(() =>
     <Group
-      rotation={rotation}
+      rotation={state.rotation}
       onPointerDown={startRotating}
       onPointerUp={transitionToRest}
       onPointerCancel={transitionToRest}
       onPointerMove={updateRotationFromPointer}
-      onGotPointerCapture={() => console.log('captured')}
-      onLostPointerCapture={() => console.log('released')}
-
+      
       // touch-action here is redundant with the CSS property, but we need it
       // in order for the PointerCapture polyfill to work.
       touch-action="none"
-    >
-      {props.children({ rotation, currentDetent})}
-    </Group>
+    >{
+      props.children({
+        rotation: state.rotation,
+        currentDetent: state.currentDetent
+      })
+    }</Group>
   );
 
 };
