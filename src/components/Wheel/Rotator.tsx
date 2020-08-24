@@ -166,10 +166,6 @@ export const Rotator = (props: Props) => {
    * Stop user interaction and transition gradually to the nearest detent.
    */
   const transitionToRest = (e: React.PointerEvent) => {
-    const el = e.target as SVGGElement;
-    if (el.hasPointerCapture(e.pointerId)) {
-      el.releasePointerCapture(e.pointerId);
-    }
     if (status !== 'rotating') {
       // If we're at rest or already transitioning, then we're done.
       return;
@@ -189,6 +185,8 @@ export const Rotator = (props: Props) => {
       onPointerUp={transitionToRest}
       onPointerCancel={transitionToRest}
       onPointerMove={updateRotationFromPointer}
+      onGotPointerCapture={() => console.log('captured')}
+      onLostPointerCapture={() => console.log('released')}
     >
       {props.children({ rotation, currentDetent})}
     </Group>
