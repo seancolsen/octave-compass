@@ -118,7 +118,6 @@ export const Rotator = (props: Props) => {
 
   const startRotating = (e: React.PointerEvent) => {
     e.preventDefault();
-    e.persist()
     const el = e.target as SVGGElement;
     el.setPointerCapture(e.pointerId);
     
