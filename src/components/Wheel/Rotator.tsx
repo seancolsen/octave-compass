@@ -187,6 +187,10 @@ export const Rotator = (props: Props) => {
       onPointerMove={updateRotationFromPointer}
       onGotPointerCapture={() => console.log('captured')}
       onLostPointerCapture={() => console.log('released')}
+
+      // touch-action here is redundant with the CSS property, but we need it
+      // in order for the PointerCapture polyfill to work.
+      touch-action="none"
     >
       {props.children({ rotation, currentDetent})}
     </Group>
