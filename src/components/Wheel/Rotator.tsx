@@ -121,6 +121,20 @@ export const Rotator = (props: Props) => {
      */
     initialGrabAngle: null as number | null,
 
+    /**
+     * The time when the user stops interacting with the object and the object
+     * begins transitioning. We need to store this so that we'll know how to
+     * update the object's rotation as it transitions.
+     */
+    transitionStartTime: null as DOMHighResTimeStamp | null,
+
+    /**
+     * The rotation value when the user stops interacting with the object. We
+     * need to store this so that we'll know how to update the object's rotation
+     * as it transitions.
+     */
+    rotationUponTransitionStart: null as number | null,
+
   }));
 
   const startRotating = (e: React.PointerEvent) => {
@@ -156,6 +170,7 @@ export const Rotator = (props: Props) => {
         // If we don't have detents then assume integers are detents.
         Math.round(state.rotation)
     );
+    console.log(`rotation: ${state.rotation}\ndetent: ${state.currentDetent}`);
   };
 
   /**
@@ -176,12 +191,48 @@ export const Rotator = (props: Props) => {
       // If we're at rest or already transitioning, then we're done.
       return;
     }
+    state.rotationUponTransitionStart = state.rotation;
+    window.requestAnimationFrame(stepTransition);
+  };
+
+  /**
+   * Update this component's state to advance one frame ahead in the animation
+   * which transitions the object from its final rotation when released to its
+   * detent. This function is called recursively by requestAnimationFrame()
+   * until the object is done transitioning.
+   */
+  const stepTransition = (currentTime: DOMHighResTimeStamp) => {
+    console.log('step');
+    // TODO handle case where user rotates the keyboard almost, but not quite
+    // one full interval counterclockwise. The keyboard should rotate just a
+    // tiny bit during the transition, but instead it rotates all the way around
+    
+    if (state.transitionStartTime === null) {
+      state.transitionStartTime = currentTime;
+    }
+    const timeElapsed = currentTime - state.transitionStartTime;
+    const transitionDuration = 200; // ms
+    const transitionIsComplete = timeElapsed >= transitionDuration;
+    if (transitionIsComplete) {
+      handleRest();
+    }
+    else {
+      const rf = state.currentDetent || 0; // rotation, final
+      const r0 = state.rotationUponTransitionStart || 0; // rotation, initial
+      const velocity = (rf - r0) / transitionDuration;
+      state.rotation =  velocity * timeElapsed + r0;
+      window.requestAnimationFrame(stepTransition);
+    }
+  };
+
+  const handleRest = () => {
+    const detent = state.currentDetent ?? state.rotation;
+    props.onRotationRest(detent);
     state.initialGrabAngle = null;
     state.status = 'resting';
-    state.rotation = 0; // TODO transition to 0 gradually
-    const detent = state.currentDetent ?? state.rotation;
+    state.rotation = 0;
     state.currentDetent = null;
-    props.onRotationRest(detent);
+    state.transitionStartTime = null;
   };
 
   return useObserver(() =>
