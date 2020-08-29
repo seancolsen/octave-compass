@@ -4,6 +4,7 @@ import { Ordinal } from '../../Utils/Music/Ordinal';
 import { Group } from './common/Group';
 import { XyPoint } from '../../Utils/Geometry/XyPoint';
 import { useLocalStore, useObserver } from 'mobx-react-lite';
+import { musicTheory } from '../../Data/musicTheory';
 
 /**
  * Find the client coordinates of the X/Y center of the SVG element that
@@ -170,7 +171,6 @@ export const Rotator = (props: Props) => {
         // If we don't have detents then assume integers are detents.
         Math.round(state.rotation)
     );
-    console.log(`rotation: ${state.rotation}\ndetent: ${state.currentDetent}`);
   };
 
   /**
@@ -191,7 +191,11 @@ export const Rotator = (props: Props) => {
       // If we're at rest or already transitioning, then we're done.
       return;
     }
-    state.rotationUponTransitionStart = state.rotation;
+    const pad = musicTheory.octaveDivisions / 2;
+    const detent = state.currentDetent || 0;
+    state.rotationUponTransitionStart = Scalar.wrap(
+      state.rotation, detent - pad, detent + pad,
+    );
     window.requestAnimationFrame(stepTransition);
   };
 
@@ -202,11 +206,6 @@ export const Rotator = (props: Props) => {
    * until the object is done transitioning.
    */
   const stepTransition = (currentTime: DOMHighResTimeStamp) => {
-    console.log('step');
-    // TODO handle case where user rotates the keyboard almost, but not quite
-    // one full interval counterclockwise. The keyboard should rotate just a
-    // tiny bit during the transition, but instead it rotates all the way around
-    
     if (state.transitionStartTime === null) {
       state.transitionStartTime = currentTime;
     }
