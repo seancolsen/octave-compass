@@ -1,11 +1,25 @@
 import {Scalar} from "./Scalar";
 
-test('wrap', () => {
+test('wrap between 0 and target', () => {
   expect(Scalar.wrap(150, 100)).toBe(50);
   expect(Scalar.wrap(-2, 100)).toBe(98);
   expect(Scalar.wrap(0, 100)).toBe(0);
   expect(Scalar.wrap(100, 100)).toBe(0);
   expect(Scalar.wrap(1050, 100)).toBe(50);
+  expect(() => Scalar.wrap(100, 0)).toThrow();
+});
+
+test('wrap between two targets', () => {
+  expect(Scalar.wrap(150, -100, 100)).toBe(-50);
+  expect(Scalar.wrap(-2, -100, 100)).toBe(-2);
+  expect(Scalar.wrap(-102, -100, 100)).toBe(98);
+  expect(Scalar.wrap(102, -100, 100)).toBe(-98);
+  expect(Scalar.wrap(0, -100, 100)).toBe(0);
+  expect(Scalar.wrap(100, -100, 100)).toBe(-100);
+  expect(Scalar.wrap(-100, -100, 100)).toBe(-100);
+  expect(Scalar.wrap(-507, -50, 50)).toBe(-7);
+  expect(Scalar.wrap(507, -50, 50)).toBe(7);
+  expect(() => Scalar.wrap(100, 10, 10)).toThrow();
 });
 
 test('wrapToOctave', () => {
