@@ -12,12 +12,12 @@ import { musicTheory } from '../../Data/musicTheory';
  * determine the center of rotation, by assuming that it's at the center of the
  * SVG -- an assumption that, for the time being is hard-coded into this app.
  */
-const centerOfContainingSvg = (e: React.PointerEvent) => {
-  const target = e.target as SVGElement;
-  const svg = (target.tagName === "svg") ? target : target.viewportElement;
-  if (!svg) {
-    throw new Error('Unable to find target SVG element from mouse event');
-  }
+const centerOfContainingSvg = (element: Element) => {
+  const el = element as SVGElement;
+  const svg = (el.tagName === "svg") ? el : el.viewportElement;
+    if (!svg) {
+      throw new Error('Unable to find target SVG element from mouse event');
+    }
   const r = svg.getBoundingClientRect() as DOMRect;
   return new XyPoint(r.x + r.height/2, r.y + r.width/2);
 };
@@ -138,30 +138,39 @@ export const Rotator = (props: Props) => {
 
   }));
 
-  const startRotating = (e: React.PointerEvent) => {
+  const startRotating = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
-    const el = e.target as SVGGElement;
-    el.setPointerCapture(e.pointerId);
-    if (e.button !== 0 || state.status === 'rotating') {
-      // Don't rotate in response to right-clicks, and also give up if we've got
-      // more than one touch.
+    e.stopPropagation();
+    const mouseEvent = e as React.MouseEvent;
+    const touchEvent = e as React.TouchEvent;
+    const isTouch = !!touchEvent.touches;
+    const isMouse = !isTouch;
+    const isRightClick = isMouse && mouseEvent.button !== 0;
+    const isAlreadyRotating = state.status === 'rotating';
+    if (isRightClick || isAlreadyRotating) {
       transitionToRest(e);
       return;
     }
     props.onRotationStart();
-    state.center = centerOfContainingSvg(e);
+    state.center = centerOfContainingSvg(e.currentTarget);
     state.initialGrabAngle = pointerGrabAngle(e);
     state.status = 'rotating';
     state.rotationWhenGrabbed = state.rotation;
+    window.addEventListener('mousemove', updateRotationFromPointer, true);
+    window.addEventListener('touchmove', updateRotationFromPointer, true);
+    window.addEventListener('mouseup', transitionToRest, true);
+    window.addEventListener('touchend', transitionToRest, true);
+    window.addEventListener('touchcancel', transitionToRest, true);
   };
 
   /**
    * This is the function that gets called over and over while the user
    * interacts with the object.
    */
-  const updateRotationFromPointer = (e: React.PointerEvent) => {
+  const updateRotationFromPointer = (e: MouseEvent | TouchEvent) => {
     if (state.status !== 'rotating') { return; }
     e.preventDefault();
+    e.stopPropagation();
     const grabAngle = pointerGrabAngle(e);
     if (!grabAngle) { transitionToRest(e); return; }
     state.rotation = grabAngle + (state.rotationWhenGrabbed||0) - (state.initialGrabAngle||0);
@@ -178,19 +187,36 @@ export const Rotator = (props: Props) => {
    * rotation center as `center`, then compute the grab angle of the
    * pointer's position.
    */
-  const pointerGrabAngle = (e: React.PointerEvent) => {
+  const pointerGrabAngle = (
+    e: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent
+  ) => {
+    const mouseEvent = e as React.MouseEvent | MouseEvent;
+    const touchEvent = e as React.TouchEvent | TouchEvent;
+    const isTouch = !!touchEvent.touches;
+    const specificEvent = isTouch ? touchEvent.touches[0] : mouseEvent;
+    const x = specificEvent.clientX;
+    const y = specificEvent.clientY;
     if (!state.center) {return null;}
-    return (new XyPoint(e.clientX, e.clientY)).minus(state.center).toI();
+    return (new XyPoint(x, y)).minus(state.center).toI();
   }
 
   /**
    * Stop user interaction and transition gradually to the nearest detent.
    */
-  const transitionToRest = (e: React.PointerEvent) => {
+  const transitionToRest = (
+    e: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (state.status !== 'rotating') {
       // If we're at rest or already transitioning, then we're done.
       return;
     }
+    window.removeEventListener('mousemove', updateRotationFromPointer, true);
+    window.removeEventListener('touchmove', updateRotationFromPointer, true);
+    window.removeEventListener('mouseup', transitionToRest, true);
+    window.removeEventListener('touchend', transitionToRest, true);
+    window.removeEventListener('touchcancel', transitionToRest, true);
     const pad = musicTheory.octaveDivisions / 2;
     const detent = state.currentDetent || 0;
     state.rotationUponTransitionStart = Scalar.wrap(
@@ -210,7 +236,7 @@ export const Rotator = (props: Props) => {
       state.transitionStartTime = currentTime;
     }
     const timeElapsed = currentTime - state.transitionStartTime;
-    const transitionDuration = 200; // ms
+    const transitionDuration = 100; // ms
     const transitionIsComplete = timeElapsed >= transitionDuration;
     if (transitionIsComplete) {
       handleRest();
@@ -237,14 +263,8 @@ export const Rotator = (props: Props) => {
   return useObserver(() =>
     <Group
       rotation={state.rotation}
-      onPointerDown={startRotating}
-      onPointerUp={transitionToRest}
-      onPointerCancel={transitionToRest}
-      onPointerMove={updateRotationFromPointer}
-      
-      // touch-action here is redundant with the CSS property, but we need it
-      // in order for the PointerCapture polyfill to work.
-      touch-action="none"
+      onMouseDown={startRotating}
+      onTouchStart={startRotating}
     >{
       props.children({
         rotation: state.rotation,
