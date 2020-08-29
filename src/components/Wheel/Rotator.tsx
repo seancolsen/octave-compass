@@ -6,6 +6,8 @@ import { XyPoint } from '../../Utils/Geometry/XyPoint';
 import { useLocalStore, useObserver } from 'mobx-react-lite';
 import { musicTheory } from '../../Data/musicTheory';
 
+const transitionVelocity = 0.01; // (Interval / ms)
+
 /**
  * Find the client coordinates of the X/Y center of the SVG element that
  * contains the element which generated the given event. This function helps us
@@ -136,6 +138,20 @@ export const Rotator = (props: Props) => {
      */
     rotationUponTransitionStart: null as number | null,
 
+    /**
+     * How long (in ms) we want to spend transitioning the object to its resting
+     * rotation after the user stops interacting with it. This value is smaller
+     * when the object is closer to its resting rotation, and larger when we
+     * need to do more rotation for the transition.
+     */
+    transitionDuration: null as number | null,
+
+    /**
+     * 1 for cases where we need to increase the rotation to get to the current
+     * detent. -1 for cases where we need to decrease.
+     */
+    transitionDirection: 1,
+
   }));
 
   const startRotating = (e: React.MouseEvent | React.TouchEvent) => {
@@ -219,9 +235,10 @@ export const Rotator = (props: Props) => {
     window.removeEventListener('touchcancel', transitionToRest, true);
     const pad = musicTheory.octaveDivisions / 2;
     const detent = state.currentDetent || 0;
-    state.rotationUponTransitionStart = Scalar.wrap(
-      state.rotation, detent - pad, detent + pad,
-    );
+    state.rotation = Scalar.wrap(state.rotation, detent - pad, detent + pad);
+    const deltaR = detent - state.rotation;
+    state.transitionDuration = Math.abs(deltaR) / transitionVelocity;
+    state.transitionDirection = Math.sign(deltaR);
     window.requestAnimationFrame(stepTransition);
   };
 
@@ -235,17 +252,18 @@ export const Rotator = (props: Props) => {
     if (state.transitionStartTime === null) {
       state.transitionStartTime = currentTime;
     }
+    if (state.rotationUponTransitionStart === null) {
+      state.rotationUponTransitionStart = state.rotation;
+    }
+    const r0 = state.rotationUponTransitionStart || 0; // rotation, initial
     const timeElapsed = currentTime - state.transitionStartTime;
-    const transitionDuration = 100; // ms
-    const transitionIsComplete = timeElapsed >= transitionDuration;
+    const transitionIsComplete = timeElapsed >= (state.transitionDuration || 0);
     if (transitionIsComplete) {
       handleRest();
     }
     else {
-      const rf = state.currentDetent || 0; // rotation, final
-      const r0 = state.rotationUponTransitionStart || 0; // rotation, initial
-      const velocity = (rf - r0) / transitionDuration;
-      state.rotation =  velocity * timeElapsed + r0;
+      const deltaR = transitionVelocity * timeElapsed * state.transitionDirection;
+      state.rotation =  deltaR + r0;
       window.requestAnimationFrame(stepTransition);
     }
   };
@@ -258,6 +276,7 @@ export const Rotator = (props: Props) => {
     state.rotation = 0;
     state.currentDetent = null;
     state.transitionStartTime = null;
+    state.rotationUponTransitionStart = null;
   };
 
   return useObserver(() =>
