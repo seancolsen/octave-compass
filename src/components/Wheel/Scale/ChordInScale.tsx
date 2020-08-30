@@ -63,9 +63,9 @@ export const ChordInScale = observer((props: Props) => {
     <G
       transform={transform}
       className={props.className}
-      onMouseDown={e => handleMouseDownOrTouchStart(e)}
-      onTouchStart={e => handleMouseDownOrTouchStart(e)}
-      onTouchEnd={e => e.preventDefault()}
+      onMouseDown={store.editVsPlay ? handleMouseDownOrTouchStart : undefined}
+      onTouchStart={store.editVsPlay ? handleMouseDownOrTouchStart : undefined}
+      onTouchEnd={store.editVsPlay ? e => e.preventDefault() : undefined}
     >
       <Background cx={0} cy={0} r={props.size} />
       <ChordEmblem

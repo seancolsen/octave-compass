@@ -6,26 +6,26 @@ import { Pitch } from '../../../Utils/Music/Pitch';
 import { useStore } from '../../Store';
 import { observer } from 'mobx-react-lite';
 
-const StyledKeyPolygon = styled(KeyPolygon)<{active: boolean} & KeyPolygonProps>`
-  fill: ${p => p.active ? '#e1e1e1' : '#b7b7b7'};
-  stroke: #a7a7a7;
-  stroke-width: 3px;
-`;
-
-const StyledKeyLabelSet = styled(KeyLabelSet)<{active: boolean} & KeyLabelSetProps>`
-opacity: ${p => p.active ? '1' : '0.25'};
-`;
-
 interface KeyProps {
   pitch: Pitch;
   active: boolean;
   rotation: number;
-}
+};
+
+type GenericEvent = React.MouseEvent | React.TouchEvent;
 
 export const Key = observer((props: KeyProps) => {
   const store = useStore();
+  const StyledKeyPolygon = styled(KeyPolygon)`
+    fill: ${props.active ? '#e1e1e1' : '#b7b7b7'};
+    opacity: ${props.active ? 1 : 1 - store.editVsPlay};
+    stroke: #a7a7a7;
+    stroke-width: 3px;
+  `;
+  const StyledKeyLabelSet = styled(KeyLabelSet)`
+    opacity: ${props.active ? '1' : '0.25'};
+  `;
   const isClickable = props.active && store.editVsPlay === 1;
-  type GenericEvent = React.MouseEvent | React.TouchEvent;
   const handleMouseDownOrTouchStart = (event: GenericEvent) => {
     event.preventDefault();
     if (!props.active) {
@@ -52,14 +52,10 @@ export const Key = observer((props: KeyProps) => {
       onTouchStart={isClickable ? handleMouseDownOrTouchStart : undefined}
       onTouchEnd={isClickable ? e => e.preventDefault() : undefined}
     >
-      <StyledKeyPolygon
-        pitch={props.pitch}
-        active={props.active}
-      />
+      <StyledKeyPolygon pitch={props.pitch} />
       <StyledKeyLabelSet
         pitch={props.pitch}
         rotation={props.rotation}
-        active={props.active}
       />
     </G>
   );

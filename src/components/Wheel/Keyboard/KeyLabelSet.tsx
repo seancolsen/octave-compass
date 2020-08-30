@@ -4,18 +4,9 @@ import { Arc, ArcProps } from "../common/Arc";
 import { Pitch } from "../../../Utils/Music/Pitch";
 import { NoteName } from "../../../Utils/Music/NoteName";
 import { KeyLabel } from './KeyLabel';
-
-const spread = 0.20;
-const tieRadius = 348;
-const tieSpan = 0.2;
-const tieWidth = 50;
+import { useStore } from "../../Store";
 
 type LabelTieProps = {color: string} & ArcProps;
-
-const LabelTie = styled(Arc)<LabelTieProps>`
-  stroke: ${props => props.color};
-  stroke-width: ${tieWidth}px;
-`;
 
 export interface KeyLabelSetProps {
   className?: string;
@@ -24,6 +15,17 @@ export interface KeyLabelSetProps {
 }
 
 export function KeyLabelSet(props: KeyLabelSetProps) {
+  const store = useStore();;
+  
+  const spread = 0.20;
+  const radius = 348 + store.editVsPlay * 20;
+  const tieSpan = 0.2;
+  const tieWidth = 50;
+
+  const LabelTie = styled(Arc)<LabelTieProps>`
+    stroke: ${props => props.color};
+    stroke-width: ${tieWidth}px;
+  `;
 
   /**
    * Return a LabelTie if needed
@@ -36,7 +38,7 @@ export function KeyLabelSet(props: KeyLabelSetProps) {
       startInterval={props.pitch.note.id - tieSpan}
       endInterval={props.pitch.note.id + tieSpan}
       color={props.pitch.note.color}
-      radius={tieRadius}
+      radius={radius}
     />;
   }
 
@@ -52,6 +54,7 @@ export function KeyLabelSet(props: KeyLabelSetProps) {
       const interval = props.pitch.note.id + (discreteOffset * spread);
       result.push(
         <KeyLabel
+          radius={radius}
           key={index}
           interval={interval}
           rotation={props.rotation}

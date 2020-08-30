@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { IrPoint } from '../../../Utils/Geometry/IrPoint';
 import { Angle } from '../../../Utils/Geometry/Angle';
 
-const radius = 350;
 const size = 60;
 
 const StyledRect = styled.rect`
@@ -19,6 +18,7 @@ const StyledText = styled.text<{parenthetical: boolean}>`
 
 interface Props {
   interval: number;
+  radius: number;
   rotation: number;
   color: string;
   parenthetical: boolean;
@@ -26,7 +26,7 @@ interface Props {
 }
 
 export function KeyLabel(props: Props) {
-  let point = (new IrPoint(props.interval, radius)).toXy();
+  let point = (new IrPoint(props.interval, props.radius)).toXy();
   let rotation = -Angle.iToD(props.rotation);
   let transform = `translate(${point.x} ${point.y}) rotate(${rotation})`;
   return (

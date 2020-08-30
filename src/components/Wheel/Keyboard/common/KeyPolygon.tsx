@@ -3,16 +3,18 @@ import { Scalar } from '../../../../Utils/Math/Scalar';
 import { IrPoint } from '../../../../Utils/Geometry/IrPoint';
 import { Polygon } from '../../common/Polygon';
 import { Pitch } from '../../../../Utils/Music/Pitch';
-
-const innerRadius = 308;
-const outerRadius = 400;
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../../Store';
 
 export interface KeyPolygonProps {
   pitch: Pitch;
   className?: string;
 }
 
-export function KeyPolygon(props: KeyPolygonProps) {
+export const KeyPolygon = observer((props: KeyPolygonProps) =>{
+  const store = useStore();
+  const innerRadius = store.editVsPlay * 308;
+  const outerRadius = 400 + 40 * store.editVsPlay;
   const shape: [number, number][] = [
     [-0.5, outerRadius * Scalar.rFactorAtEdge],
     [0, outerRadius],
@@ -25,4 +27,4 @@ export function KeyPolygon(props: KeyPolygonProps) {
     IrPoint.fromArray(ir).plusI(props.pitch.note.id)
   );
   return <Polygon points={points} className={props.className}/>;
-}
+});
