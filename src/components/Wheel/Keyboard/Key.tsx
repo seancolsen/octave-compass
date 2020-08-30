@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { KeyPolygon, KeyPolygonProps } from './common/KeyPolygon';
 import { KeyLabelSet, KeyLabelSetProps } from './KeyLabelSet';
 import { Pitch } from '../../../Utils/Music/Pitch';
 import { useStore } from '../../Store';
+import { observer } from 'mobx-react-lite';
 
 const StyledKeyPolygon = styled(KeyPolygon)<{active: boolean} & KeyPolygonProps>`
   fill: ${p => p.active ? '#e1e1e1' : '#b7b7b7'};
@@ -11,23 +12,8 @@ const StyledKeyPolygon = styled(KeyPolygon)<{active: boolean} & KeyPolygonProps>
   stroke-width: 3px;
 `;
 
-const InactiveG = styled.g`
-  & * {
-    cursor: grab;
-  }
-`;
-
 const StyledKeyLabelSet = styled(KeyLabelSet)<{active: boolean} & KeyLabelSetProps>`
 opacity: ${p => p.active ? '1' : '0.25'};
-`;
-
-const ActiveG = styled.g`
-  & * {
-    cursor: pointer;
-  }
-  &:hover > ${StyledKeyPolygon} {
-    fill: #f2f2d2;
-  }
 `;
 
 interface KeyProps {
@@ -36,9 +22,9 @@ interface KeyProps {
   rotation: number;
 }
 
-export function Key(props: KeyProps) {
+export const Key = observer((props: KeyProps) => {
   const store = useStore();
-
+  const isClickable = props.active && store.editVsPlay === 1;
   type GenericEvent = React.MouseEvent | React.TouchEvent;
   const handleMouseDownOrTouchStart = (event: GenericEvent) => {
     event.preventDefault();
@@ -49,13 +35,22 @@ export function Key(props: KeyProps) {
     event.stopPropagation();
   }
 
-  const G = props.active ? ActiveG : InactiveG;
+  const ClickableG = styled.g`
+    & * {
+      cursor: pointer;
+    }
+    &:hover > ${StyledKeyPolygon} {
+      fill: #f2f2d2;
+    }
+  `;
+  const BasicG = styled.g``;
+  const G = isClickable ? ClickableG : BasicG;
   
   return (
     <G
-      onMouseDown={e => handleMouseDownOrTouchStart(e)}
-      onTouchStart={e => handleMouseDownOrTouchStart(e)}
-      onTouchEnd={e => e.preventDefault()}
+      onMouseDown={isClickable ? handleMouseDownOrTouchStart : undefined}
+      onTouchStart={isClickable ? handleMouseDownOrTouchStart : undefined}
+      onTouchEnd={isClickable ? e => e.preventDefault() : undefined}
     >
       <StyledKeyPolygon
         pitch={props.pitch}
@@ -68,4 +63,4 @@ export function Key(props: KeyProps) {
       />
     </G>
   );
-}
+});

@@ -44,6 +44,11 @@ interface RenderProps {
 interface Props {
 
   /**
+   * When true the user will be able to rotate the object. Defaults to true.
+   */
+  isRotatable?: boolean,
+
+  /**
    * This function is called when the user grabs the object.
    */
   onRotationStart(): void,
@@ -282,8 +287,9 @@ export const Rotator = (props: Props) => {
   return useObserver(() =>
     <Group
       rotation={state.rotation}
-      onMouseDown={startRotating}
-      onTouchStart={startRotating}
+      onMouseDown={props.isRotatable ? startRotating : undefined}
+      onTouchStart={props.isRotatable ? startRotating : undefined}
+      style={{cursor: props.isRotatable ? 'grab' : 'default'}}
     >{
       props.children({
         rotation: state.rotation,

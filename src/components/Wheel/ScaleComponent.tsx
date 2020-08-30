@@ -10,7 +10,6 @@ const Background = styled(IntervalSetPolygon)<IntervalSetPolygonProps>`
   fill: #E1E1E1;
   stroke: #f7f7f7;
   stroke-width: 3px;
-  cursor: grab;
   filter: url(#shadow-when-edit);
 `;
 

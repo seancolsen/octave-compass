@@ -43,7 +43,7 @@ svg text {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  cursor: default;
+  cursor: inherit;
 }
 
 svg text::selection {

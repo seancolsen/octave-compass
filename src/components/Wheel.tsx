@@ -48,6 +48,7 @@ export const Wheel = observer(() => {
         <Base scaleIsRotating={store.scaleIsRotating} />
         
         <Rotator
+          isRotatable={store.editVsPlay === 0}
           onRotationStart={() => store.keyboardIsRotating = true}
           onRotationRest={r => {store.keyboardIsRotating = false; store.shiftTonalCenter(r)}}
         >{({rotation, currentDetent}) =>
@@ -58,6 +59,7 @@ export const Wheel = observer(() => {
         }</Rotator>
 
         <Rotator
+          isRotatable={store.editVsPlay === 0}
           detents={store.intervalSet.ordinals.map((o) => Scalar.wrapToOctave(-o))}
           onRotationStart={() => store.scaleIsRotating = true}
           onRotationRest={r => {store.scaleIsRotating = false; store.shiftIntervalSet(r)}}
