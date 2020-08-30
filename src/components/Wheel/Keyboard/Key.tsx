@@ -18,7 +18,6 @@ export const Key = observer((props: KeyProps) => {
   const store = useStore();
   const StyledKeyPolygon = styled(KeyPolygon)`
     fill: ${props.active ? '#e1e1e1' : '#b7b7b7'};
-    opacity: ${props.active ? 1 : 1 - store.editVsPlay};
     stroke: #a7a7a7;
     stroke-width: 3px;
   `;
@@ -52,7 +51,10 @@ export const Key = observer((props: KeyProps) => {
       onTouchStart={isClickable ? handleMouseDownOrTouchStart : undefined}
       onTouchEnd={isClickable ? e => e.preventDefault() : undefined}
     >
-      <StyledKeyPolygon pitch={props.pitch} />
+      {props.active || store.editVsPlay === 0 ?
+        <StyledKeyPolygon pitch={props.pitch} />
+        : null
+      }
       <StyledKeyLabelSet
         pitch={props.pitch}
         rotation={props.rotation}

@@ -34,13 +34,13 @@ export const Wheel = observer(() => {
 
         <ShadowFilter
           id='shadow-when-edit'
-          blurRadius={15*(1-store.editVsPlay)}
-          opacity={store.editVsPlay === 1 ? 0 : 1}
+          blurRadius={15}
+          opacity={store.editVsPlay === 0 ? 1 : 0}
           bounds={3}
         />
         <ShadowFilter
           id='shadow-when-play'
-          blurRadius={15*store.editVsPlay}
+          blurRadius={15}
           opacity={store.editVsPlay === 0 ? 0 : 1}
           bounds={3}
         />

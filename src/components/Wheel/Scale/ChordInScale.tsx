@@ -57,15 +57,16 @@ export const ChordInScale = observer((props: Props) => {
     return `translate(${point.x} ${point.y}) rotate(${rotation})`;
   })();
 
-  const G = store.editVsPlay ? ClickableG : NonClickableG;
+  const clickable = store.editVsPlay === 1;
+  const G = clickable ? ClickableG : NonClickableG;
 
   return (
     <G
       transform={transform}
       className={props.className}
-      onMouseDown={store.editVsPlay ? handleMouseDownOrTouchStart : undefined}
-      onTouchStart={store.editVsPlay ? handleMouseDownOrTouchStart : undefined}
-      onTouchEnd={store.editVsPlay ? e => e.preventDefault() : undefined}
+      onMouseDown={clickable ? handleMouseDownOrTouchStart : undefined}
+      onTouchStart={clickable ? handleMouseDownOrTouchStart : undefined}
+      onTouchEnd={clickable ? e => e.preventDefault() : undefined}
     >
       <Background cx={0} cy={0} r={props.size} />
       <ChordEmblem
