@@ -20,6 +20,7 @@ interface Props {
   checked: boolean;
   x: number;
   y: number;
+  opacity?: number;
 }
 
 export function SvgCheckbox(props: Props) {
@@ -39,7 +40,10 @@ export function SvgCheckbox(props: Props) {
   const transform = `translate(${props.x} ${props.y})`;
 
   return (
-    <g transform={transform}>
+    <g
+      transform={transform}
+      opacity={props.opacity}
+    >
       <StyledRect
         x={-size / 2} y={-size / 2}
         width={size} height={size}

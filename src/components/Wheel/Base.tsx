@@ -21,6 +21,7 @@ export const Base = observer((props: Props) => {
       interval={ordinal}
       label={name}
       active={intervalIsActive(ordinal)}
+      clickable={ordinal !== 0 && store.editVsPlay === 0}
     />
   );
 

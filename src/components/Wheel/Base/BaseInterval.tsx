@@ -33,16 +33,16 @@ interface Props {
   interval: number;
   active: boolean;
   label: string;
+  clickable?: boolean;
 }
 
 export function BaseInterval(props: Props) {
   const store = useStore();
   const point = (new IrPoint(props.interval, checkboxRadius)).toXy();
-  const clickable = props.interval !== 0;
   return (
     <StyledG
-      clickable={clickable}
-      onClick={() => clickable ?
+      clickable={props.clickable || false}
+      onClick={() => props.clickable ?
         store.toggleInterval(props.interval) :
         null
       }
@@ -63,7 +63,8 @@ export function BaseInterval(props: Props) {
         x={point.x}
         y={point.y}
         checked={props.active}
-        clickable={clickable}
+        clickable={props.clickable || false}
+        opacity={1 - store.editVsPlay}
       />
     </StyledG>
   );
