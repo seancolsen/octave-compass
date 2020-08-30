@@ -6,13 +6,14 @@ import { IrPoint } from '../../../Utils/Geometry/IrPoint';
 import { Angle } from '../../../Utils/Geometry/Angle';
 import { ChordEmblem } from '../../common/ChordEmblem';
 import { useStore } from '../../Store';
+import { observer } from 'mobx-react-lite';
 
 const Background = styled.circle`
-    stroke: #e1e1e1;
-    stroke-width: 5px;
+  stroke: #e1e1e1;
+  stroke-width: 5px;
 `;
 
-const HighlightableG = styled.g`
+const ClickableG = styled.g`
   & * {
     cursor: pointer;
   }
@@ -22,7 +23,7 @@ const HighlightableG = styled.g`
   }
 `;
 
-const NonHighlightableG = styled.g`
+const NonClickableG = styled.g`
   & * {
     cursor: grab;
   }
@@ -33,12 +34,11 @@ interface Props {
   chord: Chord;
   radialPosition: number;
   rotation: number;
-  somethingIsRotating: boolean;
   className?: string;
   size: number;
 }
 
-export function ChordInScale(props: Props) {
+export const ChordInScale = observer((props: Props) => {
   const store = useStore();
 
   type GenericEvent = React.MouseEvent | React.TouchEvent;
@@ -57,7 +57,7 @@ export function ChordInScale(props: Props) {
     return `translate(${point.x} ${point.y}) rotate(${rotation})`;
   })();
 
-  const G = props.somethingIsRotating ? NonHighlightableG : HighlightableG;
+  const G = store.editVsPlay ? ClickableG : NonClickableG;
 
   return (
     <G
@@ -75,4 +75,4 @@ export function ChordInScale(props: Props) {
     </G>
   );
 
-}
+})

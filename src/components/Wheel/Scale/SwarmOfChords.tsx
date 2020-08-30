@@ -5,7 +5,6 @@ import { OrdinalChordSet } from '../../../Utils/Music/OrdinalChordSet';
 interface Props {
   ordinalChordSets: OrdinalChordSet[];
   rotation: number;
-  somethingIsRotating: boolean;
 }
 
 export function SwarmOfChords(props: Props) {
@@ -15,8 +14,7 @@ export function SwarmOfChords(props: Props) {
       chordSet={ordinalChordSet.chordSet}
       ordinal={ordinalChordSet.ordinal}
       rotation={props.rotation}
-      somethingIsRotating={props.somethingIsRotating}
     />
   );
-  return <g>{slices}</g>;
+  return <g style={{filter: 'url(#shadow-when-play)'}}>{slices}</g>;
 }

@@ -11,7 +11,6 @@ interface Props {
   chordSet: ChordSet;
   ordinal: number;
   rotation: number;
-  somethingIsRotating: boolean;
 }
 
 export function SliceOfChords(props: Props) {
@@ -37,7 +36,6 @@ export function SliceOfChords(props: Props) {
           chord={chord}
           interval={props.ordinal}
           rotation={props.rotation}
-          somethingIsRotating={props.somethingIsRotating}
         />
       );
       radialPosition -= size;

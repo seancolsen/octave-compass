@@ -6,18 +6,12 @@ import { SwarmOfChords } from './Scale/SwarmOfChords';
 import { useStore } from '../Store';
 import { observer } from 'mobx-react-lite';
 
-const Shadow = styled(IntervalSetPolygon)<IntervalSetPolygonProps>`
-  fill: black;
-  stroke: black;
-  stroke-width: 3px;
-  filter: url(#blur);
-`;
-
 const Background = styled(IntervalSetPolygon)<IntervalSetPolygonProps>`
   fill: #E1E1E1;
   stroke: #f7f7f7;
   stroke-width: 3px;
   cursor: grab;
+  filter: url(#shadow-when-edit);
 `;
 
 interface Props {
@@ -33,7 +27,6 @@ export const ScaleComponent = observer((props: Props) => {
   );
   return (
     <g>
-      <Shadow intervalSet={store.intervalSet}/>
       <Background intervalSet={store.intervalSet}/>
       {/* <ChordPolygons
         ordinalChordsPlayed={props.ordinalChordsPlayed}
@@ -43,7 +36,6 @@ export const ScaleComponent = observer((props: Props) => {
       <SwarmOfChords
         ordinalChordSets={ordinalChordSets}
         rotation={props.rotation}
-        somethingIsRotating={props.somethingIsRotating}
       />
     </g>
   );

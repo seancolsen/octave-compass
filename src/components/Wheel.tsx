@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BlurFilter } from './Wheel/BlurFilter';
 import { Keyboard } from './Wheel/Keyboard';
 import { Base } from './Wheel/Base';
 import { ScaleComponent } from './Wheel/ScaleComponent';
@@ -8,6 +7,7 @@ import { Rotator } from './Wheel/Rotator';
 import { useStore } from './Store';
 import { Scalar } from '../Utils/Math/Scalar';
 import { observer } from 'mobx-react-lite';
+import { ShadowFilter } from './Wheel/ShadowFilter';
 
 /**
  * The width and height of the square SVG view box in user units (basically SVG
@@ -32,7 +32,18 @@ export const Wheel = observer(() => {
     <Container id='wheel'>
       <svg viewBox={`-${BOX_SIZE/2} -${BOX_SIZE/2} ${BOX_SIZE} ${BOX_SIZE}`}>
 
-        <BlurFilter id='blur' size={15} bounds={3} />
+        <ShadowFilter
+          id='shadow-when-edit'
+          blurRadius={15*(1-store.editVsPlay)}
+          opacity={store.editVsPlay === 1 ? 0 : 1}
+          bounds={3}
+        />
+        <ShadowFilter
+          id='shadow-when-play'
+          blurRadius={15*store.editVsPlay}
+          opacity={store.editVsPlay === 0 ? 0 : 1}
+          bounds={3}
+        />
 
         <Base scaleIsRotating={store.scaleIsRotating} />
         

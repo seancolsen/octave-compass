@@ -14,7 +14,7 @@ export const Keyboard = observer((props: Props) => {
   const rotation = props.rotation - store.tonalCenter;
   const transform = `rotate(${Angle.iToD(-store.tonalCenter)})`;
   return (
-    <g transform={transform}>
+    <g transform={transform} filter="url('#shadow-when-edit')">
       <KeySet
         pitchSet={store.pitchSet.compliment}
         active={false}
