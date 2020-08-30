@@ -70,27 +70,6 @@ body,
 width: 100%;
 }
 
-#overlaid-buttons .corner {
-  position: absolute;
-  margin: 1vmax;
-}
-
-#overlaid-buttons .top {
-  top: 0;
-}
-
-#overlaid-buttons .bottom {
-  bottom: 0;
-}
-
-#overlaid-buttons .left {
-  left: 0;
-}
-
-#overlaid-buttons .right {
-  right: 0;
-}
-
 #wheel svg {
   display: inline-block;
   max-width: 100%;
@@ -107,27 +86,6 @@ width: 100%;
 #layout {
   display: grid;
   grid-template-rows: auto auto 100vw auto;
-}
-#overlaid-buttons {
-  display: none;
-}
-
-@media (min-aspect-ratio: 65/100) {
-  #layout {
-    grid-template-rows: auto 105vw auto;
-  }
-  #wheel {
-    margin-top: 5vw;
-  }
-  #overlaid-buttons {
-    display: block;
-  }
-  #toolbar {
-    display: none;
-  }
-  #wheel svg {
-    width: 100vw;
-  }
 }
 
 @media (min-aspect-ratio: 75/100) {
@@ -147,9 +105,6 @@ width: 100%;
     grid-auto-flow: column;
     grid-template-columns: 75vh auto;
     grid-template-rows: 10vh 15vh 75vh;
-  }
-  #overlaid-buttons {
-    display: none;
   }
   #toolbar {
     display: block;
@@ -184,7 +139,6 @@ width: 100%;
     grid-template-columns: 100vh 1fr;
     grid-template-rows: 1fr 10fr 30fr;
   }
-
   #toolbar {
     margin-bottom: 0;
   }

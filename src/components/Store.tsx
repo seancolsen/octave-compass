@@ -29,6 +29,17 @@ const defaultInitialValues: StoreInitialValues = {
 const createStore = (initialValues: StoreInitialValues, audio: Audio) => ({
 
   /**
+   * A value of 0 means "Edit". When edit is enabled, the user can rotate the
+   * scale and keyboard as well as toggle intervals on/off.
+   * 
+   * A value of 1 means "Play". When play is enabled, the user can play sounds.
+   * 
+   * Values in between 0 and 1 mean that the app is transitioning between states
+   * and that no interaction should be possible. 
+   */
+  editVsPlay: 1,
+  
+  /**
    * The note at the top of the wheel, as an integer. 0 means C, 1 means C
    * and so on. 
    */
@@ -69,6 +80,35 @@ const createStore = (initialValues: StoreInitialValues, audio: Audio) => ({
    * in the scale.
    */
   clef: "treble",
+
+  /**
+   * Set a new value for editVsPlay, and transition to that value with
+   * animation.
+   * 
+   * @param newValue The desired editVsPlay value
+   */
+  setEditVsPlayWithTransition(newValue: 0 | 1) {
+    if (this.editVsPlay === newValue) {return;}
+    const transitionDuration = 200; // (ms)
+    const direction = newValue ? 1 : -1;
+    const startValue = Math.round(this.editVsPlay);
+    const stepEditVsPlayTransition = (currentTime: DOMHighResTimeStamp) => {
+      const timeElapsed = currentTime - transitionStartTime;
+      if (timeElapsed > transitionDuration) {
+        this.editVsPlay = Math.round(this.editVsPlay);
+        return;
+      }
+      this.editVsPlay = startValue + timeElapsed / transitionDuration * direction;
+      window.requestAnimationFrame(stepEditVsPlayTransition)
+    };
+    const transitionStartTime = performance.now();
+    window.requestAnimationFrame(stepEditVsPlayTransition)
+  },
+
+  toggleEditVsPlayWithTransition() {
+    const newValue = Math.round(this.editVsPlay) ? 0 : 1;
+    this.setEditVsPlayWithTransition(newValue);
+  },
 
   /**
    * Set the intervalSet and try to figure out what Scale or Chord it is in
