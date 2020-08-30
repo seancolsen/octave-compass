@@ -95,7 +95,7 @@ const createStore = (initialValues: StoreInitialValues, audio: Audio) => ({
     const stepEditVsPlayTransition = (currentTime: DOMHighResTimeStamp) => {
       const timeElapsed = currentTime - transitionStartTime;
       if (timeElapsed > transitionDuration) {
-        this.editVsPlay = Math.round(this.editVsPlay);
+        this.editVsPlay = newValue;
         return;
       }
       this.editVsPlay = startValue + timeElapsed / transitionDuration * direction;
