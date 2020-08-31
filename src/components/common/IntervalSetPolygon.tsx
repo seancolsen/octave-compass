@@ -3,7 +3,7 @@ import { Polygon } from "./../Wheel/common/Polygon";
 import { IrPoint } from "./../../Utils/Geometry/IrPoint";
 import { IntervalSet } from '../../Utils/Music/IntervalSet';
 
-const radius = 310;
+const radius = 300;
 
 export interface IntervalSetPolygonProps {
   intervalSet: IntervalSet;

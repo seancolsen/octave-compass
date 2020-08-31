@@ -8,6 +8,7 @@ import { useStore } from './Store';
 import { Scalar } from '../Utils/Math/Scalar';
 import { observer } from 'mobx-react-lite';
 import { ShadowFilter } from './Wheel/ShadowFilter';
+import { IntervalSetPolygon } from './common/IntervalSetPolygon';
 
 /**
  * The width and height of the square SVG view box in user units (basically SVG
@@ -26,6 +27,12 @@ const Container = styled.div`
 export const Wheel = observer(() => {
 
   const store = useStore();
+
+  const StyledIntervalSetPolygon = styled(IntervalSetPolygon)`
+    fill: #b7b7b7;
+    stroke: #a7a7a7;
+    stroke-width: 3px;
+  `;
 
   return (
 
@@ -46,6 +53,11 @@ export const Wheel = observer(() => {
         />
 
         <Base scaleIsRotating={store.scaleIsRotating} />
+
+        {store.editVsPlay === 1 ?
+          <StyledIntervalSetPolygon intervalSet={store.intervalSet} />
+          : null
+        }
         
         <Rotator
           isRotatable={store.editVsPlay === 0}

@@ -6,7 +6,7 @@ import { SwarmOfChords } from './Scale/SwarmOfChords';
 import { useStore } from '../Store';
 import { observer } from 'mobx-react-lite';
 
-const Background = styled(IntervalSetPolygon)<IntervalSetPolygonProps>`
+const Background = styled(IntervalSetPolygon)`
   fill: #E1E1E1;
   stroke: #f7f7f7;
   stroke-width: 3px;
@@ -26,7 +26,10 @@ export const ScaleComponent = observer((props: Props) => {
   );
   return (
     <g>
-      <Background intervalSet={store.intervalSet}/>
+      {store.editVsPlay !== 1 ?
+        <Background intervalSet={store.intervalSet}/>
+        : null
+      }
       {/* <ChordPolygons
         ordinalChordsPlayed={props.ordinalChordsPlayed}
         rotation={props.rotation}
