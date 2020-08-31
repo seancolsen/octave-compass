@@ -8,7 +8,7 @@ const Background = styled.circle`
   fill: ${props => props.color || 'grey'};
 `;
 
-const Symbol = styled.text`
+const StyledText = styled.text`
   fill: white;
   font-size: ${props => props.fontSize}px;
   tspan.bold {
@@ -28,7 +28,8 @@ interface Props {
 export function ChordEmblem(props: Props) {
   const fontSize = props.size * props.chord.textSizeFactor
       * fontSizeToEmblemSizeRatio;
-  const noteName = props.noteName || '';
+  const noteName = props.noteName;
+  const EmblemContents = props.chord.EmblemContents;
   return (
     <>
       <Background
@@ -36,13 +37,14 @@ export function ChordEmblem(props: Props) {
         r={props.size}
         color={props.chord.color}
       />
-      <Symbol
+      <StyledText
         x={0} y={0}
-        dangerouslySetInnerHTML={{__html: noteName + props.chord.symbol}}
-        dominantBaseline={'middle'} // TODO address lack of IE support
+        dominantBaseline={'middle'}
         textAnchor={'middle'}
         fontSize={fontSize}
-      />
+      >
+        <EmblemContents noteName={noteName}/>
+      </StyledText>
     </>
   );
 }

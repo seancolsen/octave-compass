@@ -3,10 +3,10 @@ import { ChordSet } from '../../../Utils/Music/ChordSet';
 import { ChordInScale } from './ChordInScale';
 import { Note } from '../../../Utils/Music/Note';
 
-const constellationRadius = 295;
+const constellationRadius = 270;
 const maxRadialSpacing = 5;
-const circleRadius = 40;
-const centerDeadZone = 60;
+const circleRadius = 45;
+const centerDeadZone = 10;
 
 interface Props {
   chordSet: ChordSet;
