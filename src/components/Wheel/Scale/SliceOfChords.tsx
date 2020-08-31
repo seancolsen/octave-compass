@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChordSet } from '../../../Utils/Music/ChordSet';
 import { ChordInScale } from './ChordInScale';
+import { Note } from '../../../Utils/Music/Note';
 
 const constellationRadius = 295;
 const maxRadialSpacing = 5;
@@ -9,6 +10,7 @@ const centerDeadZone = 60;
 
 interface Props {
   chordSet: ChordSet;
+  note?: Note;
   ordinal: number;
   rotation: number;
 }
@@ -31,6 +33,7 @@ export function SliceOfChords(props: Props) {
       result.push(
         <ChordInScale
           key={index}
+          note={props.note}
           radialPosition={radialPosition}
           size={size}
           chord={chord}

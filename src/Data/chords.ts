@@ -17,7 +17,7 @@ export const chords: ChordData[] = [
     emblemSize: 1,
     textSizeFactor: 1,
     color: '#46ba19',
-    symbol: '<tspan class="bold">M</tspan>',
+    symbol: 'M',
   },
   {
     binary: 0b000010001001,

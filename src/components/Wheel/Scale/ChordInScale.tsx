@@ -7,6 +7,7 @@ import { Angle } from '../../../Utils/Geometry/Angle';
 import { ChordEmblem } from '../../common/ChordEmblem';
 import { useStore } from '../../Store';
 import { observer } from 'mobx-react-lite';
+import { Note } from '../../../Utils/Music/Note';
 
 const Background = styled.circle`
   stroke: #e1e1e1;
@@ -31,6 +32,7 @@ const NonClickableG = styled.g`
 
 interface Props {
   interval: number;
+  note?: Note;
   chord: Chord;
   radialPosition: number;
   rotation: number;
@@ -40,7 +42,8 @@ interface Props {
 
 export const ChordInScale = observer((props: Props) => {
   const store = useStore();
-
+  const displayNoteName = !store.scaleIsRotating && !store.keyboardIsRotating;
+  const noteName = displayNoteName ? (props.note?.name?.unicode || '') : '';
   type GenericEvent = React.MouseEvent | React.TouchEvent;
   const handleMouseDownOrTouchStart = (event: GenericEvent) => {
     event.preventDefault();
@@ -72,6 +75,7 @@ export const ChordInScale = observer((props: Props) => {
       <ChordEmblem
         size={props.size}
         chord={props.chord}
+        noteName={noteName}
       />
     </G>
   );

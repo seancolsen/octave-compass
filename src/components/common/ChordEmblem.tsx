@@ -22,11 +22,13 @@ const Symbol = styled.text`
 interface Props {
   size: number;
   chord: Chord;
+  noteName?: string;
 }
 
 export function ChordEmblem(props: Props) {
   const fontSize = props.size * props.chord.textSizeFactor
       * fontSizeToEmblemSizeRatio;
+  const noteName = props.noteName || '';
   return (
     <>
       <Background
@@ -36,7 +38,7 @@ export function ChordEmblem(props: Props) {
       />
       <Symbol
         x={0} y={0}
-        dangerouslySetInnerHTML={{__html: props.chord.symbol}}
+        dangerouslySetInnerHTML={{__html: noteName + props.chord.symbol}}
         dominantBaseline={'middle'} // TODO address lack of IE support
         textAnchor={'middle'}
         fontSize={fontSize}
