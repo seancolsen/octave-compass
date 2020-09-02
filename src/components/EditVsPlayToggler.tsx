@@ -1,23 +1,31 @@
 import React from 'react';
 import { useStore } from './Store';
-import { Button } from './common/Button';
 import { useObserver } from 'mobx-react-lite';
+import styled from 'styled-components';
+
+interface ButtonProps {
+};
+const Button: React.FC<ButtonProps> = p => <div>{p.children}</div>;
+
+const Container = styled.div`
+  cursor: pointer;
+`;
 
 export function EditVsPlayToggler() {
   const store = useStore();
+  const isEdit = store.editVsPlay === 0;
+  const isPlay = !isEdit;
   
   return useObserver(() =>
-    <div>
-      <Button
-        onClick={store.toggleEditVsPlayWithTransition}
-      >
-        Toggle
+    <Container
+      onClick={store.toggleEditVsPlayWithTransition}
+    >
+      <Button>
+        Edit Scale
       </Button>
-      
-      Value: {store.editVsPlay}
-      --
-      ({store.editVsPlay ? "play" : store.editVsPlay === 0 ? "edit" : "transitioning"})
-
-    </div>
+      <Button>
+        Play Sounds
+      </Button>
+    </Container>
   );
 }

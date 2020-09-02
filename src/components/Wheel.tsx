@@ -9,6 +9,7 @@ import { Scalar } from '../Utils/Math/Scalar';
 import { observer } from 'mobx-react-lite';
 import { ShadowFilter } from './Wheel/ShadowFilter';
 import { IntervalSetPolygon } from './common/IntervalSetPolygon';
+import { BlurFilter } from './Wheel/BlurFilter';
 
 /**
  * The width and height of the square SVG view box in user units (basically SVG
@@ -29,8 +30,8 @@ export const Wheel = observer(() => {
   const store = useStore();
 
   const StyledIntervalSetPolygon = styled(IntervalSetPolygon)`
-    fill: #b7b7b7;
-    stroke: #a7a7a7;
+    fill: #8F8F8F;
+    stroke: #CCC;
     stroke-width: 3px;
   `;
 
@@ -41,22 +42,22 @@ export const Wheel = observer(() => {
 
         <ShadowFilter
           id='shadow-when-edit'
-          blurRadius={15}
+          blurRadius={20}
           opacity={store.editVsPlay === 0 ? 1 : 0}
           bounds={3}
         />
         <ShadowFilter
           id='shadow-when-play'
-          blurRadius={15}
+          blurRadius={20}
           opacity={store.editVsPlay === 0 ? 0 : 1}
           bounds={3}
         />
+        <BlurFilter bounds={3} size={8} id='blur' />
 
         <Base scaleIsRotating={store.scaleIsRotating} />
 
-        {store.editVsPlay === 1 ?
-          <StyledIntervalSetPolygon intervalSet={store.intervalSet} />
-          : null
+        {store.editVsPlay === 1 &&
+          <StyledIntervalSetPolygon intervalSet={store.intervalSet} radius={300} />
         }
         
         <Rotator
@@ -81,6 +82,10 @@ export const Wheel = observer(() => {
             somethingIsRotating={store.keyboardIsRotating || store.scaleIsRotating}
           />
         }</Rotator>
+
+        {store.editVsPlay === 0 &&
+          <circle cx={0} cy={0} r={5} fill='white' stroke='none' />
+        }
 
         {/* TODO: build this component and then uncomment */}
         {/* <ModeShiftHelpText currentDetent={scaleRotator.currentDetent}/> */}

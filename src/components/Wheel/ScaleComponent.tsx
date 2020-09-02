@@ -26,9 +26,8 @@ export const ScaleComponent = observer((props: Props) => {
   );
   return (
     <g>
-      {store.editVsPlay !== 1 ?
-        <Background intervalSet={store.intervalSet}/>
-        : null
+      {store.editVsPlay !== 1 &&
+        <Background intervalSet={store.intervalSet} radius={300} />
       }
       {/* <ChordPolygons
         ordinalChordsPlayed={props.ordinalChordsPlayed}

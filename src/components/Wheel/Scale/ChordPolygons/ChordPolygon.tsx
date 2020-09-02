@@ -5,6 +5,7 @@ import { OrdinalChord } from '../../../../Utils/Music/OrdinalChord';
 
 interface Props {
   ordinalChord: OrdinalChord;
+  radius: number;
   className?: string;
 }
 
@@ -18,6 +19,7 @@ export function ChordPolygon(props: Props) {
         fill={props.ordinalChord.chord.color}
         opacity={value.opacity}
         className={props.className}
+        radius={props.radius}
       />}
     </Motion>
   );

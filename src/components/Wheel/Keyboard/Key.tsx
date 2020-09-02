@@ -17,13 +17,14 @@ type GenericEvent = React.MouseEvent | React.TouchEvent;
 export const Key = observer((props: KeyProps) => {
   const store = useStore();
   const isClickable = props.active && store.editVsPlay === 1;
+  const isHighlighted = store.editVsPlay === 0 && props.active;
   const StyledKeyPolygon = styled(KeyPolygon)`
-    fill: ${isClickable ? '#e1e1e1' : props.active ? '#cccccc' : '#b7b7b7'};
+    fill: ${store.editVsPlay !== 0 ? '#CCC' : '#b7b7b7'};
     stroke: #a7a7a7;
     stroke-width: 3px;
   `;
   const StyledKeyLabelSet = styled(KeyLabelSet)`
-    opacity: ${props.active ? '1' : '0.25'};
+    opacity: ${!props.active ? '0.25' : isHighlighted ? '0.9' : '1'};
   `;
   
   const handleMouseDownOrTouchStart = (event: GenericEvent) => {
@@ -56,9 +57,15 @@ export const Key = observer((props: KeyProps) => {
         <StyledKeyPolygon pitch={props.pitch} />
         : null
       }
+      {isHighlighted && <StyledKeyLabelSet
+        pitch={props.pitch}
+        rotation={props.rotation}
+        isHighlight={true}
+      />}
       <StyledKeyLabelSet
         pitch={props.pitch}
         rotation={props.rotation}
+        isHighlight={false}
       />
     </G>
   );

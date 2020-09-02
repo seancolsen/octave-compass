@@ -5,10 +5,6 @@ import { Angle } from '../../../Utils/Geometry/Angle';
 
 const size = 60;
 
-const StyledRect = styled.rect`
-  fill: ${props => (props.color === 'white') ? 'white' : 'black'};
-`;
-
 const StyledText = styled.text<{parenthetical: boolean}>`
   font-size: ${props => props.parenthetical ? '34px' : '42px'};
   font-weight: ${props => props.parenthetical ? 'normal' : 'bold'};
@@ -21,36 +17,40 @@ interface Props {
   radius: number;
   rotation: number;
   color: string;
-  parenthetical: boolean;
-  children: ReactNode;
+  strokeWidth?: number;
+  isParenthetical: boolean;
+  children?: ReactNode;
 }
-
-export function KeyLabel(props: Props) {
-  let point = (new IrPoint(props.interval, props.radius)).toXy();
-  let rotation = -Angle.iToD(props.rotation);
+export function KeyLabel(p: Props) {
+  let point = (new IrPoint(p.interval, p.radius)).toXy();
+  let rotation = -Angle.iToD(p.rotation);
   let transform = `translate(${point.x} ${point.y}) rotate(${rotation})`;
   return (
     <g transform={transform}>
 
-      <StyledRect
+      <rect
         x={-size/2} y={-size/2}
         width={size} height={size}
         rx={size/6}  ry={size/6}
-        color={props.color}
+        fill={p.color}
+        stroke={p.strokeWidth ? p.color : 'none'}
+        strokeWidth={p.strokeWidth}
       />
 
-      <StyledText
-        x={1}
-        y={4}
-        dominantBaseline={'middle'} // TODO address lack of IE support
-        textAnchor={'middle'}
-        color={props.color}
-        parenthetical={props.parenthetical}
-      >
-        {props.parenthetical ? '(' : ''}
-          {props.children}
-        {props.parenthetical ? ')' : ''}
-      </StyledText>
+      {p.children && 
+        <StyledText
+          x={1}
+          y={4}
+          dominantBaseline={'middle'}
+          textAnchor={'middle'}
+          color={p.color}
+          parenthetical={p.isParenthetical}
+        >
+          {p.isParenthetical ? '(' : ''}
+            {p.children}
+          {p.isParenthetical ? ')' : ''}
+        </StyledText>
+      }
 
     </g>
   );

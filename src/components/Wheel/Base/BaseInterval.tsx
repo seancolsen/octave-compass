@@ -23,7 +23,7 @@ const StyledG = styled.g<{clickable: boolean}>`
 
 const Background = styled(Arc)<{active: boolean} & ArcProps>`
   stroke-width: 130px;
-  stroke: ${props => (props.active) ? 'white' : '#e4e4e4'};
+  stroke: ${props => (props.active) ? '#787878' : '#666'};
   fill: none;
   stroke-linecap: butt;
 `;

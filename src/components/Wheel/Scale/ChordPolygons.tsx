@@ -13,6 +13,7 @@ const StyledG = styled.g`
 
 interface Props {
   rotation: number;
+  radius: number;
   ordinalChordsPlayed: ObjectLog<OrdinalChord>;
 }
 
@@ -24,6 +25,7 @@ export function ChordPolygons(props: Props) {
         <ChordPolygon
           key={key}
           ordinalChord={ordinalChord}
+          radius={props.radius}
         />
       )}
     </StyledG>

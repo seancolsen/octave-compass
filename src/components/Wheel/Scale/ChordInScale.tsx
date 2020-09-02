@@ -66,6 +66,7 @@ export const ChordInScale = observer((props: Props) => {
   return (
     <G
       transform={transform}
+      opacity={store.editVsPlay === 1 ? 1 : 0.4}
       className={props.className}
       onMouseDown={clickable ? handleMouseDownOrTouchStart : undefined}
       onTouchStart={clickable ? handleMouseDownOrTouchStart : undefined}

@@ -13,7 +13,7 @@ const TextPath = styled(Arc)<ArcProps>`
 `;
 
 const StyledText = styled.text<{active: boolean}>`
-  fill: ${props => props.active ? 'black' : '#AAA'};
+  fill: ${props => props.active ? '#DDD' : '#444'};
   font-size: 30px;
 `;
 

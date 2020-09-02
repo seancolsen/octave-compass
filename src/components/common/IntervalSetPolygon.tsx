@@ -3,10 +3,9 @@ import { Polygon } from "./../Wheel/common/Polygon";
 import { IrPoint } from "./../../Utils/Geometry/IrPoint";
 import { IntervalSet } from '../../Utils/Music/IntervalSet';
 
-const radius = 300;
-
 export interface IntervalSetPolygonProps {
   intervalSet: IntervalSet;
+  radius: number;
   className?: string;
   fill?: string;
   opacity?: string | number;
@@ -14,7 +13,7 @@ export interface IntervalSetPolygonProps {
 
 export function IntervalSetPolygon(props: IntervalSetPolygonProps) {
   const intervals = props.intervalSet.ordinals;
-  const points = intervals.map(i => IrPoint.fromArray([i, radius]));
+  const points = intervals.map(i => IrPoint.fromArray([i, props.radius]));
   return (
     <Polygon
       className={props.className}
