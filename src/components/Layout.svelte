@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   // import Modal from 'react-responsive-modal';
   // import { Marquee } from "./Marquee";
-  // import { Wheel } from "./Wheel.svelte";
+  import Wheel from "./Wheel.svelte";
   // import { Menu } from "./Menu";
   // import { Toolbar } from "./Toolbar";
 
@@ -11,10 +11,9 @@
 
 <div id='app' className="App">
   <div id='layout'>
-    Hello world!
     <!-- <Marquee showMore={() => setModal('marquee')}/>
     <Toolbar /> -->
-    <!-- <div id='wheel-container'><Wheel/></div> -->
+    <div id='wheel-container'><Wheel/></div>
     <!-- <Menu/> -->
   </div>
   <div id='modals'>
