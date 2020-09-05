@@ -1,5 +1,5 @@
 import { IntervalSet } from "./IntervalSet";
-import { chords as chordsData, ChordData, EmblemTemplateProps } from "./../../Data/chords";
+import { chords as chordsData, ChordData, EmblemTemplateProps } from "../../Data/chords";
 
 export class Chord extends IntervalSet {
 
@@ -18,7 +18,7 @@ export class Chord extends IntervalSet {
    * A component to render the formatted text that displays inside the chord
    * emblem.
    */
-  EmblemContents: React.FC<EmblemTemplateProps>;
+  // EmblemContents: React.FC<EmblemTemplateProps>;
 
   /**
    * The CSS color to use for the emblem.
@@ -52,7 +52,7 @@ export class Chord extends IntervalSet {
     super(chordData);
     this.names = [chordData.name];
     this.defaultName = chordData.name;
-    this.EmblemContents = chordData.EmblemContents;
+    // this.EmblemContents = chordData.EmblemContents;
     this.color = chordData.color;
     this.weight = chordData.weight;
     this.emblemSize = chordData.emblemSize;

@@ -3,4 +3,13 @@
 
   "include": ["src/**/*"],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"],
+  "compilerOptions": {
+    "types": [
+      "jest",
+    ],
+    "importsNotUsedAsValues": "remove",
+    "lib": [
+      "es2019"
+    ],
+  }
 }

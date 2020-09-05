@@ -1,4 +1,3 @@
-import { StoreInitialValues } from "./../../components/Store";
 import { IntervalSetFactory } from "./../Music/IntervalSetFactory";
 import { Scalar } from "./../Math/Scalar";
 import { IntervalSetBinary } from "./../Music/IntervalSetBinary";
@@ -34,7 +33,7 @@ export class Url {
    * that can be fed directly into the initial values needed for the global
    * application store.
    */
-  static parse(url: string): StoreInitialValues {
+  static parse(url: string) {
     const parts = Url.normalize(url).split(separator);
     const parsedIntervalSetBin =
       parseInt(parts[0], 10) || defaultIntervalSetBin;
