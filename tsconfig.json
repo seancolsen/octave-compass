@@ -1,15 +1,42 @@
 {
-  "extends": "@tsconfig/svelte/tsconfig.json",
-
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Svelte",
   "include": ["src/**/*"],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"],
   "compilerOptions": {
-    "types": [
-      "jest",
-    ],
+    "moduleResolution": "node",
+    "target": "es2017",
+
+
+    /** 
+      Svelte Preprocess cannot figure out whether you have a value or a type, so tell TypeScript
+      to enforce using `import type` instead of `import` for Types.
+     */
+    // "importsNotUsedAsValues": "error",
     "importsNotUsedAsValues": "remove",
-    "lib": [
-      "es2019"
+    /**
+      TODO: Turn this back on. I set it to remove in order to get the tests to run.
+    */
+
+    
+    "isolatedModules": true,
+    /**
+      To have warnings/errors of the Svelte compiler at the correct position,
+      enable source maps by default.
+     */
+    "sourceMap": true,
+    "types": [
+      "svelte",
+      "jest"
     ],
+    "lib": [
+      "es2019",
+      "DOM",
+    ],
+    "jsx": "preserve", // TODO: Remove once we've got all the JSX out of there
+    "strict": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   }
 }

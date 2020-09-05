@@ -29,7 +29,7 @@ export function ChordEmblem(props: Props) {
   const fontSize = props.size * props.chord.textSizeFactor
       * fontSizeToEmblemSizeRatio;
   const noteName = props.noteName;
-  const EmblemContents = props.chord.EmblemContents;
+  // const EmblemContents = props.chord.EmblemContents;
   return (
     <>
       <Background
@@ -43,7 +43,7 @@ export function ChordEmblem(props: Props) {
         textAnchor={'middle'}
         fontSize={fontSize}
       >
-        <EmblemContents noteName={noteName}/>
+        {/* <EmblemContents noteName={noteName}/> */}
       </StyledText>
     </>
   );

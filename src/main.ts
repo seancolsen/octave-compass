@@ -1,4 +1,4 @@
-import App from './App.svelte';
+import App from './components/App.svelte';
 
 const app = new App({
 	target: document.body,
@@ -7,7 +7,7 @@ const app = new App({
 export default app;
 
 // Disable default drag-related behaviors
-document.body.ondrag = () => false;
-document.body.ondragstart = () => false;
-document.body.ondrop = () => false;
-document.body.ondblclick = () => false;
+// document.body.ondrag = () => false;
+// document.body.ondragstart = () => false;
+// document.body.ondrop = () => false;
+// document.body.ondblclick = () => false;

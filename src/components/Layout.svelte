@@ -11,7 +11,7 @@
 
 <div id='app' className="App">
   <div id='layout'>
-    Foo
+    Hello world!
     <!-- <Marquee showMore={() => setModal('marquee')}/>
     <Toolbar /> -->
     <!-- <div id='wheel-container'><Wheel/></div> -->

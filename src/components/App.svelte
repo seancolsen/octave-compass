@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
   // import { RouteProcessor } from "./RouteProcessor";
-  import { Layout } from "./Layout.svelte";
+  import Layout from "./Layout.svelte";
   // import { StoreProvider } from "./Store";
   // import { Url } from './../Utils/Text/Url';
   // import { useAudio } from "./useAudio";
