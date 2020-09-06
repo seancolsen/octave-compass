@@ -4,9 +4,9 @@
   // import { ScaleComponent } from './Wheel/ScaleComponent';
   // import { Rotator } from './Wheel/Rotator';
   // import { Scalar } from '../Utils/Math/Scalar';
-  // import { ShadowFilter } from './Wheel/ShadowFilter';
+  import ShadowFilter from './Wheel/ShadowFilter.svelte';
   import IntervalSetPolygon from './common/IntervalSetPolygon.svelte';
-  // import { BlurFilter } from './Wheel/BlurFilter';
+  import BlurFilter from './Wheel/BlurFilter.svelte';
 
   import { editVsPlay } from '../stores/editVsPlay';
   import { intervalSet } from '../stores/intervalSet';
@@ -21,22 +21,22 @@
 
 </script>
 
-<div id='wheel'> <!-- TODO: set touch-action: none; for this and all children -->
+<div id='wheel'>
   <svg viewBox={`-${boxSize/2} -${boxSize/2} ${boxSize} ${boxSize}`}>
 
-    <!-- <ShadowFilter
+    <ShadowFilter
       id='shadow-when-edit'
       blurRadius={20}
-      opacity={store.editVsPlay === 0 ? 1 : 0}
+      opacity={$editVsPlay === 0 ? 1 : 0}
       bounds={3}
     />
     <ShadowFilter
       id='shadow-when-play'
       blurRadius={20}
-      opacity={store.editVsPlay === 0 ? 0 : 1}
+      opacity={$editVsPlay === 0 ? 0 : 1}
       bounds={3}
     />
-    <BlurFilter bounds={3} size={8} id='blur' /> -->
+    <BlurFilter bounds={3} size={8} id='blur' />
 
     <!-- <Base scaleIsRotating={store.scaleIsRotating} /> -->
 
@@ -83,5 +83,9 @@
     fill: #8F8F8F;
     stroke: #CCC;
     stroke-width: 3px;
+  }
+
+  :global(#wheel *) {
+    touch-action: none;
   }
 </style>

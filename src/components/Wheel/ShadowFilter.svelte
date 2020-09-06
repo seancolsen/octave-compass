@@ -1,40 +1,26 @@
 <script lang="ts">
-
+  export let id: string;
+  export let blurRadius: number;
+  export let bounds = 1.2;
+  export let opacity = 1;
+  export let offsetX = 0;
+  export let offsetY = 0;
 </script>
 
-<!-- import React from 'react';
-
-interface Props {
-  bounds?: number;
-  id: string;
-  blurRadius: number;
-  opacity?: number;
-  offsetX?: number;
-  offsetY?: number;
-}
-
-export function ShadowFilter(props: Props) {
-  const bounds = props.bounds || 1.2;
-  const offsetX = props.offsetX ?? 0;
-  const offsetY = props.offsetY ?? 0;
-  const opacity = props.opacity ?? 1;
-  return (
-    <filter
-      id={props.id}
-      x={-(bounds - 1) / 2}
-      y={-(bounds - 1) / 2}
-      width={bounds}
-      height={bounds}
-    >
-      <feGaussianBlur in="SourceAlpha" stdDeviation={props.blurRadius}/>
-      <feOffset dx={offsetX} dy={offsetY} result="offsetblur"/>
-      <feComponentTransfer>
-        <feFuncA type="linear" slope={opacity}/>
-      </feComponentTransfer>
-      <feMerge> 
-        <feMergeNode/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  );
-} -->
+<filter
+  id={id}
+  x={-(bounds - 1) / 2}
+  y={-(bounds - 1) / 2}
+  width={bounds}
+  height={bounds}
+>
+  <feGaussianBlur in="SourceAlpha" stdDeviation={blurRadius}/>
+  <feOffset dx={offsetX} dy={offsetY} result="offsetblur"/>
+  <feComponentTransfer>
+    <feFuncA type="linear" slope={opacity}/>
+  </feComponentTransfer>
+  <feMerge> 
+    <feMergeNode/>
+    <feMergeNode in="SourceGraphic"/>
+  </feMerge>
+</filter>
