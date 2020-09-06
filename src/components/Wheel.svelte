@@ -19,14 +19,6 @@
    */
   const boxSize = 1000;
 
-
-
-
-  // const StyledIntervalSetPolygon = styled(IntervalSetPolygon)`
-  //   fill: #8F8F8F;
-  //   stroke: #CCC;
-  //   stroke-width: 3px;
-  // `;
 </script>
 
 <div id='wheel'> <!-- TODO: set touch-action: none; for this and all children -->
@@ -49,7 +41,11 @@
     <!-- <Base scaleIsRotating={store.scaleIsRotating} /> -->
 
     {#if $editVsPlay === 1}
-      <IntervalSetPolygon intervalSet={$intervalSet} radius={300} />
+      <IntervalSetPolygon
+        intervalSet={$intervalSet}
+        radius={300}
+        class='intervalSetPolygon_play'
+      />
     {/if}
     
     <!-- <Rotator
@@ -81,3 +77,11 @@
 
   </svg>
 </div>
+
+<style>
+  svg :global(.intervalSetPolygon_play) {
+    fill: #8F8F8F;
+    stroke: #CCC;
+    stroke-width: 3px;
+  }
+</style>
