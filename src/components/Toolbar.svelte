@@ -1,16 +1,7 @@
 <script lang="ts">
-
+  import EditVsPlayToggler from './EditVsPlayToggler.svelte';
 </script>
 
-<!-- import React from 'react';
-import { EditVsPlayToggler } from './EditVsPlayToggler';
-
-interface Props { }
-
-export function Toolbar(props: Props) {
-  return (
-    <div id='toolbar'>
-      <EditVsPlayToggler />
-    </div>
-  );
-} -->
+<div id='toolbar'>
+  <EditVsPlayToggler />
+</div>

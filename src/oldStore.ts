@@ -1,11 +1,11 @@
-import { IntervalSet } from '../Utils/Music/IntervalSet';
-import { ChordSet } from '../Utils/Music/ChordSet';
-import { Scalar } from '../Utils/Math/Scalar';
-import { IntervalSetFactory } from '../Utils/Music/IntervalSetFactory';
-import { Chord } from '../Utils/Music/Chord';
-import { NoteSet } from '../Utils/Music/NoteSet';
-import { Scale } from '../Utils/Music/Scale';
-import { OrdinalChord } from '../Utils/Music/OrdinalChord';
+import { IntervalSet } from './Utils/Music/IntervalSet';
+import { ChordSet } from './Utils/Music/ChordSet';
+import { Scalar } from './Utils/Math/Scalar';
+import { IntervalSetFactory } from './Utils/Music/IntervalSetFactory';
+import { Chord } from './Utils/Music/Chord';
+import { NoteSet } from './Utils/Music/NoteSet';
+import { Scale } from './Utils/Music/Scale';
+import { OrdinalChord } from './Utils/Music/OrdinalChord';
 
 export interface StoreInitialValues {
   tonalCenter: number,
@@ -26,73 +26,11 @@ const defaultInitialValues: StoreInitialValues = {
 const createStore = (initialValues: StoreInitialValues, audio: any) => ({
 
   
-  /**
-   * The note at the top of the wheel, as an integer. 0 means C, 1 means C
-   * and so on. 
-   */
-  tonalCenter: initialValues.tonalCenter,
 
-  
 
-  /**
-   * Which chords are displayed to the user.
-   */
-  selectedChords: ChordSet.fromDefaultChords,
 
-  /**
-   * True when the user is manipulating the scale polygon.
-   * 
-   * This store value is redundant with the value stored in the Rotator
-   * component, but this is intentional for performance reasons because we don't
-   * want to re-render the Wheel component as frequently as the Rotator
-   * component.
-   */
-  scaleIsRotating: false,
 
-  /**
-   * True when the user is manipulating the radial keyboard.
-   * 
-   * This store value is redundant with the value stored in the Rotator
-   * component, but this is intentional for performance reasons because we don't
-   * want to re-render the Wheel component as frequently as the Rotator
-   * component.
-   */
-  keyboardIsRotating: false,
 
-  /**
-   * The clef to use when rendering a musical staff that contains the notes
-   * in the scale.
-   */
-  clef: "treble",
-
-  /**
-   * Set a new value for editVsPlay, and transition to that value with
-   * animation.
-   * 
-   * @param newValue The desired editVsPlay value
-   */
-  setEditVsPlayWithTransition(newValue: 0 | 1) {
-    if (this.editVsPlay === newValue) {return;}
-    const transitionDuration = 200; // (ms)
-    const direction = newValue ? 1 : -1;
-    const startValue = Math.round(this.editVsPlay);
-    const stepEditVsPlayTransition = (currentTime: DOMHighResTimeStamp) => {
-      const timeElapsed = currentTime - transitionStartTime;
-      if (timeElapsed > transitionDuration) {
-        this.editVsPlay = newValue;
-        return;
-      }
-      this.editVsPlay = startValue + timeElapsed / transitionDuration * direction;
-      window.requestAnimationFrame(stepEditVsPlayTransition)
-    };
-    const transitionStartTime = performance.now();
-    window.requestAnimationFrame(stepEditVsPlayTransition)
-  },
-
-  toggleEditVsPlayWithTransition() {
-    const newValue = Math.round(this.editVsPlay) ? 0 : 1;
-    this.setEditVsPlayWithTransition(newValue);
-  },
 
   /**
    * Set the intervalSet and try to figure out what Scale or Chord it is in

@@ -3,7 +3,7 @@
   // import { Marquee } from "./Marquee";
   import Wheel from "./Wheel.svelte";
   // import { Menu } from "./Menu";
-  // import { Toolbar } from "./Toolbar";
+  import Toolbar from "./Toolbar.svelte";
 
   // type Modal = 'marquee' | null;
 </script>
@@ -11,8 +11,8 @@
 
 <div id='app' className="App">
   <div id='layout'>
-    <!-- <Marquee showMore={() => setModal('marquee')}/>
-    <Toolbar /> -->
+    <!-- <Marquee showMore={() => setModal('marquee')}/> -->
+    <Toolbar />
     <div id='wheel-container'><Wheel/></div>
     <!-- <Menu/> -->
   </div>
