@@ -1,60 +1,46 @@
 <script lang="ts">
+  import Arc from '../common/Arc.svelte';
+  import { musicTheory } from '../../../Data/musicTheory';
+  
+  const upperRadius = 465;
+  const lowerRadius = 480;
+  const arcSpan = 0.4;
+
+  let className: string | undefined = undefined;
+  export {className as class};
+  export let interval: number;
+  export let label: string;
+  export let active: boolean;
+
+  $: id = `interval-label-${interval}`;
+  $: isOnBottom = (() => {
+    const revolution = interval / musicTheory.octaveDivisions;
+    return (revolution > 0.25) && (revolution < 0.75);
+  })();
 
 </script>
 
-<!-- import React from 'react';
-import styled from 'styled-components';
-import { Arc, ArcProps } from '../common/Arc';
-import { musicTheory } from '../../../Data/musicTheory';
+<g class={className}>
+  <Arc
+    class='text-path'
+    {id}
+    radius={isOnBottom ? lowerRadius : upperRadius}
+    startInterval={interval + (arcSpan * (isOnBottom ? 1 : -1))}
+    endInterval={interval + (arcSpan * (isOnBottom ? -1 : 1))}
+  />
+  <text class:active text-anchor={'middle'}>
+    <textPath href={`#${id}`} startOffset={'50%'}>
+      {label}
+    </textPath>
+  </text>
+</g>
 
-const upperRadius = 465;
-const lowerRadius = 480;
-const arcSpan = 0.4;
-
-const TextPath = styled(Arc)<ArcProps>`
-  fill: none;
-  stroke: none;
-`;
-
-const StyledText = styled.text<{active: boolean}>`
-  fill: ${props => props.active ? '#DDD' : '#444'};
-  font-size: 30px;
-`;
-
-interface Props {
-  interval: number;
-  className?: string;
-  label: string;
-  active: boolean;
-}
-
-export function IntervalLabel(props: Props) {
-
-  /**
-   * If the interval we're labeling is on the lower half of the wheel, then we
-   * want to treat it a bit differently. This value is true for those
-   * "bottom" intervals.
-   */
-  const isOnBottom = (() => {
-    const revolution = props.interval / musicTheory.octaveDivisions;
-    return (revolution > 0.25) && (revolution < 0.75);
-  })();
+<style>
+  text { font-size: 30px; fill: #444; }
+  text.active { fill: #DDD; }
   
-  const id = `interval-label-${props.interval}`;
-
-  return (
-    <g className={props.className}>
-      <TextPath
-        id={id}
-        radius={isOnBottom ? lowerRadius : upperRadius}
-        startInterval={props.interval + (arcSpan * (isOnBottom ? 1 : -1))}
-        endInterval={props.interval + (arcSpan * (isOnBottom ? -1 : 1))}
-      />
-      <StyledText active={props.active} textAnchor={'middle'}>
-        <textPath xlinkHref={`#${id}`} href={`#${id}`} startOffset={'50%'}>
-          {props.label}
-        </textPath>
-      </StyledText>
-    </g>
-  );
-} -->
+  g :global(.text-path) {
+    fill: none;
+    stroke: none;
+  }
+</style>

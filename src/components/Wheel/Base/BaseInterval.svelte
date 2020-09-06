@@ -1,78 +1,52 @@
 <script lang="ts">
+  import { IrPoint } from '../../../Utils/Geometry/IrPoint';
+  import IntervalLabel from './IntervalLabel.svelte';
+  import Arc from '../common/Arc.svelte';
+  import SvgCheckbox from './SvgCheckbox.svelte';
+  import { editVsPlay } from '../../../stores/editVsPlay';
+  import { intervalSet } from '../../../stores/intervalSet';
+
+  const checkboxRadius = 430;
+  const arcRadius = 430;
+  const arcSpan = 0.5;
+
+  let className: string | undefined = undefined;
+  export {className as class};
+  export let interval: number;
+  export let label: string;
+  export let isActive: boolean = true;
+  export let isClickable: boolean = true;
+
+  $: point = (new IrPoint(interval, checkboxRadius)).toXy();
 
 </script>
 
-<!-- import React from 'react';
-import styled from 'styled-components';
-import { IntervalLabel } from './IntervalLabel';
-import { Arc, ArcProps } from '../common/Arc';
-import { IrPoint } from '../../../Utils/Geometry/IrPoint';
-import { SvgCheckbox } from './SvgCheckbox';
-import { useStore } from '../../Store';
+<g
+  class={className}
+  class:isClickable
+  class:isActive
+  on:click={() => isClickable ? intervalSet.toggleInterval(interval) : null}
+>
+  <Arc
+    class='background'  
+    startInterval={interval - arcSpan}
+    endInterval={interval + arcSpan}
+    radius={arcRadius}
+  />
+  <IntervalLabel {interval} {label} active={isActive} />
+  {#if $editVsPlay === 0}
+    <SvgCheckbox x={point.x} y={point.y} isChecked={isActive} {isClickable} />
+  {/if}
+</g>
 
-const checkboxRadius = 430;
-const arcRadius = 430;
-const arcSpan = 0.5;
-
-const StyledIntervalLabel = styled(IntervalLabel)``;
-
-const StyledG = styled.g<{clickable: boolean}>`
-  & * {
-    cursor: ${p => p.clickable ? 'pointer' : 'default'};
+<style>
+  g.isClickable :global(*) { cursor: pointer; }
+  g.isClickable:hover { text-decoration: underline; }
+  g :global(.background) {
+    stroke-width: 130px;
+    stroke: #666666;
+    fill: none;
+    stroke-linecap: butt;
   }
-  &:hover ${StyledIntervalLabel} {
-    text-decoration: ${p => p.clickable ? 'underline' : 'none'};
-  }
-`;
-
-const Background = styled(Arc)<{active: boolean} & ArcProps>`
-  stroke-width: 130px;
-  stroke: ${props => (props.active) ? '#787878' : '#666'};
-  fill: none;
-  stroke-linecap: butt;
-`;
-
-interface Props {
-  className?: string;
-  interval: number;
-  active: boolean;
-  label: string;
-  clickable?: boolean;
-}
-
-export function BaseInterval(props: Props) {
-  const store = useStore();
-  const point = (new IrPoint(props.interval, checkboxRadius)).toXy();
-  return (
-    <StyledG
-      clickable={props.clickable || false}
-      onClick={() => props.clickable ?
-        store.toggleInterval(props.interval) :
-        null
-      }
-      className={props.className}
-    >
-      <Background
-        startInterval={props.interval - arcSpan}
-        endInterval={props.interval + arcSpan}
-        radius={arcRadius}
-        active={props.active}
-      />
-      <StyledIntervalLabel
-        interval={props.interval}
-        label={props.label}
-        active={props.active}
-      />
-      {store.editVsPlay === 0 ?
-        <SvgCheckbox
-          x={point.x}
-          y={point.y}
-          checked={props.active}
-          clickable={props.clickable || false}
-        />
-        : null
-      }
-    </StyledG>
-  );
-}
- -->
+  g.isActive :global(.background) { stroke: #787878; }
+</style>

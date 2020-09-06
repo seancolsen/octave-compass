@@ -1,6 +1,6 @@
 <script lang="ts">
   // import { Keyboard } from './Wheel/Keyboard';
-  // import { Base } from './Wheel/Base';
+  import Base from './Wheel/Base.svelte';
   // import { ScaleComponent } from './Wheel/ScaleComponent';
   // import { Rotator } from './Wheel/Rotator';
   // import { Scalar } from '../Utils/Math/Scalar';
@@ -10,6 +10,7 @@
 
   import { editVsPlay } from '../stores/editVsPlay';
   import { intervalSet } from '../stores/intervalSet';
+  import { scaleIsRotating } from '../stores/scaleIsRotating';
 
   /**
    * The width and height of the square SVG view box in user units (basically SVG
@@ -38,7 +39,7 @@
     />
     <BlurFilter bounds={3} size={8} id='blur' />
 
-    <!-- <Base scaleIsRotating={store.scaleIsRotating} /> -->
+    <Base scaleIsRotating={$scaleIsRotating} />
 
     {#if $editVsPlay === 1}
       <IntervalSetPolygon

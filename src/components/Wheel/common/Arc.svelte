@@ -1,24 +1,14 @@
 <script lang="ts">
+  import { IrPoint } from '../../../Utils/Geometry/IrPoint';
 
-</script>
-
-<!-- import React from 'react';
-import { IrPoint } from '../../../Utils/Geometry/IrPoint';
-
-export interface ArcProps {
-  startInterval: number;
-  endInterval: number;
-  radius: number;
-  className?: string;
-  id?: string;
-}
-
-export function Arc(props: ArcProps) {
-
+  let className: string | undefined = undefined;
+  export {className as class};
+  export let startInterval: number;
+  export let endInterval: number;
+  export let radius: number;
+  export let id: string | undefined = undefined;
+  
   const d = (() => {
-    const startInterval = props.startInterval;
-    const endInterval = props.endInterval;
-    const radius = props.radius;
     const startPoint = (new IrPoint(startInterval, radius)).toXy();
     const endPoint = (new IrPoint(endInterval, radius)).toXy();
     const sweepFlag = startInterval < endInterval ? 1 : 0;
@@ -27,9 +17,6 @@ export function Arc(props: ArcProps) {
       "A", radius, radius, 0, 0, sweepFlag, endPoint.x, endPoint.y
     ].join(" ");
   })();
+</script>
 
-  return (
-    <path d={d} className={props.className} id={props.id}/>
-  );
-
-} -->
+<path d={d} class={className} id={id}/>

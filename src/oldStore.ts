@@ -24,22 +24,7 @@ const defaultInitialValues: StoreInitialValues = {
 }
 
 const createStore = (initialValues: StoreInitialValues, audio: any) => ({
-
-  
-
-
-
-
-
-
-  /**
-   * Set the intervalSet and try to figure out what Scale or Chord it is in
-   * the process. This has more of a performance hit than just setting the
-   * interval set directly.
-   */
-  setIntervalSetSmartly(i: IntervalSet) {
-    this.intervalSet = IntervalSetFactory.fromIntervalSet(i);
-  },
+ 
 
   /**
    * Returns a note set derived from the current interval set and named if
@@ -150,46 +135,6 @@ const createStore = (initialValues: StoreInitialValues, audio: any) => ({
     this.tonalCenter = Scalar.wrapToOctave(this.tonalCenter - intervalDiff);
   },
 
-  /**
-   * Rotate the inner scale polygon clockwise by the number (of half steps)
-   * given. Note that it may fall on an intervalSet without a tonal center.
-   */
-  shiftIntervalSet(rotation: number) {
-    this.setIntervalSetSmartly(this.intervalSet.shift(rotation));
-  },
-
-  /**
-   * Rotate the inner scale polygon clockwise. When 1 is given as an argument,
-   * rotate the polygon clockwise to its next vertex. When 2 is given, go 2
-   * vertices and so on.
-   */
-  shiftMode(amount: number) {
-    this.setIntervalSetSmartly(this.intervalSet.modeShift(amount));
-  },
-
-  /**
-   * Turn on/off one interval within the set.
-   */
-  toggleInterval(ordinal: number) {
-    this.setIntervalSetSmartly(
-      this.intervalSet.toggleIntervalOrdinal(ordinal)
-    );
-  },
-
-  /**
-   * Turn on/off a type of chord to display within the scale.
-   */
-  toggleSelectedChord(chord: Chord) {
-    this.selectedChords = this.selectedChords.toggleChord(chord);
-  },
-
-  /**
-   * With Mobx, this function isn't necessary, but we provide it for backwards
-   * compatibility with components that use a store with setter functions.
-   */
-  setIntervalSet(intervalSet: IntervalSet) {
-    this.intervalSet = intervalSet;
-  },
 
   /**
    * With Mobx, this function isn't necessary, but we provide it for backwards
@@ -198,6 +143,16 @@ const createStore = (initialValues: StoreInitialValues, audio: any) => ({
   setTonalCenter(tonalCenter: number) {
     this.tonalCenter = tonalCenter;
   },
+
+
+  /**
+   * Turn on/off a type of chord to display within the scale.
+   */
+  toggleSelectedChord(chord: Chord) {
+    this.selectedChords = this.selectedChords.toggleChord(chord);
+  },
+
+
   
   /**
    * With Mobx, this function isn't necessary, but we provide it for backwards

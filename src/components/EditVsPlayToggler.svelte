@@ -1,8 +1,8 @@
 <script lang="ts">
   import { editVsPlay } from '../stores/editVsPlay';
 
-  const isEdit = $editVsPlay === 0;
-  const isPlay = !isEdit;
+  $: isPlay = $editVsPlay === 1;
+  $: isEdit = $editVsPlay === 0;
 
   /**
    * Set a new value for editVsPlay, and transition to that value with
@@ -38,11 +38,16 @@
   class='container'
   on:click={toggleWithTransition}
 >
-  toggle {$editVsPlay}
+  <div class:active={isEdit}>Edit Scale</div>
+  <div class:active={isPlay}>Play Sounds</div>
 </div>
 
 <style>
   .container {
     cursor: pointer;
+  }
+
+  .active {
+    background: white;
   }
 </style>
