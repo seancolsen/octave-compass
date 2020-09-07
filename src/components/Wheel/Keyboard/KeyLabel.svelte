@@ -1,61 +1,51 @@
 <script lang="ts">
+  import { IrPoint } from '../../../Utils/Geometry/IrPoint';
+  import { Angle } from '../../../Utils/Geometry/Angle';
 
+  const size = 60;
+
+  export let interval: number;
+  export let radius: number;
+  export let rotation: number;
+  export let color: string;
+  export let isParenthetical: boolean = false;
+  export let strokeWidth: number | undefined = undefined;
+
+  $: isBlack = color === 'black' || color === '#000' || color === '#000000';
+  $: point = (new IrPoint(interval, radius)).toXy();
+  $: rotationDeg = -Angle.iToD(rotation);
+  $: transform = `translate(${point.x} ${point.y}) rotate(${rotationDeg})`;
 </script>
 
-<!-- import React, { ReactNode } from 'react';
-import styled from 'styled-components';
-import { IrPoint } from '../../../Utils/Geometry/IrPoint';
-import { Angle } from '../../../Utils/Geometry/Angle';
 
-const size = 60;
+<g class:isParenthetical class:isBlack transform={transform}>
+  <rect
+    x={-size/2} y={-size/2}
+    width={size} height={size}
+    rx={size/6}  ry={size/6}
+    fill={color}
+    stroke={strokeWidth ? color : 'none'}
+    stroke-width={strokeWidth}
+  />
+  <text
+    x={1}
+    y={4}
+    dominant-baseline={'middle'}
+    text-anchor={'middle'}
+  >
+    {#if isParenthetical}({/if}
+      <slot />
+    {#if isParenthetical}){/if}
+  </text>
+</g>
 
-const StyledText = styled.text<{parenthetical: boolean}>`
-  font-size: ${props => props.parenthetical ? '34px' : '42px'};
-  font-weight: ${props => props.parenthetical ? 'normal' : 'bold'};
-  fill: ${props => (props.color === 'white') ? 'black' : 'white'};
-  stroke: none;
-`;
-
-interface Props {
-  interval: number;
-  radius: number;
-  rotation: number;
-  color: string;
-  strokeWidth?: number;
-  isParenthetical: boolean;
-  children?: ReactNode;
-}
-export function KeyLabel(p: Props) {
-  let point = (new IrPoint(p.interval, p.radius)).toXy();
-  let rotation = -Angle.iToD(p.rotation);
-  let transform = `translate(${point.x} ${point.y}) rotate(${rotation})`;
-  return (
-    <g transform={transform}>
-
-      <rect
-        x={-size/2} y={-size/2}
-        width={size} height={size}
-        rx={size/6}  ry={size/6}
-        fill={p.color}
-        stroke={p.strokeWidth ? p.color : 'none'}
-        strokeWidth={p.strokeWidth}
-      />
-
-      {p.children && 
-        <StyledText
-          x={1}
-          y={4}
-          dominantBaseline={'middle'}
-          textAnchor={'middle'}
-          color={p.color}
-          parenthetical={p.isParenthetical}
-        >
-          {p.isParenthetical ? '(' : ''}
-            {p.children}
-          {p.isParenthetical ? ')' : ''}
-        </StyledText>
-      }
-
-    </g>
-  );
-} -->
+<style>
+  g :global(text) {
+    font-size: 42px;
+    font-weight: bold;
+    fill: black;
+    stroke: none;
+  }
+  g.isParenthetical :global(text) { font-size: 34px; font-weight: normal; }
+  g.isBlack :global(text) { fill: white; }
+</style>

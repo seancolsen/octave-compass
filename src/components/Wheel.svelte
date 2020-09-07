@@ -11,6 +11,7 @@
   import { editVsPlay } from '../stores/editVsPlay';
   import { intervalSet } from '../stores/intervalSet';
   import { scaleIsRotating } from '../stores/scaleIsRotating';
+  import { keyboardIsRotating } from '../stores/keyboardIsRotating';
 
   /**
    * The width and height of the square SVG view box in user units (basically SVG
@@ -54,10 +55,10 @@
       onRotationStart={() => store.keyboardIsRotating = true}
       onRotationRest={r => {store.keyboardIsRotating = false; store.shiftTonalCenter(r)}}
     >{({rotation, currentDetent}) => -->
-      <!-- <Keyboard
-        rotation={rotation}
-        somethingIsRotating={store.keyboardIsRotating || store.scaleIsRotating}
-      /> -->
+      <Keyboard
+        rotation={0}
+        somethingIsRotating={$keyboardIsRotating || $scaleIsRotating}
+      />
     <!-- }</Rotator> -->
 
     <!-- <Rotator
@@ -72,9 +73,9 @@
       /> -->
     <!-- }</Rotator> -->
 
-    <!-- {store.editVsPlay === 0 &&
-      <circle cx={0} cy={0} r={5} fill='white' stroke='none' />
-    } -->
+    {#if $editVsPlay === 0}
+      <circle cx={0} cy={0} r={5} class='center-dot' />
+    {/if}
 
   </svg>
 </div>
@@ -85,8 +86,6 @@
     stroke: #CCC;
     stroke-width: 3px;
   }
-
-  :global(#wheel *) {
-    touch-action: none;
-  }
+  :global(#wheel *) { touch-action: none; }
+  .center-dot { fill: white; stroke: none; }
 </style>

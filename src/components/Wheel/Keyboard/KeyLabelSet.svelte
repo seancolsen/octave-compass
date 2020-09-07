@@ -1,79 +1,56 @@
 <script lang="ts">
+  import { Pitch } from "../../../Utils/Music/Pitch";
+  import Arc from "../common/Arc.svelte";
+  import KeyLabel from './KeyLabel.svelte';
+  import { editVsPlay } from '../../../stores/editVsPlay';
 
-</script>
+  const tieSpan = 0.2;
 
-<!-- import React from "react";
-import styled from "styled-components";
-import { Arc } from "../common/Arc";
-import { Pitch } from "../../../Utils/Music/Pitch";
-import { KeyLabel } from './KeyLabel';
-import { useStore } from "../../Store";
-
-const highlightColor = '#fffa58';
-
-export interface KeyLabelSetProps {
-  pitch: Pitch;
-  rotation: number;
+  let className: string | undefined = undefined;
+  export {className as class};
+  export let pitch: Pitch;
+  export let rotation: number;
   /**
    * True when we're rendering the blurred yellow highlight that goes behind the
    * actual labels.
    */
-  isHighlight: boolean;
-  className?: string;
-}
+  export let isHighlight: boolean;
 
-export function KeyLabelSet(p: KeyLabelSetProps) {
-  const store = useStore();
-  const names = p.pitch.note.namesToUseForLabels;
-  const spread = 0.20;
-  const radius = 348 + store.editVsPlay * 20;
-  const tieSpan = 0.2;
-  const tieWidth = 50;
-  const color = p.isHighlight ? highlightColor : p.pitch.note.color;
-  const StyledArc = styled(Arc)<{color: string}>`
-    stroke: ${p => p.color};
-    stroke-width: ${tieWidth}px;
-  `;
+  $: names = pitch.note.namesToUseForLabels;
+  $: radius = 348 + $editVsPlay * 20;
+  $: color = isHighlight ? '#fffa58' : pitch.note.color;
+  $: keyLabelIntervalOffset = (index: number) => {
+    const discreteWidth = names.length - 1;
+    const discreteOffset = (2 * index) - discreteWidth;
+    const spread = 0.20;
+    return discreteOffset * spread;
+  }
+</script>
 
-  const labelTie = names.length < 2 ? null: <StyledArc
-    startInterval={p.pitch.note.id - tieSpan}
-    endInterval={p.pitch.note.id + tieSpan}
-    color={color}
-    radius={radius}
-  />;
-
-  const keyLabels = (() => {
-    let keyLabels: JSX.Element[] = [];
-    const nameCount = names.length;
-    names.forEach((name, index) => {
-      const discreteWidth = nameCount - 1;
-      const discreteOffset = (2 * index) - discreteWidth;
-      const interval = p.pitch.note.id + (discreteOffset * spread);
-      keyLabels.push(
-        <KeyLabel
-          radius={radius}
-          key={index}
-          interval={interval}
-          rotation={p.rotation}
-          color={color}
-          isParenthetical={nameCount > 1 && name.modifier.name === 'natural'}
-          strokeWidth={p.isHighlight ? 35 : 0}
-        >
-          {p.isHighlight ? undefined : name.unicode}
-        </KeyLabel>
-      );
-    });
-    return <>{keyLabels}</>;
-  })();
-  
-  return (
-    <g
-      className={p.className}
-      filter={p.isHighlight ? "url('#blur')" : 'none'}
+<g
+  class={className}
+  filter={isHighlight ? "url('#blur')" : 'none'}
+>
+  {#if names.length < 2}
+    <Arc
+      class='label-tie'
+      startInterval={pitch.note.id - tieSpan}
+      endInterval={pitch.note.id + tieSpan}
+      color={color}
+      radius={radius}
+      stroke-width='50px'
+    />
+  {/if}
+  {#each names as name, index (name.ascii)}
+    <KeyLabel
+      radius={radius}
+      interval={pitch.note.id + keyLabelIntervalOffset(index)}
+      rotation={rotation}
+      color={color}
+      isParenthetical={names.length > 1 && name.modifier.name === 'natural'}
+      strokeWidth={isHighlight ? 35 : 0}
     >
-      {labelTie}
-      <g>{keyLabels}</g>
-    </g>
-  );
-
-} -->
+      {#if isHighlight}{name.unicode}{/if}
+    </KeyLabel>
+  {/each}
+</g>

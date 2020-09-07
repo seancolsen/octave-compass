@@ -7,6 +7,7 @@
   export let endInterval: number;
   export let radius: number;
   export let id: string | undefined = undefined;
+  export let color: string | undefined = undefined;
   
   const d = (() => {
     const startPoint = (new IrPoint(startInterval, radius)).toXy();
@@ -19,4 +20,4 @@
   })();
 </script>
 
-<path d={d} class={className} id={id}/>
+<path d={d} class={className} id={id} stroke={color} />
