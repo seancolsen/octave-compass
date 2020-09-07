@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { editVsPlay } from '../stores/editVsPlay';
+  import { editVsPlay } from '../store';
 
   $: isPlay = $editVsPlay === 1;
   $: isEdit = $editVsPlay === 0;

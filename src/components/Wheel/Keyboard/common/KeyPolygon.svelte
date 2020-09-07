@@ -3,7 +3,7 @@
   import { IrPoint } from '../../../../Utils/Geometry/IrPoint';
   import { Pitch } from '../../../../Utils/Music/Pitch';
   import Polygon from '../../common/Polygon.svelte';
-  import { editVsPlay } from '../../../../stores/editVsPlay';
+  import { editVsPlay } from '../../../../store';
 
   let className: string | undefined = undefined;
   export {className as class};

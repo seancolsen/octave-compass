@@ -8,10 +8,12 @@
   import IntervalSetPolygon from './common/IntervalSetPolygon.svelte';
   import BlurFilter from './Wheel/BlurFilter.svelte';
 
-  import { editVsPlay } from '../stores/editVsPlay';
-  import { intervalSet } from '../stores/intervalSet';
-  import { scaleIsRotating } from '../stores/scaleIsRotating';
-  import { keyboardIsRotating } from '../stores/keyboardIsRotating';
+  import {
+    editVsPlay,
+    intervalSet,
+    scaleIsRotating,
+    keyboardIsRotating
+  } from '../store';
 
   /**
    * The width and height of the square SVG view box in user units (basically SVG

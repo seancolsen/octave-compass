@@ -2,7 +2,7 @@
   import { Pitch } from "../../../Utils/Music/Pitch";
   import Arc from "../common/Arc.svelte";
   import KeyLabel from './KeyLabel.svelte';
-  import { editVsPlay } from '../../../stores/editVsPlay';
+  import { editVsPlay } from '../../../store';
 
   const tieSpan = 0.2;
 

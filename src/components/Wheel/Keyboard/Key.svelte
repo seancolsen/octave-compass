@@ -2,7 +2,7 @@
   import KeyPolygon from './common/KeyPolygon.svelte';
   import KeyLabelSet from './KeyLabelSet.svelte';
   import { Pitch } from '../../../Utils/Music/Pitch';
-  import { editVsPlay } from '../../../stores/editVsPlay';
+  import { editVsPlay } from '../../../store';
 
   export let pitch: Pitch;
   export let isActive: boolean;

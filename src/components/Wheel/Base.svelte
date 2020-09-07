@@ -1,8 +1,7 @@
 <script lang="ts">
   import BaseInterval from './Base/BaseInterval.svelte';
   import { musicTheory } from '../../Data/musicTheory';
-  import { intervalSet } from '../../stores/intervalSet';
-  import { editVsPlay } from '../../stores/editVsPlay';
+  import { intervalSet, editVsPlay } from '../../store';
   export let scaleIsRotating: boolean;
 </script>
 
