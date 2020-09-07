@@ -1,7 +1,11 @@
-import { writable } from 'svelte/store';
+import { writable, derived } from 'svelte/store';
 import { IntervalSet } from './Utils/Music/IntervalSet';
 import { IntervalSetFactory } from './Utils/Music/IntervalSetFactory';
 import { ChordSet } from './Utils/Music/ChordSet';
+import { NoteSet } from './Utils/Music/NoteSet';
+import { Chord } from './Utils/Music/Chord';
+import { Scale } from './Utils/Music/Scale';
+import { Scalar } from './Utils/Math/Scalar';
 
 /**
  * ABOUT THIS FILE:
@@ -84,14 +88,42 @@ export const intervalSet = (() => {
  * The note at the top of the wheel, as an integer. 0 means C, 1 means C
  * and so on. 
  */
-export const tonalCenter = writable(0);
+export const tonalCenter = (() => {
+  const {subscribe, set, update} = writable(0);
+
+  return {
+    subscribe, set, update,
+
+    /**
+     * E.g. when rotating the outer keyboard.
+     */
+    shift(intervalDiff: number) {
+      update(tonalCenter => Scalar.wrapToOctave(tonalCenter - intervalDiff));
+    },
+  }
+  
+})();
 
 // ========================================================================== //
 
 /**
  * Which chords are displayed to the user.
  */
-export const selectedChords = writable(ChordSet.fromDefaultChords);
+export const selectedChords = (() => {
+  const {subscribe, set, update} = writable(ChordSet.fromDefaultChords);
+
+  return {
+    subscribe, set, update,
+
+    /**
+     * Turn on/off a type of chord to display within the scale.
+     */
+    toggle(chord: Chord) {
+      update(selectedChords => selectedChords.toggleChord(chord))
+    },
+
+  };
+})();
 
 // ========================================================================== //
 
@@ -116,3 +148,96 @@ export const keyboardIsRotating = writable(false);
  * component.
  */
 export const scaleIsRotating = writable(false);
+
+// ========================================================================== //
+
+/**
+ * Gives the set of notes that fall on the active intervals, given the tonal
+ * center.
+ */
+export const noteSet = derived([intervalSet, tonalCenter],
+  ([$intervalSet, $tonalCenter]) => 
+  NoteSet.fromIntervalSet($intervalSet, -$tonalCenter).namedIfFeasible
+);
+
+// ========================================================================== //
+
+/**
+ * If the current interval set is a chord, then give the inversion of that
+ * chord. If not, then give null.
+ */
+export const inversion = derived(intervalSet, $intervalSet => 
+  $intervalSet instanceof Chord ? $intervalSet.inversion : null
+);
+
+// ========================================================================== //
+
+/**
+ * E.g. "G♭"
+ */
+export const tonalCenterName = derived([noteSet, inversion],
+  ([$noteSet, $inversion]) =>
+  $noteSet.rootNote($inversion || 0).nameToUseForLabels
+);
+
+// ========================================================================== //
+
+/**
+ * This puts the notes in the current interval set into a specific octave so
+ * they can be played with audio.
+ */
+export const pitchSet = derived(noteSet, ($noteSet) => 
+  $noteSet.pitchSetStartingFrom(4)
+);
+
+// ========================================================================== //
+
+/**
+ * The main text to display to the user that describes the current interval
+ * set.
+ */
+export const title = derived([intervalSet, tonalCenterName],
+  ([$intervalSet, $tonalCenterName]) => {
+    const displayName = $intervalSet.displayName;
+    if ($intervalSet instanceof Chord) {
+      return `${$tonalCenterName} ${displayName} chord`
+    }
+    else if ($intervalSet instanceof Scale) {
+      return `${$tonalCenterName} ${displayName} Scale`;
+    }
+    else {
+      return `${displayName} in ${$tonalCenterName}`;
+    }
+  }
+);
+
+// ========================================================================== //
+
+  /**
+ * E.g. "1st inversion"
+ */
+export const inversionText = derived(inversion, $inversion => {
+  const ordinalAbbreviations = [
+    '0th',
+    '1st',
+    '2nd',
+    '3rd',
+    '4th',
+    '5th',
+  ];
+  return $inversion
+    ? ` (${ordinalAbbreviations[$inversion]} inversion)`
+    : undefined;
+});
+
+// ========================================================================== //
+
+/**
+ * True if we know the name of the current interval set.
+ */
+export const isNamed = derived(intervalSet, $intervalSet => 
+  $intervalSet instanceof Chord || $intervalSet instanceof Scale
+);
+
+// ========================================================================== //
+
