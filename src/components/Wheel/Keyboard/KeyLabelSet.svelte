@@ -31,14 +31,13 @@
   class={className}
   filter={isHighlight ? "url('#blur')" : 'none'}
 >
-  {#if names.length < 2}
+  {#if names.length > 1}
     <Arc
       class='label-tie'
       startInterval={pitch.note.id - tieSpan}
       endInterval={pitch.note.id + tieSpan}
       color={color}
       radius={radius}
-      stroke-width='50px'
     />
   {/if}
   {#each names as name, index (name.ascii)}
@@ -50,7 +49,11 @@
       isParenthetical={names.length > 1 && name.modifier.name === 'natural'}
       strokeWidth={isHighlight ? 35 : 0}
     >
-      {#if isHighlight}{name.unicode}{/if}
+      {#if !isHighlight}{name.unicode}{/if}
     </KeyLabel>
   {/each}
 </g>
+
+<style>
+  g :global(.label-tie) {stroke-width: 50px;}
+</style>

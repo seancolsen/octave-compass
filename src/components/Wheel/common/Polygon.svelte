@@ -8,7 +8,7 @@
   export let fill: string | undefined = undefined;
   export let opacity = 1;
   
-  let pointsString = XyPoint.stringFromIrArray(points);
+  $: pointsString = XyPoint.stringFromIrArray(points);
 </script>
 
 <polygon points={pointsString} {fill} {opacity} class={className} />

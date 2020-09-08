@@ -1,5 +1,6 @@
 <script lang="ts">
-  // import { Keyboard } from './Wheel/Keyboard';
+  import Keyboard from './Wheel/Keyboard.svelte';
+  import Polygon from './Wheel/common/Polygon.svelte';
   import Base from './Wheel/Base.svelte';
   // import { ScaleComponent } from './Wheel/ScaleComponent';
   // import { Rotator } from './Wheel/Rotator';
@@ -14,6 +15,10 @@
     scaleIsRotating,
     keyboardIsRotating
   } from '../store';
+import KeyPolygon from './Wheel/Keyboard/common/KeyPolygon.svelte';
+import { Pitch } from '../Utils/Music/Pitch';
+import { Note } from '../Utils/Music/Note';
+import { IrPoint } from '../Utils/Geometry/IrPoint';
 
   /**
    * The width and height of the square SVG view box in user units (basically SVG
