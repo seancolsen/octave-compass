@@ -10,8 +10,7 @@
   export let fill: string | undefined = undefined;
   export let opacity: number = 1;
 
-  const intervals = intervalSet.ordinals;
-  const points = intervals.map(i => IrPoint.fromArray([i, radius]));
+  $: points = intervalSet.ordinals.map(i => IrPoint.fromArray([i, radius]));
 </script>
 
 <Polygon {points} {fill} {opacity} class={className} />

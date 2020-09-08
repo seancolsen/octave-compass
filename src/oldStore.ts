@@ -26,32 +26,32 @@ const defaultInitialValues: StoreInitialValues = {
 const createStore = (initialValues: StoreInitialValues, audio: any) => ({
  
 
-  /**
-   * Generate audio from the given notes!
-   */
-  playNotes(noteIds: number[]) {
-    const pitches = this.pitchSet.pitches.filter(pitch =>
-      noteIds.includes(pitch.note.id)
-    );
-    audio.playPitches(pitches);
-  },
+  // /**
+  //  * Generate audio from the given notes!
+  //  */
+  // playNotes(noteIds: number[]) {
+  //   const pitches = this.pitchSet.pitches.filter(pitch =>
+  //     noteIds.includes(pitch.note.id)
+  //   );
+  //   audio.playPitches(pitches);
+  // },
 
-  /**
-   * Generate audio from the given ordinals!
-   */
-  playIntervals(ordinals: number[]) {
-    const notes = ordinals.map(ordinal =>
-      Scalar.wrapToOctave(ordinal + this.tonalCenter)
-    );
-    this.playNotes(notes);
-  },
+  // /**
+  //  * Generate audio from the given ordinals!
+  //  */
+  // playIntervals(ordinals: number[]) {
+  //   const notes = ordinals.map(ordinal =>
+  //     Scalar.wrapToOctave(ordinal + this.tonalCenter)
+  //   );
+  //   this.playNotes(notes);
+  // },
   
-  /**
-   * Generate audio of a chord within the scale.
-   */
-  playOrdinalChord(ordinalChord: OrdinalChord) {
-    this.playIntervals(ordinalChord.intervalSet.ordinals);
-  },
+  // /**
+  //  * Generate audio of a chord within the scale.
+  //  */
+  // playOrdinalChord(ordinalChord: OrdinalChord) {
+  //   this.playIntervals(ordinalChord.intervalSet.ordinals);
+  // },
 
 
 

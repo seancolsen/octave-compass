@@ -1,24 +1,21 @@
 <script lang="ts">
+  import { Pitch } from '../Utils/Music/Pitch';
+  import { Note } from '../Utils/Music/Note';
+  import { IrPoint } from '../Utils/Geometry/IrPoint';
+  import { Scalar } from '../Utils/Math/Scalar';
   import Keyboard from './Wheel/Keyboard.svelte';
-  import Polygon from './Wheel/common/Polygon.svelte';
   import Base from './Wheel/Base.svelte';
-  // import { ScaleComponent } from './Wheel/ScaleComponent';
+  import ScaleComponent from './Wheel/ScaleComponent.svelte';
   // import { Rotator } from './Wheel/Rotator';
-  // import { Scalar } from '../Utils/Math/Scalar';
   import ShadowFilter from './Wheel/ShadowFilter.svelte';
   import IntervalSetPolygon from './common/IntervalSetPolygon.svelte';
   import BlurFilter from './Wheel/BlurFilter.svelte';
-
   import {
     editVsPlay,
     intervalSet,
     scaleIsRotating,
     keyboardIsRotating
   } from '../store';
-import KeyPolygon from './Wheel/Keyboard/common/KeyPolygon.svelte';
-import { Pitch } from '../Utils/Music/Pitch';
-import { Note } from '../Utils/Music/Note';
-import { IrPoint } from '../Utils/Geometry/IrPoint';
 
   /**
    * The width and height of the square SVG view box in user units (basically SVG
@@ -27,7 +24,6 @@ import { IrPoint } from '../Utils/Geometry/IrPoint';
    * relative to this value.
    */
   const boxSize = 1000;
-
 </script>
 
 <div id='wheel'>
@@ -36,26 +32,25 @@ import { IrPoint } from '../Utils/Geometry/IrPoint';
     <ShadowFilter
       id='shadow-when-edit'
       blurRadius={20}
-      opacity={$editVsPlay === 0 ? 1 : 0}
+      opacity={1 - $editVsPlay}
       bounds={3}
     />
     <ShadowFilter
       id='shadow-when-play'
       blurRadius={20}
-      opacity={$editVsPlay === 0 ? 0 : 1}
+      opacity={$editVsPlay}
       bounds={3}
     />
     <BlurFilter bounds={3} size={8} id='blur' />
 
     <Base scaleIsRotating={$scaleIsRotating} />
 
-    {#if $editVsPlay === 1}
-      <IntervalSetPolygon
-        intervalSet={$intervalSet}
-        radius={300}
-        class='intervalSetPolygon_play'
-      />
-    {/if}
+    <IntervalSetPolygon
+      intervalSet={$intervalSet}
+      radius={300}
+      class='intervalSetPolygon_play'
+      opacity={$editVsPlay}
+    />
     
     <!-- <Rotator
       isRotatable={store.editVsPlay === 0}
@@ -74,10 +69,10 @@ import { IrPoint } from '../Utils/Geometry/IrPoint';
       onRotationStart={() => store.scaleIsRotating = true}
       onRotationRest={r => {store.scaleIsRotating = false; store.shiftIntervalSet(r)}}
     >{({rotation, currentDetent}) => -->
-      <!-- <ScaleComponent
+      <ScaleComponent
         rotation={0}
         somethingIsRotating={false}
-      /> -->
+      />
     <!-- }</Rotator> -->
 
     {#if $editVsPlay === 0}
@@ -88,7 +83,10 @@ import { IrPoint } from '../Utils/Geometry/IrPoint';
 </div>
 
 <style>
-  svg :global(.intervalSetPolygon_play) {
+  svg {
+    text-rendering: optimizeLegibility;
+  }
+  svg > :global(.intervalSetPolygon_play) {
     fill: #8F8F8F;
     stroke: #CCC;
     stroke-width: 3px;

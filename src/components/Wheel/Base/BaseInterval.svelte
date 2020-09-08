@@ -33,19 +33,23 @@
     radius={arcRadius}
   />
   <IntervalLabel {interval} {label} active={isActive} />
-  {#if $editVsPlay === 0}
-    <SvgCheckbox x={point.x} y={point.y} isChecked={isActive} {isClickable} />
-  {/if}
+  <SvgCheckbox
+    x={point.x}
+    y={point.y}
+    isChecked={isActive}
+    {isClickable}
+    opacity={1 - $editVsPlay}
+  />
 </g>
 
 <style>
   g.isClickable :global(*) { cursor: pointer; }
   g.isClickable:hover { text-decoration: underline; }
-  g :global(.background) {
+  g > :global(.background) {
     stroke-width: 130px;
     stroke: #666666;
     fill: none;
     stroke-linecap: butt;
   }
-  g.isActive :global(.background) { stroke: #787878; }
+  g.isActive > :global(.background) { stroke: #787878; }
 </style>

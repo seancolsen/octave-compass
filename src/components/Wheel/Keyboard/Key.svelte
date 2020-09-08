@@ -56,13 +56,13 @@
 
 <style>
   g.isClickable :global(*) { cursor: pointer; }
-  g :global(.background) {
+  g > :global(.background) {
     fill: #b7b7b7;
     stroke: #a7a7a7;
     stroke-width: 3px;
   }
-  g.isPlay :global(.background) { fill: #CCC; }
-  g               :global(.key-label-set) { opacity: 0.25; }
-  g.isActive      :global(.key-label-set) { opacity: 1; }
-  g.isHighlighted :global(.key-label-set) { opacity: 0.9; }
+  g.isPlay > :global(.background) { fill: #CCC; }
+  g               > :global(.key-label-set) { opacity: 0.25; }
+  g.isActive      > :global(.key-label-set) { opacity: 1; }
+  g.isHighlighted > :global(.key-label-set) { opacity: 0.9; }
 </style>

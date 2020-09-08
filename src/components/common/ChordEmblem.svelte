@@ -1,50 +1,30 @@
-<!-- import React from 'react';
-import styled from 'styled-components';
-import { Chord } from '../../Utils/Music/Chord';
+<script lang='ts'>
+  import { Chord } from '../../Utils/Music/Chord';
+  export let size: number;
+  export let chord: Chord;
+  export let noteName: string | undefined = undefined;
+  export let opacity = 1;
+  $: fontSize = size * chord.textSizeFactor * 0.85;
+</script>
 
-const fontSizeToEmblemSizeRatio = 0.85;
+<g {opacity}>
+  <circle
+    cx={0} cy={0}
+    r={size}
+    fill={chord.color}
+  />
+  <text
+    x={0} y={0}
+    dominant-baseline='middle'
+    text-anchor='middle'
+    font-size={`${fontSize}px`}
+  >
+    {@html chord.contents(noteName)}
+  </text>
+</g>
 
-const Background = styled.circle`
-  fill: ${props => props.color || 'grey'};
-`;
-
-const StyledText = styled.text`
-  fill: white;
-  font-size: ${props => props.fontSize}px;
-  tspan.bold {
-    font-weight: bold;
-  }
-  tspan.italic {
-    font-style: italic;
-  }
-`;
-
-interface Props {
-  size: number;
-  chord: Chord;
-  noteName?: string;
-}
-
-export function ChordEmblem(props: Props) {
-  const fontSize = props.size * props.chord.textSizeFactor
-      * fontSizeToEmblemSizeRatio;
-  const noteName = props.noteName;
-  // const EmblemContents = props.chord.EmblemContents;
-  return (
-    <>
-      <Background
-        cx={0} cy={0}
-        r={props.size}
-        color={props.chord.color}
-      />
-      <StyledText
-        x={0} y={0}
-        dominantBaseline={'middle'}
-        textAnchor={'middle'}
-        fontSize={fontSize}
-      >
-        {/* <EmblemContents noteName={noteName}/> */}
-      </StyledText>
-    </>
-  );
-} -->
+<style>
+  text { fill: white;}
+  text > :global(tspan.bold) { font-weight: bold; }
+  text > :global(tspan.italic) { font-style: italic; }
+</style>

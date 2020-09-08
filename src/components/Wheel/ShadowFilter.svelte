@@ -1,8 +1,8 @@
 <script lang="ts">
   export let id: string;
   export let blurRadius: number;
+  export let opacity: number;
   export let bounds = 1.2;
-  export let opacity = 1;
   export let offsetX = 0;
   export let offsetY = 0;
 </script>

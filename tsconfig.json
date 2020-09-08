@@ -34,7 +34,7 @@
       "DOM",
     ],
     "jsx": "preserve", // TODO: Remove once we've got all the JSX out of there
-    "strict": false,
+    "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true

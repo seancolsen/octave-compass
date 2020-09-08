@@ -40,12 +40,12 @@
 </g>
 
 <style>
-  g :global(text) {
+  g > :global(text) {
     font-size: 42px;
     font-weight: bold;
     fill: black;
     stroke: none;
   }
-  g.isParenthetical :global(text) { font-size: 34px; font-weight: normal; }
-  g.isBlack :global(text) { fill: white; }
+  g.isParenthetical > :global(text) { font-size: 34px; font-weight: normal; }
+  g.isBlack > :global(text) { fill: white; }
 </style>

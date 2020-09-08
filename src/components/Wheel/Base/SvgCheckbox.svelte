@@ -5,11 +5,9 @@
   export let x: number;
   export let y: number;
   export let opacity = 1;
-  $: transform = `translate(${x} ${y})`;
-  // TODO: figure out how to set dominantBaseline={'middle'} on <text>
 </script>
 
-<g transform={transform} opacity={opacity} >
+<g transform={`translate(${x} ${y})`} {opacity} >
   <rect
     x={-size / 2} y={-size / 2}
     width={size} height={size}

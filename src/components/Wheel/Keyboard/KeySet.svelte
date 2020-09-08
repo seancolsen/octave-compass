@@ -5,7 +5,7 @@
   export let pitchSet: PitchSet;
   export let isActive: boolean;
   export let rotation: number;
-  $: filter = isActive ? "url('#shadow-when-play')" : undefined;
+  $: filter = isActive ? "url('#shadow-when-play')" : 'none';
 </script>
 
 <g {filter}>

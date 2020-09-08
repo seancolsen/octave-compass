@@ -55,5 +55,5 @@
 </g>
 
 <style>
-  g :global(.label-tie) {stroke-width: 50px;}
+  g > :global(.label-tie) {stroke-width: 50px;}
 </style>

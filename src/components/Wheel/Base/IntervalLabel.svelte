@@ -22,7 +22,7 @@
 
 <g class={className}>
   <Arc
-    class='text-path'
+    class='text-path-arc'
     {id}
     radius={isOnBottom ? lowerRadius : upperRadius}
     startInterval={interval + (arcSpan * (isOnBottom ? 1 : -1))}
@@ -38,8 +38,7 @@
 <style>
   text { font-size: 30px; fill: #444; }
   text.active { fill: #DDD; }
-  
-  g :global(.text-path) {
+  g > :global(.text-path-arc) {
     fill: none;
     stroke: none;
   }
