@@ -13,7 +13,7 @@
   );
 </script>
 
-<g>
+<g class:isEdit={$editVsPlay === 0}>
   <IntervalSetPolygon
     class='background'
     intervalSet={$intervalSet}
@@ -33,4 +33,5 @@
     stroke-width: 3px;
     filter: url('#shadow-when-edit');
   }
+  g.isEdit :global(*) { cursor: grab; }
 </style>

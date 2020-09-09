@@ -41,5 +41,4 @@
     rotation={rotation}
   />
   {/each}
-  
 </g>

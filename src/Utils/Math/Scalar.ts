@@ -8,6 +8,20 @@ const PI = Math.PI;
 export class Scalar {
 
   /**
+   * Scale the input value so that its domain fits into the desired range of
+   * output values.
+   */
+  static interpolate(
+    input: number,
+    domain: [number, number],
+    range: [number, number]
+  ) {
+    const [x1, x2] = domain;
+    const [y1, y2] = range;
+    return  y1 + input*((y2-y1)/(x2-x1));
+  }
+
+  /**
    * Ensure that `value` is within a range between two numbers, specified by
    * `bounds`. If `value` is below the minimum, then it's shifted up enough to
    * make it fall within the bounds. If `value` is greater than `max`, then it's

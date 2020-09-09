@@ -70,7 +70,7 @@
     stroke-width: 5px;
     fill: #e1e1e1;
   }
-  g :global(*) { cursor: grab; }
+  /* g :global(*) { cursor: grab; } */
   g.isClickable :global(*) { cursor: pointer; }
   g.isClickable:hover > :global(.background) {
     stroke: white;

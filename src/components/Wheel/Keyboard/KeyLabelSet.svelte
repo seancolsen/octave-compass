@@ -15,6 +15,7 @@
    * actual labels.
    */
   export let isHighlight: boolean;
+  export let opacity = 1;
 
   $: names = pitch.note.namesToUseForLabels;
   $: radius = 348 + $editVsPlay * 20;
@@ -30,6 +31,7 @@
 <g
   class={className}
   filter={isHighlight ? "url('#blur')" : 'none'}
+  {opacity}
 >
   {#if names.length > 1}
     <Arc

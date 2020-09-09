@@ -28,7 +28,6 @@
   // onTouchEnd={isClickable ? e => e.preventDefault() : undefined}
 
 </script>
-
   
 <g
   class:isClickable
@@ -36,33 +35,30 @@
   class:isPlay
   class:isActive
 >
-  {#if isActive || isEdit}
+  {#if isActive && !isEdit}
     <KeyPolygon class='background' pitch={pitch} />
   {/if}
-  {#if isHighlighted}
-    <KeyLabelSet
-      pitch={pitch}
-      rotation={rotation}
-      isHighlight={true}
-    />
-  {/if}
   <KeyLabelSet
-    class='key-label-set'
+    class='key-label-highlight'
+    pitch={pitch}
+    rotation={rotation}
+    isHighlight={true}
+    opacity={isActive ? 1 - $editVsPlay : 0}
+  />
+  <KeyLabelSet
+    class='key-label'
     pitch={pitch}
     rotation={rotation}
     isHighlight={false}
+    opacity={isActive ? 1 - 0.1 * $editVsPlay : 0.25}
   />
 </g>
 
 <style>
   g.isClickable :global(*) { cursor: pointer; }
   g > :global(.background) {
-    fill: #b7b7b7;
+    fill: #CCC;
     stroke: #a7a7a7;
     stroke-width: 3px;
   }
-  g.isPlay > :global(.background) { fill: #CCC; }
-  g               > :global(.key-label-set) { opacity: 0.25; }
-  g.isActive      > :global(.key-label-set) { opacity: 1; }
-  g.isHighlighted > :global(.key-label-set) { opacity: 0.9; }
 </style>

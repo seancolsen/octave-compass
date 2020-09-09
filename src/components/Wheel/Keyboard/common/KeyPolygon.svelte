@@ -3,18 +3,17 @@
   import { IrPoint } from '../../../../Utils/Geometry/IrPoint';
   import { Pitch } from '../../../../Utils/Music/Pitch';
   import Polygon from '../../common/Polygon.svelte';
-  import { editVsPlay } from '../../../../store';
+  import { keyboardRadius } from '../../../../store';
 
   let className: string | undefined = undefined;
   export {className as class};
   export let pitch: Pitch;
 
-  $: innerRadius = $editVsPlay * 308;
-  $: outerRadius = 400 + 40 * $editVsPlay;
+  $: innerRadius = $keyboardRadius - 131;
   $: shape = [
-    [-0.5, outerRadius * Scalar.rFactorAtEdge],
-    [0, outerRadius],
-    [0.5, outerRadius * Scalar.rFactorAtEdge],
+    [-0.5, $keyboardRadius * Scalar.rFactorAtEdge],
+    [0, $keyboardRadius],
+    [0.5, $keyboardRadius * Scalar.rFactorAtEdge],
     [0.5, innerRadius * Scalar.rFactorAtEdge],
     [0, innerRadius],
     [-0.5, innerRadius * Scalar.rFactorAtEdge],

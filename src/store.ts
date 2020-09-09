@@ -1,4 +1,4 @@
-import { writable, derived } from 'svelte/store';
+import { writable, derived, readable } from 'svelte/store';
 import { IntervalSet } from './Utils/Music/IntervalSet';
 import { IntervalSetFactory } from './Utils/Music/IntervalSetFactory';
 import { ChordSet } from './Utils/Music/ChordSet';
@@ -34,6 +34,15 @@ import { Scalar } from './Utils/Math/Scalar';
  * and that no interaction should be possible. 
  */
 export const editVsPlay = writable(1); 
+
+// ========================================================================== //
+
+/**
+ * When in edit mode, we make the keyboard a bit bigger.
+ */
+export const keyboardRadius = derived(editVsPlay, $editVsPlay => 
+  Scalar.interpolate($editVsPlay, [0, 1], [400, 440])
+);
 
 // ========================================================================== //
 
