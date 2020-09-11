@@ -31,9 +31,10 @@
    * relative to this value.
    */
   const boxSize = 1000;
+  $: isRotatable = $editVsPlay === 0;
 </script>
 
-<div id='wheel'>
+<div id='wheel' class:isRotatable >
   <svg viewBox={`-${boxSize/2} -${boxSize/2} ${boxSize} ${boxSize}`}>
     <ShadowFilter id='shadow-when-edit' opacity={1 - $editVsPlay} />
     <ShadowFilter id='shadow-when-play' opacity={$editVsPlay} />
@@ -45,17 +46,19 @@
       class='intervalSetPolygon_play'
       opacity={$editVsPlay}
     />
-    <Rotator
-      isRotatable={$editVsPlay === 0}
+    <Rotator {isRotatable}
       rotatorStores={keyboardRotatorStores}
       onRotationRest={r => {tonalCenter.shift(r)}}
-    ><Keyboard/></Rotator>
-    <Rotator
-      isRotatable={$editVsPlay === 0}
+    >
+      <Keyboard />
+    </Rotator>
+    <Rotator {isRotatable}
       rotatorStores={scaleRotatorStores}
       detents={$intervalSet.ordinals.map((o) => Scalar.wrapToOctave(-o))}
       onRotationRest={r => {intervalSet.shift(r)}}
-    ><ScaleComponent/></Rotator>
+    >
+      <ScaleComponent/>
+    </Rotator>
     <circle cx={0} cy={0} r={5} class='center-dot' opacity={1 - $editVsPlay} />
   </svg>
 </div>
@@ -71,4 +74,30 @@
   }
   :global(#wheel *) { touch-action: none; }
   .center-dot { fill: white; stroke: none; }
+  #wheel.isRotatable :global(#scale) {
+    animation: oscillate 700ms ease-in-out;
+  }
+  #wheel.isRotatable :global(#keyboard) {
+    animation: oscillate-reverse 700ms ease-in-out;
+  }
+  @keyframes oscillate {
+      0% {transform: rotate( 0.0deg);}
+     14% {transform: rotate( 3.0deg);}
+     29% {transform: rotate(-2.5deg);}
+     43% {transform: rotate( 2.0deg);}
+     57% {transform: rotate(-1.5deg);}
+     71% {transform: rotate( 1.0deg);}
+     86% {transform: rotate(-0.5deg);}
+    100% {transform: rotate( 0.0deg);}
+  }
+  @keyframes oscillate-reverse {
+      0% {transform: rotate( 0.0deg);}
+     14% {transform: rotate(-3.0deg);}
+     29% {transform: rotate( 2.5deg);}
+     43% {transform: rotate(-2.0deg);}
+     57% {transform: rotate( 1.5deg);}
+     71% {transform: rotate(-1.0deg);}
+     86% {transform: rotate( 0.5deg);}
+    100% {transform: rotate( 0.0deg);}
+  }
 </style>

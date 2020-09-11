@@ -8,6 +8,7 @@
 </script>
 
 <g
+  id='keyboard'
   filter="url('#shadow-when-edit')"
   class:isEdit={$editVsPlay === 0}
  >

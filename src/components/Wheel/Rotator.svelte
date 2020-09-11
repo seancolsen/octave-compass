@@ -259,6 +259,7 @@
   transform={`rotate(${Angle.iToD($rotation)})`}
   on:mousedown={isRotatable ? startRotating : undefined}
   on:touchstart={isRotatable ? startRotating : undefined}
+  class:isOscillating={isRotatable && !$isRotating}
 >
   <slot></slot>
 </g>
