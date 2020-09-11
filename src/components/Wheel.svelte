@@ -17,6 +17,7 @@
   import Rotator from './Wheel/Rotator.svelte';
   import ShadowFilter from './Wheel/ShadowFilter.svelte';
   import IntervalSetPolygon from './common/IntervalSetPolygon.svelte';
+  import Tips from './Wheel/Tips.svelte';
   import BlurFilter from './Wheel/BlurFilter.svelte';
   import {
     editVsPlay,
@@ -60,6 +61,7 @@
       <ScaleComponent/>
     </Rotator>
     <circle cx={0} cy={0} r={5} class='center-dot' opacity={1 - $editVsPlay} />
+    <!-- <Tips /> -->
   </svg>
 </div>
 
