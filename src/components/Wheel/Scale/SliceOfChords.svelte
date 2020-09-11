@@ -10,7 +10,6 @@
 
   export let chordSet: ChordSet;
   export let ordinal: number;
-  export let rotation: number;
   export let note: Note | undefined = undefined;
 
   $: radialSpacing = (() => {
@@ -33,12 +32,11 @@
 <g>
   {#each chordSet.chords as chord, index (index)}
   <ChordInScale
-    note={note}
+    {note}
     radialPosition={radialPositions[index]}
     size={chord.emblemSize * circleRadius}
-    chord={chord}
+    {chord}
     interval={ordinal}
-    rotation={rotation}
   />
   {/each}
 </g>

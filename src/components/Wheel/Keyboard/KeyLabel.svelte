@@ -1,19 +1,20 @@
 <script lang="ts">
   import { IrPoint } from '../../../Utils/Geometry/IrPoint';
   import { Angle } from '../../../Utils/Geometry/Angle';
+  import { keyboardRotatorStores } from '../../Wheel.svelte';
 
+  const {rotation} = keyboardRotatorStores;
   const size = 60;
 
   export let interval: number;
   export let radius: number;
-  export let rotation: number;
   export let color: string;
   export let isParenthetical: boolean = false;
   export let strokeWidth: number | undefined = undefined;
 
   $: isBlack = color === 'black' || color === '#000' || color === '#000000';
   $: point = (new IrPoint(interval, radius)).toXy();
-  $: rotationDeg = -Angle.iToD(rotation);
+  $: rotationDeg = -Angle.iToD($rotation);
   $: transform = `translate(${point.x} ${point.y}) rotate(${rotationDeg})`;
 </script>
 

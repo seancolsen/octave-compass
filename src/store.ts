@@ -1,4 +1,4 @@
-import { writable, derived, readable } from 'svelte/store';
+import { writable, derived } from 'svelte/store';
 import { IntervalSet } from './Utils/Music/IntervalSet';
 import { IntervalSetFactory } from './Utils/Music/IntervalSetFactory';
 import { ChordSet } from './Utils/Music/ChordSet';
@@ -133,30 +133,6 @@ export const selectedChords = (() => {
 
   };
 })();
-
-// ========================================================================== //
-
-/**
- * True when the user is manipulating the radial keyboard.
- * 
- * This store value is redundant with the value stored in the Rotator
- * component, but this is intentional for performance reasons because we don't
- * want to re-render the Wheel component as frequently as the Rotator
- * component.
- */
-export const keyboardIsRotating = writable(false);
-
-// ========================================================================== //
-
-/**
- * True when the user is manipulating the scale polygon.
- * 
- * This store value is redundant with the value stored in the Rotator
- * component, but this is intentional for performance reasons because we don't
- * want to re-render the Wheel component as frequently as the Rotator
- * component.
- */
-export const scaleIsRotating = writable(false);
 
 // ========================================================================== //
 

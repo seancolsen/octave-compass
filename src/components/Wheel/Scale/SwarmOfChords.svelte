@@ -4,7 +4,6 @@
   import {intervalSet, noteSet} from '../../../store';
 
   export let ordinalChordSets: OrdinalChordSet[];
-  export let rotation: number;
 
   $: ordinals = $intervalSet.ordinals;
   $: findNote = (ordinal: number) => 
@@ -17,7 +16,6 @@
       note={findNote(ordinalChordSet.ordinal)}
       chordSet={ordinalChordSet.chordSet}
       ordinal={ordinalChordSet.ordinal}
-      rotation={rotation}
     />
   {/each}
 </g>

@@ -1,20 +1,27 @@
+<script context="module" lang="ts">
+  import {derived} from 'svelte/store';
+  import {RotatorStores} from './Wheel/Rotator.svelte';
+  export const scaleRotatorStores = new RotatorStores();
+  export const keyboardRotatorStores = new RotatorStores();
+  export const somethingIsRotating = derived(
+    [scaleRotatorStores.isRotating, keyboardRotatorStores.isRotating],
+    ([$s, $k]) => $s || $k
+  );
+</script>
+
 <script lang="ts">
-  import { Pitch } from '../Utils/Music/Pitch';
-  import { Note } from '../Utils/Music/Note';
-  import { IrPoint } from '../Utils/Geometry/IrPoint';
   import { Scalar } from '../Utils/Math/Scalar';
   import Keyboard from './Wheel/Keyboard.svelte';
   import Base from './Wheel/Base.svelte';
   import ScaleComponent from './Wheel/ScaleComponent.svelte';
-  // import { Rotator } from './Wheel/Rotator';
+  import Rotator from './Wheel/Rotator.svelte';
   import ShadowFilter from './Wheel/ShadowFilter.svelte';
   import IntervalSetPolygon from './common/IntervalSetPolygon.svelte';
   import BlurFilter from './Wheel/BlurFilter.svelte';
   import {
     editVsPlay,
     intervalSet,
-    scaleIsRotating,
-    keyboardIsRotating
+    tonalCenter,
   } from '../store';
 
   /**
@@ -28,57 +35,28 @@
 
 <div id='wheel'>
   <svg viewBox={`-${boxSize/2} -${boxSize/2} ${boxSize} ${boxSize}`}>
-
-    <ShadowFilter
-      id='shadow-when-edit'
-      blurRadius={20}
-      opacity={1 - $editVsPlay}
-      bounds={3}
-    />
-    <ShadowFilter
-      id='shadow-when-play'
-      blurRadius={20}
-      opacity={$editVsPlay}
-      bounds={3}
-    />
+    <ShadowFilter id='shadow-when-edit' opacity={1 - $editVsPlay} />
+    <ShadowFilter id='shadow-when-play' opacity={$editVsPlay} />
     <BlurFilter bounds={3} size={8} id='blur' />
-
-    <Base scaleIsRotating={$scaleIsRotating} />
-
+    <Base/>
     <IntervalSetPolygon
       intervalSet={$intervalSet}
       radius={300}
       class='intervalSetPolygon_play'
       opacity={$editVsPlay}
     />
-    
-    <!-- <Rotator
-      isRotatable={store.editVsPlay === 0}
-      onRotationStart={() => store.keyboardIsRotating = true}
-      onRotationRest={r => {store.keyboardIsRotating = false; store.shiftTonalCenter(r)}}
-    >{({rotation, currentDetent}) => -->
-      <Keyboard
-        rotation={0}
-        somethingIsRotating={$keyboardIsRotating || $scaleIsRotating}
-      />
-    <!-- }</Rotator> -->
-
-    <!-- <Rotator
-      isRotatable={store.editVsPlay === 0}
-      detents={store.intervalSet.ordinals.map((o) => Scalar.wrapToOctave(-o))}
-      onRotationStart={() => store.scaleIsRotating = true}
-      onRotationRest={r => {store.scaleIsRotating = false; store.shiftIntervalSet(r)}}
-    >{({rotation, currentDetent}) => -->
-      <ScaleComponent
-        rotation={0}
-        somethingIsRotating={false}
-      />
-    <!-- }</Rotator> -->
-
-    {#if $editVsPlay === 0}
-      <circle cx={0} cy={0} r={5} class='center-dot' />
-    {/if}
-
+    <Rotator
+      isRotatable={$editVsPlay === 0}
+      rotatorStores={keyboardRotatorStores}
+      onRotationRest={r => {tonalCenter.shift(r)}}
+    ><Keyboard/></Rotator>
+    <Rotator
+      isRotatable={$editVsPlay === 0}
+      rotatorStores={scaleRotatorStores}
+      detents={$intervalSet.ordinals.map((o) => Scalar.wrapToOctave(-o))}
+      onRotationRest={r => {intervalSet.shift(r)}}
+    ><ScaleComponent/></Rotator>
+    <circle cx={0} cy={0} r={5} class='center-dot' opacity={1 - $editVsPlay} />
   </svg>
 </div>
 

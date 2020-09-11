@@ -2,16 +2,16 @@
   import KeyPolygon from './common/KeyPolygon.svelte';
   import KeyLabelSet from './KeyLabelSet.svelte';
   import { Pitch } from '../../../Utils/Music/Pitch';
-  import { editVsPlay } from '../../../store';
+  import { editVsPlay, tonalCenter } from '../../../store';
 
   export let pitch: Pitch;
   export let isActive: boolean;
-  export let rotation: number;
   
   $: isEdit = $editVsPlay === 0;
   $: isPlay = $editVsPlay === 1;
   $: isClickable = isActive && isPlay;
   $: isHighlighted = isActive && isEdit;
+  $: interval = pitch.note.id - $tonalCenter;
 
   // const handleMouseDownOrTouchStart = (event: GenericEvent) => {
   //   event.preventDefault();
@@ -36,19 +36,19 @@
   class:isActive
 >
   {#if isActive && !isEdit}
-    <KeyPolygon class='background' pitch={pitch} />
+    <KeyPolygon class='background' {interval} />
   {/if}
   <KeyLabelSet
     class='key-label-highlight'
-    pitch={pitch}
-    rotation={rotation}
+    note={pitch.note}
+    {interval}
     isHighlight={true}
     opacity={isActive ? 1 - $editVsPlay : 0}
   />
   <KeyLabelSet
     class='key-label'
-    pitch={pitch}
-    rotation={rotation}
+    note={pitch.note}
+    {interval}
     isHighlight={false}
     opacity={isActive ? 1 - 0.1 * $editVsPlay : 0.25}
   />

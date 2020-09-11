@@ -1,13 +1,18 @@
 <script lang='ts'>
+  import { Angle } from '../../Utils/Geometry/Angle';
   import { Chord } from '../../Utils/Music/Chord';
+  import { scaleRotatorStores } from '../Wheel.svelte'
+  const {rotation} = scaleRotatorStores;
+  
   export let size: number;
   export let chord: Chord;
   export let noteName: string | undefined = undefined;
   export let opacity = 1;
   $: fontSize = size * chord.textSizeFactor * 0.85;
+  $: transform = `rotate(${-Angle.iToD($rotation)})`;
 </script>
 
-<g {opacity}>
+<g {opacity} {transform}>
   <circle
     cx={0} cy={0}
     r={size}

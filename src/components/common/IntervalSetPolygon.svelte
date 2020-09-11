@@ -3,7 +3,7 @@
   import { IrPoint } from "./../../Utils/Geometry/IrPoint";
   import { IntervalSet } from '../../Utils/Music/IntervalSet';
   
-  let className: string | undefined = undefined;
+  let className = undefined as string | undefined;
   export {className as class};
   export let intervalSet: IntervalSet;
   export let radius: number;

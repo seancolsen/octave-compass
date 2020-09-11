@@ -4,9 +4,6 @@
   import SwarmOfChords from './Scale/SwarmOfChords.svelte';
   import { editVsPlay, intervalSet, selectedChords } from '../../store';
 
-  export let rotation: number;
-  export let somethingIsRotating: boolean;
-
   $: ordinalChordSets = OrdinalChordSet.arrayFromIntervalSet(
     $intervalSet,
     $selectedChords
@@ -20,10 +17,7 @@
     radius={300}
     opacity={1 - $editVsPlay}
   />
-  <SwarmOfChords
-    {ordinalChordSets}
-    rotation={rotation}
-  />
+  <SwarmOfChords {ordinalChordSets} />
 </g>
 
 <style>

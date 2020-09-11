@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { Pitch } from "../../../Utils/Music/Pitch";
+  import { Note } from "../../../Utils/Music/Note";
   import Arc from "../common/Arc.svelte";
   import KeyLabel from './KeyLabel.svelte';
-  import { editVsPlay } from '../../../store';
+  import { editVsPlay, tonalCenter } from '../../../store';
 
   const tieSpan = 0.2;
 
-  let className: string | undefined = undefined;
+  let className = undefined as string | undefined;
   export {className as class};
-  export let pitch: Pitch;
-  export let rotation: number;
+  export let interval: number;
+  export let note: Note;
   /**
    * True when we're rendering the blurred yellow highlight that goes behind the
    * actual labels.
@@ -17,9 +17,9 @@
   export let isHighlight: boolean;
   export let opacity = 1;
 
-  $: names = pitch.note.namesToUseForLabels;
+  $: names = note.namesToUseForLabels;
   $: radius = 348 + $editVsPlay * 20;
-  $: color = isHighlight ? '#fffa58' : pitch.note.color;
+  $: color = isHighlight ? '#fffa58' : note.color;
   $: keyLabelIntervalOffset = (index: number) => {
     const discreteWidth = names.length - 1;
     const discreteOffset = (2 * index) - discreteWidth;
@@ -36,8 +36,8 @@
   {#if names.length > 1}
     <Arc
       class='label-tie'
-      startInterval={pitch.note.id - tieSpan}
-      endInterval={pitch.note.id + tieSpan}
+      startInterval={interval - tieSpan}
+      endInterval={interval + tieSpan}
       color={color}
       radius={radius}
     />
@@ -45,8 +45,7 @@
   {#each names as name, index (name.ascii)}
     <KeyLabel
       radius={radius}
-      interval={pitch.note.id + keyLabelIntervalOffset(index)}
-      rotation={rotation}
+      interval={interval + keyLabelIntervalOffset(index)}
       color={color}
       isParenthetical={names.length > 1 && name.modifier.name === 'natural'}
       strokeWidth={isHighlight ? 35 : 0}

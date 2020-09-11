@@ -5,9 +5,9 @@
   import Polygon from '../../common/Polygon.svelte';
   import { keyboardRadius } from '../../../../store';
 
-  let className: string | undefined = undefined;
+  let className = undefined as string | undefined;
   export {className as class};
-  export let pitch: Pitch;
+  export let interval: number;
 
   $: innerRadius = $keyboardRadius - 131;
   $: shape = [
@@ -19,7 +19,7 @@
     [-0.5, innerRadius * Scalar.rFactorAtEdge],
   ] as [number, number][];
   $: points = shape.map(ir =>
-    IrPoint.fromArray(ir).plusI(pitch.note.id)
+    IrPoint.fromArray(ir).plusI(interval)
   );
 </script>
 

@@ -4,7 +4,6 @@
 
   export let pitchSet: PitchSet;
   export let isActive: boolean;
-  export let rotation: number;
   $: filter = isActive ? "url('#shadow-when-play')" : 'none';
 </script>
 
@@ -12,7 +11,6 @@
   {#each pitchSet.pitches as pitch (pitch.note.id)}
     <Key
       pitch={pitch}
-      rotation={rotation}
       isActive={isActive}
     />
   {/each}

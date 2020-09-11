@@ -2,7 +2,7 @@
   import { XyPoint } from './../../../Utils/Geometry/XyPoint';
   import { IrPoint } from '../../../Utils/Geometry/IrPoint';
   
-  let className: string | undefined = undefined;
+  let className = undefined as string | undefined;
   export {className as class};
   export let points: IrPoint[];
   export let fill: string | undefined = undefined;

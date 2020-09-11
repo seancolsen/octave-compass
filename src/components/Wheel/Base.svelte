@@ -2,7 +2,8 @@
   import BaseInterval from './Base/BaseInterval.svelte';
   import { musicTheory } from '../../Data/musicTheory';
   import { intervalSet, editVsPlay } from '../../store';
-  export let scaleIsRotating: boolean;
+  import { scaleRotatorStores } from '../Wheel.svelte';
+  const scaleIsRotating = scaleRotatorStores.isRotating;
 </script>
 
 <g>
@@ -10,7 +11,7 @@
     <BaseInterval
       interval={ordinal}
       label={name}
-      isActive={!scaleIsRotating && $intervalSet.isActive(ordinal)}
+      isActive={!$scaleIsRotating && $intervalSet.isActive(ordinal)}
       isClickable={ordinal !== 0 && $editVsPlay === 0}
     />
   {/each}
