@@ -3,6 +3,7 @@
   import Wheel from "./Wheel/Wheel.svelte";
   import ChordSelection from './ChordSelection/ChordSelection.svelte';
   import Toolbar from "./Toolbar.svelte";
+  import LinearKeyboard from './LinearKeyboard/LinearKeyboard.svelte';
 
   let modal = null as 'marquee' | null;
 </script>
@@ -14,6 +15,7 @@
     <Toolbar />
     <Wheel/>
     <ChordSelection />
+    <LinearKeyboard />
   </div>
   <div id='modals'>
     <!-- <Modal
