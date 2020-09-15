@@ -1,7 +1,7 @@
 <script lang="ts">
   import Marquee from "./Marquee.svelte";
   import Wheel from "./Wheel.svelte";
-  // import { Menu } from "./Menu";
+  import ChordSelection from './ChordSelection.svelte';
   import Toolbar from "./Toolbar.svelte";
 
   let modal = null as 'marquee' | null;
@@ -12,8 +12,8 @@
   <div id='layout'>
     <Marquee showMore={() => {modal = 'marquee'}}/>
     <Toolbar />
-    <div id='wheel-container'><Wheel/></div>
-    <!-- <Menu/> -->
+    <Wheel/>
+    <ChordSelection />
   </div>
   <div id='modals'>
     <!-- <Modal
@@ -28,10 +28,5 @@
 
 <style>
 
-#wheel-container {
-  overflow: hidden;
-  text-align: center;
-  position: relative;
-}
 
 </style>

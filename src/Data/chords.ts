@@ -41,7 +41,7 @@ export const chords: ChordData[] = [
     textSizeFactor: 1,
     color: '#18c0ce',
     contents: (noteName: NoteName) =>
-      `${noteName || ''}{p.noteName ? 's2' : 'sus2'}`,
+      `${noteName || ''}${noteName ? 's2' : 'sus2'}`,
   },
   {
     binary: 0b000010100001,
@@ -51,7 +51,7 @@ export const chords: ChordData[] = [
     textSizeFactor: 1,
     color: '#1bceb1',
     contents: (noteName: NoteName) =>
-      `${noteName || ''}{noteName ? 's4' : 'sus4'}`,
+      `${noteName || ''}${noteName ? 's4' : 'sus4'}`,
   },
   {
     binary: 0b000100010001,
