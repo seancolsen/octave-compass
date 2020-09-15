@@ -1,5 +1,5 @@
 <script lang="ts">
-  import KeyPolygon from './common/KeyPolygon.svelte';
+  import KeyPolygon from './KeyPolygon.svelte';
   import KeyLabelSet from './KeyLabelSet.svelte';
   import { Note } from '../../../Utils/Music/Note';
   import { editVsPlay, tonalCenter } from '../../../store';

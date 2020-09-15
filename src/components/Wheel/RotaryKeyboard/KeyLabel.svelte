@@ -1,7 +1,7 @@
 <script lang="ts">
   import { IrPoint } from '../../../Utils/Geometry/IrPoint';
   import { Angle } from '../../../Utils/Geometry/Angle';
-  import { keyboardRotatorStores } from '../../Wheel.svelte';
+  import { keyboardRotatorStores } from '../Wheel.svelte';
 
   const {rotation} = keyboardRotatorStores;
   const size = 60;

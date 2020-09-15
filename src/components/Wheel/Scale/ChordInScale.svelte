@@ -5,7 +5,7 @@
   import { Note } from '../../../Utils/Music/Note';
   import ChordEmblem from '../../common/ChordEmblem.svelte';
   import { editVsPlay } from '../../../store';
-  import { somethingIsRotating } from '../../Wheel.svelte';
+  import { somethingIsRotating } from '../Wheel.svelte';
 
   let className: string | undefined = undefined;
   export {className as class};

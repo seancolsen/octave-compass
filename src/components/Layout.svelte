@@ -1,7 +1,7 @@
 <script lang="ts">
   import Marquee from "./Marquee.svelte";
-  import Wheel from "./Wheel.svelte";
-  import ChordSelection from './ChordSelection.svelte';
+  import Wheel from "./Wheel/Wheel.svelte";
+  import ChordSelection from './ChordSelection/ChordSelection.svelte';
   import Toolbar from "./Toolbar.svelte";
 
   let modal = null as 'marquee' | null;

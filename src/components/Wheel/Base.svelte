@@ -2,7 +2,7 @@
   import BaseInterval from './Base/BaseInterval.svelte';
   import { musicTheory } from '../../Data/musicTheory';
   import { intervalSet, editVsPlay } from '../../store';
-  import { scaleRotatorStores } from '../Wheel.svelte';
+  import { scaleRotatorStores } from './Wheel.svelte';
   const scaleIsRotating = scaleRotatorStores.isRotating;
 </script>
 

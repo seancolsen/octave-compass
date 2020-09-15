@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { OrdinalChordSet } from '../../Utils/Music/OrdinalChordSet';
-  import IntervalSetPolygon from '../common/IntervalSetPolygon.svelte';
-  import SwarmOfChords from './Scale/SwarmOfChords.svelte';
-  import { editVsPlay, intervalSet, selectedChords } from '../../store';
+  import { OrdinalChordSet } from '../../../Utils/Music/OrdinalChordSet';
+  import IntervalSetPolygon from '../../common/IntervalSetPolygon.svelte';
+  import SwarmOfChords from './SwarmOfChords.svelte';
+  import { editVsPlay, intervalSet, selectedChords } from '../../../store';
 
   $: ordinalChordSets = OrdinalChordSet.arrayFromIntervalSet(
     $intervalSet,

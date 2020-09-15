@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { Scalar } from '../../../../Utils/Math/Scalar';
-  import { IrPoint } from '../../../../Utils/Geometry/IrPoint';
-  import { Pitch } from '../../../../Utils/Music/Pitch';
-  import Polygon from '../../common/Polygon.svelte';
-  import { keyboardRadius } from '../../../../store';
+  import { Scalar } from '../../../Utils/Math/Scalar';
+  import { IrPoint } from '../../../Utils/Geometry/IrPoint';
+  import Polygon from '../common/Polygon.svelte';
+  import { keyboardRadius } from '../../../store';
 
   let className = undefined as string | undefined;
   export {className as class};

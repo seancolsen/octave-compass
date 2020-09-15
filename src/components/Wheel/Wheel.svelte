@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
   import {derived} from 'svelte/store';
-  import {RotatorStores} from './Wheel/Rotator.svelte';
+  import {RotatorStores} from './Rotator.svelte';
   export const scaleRotatorStores = new RotatorStores();
   export const keyboardRotatorStores = new RotatorStores();
   export const somethingIsRotating = derived(
@@ -10,20 +10,20 @@
 </script>
 
 <script lang="ts">
-  import { Scalar } from '../Utils/Math/Scalar';
-  import RotaryKeyboard from './Wheel/RotaryKeyboard.svelte';
-  import Base from './Wheel/Base.svelte';
-  import ScaleComponent from './Wheel/ScaleComponent.svelte';
-  import Rotator from './Wheel/Rotator.svelte';
-  import ShadowFilter from './Wheel/ShadowFilter.svelte';
-  import IntervalSetPolygon from './common/IntervalSetPolygon.svelte';
-  import Tips from './Wheel/Tips.svelte';
-  import BlurFilter from './Wheel/BlurFilter.svelte';
+  import { Scalar } from '../../Utils/Math/Scalar';
+  import RotaryKeyboard from './RotaryKeyboard/RotaryKeyboard.svelte';
+  import Base from './Base.svelte';
+  import ScaleComponent from './Scale/ScaleComponent.svelte';
+  import Rotator from './Rotator.svelte';
+  import ShadowFilter from './ShadowFilter.svelte';
+  import IntervalSetPolygon from '../common/IntervalSetPolygon.svelte';
+  import Tips from './Tips.svelte';
+  import BlurFilter from './BlurFilter.svelte';
   import {
     editVsPlay,
     intervalSet,
     tonalCenter,
-  } from '../store';
+  } from '../../store';
 
   /**
    * The width and height of the square SVG view box in user units (basically SVG

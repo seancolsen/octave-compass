@@ -1,7 +1,7 @@
 <script lang='ts'>
   import { Angle } from '../../Utils/Geometry/Angle';
   import { Chord } from '../../Utils/Music/Chord';
-  import { scaleRotatorStores } from '../Wheel.svelte'
+  import { scaleRotatorStores } from '../Wheel/Wheel.svelte'
   const {rotation} = scaleRotatorStores;
   
   export let size: number;

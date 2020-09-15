@@ -1,9 +1,8 @@
 <script lang="ts">
-  import KeySet from './RotaryKeyboard/KeySet.svelte';
-  import { noteSet } from '../../store';
-  import IntervalSetPolygon from '../common/IntervalSetPolygon.svelte';
-  import { editVsPlay, keyboardRadius } from '../../store';
-  import { IntervalSet } from '../../Utils/Music/IntervalSet';
+  import KeySet from './KeySet.svelte';
+  import IntervalSetPolygon from '../../common/IntervalSetPolygon.svelte';
+  import { editVsPlay, keyboardRadius, noteSet } from '../../../store';
+  import { IntervalSet } from '../../../Utils/Music/IntervalSet';
   import { somethingIsRotating } from '../Wheel.svelte';
 </script>
 
