@@ -1,5 +1,5 @@
 <script lang="ts">
-  import KeySet from './Keyboard/KeySet.svelte';
+  import KeySet from './RotaryKeyboard/KeySet.svelte';
   import { noteSet } from '../../store';
   import IntervalSetPolygon from '../common/IntervalSetPolygon.svelte';
   import { editVsPlay, keyboardRadius } from '../../store';
@@ -8,7 +8,7 @@
 </script>
 
 <g
-  id='keyboard'
+  id='rotary-keyboard'
   filter="url('#shadow-when-edit')"
   class:isEdit={$editVsPlay === 0}
  >

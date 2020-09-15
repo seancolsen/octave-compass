@@ -11,7 +11,7 @@
 
 <script lang="ts">
   import { Scalar } from '../Utils/Math/Scalar';
-  import Keyboard from './Wheel/Keyboard.svelte';
+  import RotaryKeyboard from './Wheel/RotaryKeyboard.svelte';
   import Base from './Wheel/Base.svelte';
   import ScaleComponent from './Wheel/ScaleComponent.svelte';
   import Rotator from './Wheel/Rotator.svelte';
@@ -51,7 +51,7 @@
       rotatorStores={keyboardRotatorStores}
       onRotationRest={r => {tonalCenter.shift(r)}}
     >
-      <Keyboard />
+      <RotaryKeyboard />
     </Rotator>
     <Rotator {isRotatable}
       rotatorStores={scaleRotatorStores}
@@ -83,7 +83,7 @@
   #wheel.isRotatable :global(#scale) {
     animation: oscillate 700ms ease-in-out;
   }
-  #wheel.isRotatable :global(#keyboard) {
+  #wheel.isRotatable :global(#rotary-keyboard) {
     animation: oscillate-reverse 700ms ease-in-out;
   }
   @keyframes oscillate {
