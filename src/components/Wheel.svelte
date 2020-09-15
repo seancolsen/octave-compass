@@ -66,7 +66,11 @@
 </div>
 
 <style>
+  #wheel {width: 100%;}
   svg {
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100%;
     text-rendering: optimizeLegibility;
   }
   svg > :global(.intervalSetPolygon_play) {

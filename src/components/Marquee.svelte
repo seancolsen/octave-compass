@@ -1,40 +1,59 @@
 <script lang="ts">
+  import {
+    title,
+    alternateScaleNames,
+    inversionText,
+    isNamed,
+  } from '../store';
+
+  let className = undefined as string | undefined;
+  export {className as class};
+
+  /**
+   * Function to execute when the user clicks the "Show more" link within the
+   * list of alternate scale names.
+   */
+  export let showMore = () => {};
+
+  $: nameCount = $alternateScaleNames.length;
 
 </script>
 
-<!-- import React from 'react';
-import styled from 'styled-components';
-import { AlternateScaleNames } from './Marquee/AlternateScaleNames';
-import { useStore } from './Store';
-import { useObserver } from 'mobx-react-lite';
+<div class={className} id='marquee'>
 
-interface Props {
-  showMore?(): void;
-  isWithinModal?: boolean;
-  className?: string;
-}
+  <h1 class:isNamed >
+    {$title}
+    {#if $inversionText}<em>{$inversionText}</em>{/if}
+  </h1>
 
-export function Marquee(props: Props) {
-  const store = useStore();
+  {#if nameCount > 0}
+    <div class='subtitle'>
 
-  const TitleElement = props.isWithinModal ? 'h2' : 'h1';
+      <span class='aka'>Also know as: </span>
+      {$alternateScaleNames[0]}
 
-  const Title = styled(TitleElement)`
-    text-align: center;
-    font-style: ${store.isNamed ? 'default' : 'italic'};
-  `;
+      {#if nameCount > 1}
+        <span>, and </span>
+        <span class='show-more' on:click|preventDefault={showMore}>
+          {nameCount - 1} other name{nameCount > 2 && 's'}...
+        </span>
+      {/if}
 
-  return useObserver(() => (
-    <div className={props.className} id='marquee'>
-      <Title>
-        {store.title}
-        {store.inversionText && <em>{store.inversionText}</em>}
-      </Title>
-      <AlternateScaleNames
-        intervalSet={store.intervalSet}
-        showMore={props.showMore}
-        isWithinModal={props.isWithinModal}
-      />
     </div>
-  ));
-} -->
+  {/if}
+
+</div>
+
+<style>
+  h1 { text-align: center; }
+  h1.isNamed { font-style: italic; }
+  .subtitle {
+    text-align: center;
+    padding: 1vmax;
+    font-size: 85%;
+    font-style: italic;
+    height: 1em;
+  }
+  .aka { color: #333; }
+  .show-more {text-decoration: underline; cursor: pointer;}
+</style>

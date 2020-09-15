@@ -199,6 +199,12 @@ export const title = derived([intervalSet, tonalCenterName],
 
 // ========================================================================== //
 
+export const alternateScaleNames = derived(intervalSet, $intervalSet => 
+  $intervalSet instanceof Scale ? $intervalSet.alternateNames : [] as string[]
+);
+
+// ========================================================================== //
+
   /**
  * E.g. "1st inversion"
  */

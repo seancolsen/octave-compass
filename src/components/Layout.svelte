@@ -1,17 +1,16 @@
 <script lang="ts">
-  // import Modal from 'react-responsive-modal';
-  // import { Marquee } from "./Marquee";
+  import Marquee from "./Marquee.svelte";
   import Wheel from "./Wheel.svelte";
   // import { Menu } from "./Menu";
   import Toolbar from "./Toolbar.svelte";
 
-  // type Modal = 'marquee' | null;
+  let modal = null as 'marquee' | null;
 </script>
 
 
 <div id='app' className="App">
   <div id='layout'>
-    <!-- <Marquee showMore={() => setModal('marquee')}/> -->
+    <Marquee showMore={() => {modal = 'marquee'}}/>
     <Toolbar />
     <div id='wheel-container'><Wheel/></div>
     <!-- <Menu/> -->
@@ -25,3 +24,14 @@
     </Modal> -->
   </div>
 </div>
+
+
+<style>
+
+#wheel-container {
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+}
+
+</style>
