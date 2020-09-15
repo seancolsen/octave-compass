@@ -49,7 +49,7 @@ export class IntervalSet {
   defaultName: string | null = null;
 
   /**
-   * The binary representaion of this IntervalSet (as explained in IntervalSet
+   * The binary representation of this IntervalSet (as explained in IntervalSet
    * docs).
    */
   binary: number;

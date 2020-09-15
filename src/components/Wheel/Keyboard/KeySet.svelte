@@ -1,17 +1,12 @@
 <script lang="ts">
-  import { PitchSet } from "../../../Utils/Music/PitchSet";
+  import { NoteSet } from "../../../Utils/Music/NoteSet";
   import Key from "./Key.svelte";
-
-  export let pitchSet: PitchSet;
+  export let noteSet: NoteSet;
   export let isActive: boolean;
-  $: filter = isActive ? "url('#shadow-when-play')" : 'none';
 </script>
 
-<g {filter}>
-  {#each pitchSet.pitches as pitch (pitch.note.id)}
-    <Key
-      pitch={pitch}
-      isActive={isActive}
-    />
+<g filter={isActive ? "url('#shadow-when-play')" : 'none'}>
+  {#each noteSet.notes as note (note.id)}
+    <Key {note} {isActive} />
   {/each}
 </g>

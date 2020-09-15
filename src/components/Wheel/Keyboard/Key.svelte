@@ -1,54 +1,30 @@
 <script lang="ts">
   import KeyPolygon from './common/KeyPolygon.svelte';
   import KeyLabelSet from './KeyLabelSet.svelte';
-  import { Pitch } from '../../../Utils/Music/Pitch';
+  import { Note } from '../../../Utils/Music/Note';
   import { editVsPlay, tonalCenter } from '../../../store';
 
-  export let pitch: Pitch;
+  export let note: Note;
   export let isActive: boolean;
   
   $: isEdit = $editVsPlay === 0;
   $: isPlay = $editVsPlay === 1;
   $: isClickable = isActive && isPlay;
-  $: isHighlighted = isActive && isEdit;
-  $: interval = pitch.note.id - $tonalCenter;
-
-  // const handleMouseDownOrTouchStart = (event: GenericEvent) => {
-  //   event.preventDefault();
-  //   if (!isActive) {
-  //     return;
-  //   }
-  //   // store.playNotes([pitch.note.id]); // TODO
-  //   event.stopPropagation();
-  // }
-
-  // TODO: add these event handlers and edit
-  // onMouseDown={isClickable ? handleMouseDownOrTouchStart : undefined}
-  // onTouchStart={isClickable ? handleMouseDownOrTouchStart : undefined}
-  // onTouchEnd={isClickable ? e => e.preventDefault() : undefined}
+  $: interval = note.id - $tonalCenter;
 
 </script>
-  
-<g
-  class:isClickable
-  class:isHighlighted
-  class:isPlay
-  class:isActive
->
+
+<g class:isClickable class:isActive>
   {#if isActive && !isEdit}
     <KeyPolygon class='background' {interval} />
   {/if}
-  <KeyLabelSet
+  <KeyLabelSet {note} {interval}
     class='key-label-highlight'
-    note={pitch.note}
-    {interval}
     isHighlight={true}
     opacity={isActive ? 1 - $editVsPlay : 0}
   />
-  <KeyLabelSet
+  <KeyLabelSet {note} {interval}
     class='key-label'
-    note={pitch.note}
-    {interval}
     isHighlight={false}
     opacity={isActive ? 1 - 0.1 * $editVsPlay : 0.25}
   />

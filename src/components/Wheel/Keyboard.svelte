@@ -1,6 +1,6 @@
 <script lang="ts">
   import KeySet from './Keyboard/KeySet.svelte';
-  import { pitchSet } from '../../store';
+  import { noteSet } from '../../store';
   import IntervalSetPolygon from '../common/IntervalSetPolygon.svelte';
   import { editVsPlay, keyboardRadius } from '../../store';
   import { IntervalSet } from '../../Utils/Music/IntervalSet';
@@ -18,14 +18,8 @@
     opacity={1 - $editVsPlay}
     fill='#b7b7b7'
   />
-  <KeySet
-    pitchSet={$pitchSet.compliment}
-    isActive={false}
-  />
-  <KeySet
-    pitchSet={$pitchSet}
-    isActive={!$somethingIsRotating}
-  />
+  <KeySet noteSet={$noteSet.compliment} isActive={false} />
+  <KeySet noteSet={$noteSet} isActive={!$somethingIsRotating} />
 </g>
 
 <style>
