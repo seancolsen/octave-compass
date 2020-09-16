@@ -7,6 +7,7 @@ import { Chord } from './Utils/Music/Chord';
 import { Scale } from './Utils/Music/Scale';
 import { Scalar } from './Utils/Math/Scalar';
 import { Pitch } from './Utils/Music/Pitch';
+import { KeyController } from './Utils/Keyboard/KeyController';
 
 /**
  * ABOUT THIS FILE:
@@ -233,44 +234,13 @@ export const isNamed = derived(intervalSet, $intervalSet =>
 
 // ========================================================================== //
 
+export const audioContext = new AudioContext({
+  latencyHint: "playback",
+  sampleRate: 12000,
+});
 
-/**
- * Generate sound for an array of notes, given their IDs.
- */
-export const playPitches = (pitches: Pitch[]) => {
-  // const frequencies = pitches.map(pitch => pitch.frequency);
-  // const synth = new Tone.PolySynth(Tone.Synth).toMaster();
-  // synth.triggerAttackRelease(frequencies, "8n", "+0.03")
-};
+// ========================================================================== //
 
-
-
-/**
- * Generate audio from the given notes!
- */
-export const playNotes = async (noteIds: number[]) => {
-  // await Tone.start();
-  // const synth = new Tone.PolySynth().toDestination();
-  // synth.triggerAttackRelease(['C4'], "8n", "+0.03");
-  // const pitches = this.pitchSet.pitches.filter(pitch =>
-  //   noteIds.includes(pitch.note.id)
-  // );
-  // audio.playPitches(pitches);
-}
-
-// /**
-//  * Generate audio from the given ordinals!
-//  */
-// playIntervals(ordinals: number[]) {
-//   const notes = ordinals.map(ordinal =>
-//     Scalar.wrapToOctave(ordinal + this.tonalCenter)
-//   );
-//   this.playNotes(notes);
-// },
-
-// /**
-//  * Generate audio of a chord within the scale.
-//  */
-// playOrdinalChord(ordinalChord: OrdinalChord) {
-//   this.playIntervals(ordinalChord.intervalSet.ordinals);
-// },
+export const keyControllers = derived(pitchSet, $pitchSet => 
+  $pitchSet.pitches.map(pitch => new KeyController(audioContext, pitch))
+);

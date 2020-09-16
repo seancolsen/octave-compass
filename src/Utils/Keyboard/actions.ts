@@ -13,7 +13,7 @@ export function keyboardAction(e: Element, keyControllers: KeyController[]) {
     for (let i = 0; i < touches.length; i++) {
       let {clientX, clientY} = touches[i];
       let el = document.elementFromPoint(clientX, clientY) as KeyElement;
-      if (el.keyController) {
+      if (el?.keyController) {
         // For all keys that we determine the user is touching, call press()
         // on the keyController. Don't worry about pressing keys that are
         // already pressed because the key controller will ignore it.

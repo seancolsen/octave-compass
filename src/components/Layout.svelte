@@ -4,6 +4,7 @@
   import ChordSelection from './ChordSelection/ChordSelection.svelte';
   import Toolbar from "./Toolbar.svelte";
   import LinearKeyboard from './LinearKeyboard/LinearKeyboard.svelte';
+  import {editVsPlay} from '../store';
 
   let modal = null as 'marquee' | null;
 </script>
@@ -14,8 +15,8 @@
     <Marquee showMore={() => {modal = 'marquee'}}/>
     <Toolbar />
     <Wheel/>
-    <ChordSelection />
-    <LinearKeyboard />
+    {#if $editVsPlay === 0}<ChordSelection />{/if}
+    {#if $editVsPlay === 1}<LinearKeyboard />{/if}
   </div>
   <div id='modals'>
     <!-- <Modal
