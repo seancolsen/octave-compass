@@ -4,14 +4,17 @@
   import ChordSelection from './ChordSelection/ChordSelection.svelte';
   import Toolbar from "./Toolbar.svelte";
   import LinearKeyboard from './LinearKeyboard/LinearKeyboard.svelte';
-  import {editVsPlay} from '../store';
+  import {editVsPlay, keyControllers} from '../store';
+  import {
+    addKeyboardEventListeners
+  } from './Keyboard/addKeyboardEventListeners';
 
   let modal = null as 'marquee' | null;
 </script>
 
 
 <div id='app' className="App">
-  <div id='layout'>
+  <div id='layout' use:addKeyboardEventListeners={keyControllers}>
     <Marquee showMore={() => {modal = 'marquee'}}/>
     <Toolbar />
     <Wheel/>

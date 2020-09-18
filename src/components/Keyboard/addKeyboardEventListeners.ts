@@ -1,11 +1,17 @@
-import { KeyController } from "./KeyController";
+import type { KeyController } from "./KeyController";
 import type {KeyElement} from './KeyController';
+import {get} from 'svelte/store';
+import type {Readable} from 'svelte/store';
 
 /**
  * Add event listeners to make a component behave like a keyboard.
  */
-export function keyboardAction(e: Element, keyControllers: KeyController[]) {
+export function addKeyboardEventListeners(
+  e: Element | SVGElement,
+  keyControllersStore: Readable<KeyController[]>
+) {
   
+  // just to make ts happy
   const el = e as KeyElement;
 
   const pressKeysThatAreTouched = (touches: TouchList) => {
@@ -31,7 +37,8 @@ export function keyboardAction(e: Element, keyControllers: KeyController[]) {
   const releaseKeysThatAreNotTouched = (
     touchedKeyControllers: KeyController[]
   ) => {
-    keyControllers
+    // We shouldn't need the `as` here but svelte-ts isn't that smart yet.
+    (get(keyControllersStore) as KeyController[])
       .filter(kc => kc.isPressed)
       .filter(kc => !touchedKeyControllers.includes(kc))
       .forEach(kc => kc.release());
@@ -89,48 +96,13 @@ export function keyboardAction(e: Element, keyControllers: KeyController[]) {
    * 
    * - We use `{passive: false}` because some browsers will default to true for
    *   certain touch events in order to improve scrolling performance.
+   * - We add the event handlers manually (instead of by using directives) so
+   *   that we can explicitly get non-passive. We can clean this up once
+   *   https://github.com/sveltejs/svelte/issues/2068 is resloved.
+   *   
    */
   el.addEventListener('touchstart', syncKeysWithTouches, {passive: false});
   el.addEventListener('touchmove', syncKeysWithTouches, {passive: false});
   el.addEventListener('touchend', syncKeysWithTouches, {passive: false});
   el.addEventListener('touchcancel', syncKeysWithTouches, {passive: false});
-}
-
-
-/**
- * Add event listeners to make a component behave like a key within a keyboard.
- */
-export function keyAction(element: Element, keyController: KeyController) {
-
-  const el = element as KeyElement;
-
-  /**
-   * Onto the calling component's DOM node, attach a reference to the controller
-   * so that we can control it once parent components find this element via
-   * document.elementFromPoint().
-   */
-  el.keyController = keyController;
-
-  const handleMouseBegin = (event: Event) => {
-    const e = event as MouseEvent;
-    e.preventDefault();
-    e.stopPropagation();
-    // Validate `buttons` for two reasons:
-    // - Don't fire when hovering on `mouseover`.
-    // - Don't fire when right-clicking on `mousedown`.
-    e.buttons === 1 ? keyController.press() : null
-  }
-
-  /**
-   * The event handlers here only deal with mouse events. Touch events are
-   * handled within keyboardAction. See the comments on the event listeners
-   * there for more notes about this setup.
-   */
-  el.addEventListener('mousedown', handleMouseBegin);
-  el.addEventListener('mouseover', handleMouseBegin);
-  el.addEventListener('contextmenu', () => {});
-  el.addEventListener('mouseup', e => keyController.release());
-  el.addEventListener('mouseout', e => keyController.release());
-  el.addEventListener('mouseleave', e => keyController.release());
-  
 }

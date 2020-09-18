@@ -7,7 +7,7 @@ import { Chord } from './Utils/Music/Chord';
 import { Scale } from './Utils/Music/Scale';
 import { Scalar } from './Utils/Math/Scalar';
 import { Pitch } from './Utils/Music/Pitch';
-import { KeyController } from './Utils/Keyboard/KeyController';
+import { KeyController } from './components/Keyboard/KeyControllerr
 
 /**
  * ABOUT THIS FILE:

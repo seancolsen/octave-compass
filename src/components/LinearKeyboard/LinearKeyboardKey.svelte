@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { KeyController } from '../../Utils/Keyboard/KeyController';
-  import {keyAction} from '../../Utils/Keyboard/actions';
+  import type { KeyController } from '../../Keyboard/KeyController';
+  import {keyAction} from '../../Keyboard/actions';
   export let controller: KeyController;
   const isPressed = controller.isPressed;
 

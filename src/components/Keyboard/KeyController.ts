@@ -1,6 +1,6 @@
 import {writable, derived, get} from 'svelte/store';
 import SynthNote from './SynthNote';
-import type {Pitch} from '../Music/Pitch';
+import type {Pitch} from '../../Utils/Music/Pitch';
 
 /**
  * Each Key component gets a corresponding KeyController instance to control
