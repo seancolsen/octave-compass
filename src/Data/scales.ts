@@ -90,10 +90,10 @@ export const scales: { [k: number]: string[] } = {
     "Kumoi",
   ],
   0b001010010101: [
+    "Major Pentatonic",
     "Bilahari",
     "Deskar",
     "Gong",
-    "Major Pentatonic",
     "Mohanam",
     "Raga Bhopali",
   ],
@@ -260,7 +260,8 @@ export const scales: { [k: number]: string[] } = {
     "Suspended Pentatonic",
   ],
   0b010010101001: [
-    "Blues Pentatonic Minor",
+    "Minor Pentatonic",
+    "Blues Pentatonic",
     "Minyo",
     "Pyongjo Kyemyonjo",
   ],
