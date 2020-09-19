@@ -17,7 +17,7 @@ export class KeyController {
 
   audioContext: AudioContext;
 
-  pitch: Pitch;
+  pitches: Pitch[];
 
   /**
    * When null, this indicates that the key is not currently being pressed.
@@ -27,9 +27,9 @@ export class KeyController {
    */
   doReleaseSynth = writable(null as null | (() => void));
   
-  constructor(audioContext: AudioContext, pitch: Pitch) {
+  constructor(audioContext: AudioContext, pitches: Pitch[]) {
     this.audioContext = audioContext;
-    this.pitch = pitch;
+    this.pitches = pitches;
   }
 
   /**
@@ -46,12 +46,14 @@ export class KeyController {
   press() {
     if (get(this.isPressed)) {return;}
     
-    // For chrome policy
-    // Tutorials recommend running this with `await`, but I had trouble with
-    // redundant key presses when making press() an async function.
+    // This resume() call is here to accommodate the Chrome policy of suspending
+    // until user interaction. Tutorials recommend running this with `await`,
+    // but I had trouble with redundant key presses when making press() an async
+    // function.
     this.audioContext.resume();
 
-    const synthNote = new SynthNote(this.audioContext, this.pitch.frequency);
+    const frequencies = this.pitches.map(p => p.frequency);
+    const synthNote = new SynthNote(this.audioContext, frequencies);
     synthNote.attack();
     this.doReleaseSynth.set(() => synthNote.release());
   }

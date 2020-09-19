@@ -1,25 +1,25 @@
 <script lang="ts">
   import Marquee from "./Marquee.svelte";
   import Wheel from "./Wheel/Wheel.svelte";
+  import Keyboard from './Keyboard/Keyboard.svelte';
   import ChordSelection from './ChordSelection/ChordSelection.svelte';
   import Toolbar from "./Toolbar.svelte";
   import LinearKeyboard from './LinearKeyboard/LinearKeyboard.svelte';
-  import {editVsPlay, keyControllers} from '../store';
-  import {
-    addKeyboardEventListeners
-  } from './Keyboard/addKeyboardEventListeners';
+  import {editVsPlay} from '../store';
 
   let modal = null as 'marquee' | null;
 </script>
 
 
 <div id='app' className="App">
-  <div id='layout' use:addKeyboardEventListeners={keyControllers}>
-    <Marquee showMore={() => {modal = 'marquee'}}/>
-    <Toolbar />
-    <Wheel/>
-    {#if $editVsPlay === 0}<ChordSelection />{/if}
-    {#if $editVsPlay === 1}<LinearKeyboard />{/if}
+  <div id='layout'>
+    <Keyboard>
+      <Marquee showMore={() => {modal = 'marquee'}}/>
+      <Toolbar />
+      <Wheel/>
+      {#if $editVsPlay === 0}<ChordSelection />{/if}
+      {#if $editVsPlay === 1}<LinearKeyboard />{/if}
+    </Keyboard>
   </div>
   <div id='modals'>
     <!-- <Modal

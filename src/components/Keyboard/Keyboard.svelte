@@ -1,21 +1,6 @@
-import type { KeyController } from "./KeyController";
-import type {KeyElement} from './KeyController';
-import {get} from 'svelte/store';
-import type {Readable} from 'svelte/store';
-
-/**
- * Add event listeners to make a component behave like a keyboard.
- */
-export function addKeyboardEventListeners(
-  e: Element | SVGElement,
-  keyControllersStore: Readable<KeyController[]>
-) {
-  
-  // just to make ts happy
-  const el = e as KeyElement;
-
+<script context="module" lang="ts">
   const pressKeysThatAreTouched = (touches: TouchList) => {
-    let touchedKeyControllers = [] as KeyController[];
+    let touchedKeyElements = [] as KeyElement[];
     for (let i = 0; i < touches.length; i++) {
       let {clientX, clientY} = touches[i];
       let el = document.elementFromPoint(clientX, clientY) as KeyElement;
@@ -28,28 +13,34 @@ export function addKeyboardEventListeners(
         // Also, store which key controllers we're touching because later on
         // we want to release all pressed keys that we determine are not
         // currently being touched.
-        touchedKeyControllers = [...touchedKeyControllers, el.keyController];
+        touchedKeyElements = [...touchedKeyElements, el];
       }
     }
-    return touchedKeyControllers;
+    return touchedKeyElements;
   }
+</script>
 
-  const releaseKeysThatAreNotTouched = (
-    touchedKeyControllers: KeyController[]
-  ) => {
-    // We shouldn't need the `as` here but svelte-ts isn't that smart yet.
-    (get(keyControllersStore) as KeyController[])
-      .filter(kc => kc.isPressed)
-      .filter(kc => !touchedKeyControllers.includes(kc))
-      .forEach(kc => kc.release());
+<script lang="ts">
+  import type {KeyElement} from './KeyController';
+  import {keyElements} from '../../store';
+  import {onMount} from 'svelte';
+
+  let ref: Element;
+
+  const releaseKeysThatAreNotTouched = (touchedKeyElements: KeyElement[]) => {
+    $keyElements
+      .filter(keyElement => !touchedKeyElements.includes(keyElement))
+      .map(keyElement => keyElement.keyController)
+      .filter(keyController => keyController.isPressed)
+      .forEach(keyController => keyController.release());
   }
   
   const syncKeysWithTouches = (event: Event) => {
     const e = event as TouchEvent;
     e.preventDefault();
     e.stopPropagation();
-    const touchedKeyControllers = pressKeysThatAreTouched(e.touches);
-    releaseKeysThatAreNotTouched(touchedKeyControllers);
+    const touchedKeyElements = pressKeysThatAreTouched(e.touches);
+    releaseKeysThatAreNotTouched(touchedKeyElements);
   };
 
   /**
@@ -101,8 +92,15 @@ export function addKeyboardEventListeners(
    *   https://github.com/sveltejs/svelte/issues/2068 is resloved.
    *   
    */
-  el.addEventListener('touchstart', syncKeysWithTouches, {passive: false});
-  el.addEventListener('touchmove', syncKeysWithTouches, {passive: false});
-  el.addEventListener('touchend', syncKeysWithTouches, {passive: false});
-  el.addEventListener('touchcancel', syncKeysWithTouches, {passive: false});
-}
+  onMount(() => {
+    ref.addEventListener('touchstart', syncKeysWithTouches, {passive: false});
+    ref.addEventListener('touchmove', syncKeysWithTouches, {passive: false});
+    ref.addEventListener('touchend', syncKeysWithTouches, {passive: false});
+    ref.addEventListener('touchcancel', syncKeysWithTouches, {passive: false});
+  })
+
+</script>
+
+<div bind:this={ref}>
+  <slot />
+</div>

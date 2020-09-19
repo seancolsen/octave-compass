@@ -1,21 +1,33 @@
 export default class SynthNote {
 
   audioContext: AudioContext;
-  oscillator: OscillatorNode;
+  oscillators: OscillatorNode[];
   gain: GainNode;
 
-  constructor(audioContext: AudioContext, frequency: number) {
+  constructor(audioContext: AudioContext, frequencies: number[]) {
     this.audioContext = audioContext;
     this.gain = audioContext.createGain();
-    this.oscillator = audioContext.createOscillator();
     this.gain.connect(audioContext.destination);
-    this.oscillator.connect(this.gain);
-    this.oscillator.type = 'triangle';
-    this.oscillator.frequency.value = frequency;
+    this.oscillators = [];
+    frequencies.forEach(frequency => {
+      const oscillator = audioContext.createOscillator();
+      oscillator.connect(this.gain);
+      oscillator.type = 'triangle';
+      oscillator.frequency.value = frequency;
+      this.oscillators = [...this.oscillators, oscillator];
+    });
   }
 
   attack() {
-    this.oscillator.start();
+    /**
+     * When multiple frequencies are present, they'll start with offsets to sound
+     * like a guitar strum. The value specified below (in seconds) represents the
+     * time between consecutive note attacks.
+     */
+    const strumStagger = 0.03 // seconds
+    this.oscillators.forEach((osc, i) => {
+      osc.start(this.audioContext.currentTime + i * strumStagger);
+    });
   }
 
   release() {
@@ -30,8 +42,10 @@ export default class SynthNote {
   }
 
   disconnect() {
-    this.oscillator.stop();
-    this.oscillator.disconnect();
+    this.oscillators.forEach(oscillator => {
+      oscillator.stop();
+      oscillator.disconnect();
+    });
     this.gain.disconnect();
   }
 

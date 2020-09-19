@@ -7,7 +7,7 @@ import { Chord } from './Utils/Music/Chord';
 import { Scale } from './Utils/Music/Scale';
 import { Scalar } from './Utils/Math/Scalar';
 import { Pitch } from './Utils/Music/Pitch';
-import { KeyController } from './components/Keyboard/KeyControllerr
+import type { KeyElement } from './components/Keyboard/KeyController';
 
 /**
  * ABOUT THIS FILE:
@@ -241,6 +241,29 @@ export const audioContext = new AudioContext({
 
 // ========================================================================== //
 
-export const keyControllers = derived(pitchSet, $pitchSet => 
-  $pitchSet.pitches.map(pitch => new KeyController(audioContext, pitch))
-);
+/**
+ * Keep a list of KeyElements so that the Keyboard component (note we only have
+ * one of them, which this structure enforces) knows what all the keys are
+ * that are associated with it.
+ */
+export const keyElements = (() => {
+  const {subscribe, update} = writable([] as KeyElement[]);
+
+  return {
+    subscribe,
+
+    /**
+     * Add a new KeyElement to the registry of KeyElements.
+     */
+    register: (keyElement: KeyElement) => {
+      update($keyElements => [...$keyElements, keyElement]);
+    },
+    
+    /**
+     * Remove a KeyElement from the registry.
+     */
+    unregister: (keyElement: KeyElement) => {
+      update($keyElements => $keyElements.filter(ke => ke !== keyElement));
+    },
+  };
+})();

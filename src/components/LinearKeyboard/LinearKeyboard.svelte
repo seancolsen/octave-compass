@@ -1,14 +1,20 @@
 <script lang="ts">
-  import { keyControllers } from '../../store';
   import Key from '../Keyboard/Key.svelte';
+  import {pitchSet} from '../../store';
+  import type { Pitch } from '../../Utils/Music/Pitch';
+
+  const style = (pitch: Pitch) => ''+
+    `background: ${pitch.note.color === 'black' ? 'black' : 'white'};`+
+    `color: ${pitch.note.color === 'black' ? 'white' : 'black'};`;
 </script>
 
 <div class='keyboard'>
-  {#each $keyControllers as keyController}
-    <Key {keyController} class='key-container'>
-      <div class='key' class:isPressed={true}>
-        {keyController.pitch.note.name?.unicode}
-      </div>
+  {#each $pitchSet.pitches as pitch}
+    <Key
+      pitches={[pitch]}
+      style={style(pitch)}
+    >
+      {pitch.note.name?.unicode}
     </Key>
   {/each}
 </div>

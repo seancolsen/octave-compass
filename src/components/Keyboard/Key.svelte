@@ -1,10 +1,26 @@
 <script lang="ts">
-  import type {KeyElement, KeyController } from './KeyController';
-  import {afterUpdate} from 'svelte';
-  export let keyController: KeyController;
-  export let isInsideSvg = false;
-  let element: Element | SVGElement;
+  import type {Pitch} from '../../Utils/Music/Pitch';
+  import {KeyController} from './KeyController';
+  import {audioContext, keyElements} from '../../store';
+  import {onMount, afterUpdate} from 'svelte';
+  import type { Readable } from 'svelte/store';
 
+  export let pitches: Pitch[];
+  export let isInsideSvg = false;
+  
+  /** 
+   * Using `any` because I can't figure out a better way. At first ref is either
+   * Element or SVGElement. Then, upon running `afterUpdate()` it gets the
+   * keyController property and can be of type `KeyElement`.
+   */
+  let ref: any;
+
+  let isPressed: Readable<boolean>;
+  
+  onMount(() => {
+    keyElements.register(ref);
+  })
+  
   afterUpdate(() => {
     /**
      * Onto the calling component's DOM node, attach a reference to the
@@ -12,7 +28,9 @@
      * element via document.elementFromPoint(). We do this afterUpdate so that
      * if a new KeyController is passed it, we can use that updated one.
      */
-    (element as KeyElement).keyController = keyController;
+    const keyController = new KeyController(audioContext, pitches);
+    ref.keyController = keyController;
+    isPressed = keyController.isPressed;
   });
 
   const handleMouseBegin = (event: Event) => {
@@ -22,11 +40,14 @@
     // Validate `buttons` for two reasons:
     // - Don't fire when hovering on `mouseover`.
     // - Don't fire when right-clicking on `mousedown`.
-    e.buttons === 1 ? keyController.press() : null
+    e.buttons === 1 ? ref.keyController?.press() : null
+  }
+
+  const handleMouseEnd = (event: Event) => {
+    ref.keyController?.release()
   }
 </script>
 
-<div>
 <!--
   The event handlers here only deal with mouse events. Touch events are
   handled within Keyboard.svelte.
@@ -35,14 +56,16 @@
 -->
 {#if isInsideSvg}
   <g
-    bind:this={element}
+    class='key'
+    class:isPressed={$isPressed}
+    bind:this={ref}
     {...$$restProps}
     on:mousedown={handleMouseBegin}
     on:mouseover={handleMouseBegin}
     on:contextmenu={() => {}}
-    on:mouseup={e => keyController.release()}
-    on:mouseout={e => keyController.release()}
-    on:mouseleave={e => keyController.release()}
+    on:mouseup={handleMouseEnd}
+    on:mouseout={handleMouseEnd}
+    on:mouseleave={handleMouseEnd}
   >
     <slot/>
   </g>
@@ -52,16 +75,17 @@
     Because https://github.com/sveltejs/svelte/issues/2324
   -->
   <div
-    bind:this={element}
+    class='key'
+    class:isPressed={$isPressed}
+    bind:this={ref}
     {...$$restProps}
     on:mousedown={handleMouseBegin}
     on:mouseover={handleMouseBegin}
     on:contextmenu={() => {}}
-    on:mouseup={e => keyController.release()}
-    on:mouseout={e => keyController.release()}
-    on:mouseleave={e => keyController.release()}
+    on:mouseup={handleMouseEnd}
+    on:mouseout={handleMouseEnd}
+    on:mouseleave={handleMouseEnd}
   >
     <slot/>
   </div>
 {/if}
-</div>

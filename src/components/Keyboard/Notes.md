@@ -1,6 +1,4 @@
-One keyboard in the whole app -- definitely, because 
-
-A key controller can have multiple keys
-A key has one and only one key controller
-
-lighting is handled separately from keyboard??
+One keyboard in the whole app -- yes
+A controller has one and only one key -- yes
+A key has one and only one key controller -- yes
+Lighting is handled separately from keyboard -- yes
