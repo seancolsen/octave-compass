@@ -15,11 +15,7 @@
    */
   let ref: any;
 
-  let isPressed: Readable<boolean>;
-  
-  onMount(() => {
-    keyElements.register(ref);
-  })
+  onMount(() => keyElements.register(ref));
   
   afterUpdate(() => {
     /**
@@ -30,7 +26,6 @@
      */
     const keyController = new KeyController(audioContext, pitches);
     ref.keyController = keyController;
-    isPressed = keyController.isPressed;
   });
 
   const handleMouseBegin = (event: Event) => {
@@ -40,11 +35,11 @@
     // Validate `buttons` for two reasons:
     // - Don't fire when hovering on `mouseover`.
     // - Don't fire when right-clicking on `mousedown`.
-    e.buttons === 1 ? ref.keyController?.press() : null
+    e.buttons === 1 ? ref.keyController.press() : null
   }
 
   const handleMouseEnd = (event: Event) => {
-    ref.keyController?.release()
+    ref.keyController.release();
   }
 </script>
 
@@ -56,10 +51,7 @@
 -->
 {#if isInsideSvg}
   <g
-    class='key'
-    class:isPressed={$isPressed}
     bind:this={ref}
-    {...$$restProps}
     on:mousedown={handleMouseBegin}
     on:mouseover={handleMouseBegin}
     on:contextmenu={() => {}}
@@ -75,10 +67,7 @@
     Because https://github.com/sveltejs/svelte/issues/2324
   -->
   <div
-    class='key'
-    class:isPressed={$isPressed}
     bind:this={ref}
-    {...$$restProps}
     on:mousedown={handleMouseBegin}
     on:mouseover={handleMouseBegin}
     on:contextmenu={() => {}}
@@ -89,3 +78,13 @@
     <slot/>
   </div>
 {/if}
+
+<style>
+  /**
+   * This is to make elementFromPoint() work correctly within Keyboard.svelte.
+   * Without it, that function returns whatever goes in the <slot/> above
+   * instead of returning this Key element like we want.
+   */
+  g :global(*),
+  div :global(*) {pointer-events: none;}
+</style>

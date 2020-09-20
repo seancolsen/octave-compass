@@ -10,10 +10,9 @@
   let modal = null as 'marquee' | null;
 </script>
 
-
 <div id='app' className="App">
   <div id='layout'>
-    <Keyboard>
+    <Keyboard isPlayable={$editVsPlay === 1}>
       <Marquee showMore={() => {modal = 'marquee'}}/>
       <Toolbar />
       <Wheel/>

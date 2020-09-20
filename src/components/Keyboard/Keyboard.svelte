@@ -25,18 +25,21 @@
   import {keyElements} from '../../store';
   import {onMount} from 'svelte';
 
+  export let isPlayable: boolean;
+  
   let ref: Element;
 
   const releaseKeysThatAreNotTouched = (touchedKeyElements: KeyElement[]) => {
     $keyElements
       .filter(keyElement => !touchedKeyElements.includes(keyElement))
       .map(keyElement => keyElement.keyController)
-      .filter(keyController => keyController.isPressed)
+      .filter(keyController => keyController.state === 'playing')
       .forEach(keyController => keyController.release());
   }
   
   const syncKeysWithTouches = (event: Event) => {
     const e = event as TouchEvent;
+    if (!isPlayable) {return;}
     e.preventDefault();
     e.stopPropagation();
     const touchedKeyElements = pressKeysThatAreTouched(e.touches);
@@ -101,6 +104,6 @@
 
 </script>
 
-<div bind:this={ref}>
+<div bind:this={ref} id=keyboard >
   <slot />
 </div>
