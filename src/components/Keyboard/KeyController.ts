@@ -1,6 +1,6 @@
 import type {Pitch} from '../../Utils/Music/Pitch';
 
-const releaseTime = 0.15; // seconds
+const releaseTime = 0.25; // seconds
 const truncationTime = 0.001; // seconds
 
 /**
@@ -51,9 +51,13 @@ export class KeyController {
   /**
    * Begins playing a SynthNote (sound to speakers!) and also tells the Key
    * component to render a visual indication that sound is playing.
+   * 
+   * @returns
+   *   true if this function call actually changed the state fom not-pressed to
+   *   pressed. Returns false if the key was already pressed.
    */
   press() {
-    if (this.state === 'playing') {return;}
+    if (this.state === 'playing') {return false;}
     if (this.state === 'releasing') {this.reset();}
 
     /**
@@ -76,6 +80,7 @@ export class KeyController {
       this.oscillators = [...this.oscillators, oscillator];
     });
     this.state = 'playing';
+    return true;
   }
 
   release() {

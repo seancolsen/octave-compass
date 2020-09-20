@@ -1,25 +1,3 @@
-<script context="module" lang="ts">
-  const pressKeysThatAreTouched = (touches: TouchList) => {
-    let touchedKeyElements = [] as KeyElement[];
-    for (let i = 0; i < touches.length; i++) {
-      let {clientX, clientY} = touches[i];
-      let el = document.elementFromPoint(clientX, clientY) as KeyElement;
-      if (el?.keyController) {
-        // For all keys that we determine the user is touching, call press()
-        // on the keyController. Don't worry about pressing keys that are
-        // already pressed because the key controller will ignore it.
-        el.keyController.press();
-
-        // Also, store which key controllers we're touching because later on
-        // we want to release all pressed keys that we determine are not
-        // currently being touched.
-        touchedKeyElements = [...touchedKeyElements, el];
-      }
-    }
-    return touchedKeyElements;
-  }
-</script>
-
 <script lang="ts">
   import type {KeyElement} from './KeyController';
   import {keyElements} from '../../store';
@@ -29,12 +7,45 @@
   
   let ref: Element;
 
-  const releaseKeysThatAreNotTouched = (touchedKeyElements: KeyElement[]) => {
+  const pressKeysThatAreTouched = (touches: TouchList) => {
+    let touchedKeyElements = [] as KeyElement[];
+    let newlyTouchedKeyElements = [] as KeyElement[];
+    for (let i = 0; i < touches.length; i++) {
+      let {clientX, clientY} = touches[i];
+      let el = document.elementFromPoint(clientX, clientY) as KeyElement;
+      if (el?.keyController) {
+        // For all keys that we determine the user is touching, call press()
+        // on the keyController. Don't worry about pressing keys that are
+        // already pressed because the key controller will ignore it.
+        let isNewlyTouched = el.keyController.press();
+
+        // Also, store which key controllers we're touching because later on
+        // we want to release all pressed keys that we determine are not
+        // currently being touched.
+        touchedKeyElements = [...touchedKeyElements, el];
+
+        // Also, we want to know whether we've touched any new ones, so keep
+        // track of that too.
+        if (isNewlyTouched) {
+          newlyTouchedKeyElements = [...newlyTouchedKeyElements, el];
+        }
+      }
+    }
+    return {touchedKeyElements, newlyTouchedKeyElements};
+  }
+
+  const releaseKeysThatAreNotTouched = (
+    touchedKeyElements: KeyElement[],
+    doImmediateReset: boolean
+  ) => {
     $keyElements
       .filter(keyElement => !touchedKeyElements.includes(keyElement))
       .map(keyElement => keyElement.keyController)
       .filter(keyController => keyController.state === 'playing')
-      .forEach(keyController => keyController.release());
+      .forEach(keyController => {
+        if (doImmediateReset) { keyController.reset(); }
+        else { keyController.release(); }
+      });
   }
   
   const syncKeysWithTouches = (event: Event) => {
@@ -42,8 +53,12 @@
     if (!isPlayable) {return;}
     e.preventDefault();
     e.stopPropagation();
-    const touchedKeyElements = pressKeysThatAreTouched(e.touches);
-    releaseKeysThatAreNotTouched(touchedKeyElements);
+    const {
+      touchedKeyElements,
+      newlyTouchedKeyElements
+    } = pressKeysThatAreTouched(e.touches);
+    const doImmediateReset = newlyTouchedKeyElements.length > 0;
+    releaseKeysThatAreNotTouched(touchedKeyElements, doImmediateReset);
   };
 
   /**
