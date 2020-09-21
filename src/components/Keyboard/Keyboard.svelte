@@ -1,3 +1,11 @@
+<!-- 
+  @component
+  A keyboard that plays sound!
+
+  - Should contain multiple Key components.
+  - Is designed with the assumption that the app will only contain *one*
+    Keyboard component.
+ -->
 <script lang="ts">
   import type {KeyElement} from './KeyController';
   import {keyElements} from '../../store';
@@ -12,22 +20,23 @@
     let newlyTouchedKeyElements = [] as KeyElement[];
     for (let i = 0; i < touches.length; i++) {
       let {clientX, clientY} = touches[i];
-      let el = document.elementFromPoint(clientX, clientY) as KeyElement;
-      if (el?.keyController) {
+      let touchReceptorElement = document.elementFromPoint(clientX, clientY);
+      let keyElement = touchReceptorElement?.parentNode as KeyElement;
+      if (keyElement?.keyController) {
         // For all keys that we determine the user is touching, call press()
         // on the keyController. Don't worry about pressing keys that are
         // already pressed because the key controller will ignore it.
-        let isNewlyTouched = el.keyController.press();
+        let isNewlyTouched = keyElement.keyController.press();
 
         // Also, store which key controllers we're touching because later on
         // we want to release all pressed keys that we determine are not
         // currently being touched.
-        touchedKeyElements = [...touchedKeyElements, el];
+        touchedKeyElements = [...touchedKeyElements, keyElement];
 
         // Also, we want to know whether we've touched any new ones, so keep
         // track of that too.
         if (isNewlyTouched) {
-          newlyTouchedKeyElements = [...newlyTouchedKeyElements, el];
+          newlyTouchedKeyElements = [...newlyTouchedKeyElements, keyElement];
         }
       }
     }
@@ -40,6 +49,7 @@
   ) => {
     $keyElements
       .filter(keyElement => !touchedKeyElements.includes(keyElement))
+      .filter(keyElement => !!keyElement.keyController)
       .map(keyElement => keyElement.keyController)
       .filter(keyController => keyController.state === 'playing')
       .forEach(keyController => {
@@ -111,6 +121,7 @@
    *   
    */
   onMount(() => {
+    if (!ref) {return}
     ref.addEventListener('touchstart', syncKeysWithTouches, {passive: false});
     ref.addEventListener('touchmove', syncKeysWithTouches, {passive: false});
     ref.addEventListener('touchend', syncKeysWithTouches, {passive: false});

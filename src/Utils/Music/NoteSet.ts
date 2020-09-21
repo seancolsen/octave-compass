@@ -3,7 +3,6 @@ import { Note } from "./Note";
 import { Scalar } from "./../Math/Scalar";
 import { CustomMath } from "./../Math/CustomMath";
 import { NoteNameSet } from "./NoteNameSet";
-import { PitchSet } from "./PitchSet";
 import { IntervalSet } from "./IntervalSet";
 
 /**
@@ -174,10 +173,6 @@ export class NoteSet {
     const direction = (this.nameSet) ? this.nameSet.direction : null;
     return NoteSet.fromIntervalSet(this.toIntervalSet(0).compliment, 0)
       .directionallyNamed(direction, 'flat');
-  }
-
-  pitchSetStartingFrom(octave: number): PitchSet {
-    return new PitchSet(this, octave);
   }
 
   get tonalCenterId(): number {

@@ -170,16 +170,6 @@ export const tonalCenterName = derived([noteSet, inversion],
 // ========================================================================== //
 
 /**
- * This puts the notes in the current interval set into a specific octave so
- * they can be played with audio.
- */
-export const pitchSet = derived(noteSet, ($noteSet) => 
-  $noteSet.pitchSetStartingFrom(4)
-);
-
-// ========================================================================== //
-
-/**
  * The main text to display to the user that describes the current interval
  * set.
  */
@@ -255,14 +245,16 @@ export const keyElements = (() => {
     /**
      * Add a new KeyElement to the registry of KeyElements.
      */
-    register: (keyElement: KeyElement) => {
+    register: (keyElement: KeyElement | null | undefined) => {
+      if (!keyElement) {return}
       update($keyElements => [...$keyElements, keyElement]);
     },
     
     /**
      * Remove a KeyElement from the registry.
      */
-    unregister: (keyElement: KeyElement) => {
+    unregister: (keyElement: KeyElement | null | undefined) => {
+      if (!keyElement) {return}
       update($keyElements => $keyElements.filter(ke => ke !== keyElement));
     },
   };

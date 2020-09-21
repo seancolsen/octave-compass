@@ -12,9 +12,9 @@
 
 <div id='app' className="App">
   <div id='layout'>
+    <Marquee showMore={() => {modal = 'marquee'}}/>
+    <Toolbar />
     <Keyboard isPlayable={$editVsPlay === 1}>
-      <Marquee showMore={() => {modal = 'marquee'}}/>
-      <Toolbar />
       <Wheel/>
       {#if $editVsPlay === 0}<ChordSelection />{/if}
       {#if $editVsPlay === 1}<LinearKeyboard />{/if}

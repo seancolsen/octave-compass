@@ -1,5 +1,6 @@
 import { musicTheory } from "./../../Data/musicTheory";
 import { NoteName } from "./NoteName";
+import { Pitch } from "./Pitch";
 
 export class Note {
 
@@ -125,8 +126,38 @@ export class Note {
     // We use a non-null assertion operator here to tell Typescript that this
     // function won't return null. This is safe because, based on the note data,
     // `this.getNameToMatch('flat')` is definitely not going to return null
-    // since every note either has a natural name (prefered) or a flat name.
+    // since every note either has a natural name (preferred) or a flat name.
     return this.name || this.getNameToMatch('flat')!;
+  }
+
+  /**
+   * Return a Pitch that is within the given SPN octave.
+   * 
+   * @param octave
+   *  The [SPN](https://en.wikipedia.org/wiki/Scientific_pitch_notation)
+   *  octave number
+   */
+  pitchFromOctave(octave: number) {
+    return new Pitch(this, octave);
+  }
+
+  /**
+   * Return a Pitch that is within one octave above the tonal center if the
+   * tonal center is placed within the given SPN octave.
+   * 
+   * @param tonalCenter
+   *  The Note ID of the tonal center that is currently set in the store.
+   * 
+   * @param tonalCenterOctave
+   *  The [SPN](https://en.wikipedia.org/wiki/Scientific_pitch_notation)
+   *  octave number in which we would like to place the tonal center.
+   */
+  pitchAboveTonalCenterInOctave(
+    tonalCenter: number,
+    tonalCenterOctave: number
+  ) {
+    const octave = tonalCenterOctave + (this.id < tonalCenter ? 1 : 0);
+    return new Pitch(this, octave);
   }
 
 }

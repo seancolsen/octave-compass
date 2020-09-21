@@ -3,7 +3,6 @@
   import IntervalSetPolygon from '../../common/IntervalSetPolygon.svelte';
   import { editVsPlay, keyboardRadius, noteSet } from '../../../store';
   import { IntervalSet } from '../../../Utils/Music/IntervalSet';
-  import { somethingIsRotating } from '../Wheel.svelte';
 </script>
 
 <g
@@ -12,15 +11,16 @@
   class:isEdit={$editVsPlay === 0}
  >
   <IntervalSetPolygon
+    class='background'
     radius={$keyboardRadius}
     intervalSet={IntervalSet.chromatic}
     opacity={1 - $editVsPlay}
-    fill='#b7b7b7'
+    
   />
   <KeySet noteSet={$noteSet.compliment} isActive={false} />
-  <KeySet noteSet={$noteSet} isActive={!$somethingIsRotating} />
+  <KeySet noteSet={$noteSet} isActive={true} />
 </g>
 
 <style>
-  g.isEdit :global(*) { cursor: grab; }
+  g > :global(.background) {fill: #b7b7b7;}
 </style>

@@ -1,12 +1,18 @@
 <script lang="ts">
+  import {noteSet, tonalCenter} from '../../store';
   import Key from '../Keyboard/Key.svelte';
-  import {pitchSet} from '../../store';
+  $: pitches = $noteSet.notes.map(note => 
+    note.pitchAboveTonalCenterInOctave($tonalCenter, 4)
+  );
 </script>
 
 <div class='keyboard'>
-  {#each $pitchSet.pitches as pitch}
+  {#each pitches as pitch}
     <Key pitches={[pitch]}>
-      <div class='key' class:isBlack={pitch.note.color === 'black'} >
+      <div
+        class='key touch-receptor'
+        class:isBlack={pitch.note.color === 'black'}
+      >
         {pitch.note.name?.unicode}
       </div>
     </Key>

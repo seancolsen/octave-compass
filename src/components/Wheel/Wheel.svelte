@@ -78,7 +78,6 @@
     stroke: #CCC;
     stroke-width: 3px;
   }
-  :global(#wheel *) { touch-action: none; }
   .center-dot { fill: white; stroke: none; }
   #wheel.isRotatable :global(#scale) {
     animation: oscillate 700ms ease-in-out;
