@@ -89,11 +89,17 @@
     // - Don't fire when hovering on `mouseover`.
     // - Don't fire when right-clicking on `mousedown`.
     e.buttons === 1 ? ref.keyController.press() : null
+    // Reset any currently releasing KeyControllers (to avoid dissonance during
+    // glissando).
+    $keyElements
+      .map(keyElement => keyElement.keyController)
+      .filter(keyController => keyController.state === 'releasing')
+      .forEach(keyController => keyController.reset());
   }
 
   const handleMouseEnd = (event: Event) => {
     if (!isActive) {return;}
-    ref.keyController.release();
+    ref?.keyController?.release();
   }
 </script>
 
