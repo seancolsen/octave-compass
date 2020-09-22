@@ -137,7 +137,7 @@ export class Note {
    *  The [SPN](https://en.wikipedia.org/wiki/Scientific_pitch_notation)
    *  octave number
    */
-  pitchFromOctave(octave: number) {
+  pitchInOctave(octave: number) {
     return new Pitch(this, octave);
   }
 
