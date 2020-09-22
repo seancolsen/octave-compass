@@ -6,7 +6,6 @@ import { NoteSet } from './Utils/Music/NoteSet';
 import { Chord } from './Utils/Music/Chord';
 import { Scale } from './Utils/Music/Scale';
 import { Scalar } from './Utils/Math/Scalar';
-import { Pitch } from './Utils/Music/Pitch';
 import type { KeyElement } from './components/Keyboard/KeyController';
 
 /**
@@ -52,7 +51,9 @@ export const keyboardRadius = derived(editVsPlay, $editVsPlay =>
  * Which intervals are enabled.
  */
 export const intervalSet = (() => {
-  const {subscribe, update} = writable(IntervalSet.fromBinary(2741));
+  const {subscribe, update} = writable(
+    IntervalSetFactory.fromIntervalSet(IntervalSet.fromBinary(2741))
+  );
 
   /**
    * We run any newly computed IntervalSet through this function in order to

@@ -1,51 +1,31 @@
 <script lang="ts">
-
-</script>
-
-<!-- import React from 'react';
-import { Url } from "../Utils/Text/Url";
-import { useStore } from './Store';
-import { observer } from 'mobx-react-lite';
-
-export const RouteProcessor = observer(() => {
-
-  const store = useStore();
+  import {afterUpdate, onMount} from 'svelte';
+  import {tonalCenter, intervalSet, title} from '../store';
+  import { Url } from "../Utils/Text/Url";
 
   const updateStateFromUrl = () => {
-    const newState = Url.parse(window.location.pathname);
-    store.setTonalCenter(newState.tonalCenter);
-    store.setIntervalSet(newState.intervalSet);
+    const url = Url.parse(window.location.pathname);
+    tonalCenter.set(url.tonalCenter);
+    intervalSet.smartUpdate(() => url.intervalSet);
   }
 
   /**
    * Ensure that "forward" and "back" buttons work correctly.
    */
-  React.useEffect(() => {
+  onMount(() => {
     window.addEventListener('popstate', updateStateFromUrl);
-  // [] is given as dependencies because the function updateStateFromUrl should
-  // remain constant regardless of any changes to application state.
-  }, []);
+  });
 
   /**
    * Set the URL and page title according to the application state.
    */
-  React.useEffect(() => {
-    // Compute URL
-    const url = Url.generate(store.intervalSet, store.tonalCenter);
-
-    // Update page title
-    const appTitle = 'Octave Compass';
-    const title = `${store.title} | ${appTitle}`;
-    document.title = title;
-
-    // Bail out if no further updates are needed
+  afterUpdate(() => {
+    const url = Url.generate($intervalSet, $tonalCenter);
+    document.title = `${$title} | Octave Compass`;
     if (Url.pathsAreEqual(window.location.pathname, url)) {
       return;
     }
+    window.history.pushState(null, $title, url);
+  });
 
-    // Update URL
-    window.history.pushState(null, title, url);
-  }, [store.intervalSet, store.tonalCenter]);
-  
-  return null;
-}); -->
+</script>
