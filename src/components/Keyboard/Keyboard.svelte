@@ -8,8 +8,9 @@
  -->
 <script lang="ts">
   import type {KeyElement} from './KeyController';
-  import {keyElements} from '../../store';
   import {onMount} from 'svelte';
+  import {getStore} from '../../store';
+  const {keyElements} = getStore();
 
   export let isPlayable: boolean;
   

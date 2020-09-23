@@ -2,8 +2,9 @@
   import KeyPolygon from './KeyPolygon.svelte';
   import KeyLabelSet from './KeyLabelSet.svelte';
   import { Note } from '../../../Utils/Music/Note';
-  import { editVsPlay, tonalCenter } from '../../../store';
   import Key from '../../Keyboard/Key.svelte';
+  import {getStore} from '../../../store';
+  const {editVsPlay, tonalCenter} = getStore();
 
   export let note: Note;
   export let isActive: boolean;

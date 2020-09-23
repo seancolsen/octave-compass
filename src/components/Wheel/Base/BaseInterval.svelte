@@ -3,7 +3,8 @@
   import IntervalLabel from './IntervalLabel.svelte';
   import Arc from '../common/Arc.svelte';
   import SvgCheckbox from './SvgCheckbox.svelte';
-  import { editVsPlay, intervalSet } from '../../../store';
+  import {getStore} from '../../../store';
+  const {editVsPlay, intervalSet} = getStore();
 
   const checkboxRadius = 430;
   const arcRadius = 430;

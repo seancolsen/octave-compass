@@ -1,8 +1,9 @@
 <script lang="ts">
   import KeySet from './KeySet.svelte';
   import IntervalSetPolygon from '../../common/IntervalSetPolygon.svelte';
-  import { editVsPlay, keyboardRadius, noteSet } from '../../../store';
   import { IntervalSet } from '../../../Utils/Music/IntervalSet';
+  import {getStore} from '../../../store';
+  const {editVsPlay, keyboardRadius, noteSet} = getStore();
 </script>
 
 <g

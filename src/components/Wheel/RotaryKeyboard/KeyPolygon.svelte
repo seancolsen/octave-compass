@@ -2,7 +2,8 @@
   import { Scalar } from '../../../Utils/Math/Scalar';
   import { IrPoint } from '../../../Utils/Geometry/IrPoint';
   import Polygon from '../common/Polygon.svelte';
-  import { keyboardRadius } from '../../../store';
+  import {getStore} from '../../../store';
+  const {keyboardRadius} = getStore();
 
   let className = undefined as string | undefined;
   export {className as class};

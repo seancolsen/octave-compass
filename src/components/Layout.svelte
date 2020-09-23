@@ -5,7 +5,9 @@
   import ChordSelection from './ChordSelection/ChordSelection.svelte';
   import Toolbar from "./Toolbar.svelte";
   import LinearKeyboard from './LinearKeyboard/LinearKeyboard.svelte';
-  import {editVsPlay} from '../store';
+
+  import {getStore} from '../store';
+  const {editVsPlay} = getStore();
 
   let modal = null as 'marquee' | null;
 </script>

@@ -1,10 +1,11 @@
 <script lang="ts">
-  import {
+  import {getStore} from '../store';
+  const {
     title,
     alternateScaleNames,
     inversionText,
     isNamed,
-  } from '../store';
+  } = getStore();
 
   let className = undefined as string | undefined;
   export {className as class};

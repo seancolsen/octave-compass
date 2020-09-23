@@ -1,7 +1,9 @@
 <script lang="ts">
   import {afterUpdate, onMount} from 'svelte';
-  import {tonalCenter, intervalSet, title} from '../store';
   import { Url } from "../Utils/Text/Url";
+
+  import {getStore} from '../store';
+  const {tonalCenter, intervalSet, title} = getStore();
 
   const updateStateFromUrl = () => {
     const url = Url.parse(window.location.pathname);

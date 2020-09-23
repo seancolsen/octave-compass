@@ -1,7 +1,8 @@
 <script lang="ts">
   import SliceOfChords from './SliceOfChords.svelte';
   import { OrdinalChordSet } from '../../../Utils/Music/OrdinalChordSet';
-  import {intervalSet, noteSet} from '../../../store';
+  import {getStore} from '../../../store';
+  const {intervalSet, noteSet} = getStore();
 
   export let ordinalChordSets: OrdinalChordSet[];
 

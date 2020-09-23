@@ -46,8 +46,9 @@
 <script lang="ts">
   import type {Pitch} from '../../Utils/Music/Pitch';
   import {KeyController} from './KeyController';
-  import {audioContext, keyElements} from '../../store';
   import {onMount, afterUpdate, onDestroy} from 'svelte';
+  import {getStore} from '../../store';
+  const {audioContext, keyElements} = getStore();
 
   export let pitches: Pitch[];
   export let isInsideSvg = false as boolean;

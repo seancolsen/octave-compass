@@ -1,7 +1,9 @@
 <script lang="ts">
   import type { Chord } from "../../Utils/Music/Chord";
   import ChordEmblem from '../common/ChordEmblem.svelte';
-  import {selectedChords} from '../../store';
+  import {getStore} from '../../store';
+  const {selectedChords} = getStore();
+
   export let chord: Chord;
   export let isSelected: boolean;
   const iconSize = 100;

@@ -1,6 +1,7 @@
 <script lang="ts">
-  import {noteSet, tonalCenter} from '../../store';
   import Key from '../Keyboard/Key.svelte';
+  import {getStore} from '../../store';
+  const {noteSet, tonalCenter} = getStore();
 
   const pitchesInOctave = (octave: number) => $noteSet.notes.map(note => 
     note.pitchAboveTonalCenterInOctave($tonalCenter, octave)

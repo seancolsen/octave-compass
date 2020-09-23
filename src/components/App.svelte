@@ -1,8 +1,10 @@
 <script lang="ts">
   import Layout from "./Layout.svelte";
   import RouteProcessor from "./RouteProcessor.svelte";
-  // import { Url } from './../Utils/Text/Url';
-  // let initialValuesFromUrl = Url.parse(window.location.pathname);
+  import { setStoreInContext } from '../store';
+  import { Url } from './../Utils/Text/Url';
+  const {tonalCenter, intervalSet} = Url.parse(window.location.pathname);
+  setStoreInContext(tonalCenter, intervalSet);
 </script>
 
 <RouteProcessor/>

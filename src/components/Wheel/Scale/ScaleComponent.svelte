@@ -2,7 +2,8 @@
   import { OrdinalChordSet } from '../../../Utils/Music/OrdinalChordSet';
   import IntervalSetPolygon from '../../common/IntervalSetPolygon.svelte';
   import SwarmOfChords from './SwarmOfChords.svelte';
-  import { editVsPlay, intervalSet, selectedChords } from '../../../store';
+  import {getStore} from '../../../store';
+  const {editVsPlay, intervalSet, selectedChords} = getStore();
 
   $: ordinalChordSets = OrdinalChordSet.arrayFromIntervalSet(
     $intervalSet,

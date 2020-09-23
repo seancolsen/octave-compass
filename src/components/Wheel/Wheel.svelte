@@ -19,11 +19,12 @@
   import IntervalSetPolygon from '../common/IntervalSetPolygon.svelte';
   import Tips from './Tips.svelte';
   import BlurFilter from './BlurFilter.svelte';
-  import {
+  import {getStore} from '../../store';
+  const {
     editVsPlay,
     intervalSet,
     tonalCenter,
-  } from '../../store';
+  } = getStore();
 
   /**
    * The width and height of the square SVG view box in user units (basically SVG

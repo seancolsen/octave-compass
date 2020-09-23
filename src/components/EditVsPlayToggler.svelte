@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { editVsPlay } from '../store';
+  import {getStore} from '../store';
+  const {editVsPlay} = getStore();
 
   $: isPlay = $editVsPlay === 1;
   $: isEdit = $editVsPlay === 0;

@@ -2,7 +2,8 @@
   import { Note } from "../../../Utils/Music/Note";
   import Arc from "../common/Arc.svelte";
   import KeyLabel from './KeyLabel.svelte';
-  import { editVsPlay, tonalCenter } from '../../../store';
+  import {getStore} from '../../../store';
+  const {editVsPlay, tonalCenter} = getStore();
 
   const tieSpan = 0.2;
 
