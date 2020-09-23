@@ -40,9 +40,11 @@
   -->
   <circle class='background' cx={0} cy={0} r={size} />
   <ChordEmblem {size} {chord} {noteName} opacity={isClickable ? 1 : 0.4} />
-  <Key {pitches} isInsideSvg={true} >
-    <circle class='touch-receptor' cx={0} cy={0} r={size} />
-  </Key>
+  {#if isClickable}
+    <Key {pitches} isInsideSvg={true} >
+      <circle class='touch-receptor' cx={0} cy={0} r={size} />
+    </Key>
+  {/if}
 </g>
 
 <style>
