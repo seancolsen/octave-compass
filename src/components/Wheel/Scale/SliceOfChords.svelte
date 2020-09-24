@@ -1,15 +1,19 @@
 <script lang="ts">
+  import { Scalar } from '../../../Utils/Math/Scalar';
   import { ChordSet } from '../../../Utils/Music/ChordSet';
   import { Note } from '../../../Utils/Music/Note';
   import ChordInScale from './ChordInScale.svelte';
-
-  const constellationRadius = 270;
+  import {getStore} from '../../../store';
+  const {editVsPlay} = getStore();
+  
   const circleRadius = 45;
 
   export let chordSet: ChordSet;
   export let ordinal: number;
   export let note: Note | undefined = undefined;
 
+  $: constellationRadius = Scalar.interpolate($editVsPlay, [0, 1], [270, 320]);
+  
   /**
    * If 0, the emblems will be stacked edge to edge. When positive, the emblems
    * will overlap by that amount. We need them to overlap more when more emblems
@@ -45,12 +49,13 @@
       // Move the outer bound inwards in preparation for the next emblem.
       outerBound -= emblemRadius * 2 - overlap;
       return radialPosition;
-    });
+    }).reverse(); // Reverse so that common chords display on top
   })();
 </script>
 
 <g>
-  {#each chordSet.chords as chord, index}
+  <!-- Reverse so that common chords display on top -->
+  {#each chordSet.chords.reverse() as chord, index}
   <ChordInScale
     {note}
     radialPosition={radialPositions[index]}

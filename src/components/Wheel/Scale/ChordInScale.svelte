@@ -29,6 +29,7 @@
     return `translate(${x} ${y})`;
   })();
   $: isClickable = $editVsPlay === 1;
+  $: strokeWidth = Scalar.interpolate($editVsPlay, [0, 1], [15, 5]);
 
 </script>
 
@@ -38,8 +39,8 @@
     emblem becomes translucent during editing and needs a background to
     separate it from the other emblems.
   -->
-  <circle class='background' cx={0} cy={0} r={size} />
-  <ChordEmblem {size} {chord} {noteName} opacity={isClickable ? 1 : 0.6} />
+  <circle class='background' cx={0} cy={0} r={size} stroke-width={strokeWidth}/>
+  <ChordEmblem {size} {chord} {noteName} opacity={1 - 0.2*(1-$editVsPlay)} />
   {#if isClickable}
     <Key {pitches} isInsideSvg={true} >
       <circle class='touch-receptor' cx={0} cy={0} r={size} />
@@ -52,9 +53,12 @@
     stroke: #e1e1e1;
     fill: #e1e1e1;
   }
-  g > :global(.background),
+  g.isClickable > :global(.background) {
+    stroke: #ddd;
+    fill: #ddd;
+  }
   g :global(.touch-receptor) {
-    stroke-width: 5px;
+    stroke-width: 15px;
   }
   g :global(.touch-receptor) {
     visibility: hidden;

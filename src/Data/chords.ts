@@ -60,10 +60,8 @@ export const chords: ChordData[] = [
     emblemSize: 1,
     textSizeFactor: 1,
     color: '#b7a18d',
-    contents: (noteName: NoteName) => `
-      ${noteName || ''}
-      <tspan class="bold" fontSize="170%" dy="-0.05em">+</tspan>
-    `,
+    contents: (noteName: NoteName) => `${noteName || ''}` +
+      '<tspan class="bold" font-size="170%" dy="-0.05em">+</tspan>',
   },
   {
     binary: 0b000001001001,
@@ -72,8 +70,8 @@ export const chords: ChordData[] = [
     emblemSize: 1,
     textSizeFactor: 1,
     color: '#ba5319',
-    contents: (noteName: NoteName) =>
-      `${noteName || ''}<tspan dy="-0.4em" fontSize="100%">o</tspan>`,
+    contents: (noteName: NoteName) => `${noteName || ''}` +
+      '<tspan dy="-0.4em" font-size="100%">o</tspan>',
   },
   {
     binary: 0b010010010001,
@@ -82,8 +80,8 @@ export const chords: ChordData[] = [
     emblemSize: 1,
     textSizeFactor: 1.1,
     color: '#551654',
-    contents: (noteName: NoteName) =>
-      `${noteName || ''}<tspan dy="-0.2em" fontSize="90%">7</tspan>`,
+    contents: (noteName: NoteName) => `${noteName || ''}` +
+      '<tspan dy="-0.2em" font-size="90%">7</tspan>',
   },
   {
     binary: 0b100010010001,
@@ -92,11 +90,9 @@ export const chords: ChordData[] = [
     emblemSize: 1,
     textSizeFactor: 1,
     color: '#9149aa',
-    contents: (noteName: NoteName) => `
-      ${noteName || ''}
-      <tspan fontSize="60%" class='bold'>M</tspan>
-      <tspan dy="-0.4em" fontSize="60%">7</tspan>
-    `,
+    contents: (noteName: NoteName) => `${noteName || ''}` +
+      '<tspan font-size="60%" class="bold">M</tspan>' +
+      '<tspan dy="-0.4em" font-size="60%">7</tspan>',
   },
   {
     binary: 0b010010001001,
@@ -105,11 +101,9 @@ export const chords: ChordData[] = [
     emblemSize: 1,
     textSizeFactor: 1,
     color: '#9a6b2b',
-    contents: (noteName: NoteName) => `
-      ${noteName || ''}
-      <tspan fontSize="60%" class="italic">m</tspan>
-      <tspan dy="-0.4em" fontSize="60%">7</tspan>
-    `,
+    contents: (noteName: NoteName) => `${noteName || ''}` +
+      '<tspan font-size="60%" class="italic">m</tspan>' +
+      '<tspan dy="-0.4em" font-size="60%">7</tspan>',
   },
   {
     binary: 0b100010001001,
@@ -118,50 +112,42 @@ export const chords: ChordData[] = [
     emblemSize: 1,
     textSizeFactor: 0.7,
     color: '#85800c',
-    contents: (noteName: NoteName) => `
-      ${noteName || ''}
-      <tspan class="italic">m</tspan>
-      <tspan dy="-0.5em" fontSize="70%">M7</tspan>
-    `,
+    contents: (noteName: NoteName) => `${noteName || ''}` +
+      '<tspan class="italic">m</tspan>' +
+      '<tspan dy="-0.5em" font-size="70%">M7</tspan>',
   },
   {
     binary: 0b001010001001,
     name: "minor 6",
     weight: 11,
     emblemSize: 1,
-    textSizeFactor: 0.9,
+    textSizeFactor: 0.8,
     color: '#9a225c',
-    contents: (noteName: NoteName) => `
-      ${noteName || ''}
-      <tspan class="italic">m</tspan>
-      <tspan dy="-0.5em" fontSize="70%">6</tspan>
-    `,
+    contents: (noteName: NoteName) => `${noteName || ''}` +
+      '<tspan class="italic">m</tspan>' +
+      '<tspan dy="-0.5em" font-size="70%">6</tspan>',
   },
   {
     binary: 0b010100010001,
     name: "augmented 7",
     weight: 12,
     emblemSize: 1,
-    textSizeFactor: 0.85,
+    textSizeFactor: 0.8,
     color: '#8d786a',
-    contents: (noteName: NoteName) => `
-      ${noteName || ''}
-      <tspan class="bold" fontSize="110%" dy="-0.05em">+</tspan>
-      <tspan dy="-0.5em" fontSize="80%">7</tspan>
-    `,
+    contents: (noteName: NoteName) => `${noteName || ''}` +
+      '<tspan class="bold" font-size="110%" dy="-0.05em">+</tspan>' +
+      '<tspan dy="-0.5em" font-size="80%">7</tspan>',
   },
   {
     binary: 0b100100010001,
     name: "augmented major 7",
     weight: 13,
     emblemSize: 1,
-    textSizeFactor: 0.8,
+    textSizeFactor: 0.75,
     color: '#748d64',
-    contents: (noteName: NoteName) => `
-      ${noteName || ''}
-      <tspan dy="-0.1em" class="bold" fontSize="110%">+</tspan>
-      <tspan dy="-0.5em" fontSize="60%">M7</tspan>
-    `,
+    contents: (noteName: NoteName) => `${noteName || ''}` +
+      '<tspan dy="-0.1em" class="bold" font-size="110%">+</tspan>' +
+      '<tspan dy="-0.5em" font-size="60%">M7</tspan>',
   },
   {
     binary: 0b001001001001,
@@ -170,7 +156,7 @@ export const chords: ChordData[] = [
     emblemSize: 1,
     textSizeFactor: 1,
     color: '#5f4f46',
-    contents: (noteName: NoteName) =>
-      `${noteName || ''}<tspan dy="-0.3em" fontSize="70%">o7</tspan>`,
+    contents: (noteName: NoteName) => `${noteName || ''}` +
+      '<tspan dy="-0.3em" font-size="70%">o7</tspan>',
   },
 ];
