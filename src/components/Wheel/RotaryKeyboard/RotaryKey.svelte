@@ -10,7 +10,7 @@
   export let note: Note;
   export let isActive: boolean;
 
-  const light = useLight(['foo', `note-${note.id}`]);
+  const light = useLight([`note-${note.id}`]);
   
   $: isEdit = $editVsPlay === 0;
   $: isPlay = $editVsPlay === 1;
