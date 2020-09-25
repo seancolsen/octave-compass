@@ -48,7 +48,7 @@
   import {KeyController} from './KeyController';
   import {onMount, afterUpdate, onDestroy} from 'svelte';
   import {getStore} from '../../store';
-  const {audioContext, keyElements} = getStore();
+  const {audioContext, keyElements, lightingController} = getStore();
 
   export let pitches: Pitch[];
   export let isInsideSvg = false as boolean;
@@ -73,7 +73,8 @@
        * element via document.elementFromPoint(). We do this afterUpdate so that
        * if a new KeyController is passed it, we can use that updated one.
        */
-      const keyController = new KeyController(audioContext, pitches);
+      const keyController =
+        new KeyController(audioContext, lightingController, pitches);
       ref.keyController = keyController;
     }
     else {

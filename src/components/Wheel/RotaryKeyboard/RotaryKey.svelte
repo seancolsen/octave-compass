@@ -4,12 +4,16 @@
   import { Note } from '../../../Utils/Music/Note';
   import Key from '../../Keyboard/Key.svelte';
   import {getStore} from '../../../store';
+  import {useLight} from '../../Lighting/Light';
   const {editVsPlay, tonalCenter} = getStore();
 
   export let note: Note;
   export let isActive: boolean;
+
+  const light = useLight(['foo', `note-${note.id}`]);
   
   $: isEdit = $editVsPlay === 0;
+  $: isPlay = $editVsPlay === 1;
   $: interval = note.id - $tonalCenter;
 
 </script>
@@ -21,7 +25,7 @@
   <KeyLabelSet {note} {interval}
     class='key-label-highlight'
     isHighlight={true}
-    opacity={isActive ? 1 - $editVsPlay : 0}
+    opacity={isPlay ? ($light) : (isActive ? 1 - $editVsPlay : 0)}
   />
   <KeyLabelSet {note} {interval}
     class='key-label'

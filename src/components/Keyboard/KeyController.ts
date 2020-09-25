@@ -1,7 +1,10 @@
 import type {Pitch} from '../../Utils/Music/Pitch';
+import type {
+  LightingController,
+  LightCommand,
+} from '../Lighting/LightingController';
 
 const releaseTime = 0.25; // seconds
-const truncationTime = 0.001; // seconds
 
 /**
  * When multiple frequencies are present, they'll start with offsets to sound
@@ -25,6 +28,8 @@ export class KeyController {
 
   audioContext: AudioContext;
 
+  lightingDispatch: (lightCommand: LightCommand) => void;
+
   pitches: Pitch[];
 
   oscillators = [] as OscillatorNode[];
@@ -43,9 +48,28 @@ export class KeyController {
    */
   // doReleaseSynth = writable(null as null | (() => void));
   
-  constructor(audioContext: AudioContext, pitches: Pitch[]) {
+  constructor(
+    audioContext: AudioContext,
+    lightingController: LightingController,
+    pitches: Pitch[]
+  ) {
     this.audioContext = audioContext;
     this.pitches = pitches;
+
+    /**
+     * This function is used to select the correct lights to turn on and off
+     * when pressing and releasing this key. It says: if one of the pitches in
+     * this Key has a signature that matches one of the classes in the given
+     * light, then the light matches and we want to include it in any commands
+     * dispatched to lights.
+     */
+    const lightClassMatcher = (classes: string[]) => 
+      classes.some(
+        _class => pitches.map(pitch => `note-${pitch.note.id}`).includes(_class)
+      );
+    this.lightingDispatch = (lightCommand: LightCommand) => {
+      lightingController.dispatch(lightClassMatcher, lightCommand)
+    };
   }
 
   /**
@@ -80,6 +104,7 @@ export class KeyController {
       this.oscillators = [...this.oscillators, oscillator];
     });
     this.state = 'playing';
+    this.lightingDispatch(l => l.turnOn());
     return true;
   }
 
@@ -94,6 +119,7 @@ export class KeyController {
     );
     this.releaseTimeoutId = setTimeout(() => this.reset(), releaseTime * 1000);
     this.state = 'releasing';
+    this.lightingDispatch(l => l.turnOff());
   }
 
   reset() {
@@ -111,6 +137,7 @@ export class KeyController {
     this.gain = null;
     this.oscillators = [];
     this.state = 'resting';
+    this.lightingDispatch(l => l.turnOff());
   }
 
 }

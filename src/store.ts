@@ -8,6 +8,7 @@ import { Scale } from './Utils/Music/Scale';
 import { Scalar } from './Utils/Math/Scalar';
 import type { KeyElement } from './components/Keyboard/KeyController';
 import { setContext, getContext } from 'svelte';
+import { LightingController } from './components/Lighting/LightingController';
 
 /**
  * ABOUT THIS FILE:
@@ -278,6 +279,8 @@ export const createStore = (
       },
     };
   })(),
+
+  lightingController: new LightingController(),
 
 });
 
