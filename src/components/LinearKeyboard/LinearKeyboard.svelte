@@ -27,6 +27,6 @@
     overflow-x: scroll;
     overflow-y: hidden;
     height: 17vmax;
-    background: #999;
+    background: #BBB;
   }
 </style>
