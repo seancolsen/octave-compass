@@ -4,11 +4,12 @@
   import Arc from '../common/Arc.svelte';
   import SvgCheckbox from './SvgCheckbox.svelte';
   import {getStore} from '../../../store';
+  import {lateralExtensionFactor} from '../RotaryKeyboard/KeyPolygon.svelte';
   const {editVsPlay, intervalSet} = getStore();
 
   const checkboxRadius = 430;
   const arcRadius = 430;
-  const arcSpan = 0.5;
+  const arcSpan = 0.5 * lateralExtensionFactor;
 
   let className: string | undefined = undefined;
   export {className as class};
