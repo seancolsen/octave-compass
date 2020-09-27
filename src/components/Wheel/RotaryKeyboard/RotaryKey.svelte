@@ -33,6 +33,7 @@
     isHighlight={false}
     opacity={isActive ? 1 - 0.1 * $editVsPlay : 0.25}
     hasBackground={$editVsPlay !== 1 || !isActive}
+    lightIsOn={!!$light}
   />
   {#if isActive && !isEdit}
     <Key

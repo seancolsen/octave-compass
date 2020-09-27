@@ -12,6 +12,7 @@
   export let hasBackground = true as boolean;
   export let isParenthetical: boolean = false;
   export let strokeWidth: number | undefined = undefined;
+  export let lightIsOn = false as boolean;
 
   $: isBlack = color === 'black' || color === '#000' || color === '#000000';
   $: point = (new IrPoint(interval, radius)).toXy();
@@ -20,7 +21,7 @@
 </script>
 
 
-<g class:isParenthetical class:isBlack transform={transform}>
+<g class:isParenthetical class:isBlack class:lightIsOn transform={transform}>
   {#if hasBackground}
     <rect
       x={-size/2} y={-size/2}
@@ -52,4 +53,5 @@
   }
   g.isParenthetical > :global(text) { font-size: 34px; font-weight: normal; }
   g.isBlack > :global(text) { fill: white; }
+  g.lightIsOn > :global(text) { fill: black; }
 </style>
