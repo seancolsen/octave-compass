@@ -17,6 +17,7 @@
    */
   export let isHighlight: boolean;
   export let opacity = 1;
+  export let hasBackground = true as boolean;
 
   $: names = note.namesToUseForLabels;
   $: radius = 348 + $editVsPlay * 20;
@@ -35,19 +36,15 @@
   {opacity}
 >
   {#if names.length > 1}
-    <Arc
+    <Arc {color} {radius}
       class='label-tie'
       startInterval={interval - tieSpan}
       endInterval={interval + tieSpan}
-      color={color}
-      radius={radius}
     />
   {/if}
   {#each names as name, index (name.ascii)}
-    <KeyLabel
-      radius={radius}
+    <KeyLabel {radius} {hasBackground} {color}
       interval={interval + keyLabelIntervalOffset(index)}
-      color={color}
       isParenthetical={names.length > 1 && name.modifier.name === 'natural'}
       strokeWidth={isHighlight ? 35 : 0}
     >

@@ -61,10 +61,10 @@
     border: 0.4vmax rgba(0, 0, 0, 0);
     pointer-events: all;
     border-radius: 0 0 0.8vmax 0.8vmax;
-    background: white;
+    background: #EEE;
   }
 
-  .key.isBlack .touch-receptor {background: black; color: white;}
+  .key.isBlack .touch-receptor {background: #222; color: white;}
   
   .key.isPressed :global(*) {z-index: 0;}
   

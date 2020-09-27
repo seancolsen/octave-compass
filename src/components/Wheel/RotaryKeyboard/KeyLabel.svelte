@@ -9,6 +9,7 @@
   export let interval: number;
   export let radius: number;
   export let color: string;
+  export let hasBackground = true as boolean;
   export let isParenthetical: boolean = false;
   export let strokeWidth: number | undefined = undefined;
 
@@ -20,14 +21,16 @@
 
 
 <g class:isParenthetical class:isBlack transform={transform}>
-  <rect
-    x={-size/2} y={-size/2}
-    width={size} height={size}
-    rx={size/6}  ry={size/6}
-    fill={color}
-    stroke={strokeWidth ? color : 'none'}
-    stroke-width={strokeWidth}
-  />
+  {#if hasBackground}
+    <rect
+      x={-size/2} y={-size/2}
+      width={size} height={size}
+      rx={size/6}  ry={size/6}
+      fill={color}
+      stroke={strokeWidth ? color : 'none'}
+      stroke-width={strokeWidth}
+    />
+  {/if}
   <text
     x={1}
     y={4}

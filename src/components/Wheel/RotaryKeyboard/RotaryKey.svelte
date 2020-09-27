@@ -14,11 +14,12 @@
   
   $: isEdit = $editVsPlay === 0;
   $: isPlay = $editVsPlay === 1;
+  $: isBlack = note.color === 'black';
   $: interval = note.id - $tonalCenter;
 
 </script>
 
-<g class:isActive>
+<g class:isActive class:isBlack >
   {#if isActive && !isEdit}
     <KeyPolygon class='background' {interval} />
   {/if}
@@ -31,6 +32,7 @@
     class='key-label'
     isHighlight={false}
     opacity={isActive ? 1 - 0.1 * $editVsPlay : 0.25}
+    hasBackground={$editVsPlay !== 1 || !isActive}
   />
   {#if isActive && !isEdit}
     <Key
@@ -44,10 +46,14 @@
 
 <style>
   g > :global(.background) {
-    fill: #CCC;
-    stroke: #a7a7a7;
-    stroke-width: 3px;
+    fill: #EEE;
+    stroke: #EEE;
   }
+  g.isBlack > :global(.background) {
+    fill: #222;
+    stroke: #222;
+  }
+  
   g :global(.touch-receptor) {
     visibility: hidden;
     pointer-events: all;

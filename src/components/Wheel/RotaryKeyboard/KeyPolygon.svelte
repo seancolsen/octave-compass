@@ -7,8 +7,9 @@
    * When 0.5, the key will extend half way towards the mid point between
    * intervals.
    */
-  export const lateralExtensionFactor = 0.85;
+  const lateralExtensionFactor = 0.7;
 
+  
   /**
    * The factor by which a radius should be reduced when it lies on the
    * edge between two keys. We want to reduce it so that we get straight lines
@@ -21,20 +22,21 @@
 
 <script lang="ts">
   import { IrPoint } from '../../../Utils/Geometry/IrPoint';
-  import Polygon from '../common/Polygon.svelte';
   import {getStore} from '../../../store';
+  import { XyPoint } from "../../../Utils/Geometry/XyPoint";
   const {keyboardRadius} = getStore();
 
   let className = undefined as string | undefined;
   export {className as class};
   export let interval: number;
 
-  $: innerRadius = $keyboardRadius - 131;
+  $: outerRadius = $keyboardRadius - 15; // half of stroke width
+  $: innerRadius = outerRadius - 100;
 
   $: shape = [
-    [-0.5 * lateralExtensionFactor, $keyboardRadius * radiusFactorAtEdge],
-    [0, $keyboardRadius],
-    [0.5 * lateralExtensionFactor, $keyboardRadius * radiusFactorAtEdge],
+    [-0.5 * lateralExtensionFactor, outerRadius * radiusFactorAtEdge],
+    [0, outerRadius],
+    [0.5 * lateralExtensionFactor, outerRadius * radiusFactorAtEdge],
     [0.5 * lateralExtensionFactor, innerRadius * radiusFactorAtEdge],
     [0, innerRadius],
     [-0.5 * lateralExtensionFactor, innerRadius * radiusFactorAtEdge],
@@ -42,6 +44,14 @@
   $: points = shape.map(ir =>
     IrPoint.fromArray(ir).plusI(interval)
   );
+  $: pointsString = XyPoint.stringFromIrArray(points);
 </script>
 
-<Polygon points={points} class={className}/>
+<polygon points={pointsString} class={className} />
+
+<style>
+  polygon {
+    stroke-width: 30px;
+    stroke-linejoin: round;
+  }
+</style>
