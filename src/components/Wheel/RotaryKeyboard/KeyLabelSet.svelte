@@ -36,7 +36,7 @@
   filter={isHighlight ? "url('#blur')" : 'none'}
   {opacity}
 >
-  {#if names.length > 1}
+  {#if names.length > 1 && hasBackground}
     <Arc {color} {radius}
       class='label-tie'
       startInterval={interval - tieSpan}
