@@ -23,5 +23,5 @@
 </g>
 
 <style>
-  g > :global(.background) {fill: #b7b7b7;}
+  g > :global(.background) {fill: #CCC;}
 </style>

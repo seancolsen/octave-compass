@@ -36,10 +36,7 @@
 </g>
 
 <style>
-  text { font-size: 30px; fill: #444; }
-  text.active { fill: #DDD; }
-  g > :global(.text-path-arc) {
-    fill: none;
-    stroke: none;
-  }
+  text { font-size: 30px; fill: #666; }
+  text.active { fill: #555; }
+  g > :global(.text-path-arc) { fill: none; stroke: none; }
 </style>

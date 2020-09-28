@@ -49,9 +49,9 @@
   g.isClickable:hover { text-decoration: underline; }
   g > :global(.background) {
     stroke-width: 130px;
-    stroke: #666666;
+    stroke: #999;
     fill: none;
     stroke-linecap: butt;
   }
-  g.isActive > :global(.background) { stroke: #787878; }
+  g.isActive > :global(.background) { stroke: #BBB; }
 </style>

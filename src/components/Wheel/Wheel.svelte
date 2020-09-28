@@ -75,7 +75,7 @@
     text-rendering: optimizeLegibility;
   }
   svg > :global(.intervalSetPolygon_play) {
-    fill: #8F8F8F;
+    fill: #AAA;
     stroke: #CCC;
     stroke-width: 3px;
   }
