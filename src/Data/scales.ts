@@ -571,7 +571,7 @@ export const scales: { [k: number]: string[] } = {
     "Mitum",
     "Khamaj",
     "Ching",
-    "Gregorian Scale 7",
+    "Gregorian 7",
   ],
   0b011010111001: [
     "Raga Nandkauns",
@@ -631,7 +631,7 @@ export const scales: { [k: number]: string[] } = {
     "Blues Octatonic",
   ],
   0b011011110111: [
-    "Gregorian Scale 4",
+    "Gregorian 4",
     "Raga Suha",
     "Youlan",
   ],

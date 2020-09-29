@@ -4,7 +4,7 @@ import { IntervalSetBinary } from "./IntervalSetBinary";
 
 const divisions = musicTheory.octaveDivisions;
 
-export type IntervalSetType = null | 'scale' | 'chord';
+export type IntervalSetType = null | 'Scale' | 'Chord';
 
 /**
  * This class stores a set of intervals using a binary representation of that

@@ -15,7 +15,7 @@ export interface ChordData {
 export const chords: ChordData[] = [
   {
     binary: 0b000010010001,
-    name: "major",
+    name: "Major",
     weight: 1,
     emblemSize: 1,
     textSizeFactor: 1,
@@ -25,7 +25,7 @@ export const chords: ChordData[] = [
   },
   {
     binary: 0b000010001001,
-    name: "minor",
+    name: "Minor",
     weight: 2,
     emblemSize: 1,
     textSizeFactor: 1,
@@ -35,7 +35,7 @@ export const chords: ChordData[] = [
   },
   {
     binary: 0b000010000101,
-    name: "suspended 2",
+    name: "Suspended 2",
     weight: 3,
     emblemSize: 1,
     textSizeFactor: 1,
@@ -45,7 +45,7 @@ export const chords: ChordData[] = [
   },
   {
     binary: 0b000010100001,
-    name: "suspended 4",
+    name: "Suspended 4",
     weight: 4,
     emblemSize: 1,
     textSizeFactor: 1,
@@ -55,7 +55,7 @@ export const chords: ChordData[] = [
   },
   {
     binary: 0b000100010001,
-    name: "augmented",
+    name: "Augmented",
     weight: 5,
     emblemSize: 1,
     textSizeFactor: 1,
@@ -65,7 +65,7 @@ export const chords: ChordData[] = [
   },
   {
     binary: 0b000001001001,
-    name: "diminished",
+    name: "Diminished",
     weight: 6,
     emblemSize: 1,
     textSizeFactor: 1,
@@ -75,7 +75,7 @@ export const chords: ChordData[] = [
   },
   {
     binary: 0b010010010001,
-    name: "dominant 7",
+    name: "Dominant 7",
     weight: 7,
     emblemSize: 1,
     textSizeFactor: 1.1,
@@ -85,7 +85,7 @@ export const chords: ChordData[] = [
   },
   {
     binary: 0b100010010001,
-    name: "major 7",
+    name: "Major 7",
     weight: 8,
     emblemSize: 1,
     textSizeFactor: 1,
@@ -96,7 +96,7 @@ export const chords: ChordData[] = [
   },
   {
     binary: 0b010010001001,
-    name: "minor 7",
+    name: "Minor 7",
     weight: 9,
     emblemSize: 1,
     textSizeFactor: 1,
@@ -107,7 +107,7 @@ export const chords: ChordData[] = [
   },
   {
     binary: 0b100010001001,
-    name: "minor-major 7",
+    name: "Minor-Major 7",
     weight: 10,
     emblemSize: 1,
     textSizeFactor: 0.7,
@@ -118,7 +118,7 @@ export const chords: ChordData[] = [
   },
   {
     binary: 0b001010001001,
-    name: "minor 6",
+    name: "Minor 6",
     weight: 11,
     emblemSize: 1,
     textSizeFactor: 0.8,
@@ -129,7 +129,7 @@ export const chords: ChordData[] = [
   },
   {
     binary: 0b010100010001,
-    name: "augmented 7",
+    name: "Augmented 7",
     weight: 12,
     emblemSize: 1,
     textSizeFactor: 0.8,
@@ -140,7 +140,7 @@ export const chords: ChordData[] = [
   },
   {
     binary: 0b100100010001,
-    name: "augmented major 7",
+    name: "Augmented Major 7",
     weight: 13,
     emblemSize: 1,
     textSizeFactor: 0.75,
@@ -151,7 +151,7 @@ export const chords: ChordData[] = [
   },
   {
     binary: 0b001001001001,
-    name: "diminished 7",
+    name: "Diminished 7",
     weight: 14,
     emblemSize: 1,
     textSizeFactor: 1,

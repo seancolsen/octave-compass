@@ -1,6 +1,6 @@
 {
-  "1717": {
-    "noteNameSetSignatures": [
+  "noteNameSetSignatures": {
+    "1717": [
       "nnnnnnf",
       "ssssssn",
       "nnsnnnn",
@@ -13,10 +13,8 @@
       "nnsnnsn",
       "fnnfnnf",
       "nssnssn"
-    ]
-  },
-  "2477": {
-    "noteNameSetSignatures": [
+    ],
+    "2477": [
       "nnfnnfn",
       "ssnssns",
       "nnnnnfs",
@@ -29,10 +27,8 @@
       "nnnnnns",
       "fnffnfn",
       "nsnnsns"
-    ]
-  },
-  "2741": {
-    "noteNameSetSignatures": [
+    ],
+    "2741": [
       "nnnnnnn",
       "ffnfffn",
       "nnsnnns",
@@ -46,5 +42,23 @@
       "fnnfnnn",
       "nssnsss"
     ]
+  },
+  "searchWeights": {
+    "Major Chord": 5,
+    "Minor Chord": 5,
+    "Dominant 7 Chord": 5,
+    "Mixolydian Scale": 7,
+    "Adonai Malach Scale": 7,
+    "Mitum Scale": 7,
+    "Khamaj Scale": 7,
+    "Ching Scale": 7,
+    "Gregorian 7 Scale": 7,
+    "Harmonic Minor Scale": 7,
+    "Major Scale": 7,
+    "Ionian Scale": 7,
+    "Nid Murub Scale": 7,
+    "Thaat Scale": 7,
+    "Bilaval Scale": 7,
+    "Chromatic Scale": 7
   }
 }
