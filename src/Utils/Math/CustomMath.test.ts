@@ -3,6 +3,8 @@ import {CustomMath} from "./CustomMath";
 test('valueFrequency', () => {
   expect(CustomMath.valueFrequency(['a', 'a', 'b', 'b', 'b', 'c']))
     .toEqual({a: 2, b: 3, c: 1});
+  expect(CustomMath.valueFrequency([1, 1, 0, 0, 0]))
+    .toEqual({1: 2, 0: 3});
 });
 
 test('cartesianProduct', () => {

@@ -1,4 +1,3 @@
-interface objectWithNumberValues { [k: string]: number};
 interface inOut {in: number, out: number};
 
 export class CustomMath {
@@ -11,8 +10,8 @@ export class CustomMath {
    * @param values - e.g. ['a', 'a', 'b', 'b', 'b', 'c']
    * @returns e.g. {a: 2, b: 3, c: 1}
    */
-  static valueFrequency(values: string[]): objectWithNumberValues {
-    let result: objectWithNumberValues = {};
+  static valueFrequency<T extends string | number>(values: T[]) {
+    let result = {} as { [k in T]: number};
     values.forEach(v => {
       result[v] = (result[v] || 0) + 1
     });
