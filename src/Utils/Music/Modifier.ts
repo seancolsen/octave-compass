@@ -7,26 +7,31 @@ const modifiers: { [k: string]: ModifierData } = {
     unicode: '',
     ascii: '',
     english: '',
+    shortCode: 'n',
   },
   'flat': {
     unicode: '♭',
     ascii: 'b',
     english: 'flat',
+    shortCode: 'f',
   },
   'sharp': {
     unicode: '♯',
     ascii: '#',
     english: 'sharp',
+    shortCode: 's',
   },
   'doubleFlat': {
     unicode: '𝄫',
     ascii: 'bb',
     english: 'double flat',
+    shortCode: 'F',
   },
   'doubleSharp': {
     unicode: '𝄪',
     ascii: '##',
     english: 'double sharp',
+    shortCode: 'S',
   },
 };
 
@@ -53,12 +58,19 @@ export class Modifier {
    * (e.g. 'double flat')
    */
   english: string;
+
+  /**
+   * A single character representation for the modifier, used when sending lots
+   * of modifier data over the wire via JSON.
+   */
+  shortCode: string;
   
   constructor(modifierName: string) {
     this.name = modifierName;
     this.unicode = modifiers[modifierName].unicode;
     this.ascii = modifiers[modifierName].ascii;
     this.english = modifiers[modifierName].english;
+    this.shortCode = modifiers[modifierName].shortCode;
   }
 
   /**

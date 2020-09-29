@@ -59,6 +59,12 @@ export class NoteSet {
     return new NoteSet(notes);
   }
 
+  get nameSetSignature() {
+    return this.notes
+      .map(note => note.name?.modifier.shortCode || '?')
+      .join('');
+  }
+  
   /**
    * How many notes are in this notes set?
    */

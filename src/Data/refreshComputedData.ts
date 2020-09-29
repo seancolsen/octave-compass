@@ -1,9 +1,6 @@
 #!/usr/bin/env ts-node-script
 
-export {};
-
 import * as fs from 'fs';
-import {IntervalSet} from '../Utils/Music/IntervalSet';
 import {IntervalSetFactory} from '../Utils/Music/IntervalSetFactory';
 import { NoteSet } from '../Utils/Music/NoteSet';
 import {musicTheory} from './musicTheory';
@@ -23,12 +20,10 @@ binaryList.forEach(binary => {
     NoteSet.fromIntervalSetAndTonalCenter(intervalSet, tonalCenter)
     .namedIfFeasible
   );
-  const noteSetData = noteSets.map(noteSet =>
-    noteSet.notes.map(note => note.name?.modifier.name)
-  );
+  const noteNameSetSignature = noteSets.map(noteSet => noteSet.nameSetSignature);
   data[binary] = {
     names: intervalSet.names,
-    noteSets: noteSetData
+    noteNameSetSignature: noteNameSetSignature
   };
   
 })
