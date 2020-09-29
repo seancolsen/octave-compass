@@ -82,9 +82,9 @@ export class NoteNameSet {
   }
 
   /**
-   * We don't like sets of notes possibleNames that contain a mix of sharps and flats.
-   * Ideally they should have possibleNames that are either all sharp or all flat.
-   * Assign some demerits if we have a mix.
+   * We don't like sets of notes possibleNames that contain a mix of sharps and
+   * flats. Ideally they should have possibleNames that are either all sharp or
+   * all flat. Assign some demerits if we have a mix.
    *
    * @return {number}
    */
@@ -104,10 +104,11 @@ export class NoteNameSet {
   }
 
   /**
-   * We don't like sets of note possibleNames that contain note possibleNames "C" and "C sharp".
-   * In this example, we'd prefer to name the notes as "C" and "D flat", so we
-   * assign demerits for any duplicate base possibleNames in order to prioritize sets of
-   * possibleNames that contain distinct base possibleNames.
+   * We don't like sets of note possibleNames that contain note possibleNames
+   * "C" and "C sharp". In this example, we'd prefer to name the notes as "C"
+   * and "D flat", so we assign demerits for any duplicate base possibleNames in
+   * order to prioritize sets of possibleNames that contain distinct base
+   * possibleNames.
    *
    * @return {number}
    */
@@ -115,7 +116,7 @@ export class NoteNameSet {
     const baseNames = this.noteNames.map(name => name.baseName);
     const baseNameFrequency = CustomMath.valueFrequency(baseNames);
     const extraBaseNameCount = Object.entries(baseNameFrequency)
-      .map(([baseName, frequency]) => frequency - 1).reduce((a, b) => a + b);
+      .map(([baseName, frequency]) => frequency - 1).reduce((a, b) => a + b, 0);
     return extraBaseNameCount * demeritFactors.duplicateBaseNames;
   }
 

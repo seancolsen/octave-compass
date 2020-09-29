@@ -27,7 +27,8 @@
     "sourceMap": true,
     "types": [
       "svelte",
-      "jest"
+      "jest",
+      "node"
     ],
     "lib": [
       "es2019",

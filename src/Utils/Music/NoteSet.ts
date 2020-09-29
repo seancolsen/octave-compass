@@ -46,12 +46,15 @@ export class NoteSet {
    * Return a new note set based on a given interval set and rotation.
    *
    * @param intervalSet
-   * @param rotation The rotation of the keyboard (clockwise)
+   * @param tonalCenter The rotation of the keyboard (clockwise)
    */
-  static fromIntervalSet(intervalSet: IntervalSet, rotation: number): NoteSet {
+  static fromIntervalSetAndTonalCenter(
+    intervalSet: IntervalSet,
+    tonalCenter: number
+  ): NoteSet {
     const allNotes = NoteSet.chromaticNotes;
     const notes = intervalSet.ordinals.map(i =>
-      allNotes[Scalar.wrap(i - rotation, musicTheory.octaveDivisions)]
+      allNotes[Scalar.wrap(i + tonalCenter, musicTheory.octaveDivisions)]
     );
     return new NoteSet(notes);
   }
@@ -171,7 +174,8 @@ export class NoteSet {
    */
   get compliment(): NoteSet {
     const direction = (this.nameSet) ? this.nameSet.direction : null;
-    return NoteSet.fromIntervalSet(this.toIntervalSet(0).compliment, 0)
+    const complement = this.toIntervalSet(0).compliment;
+    return NoteSet.fromIntervalSetAndTonalCenter(complement, 0)
       .directionallyNamed(direction, 'flat');
   }
 

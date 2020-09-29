@@ -9,7 +9,7 @@ test('chromatic', () => {
 test('fromIntervalSet basic', () => {
   const intervalSet = IntervalSet.fromBinary(0b101010110101);
   const rotation = 0;
-  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  const noteSet = NoteSet.fromIntervalSetAndTonalCenter(intervalSet, -rotation);
   expect(noteSet.count).toBe(7);
   expect(noteSet.notes[0].possibleNames.natural.baseName).toBe('C');
   expect(noteSet.notes[1].possibleNames.natural.baseName).toBe('D');
@@ -23,7 +23,7 @@ test('fromIntervalSet basic', () => {
 test('fromIntervalSet rotated', () => {
   const intervalSet = IntervalSet.fromBinary(0b101010110101);
   const rotation = 2;
-  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  const noteSet = NoteSet.fromIntervalSetAndTonalCenter(intervalSet, -rotation);
   expect(noteSet.count).toBe(7);
   expect(noteSet.notes[0].possibleNames.flat.baseName).toBe('B');
   expect(noteSet.notes[1].possibleNames.natural.baseName).toBe('C');
@@ -37,7 +37,7 @@ test('fromIntervalSet rotated', () => {
 test('possibleModifiersForEachNoteName', () => {
   const intervalSet = IntervalSet.fromBinary(0b000010010001);
   const rotation = 0;
-  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  const noteSet = NoteSet.fromIntervalSetAndTonalCenter(intervalSet, -rotation);
   expect(noteSet.possibleModifiersForEachNoteName).toEqual([
     ['natural', 'sharp', 'doubleFlat'],
     ['natural', 'flat', 'doubleSharp'],
@@ -48,7 +48,7 @@ test('possibleModifiersForEachNoteName', () => {
 test('possibleNoteNameSets small', () => {
   const intervalSet = IntervalSet.fromBinary(0b000010000001);
   const rotation = 0;
-  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  const noteSet = NoteSet.fromIntervalSetAndTonalCenter(intervalSet, -rotation);
   const sets = noteSet.possibleNoteNameSets;
   expect(sets.length).toBe(9);
 });
@@ -56,7 +56,7 @@ test('possibleNoteNameSets small', () => {
 test('possibleNoteNameSets large', () => {
   const intervalSet = IntervalSet.fromBinary(0b101010110101);
   const rotation = 0;
-  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  const noteSet = NoteSet.fromIntervalSetAndTonalCenter(intervalSet, -rotation);
   const sets = noteSet.possibleNoteNameSets;
   expect(sets.length).toBe(2187);
 });
@@ -64,7 +64,7 @@ test('possibleNoteNameSets large', () => {
 test('named C major scale', () => {
   const intervalSet = IntervalSet.fromBinary(0b101010110101);
   const rotation = 0;
-  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  const noteSet = NoteSet.fromIntervalSetAndTonalCenter(intervalSet, -rotation);
   const names = noteSet.named.nameSet!.noteNames;
   expect(names.map(n => n.unicode))
     .toEqual(['C', 'D', 'E', 'F', 'G', 'A', 'B']);
@@ -73,7 +73,7 @@ test('named C major scale', () => {
 test('named complex scale', () => {
   const intervalSet = IntervalSet.fromBinary(0b010111001101);
   const rotation = -1;
-  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  const noteSet = NoteSet.fromIntervalSetAndTonalCenter(intervalSet, -rotation);
   const names = noteSet.named.nameSet!.noteNames;
   expect(names.map(n => n.unicode))
     .toEqual(['C♯', 'D♯', 'E', 'F𝄪', 'G♯', 'A', 'B']);
@@ -82,7 +82,7 @@ test('named complex scale', () => {
 test('note names are stored within the notes', () => {
   const intervalSet = IntervalSet.fromBinary(0b000010010001);
   const rotation = 0;
-  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  const noteSet = NoteSet.fromIntervalSetAndTonalCenter(intervalSet, -rotation);
   expect(noteSet.named.notes.map(note => note.name!.unicode))
     .toEqual(['C', 'E', 'G']);
 });
@@ -91,7 +91,7 @@ test('toIntervalSet no rotation', () => {
   const binary = 0b000010010001;
   const intervalSet = IntervalSet.fromBinary(binary);
   const rotation = 0;
-  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  const noteSet = NoteSet.fromIntervalSetAndTonalCenter(intervalSet, -rotation);
   expect(noteSet.toIntervalSet().binary).toBe(binary);
 });
 
@@ -99,7 +99,7 @@ test('toIntervalSet with rotation', () => {
   const binary = 0b000010010001;
   const intervalSet = IntervalSet.fromBinary(binary);
   const rotation = -2;
-  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  const noteSet = NoteSet.fromIntervalSetAndTonalCenter(intervalSet, -rotation);
   expect(noteSet.toIntervalSet(-2).binary).toBe(binary);
 });
 
@@ -126,7 +126,7 @@ test('directionallyNamed', () => {
 test('compliment', () => {
   const intervalSet = IntervalSet.fromBinary(0b101010110101);
   const rotation = 2; // B flat major scale
-  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  const noteSet = NoteSet.fromIntervalSetAndTonalCenter(intervalSet, -rotation);
   expect(noteSet.named.compliment.notes.map(note => note.name!.spelledOut))
     .toEqual(['D flat', 'E', 'G flat', 'A flat', 'B']);
 });
@@ -148,13 +148,14 @@ test('Squash bug with note naming', () => {
 test('tonalCenterName B flat major', () => {
   const intervalSet = IntervalSet.fromBinary(0b101010110101);
   const rotation = 2;
-  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation).named;
+  const noteSet = NoteSet.fromIntervalSetAndTonalCenter(intervalSet, -rotation)
+    .named;
   expect(noteSet.tonalCenterName).toBe('B♭');
 });
 
 test('tonalCenterName C# chromatic', () => {
   const intervalSet = IntervalSet.chromatic;
   const rotation = -1;
-  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  const noteSet = NoteSet.fromIntervalSetAndTonalCenter(intervalSet, -rotation);
   expect(noteSet.tonalCenterName).toBe('C♯/D♭');
 });

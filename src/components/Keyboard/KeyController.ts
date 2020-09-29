@@ -117,7 +117,8 @@ export class KeyController {
       this.audioContext.currentTime,
       releaseTime
     );
-    this.releaseTimeoutId = setTimeout(() => this.reset(), releaseTime * 1000);
+    this.releaseTimeoutId = 
+      window.setTimeout(() => this.reset(), releaseTime * 1000);
     this.state = 'releasing';
     this.lightingDispatch(l => l.turnOff());
   }

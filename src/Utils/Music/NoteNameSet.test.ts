@@ -102,7 +102,7 @@ test('demerits zero', () => {
 test('fromModifiers simple', () => {
   const intervalSet = IntervalSet.fromBinary(0b000010010001);
   const rotation = 0;
-  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  const noteSet = NoteSet.fromIntervalSetAndTonalCenter(intervalSet, -rotation);
   const noteNameSet = NoteNameSet.fromModifiers(noteSet, [
     'natural',
     'natural',
@@ -117,7 +117,7 @@ test('fromModifiers simple', () => {
 test('fromModifiers complex', () => {
   const intervalSet = IntervalSet.fromBinary(0b000010010001);
   const rotation = -4;
-  const noteSet = NoteSet.fromIntervalSet(intervalSet, rotation);
+  const noteSet = NoteSet.fromIntervalSetAndTonalCenter(intervalSet, -rotation);
   const noteNameSet = NoteNameSet.fromModifiers(noteSet, [
     'flat',
     'sharp',
