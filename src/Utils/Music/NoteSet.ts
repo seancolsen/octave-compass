@@ -10,7 +10,7 @@ import { IntervalSet } from "./IntervalSet";
  * are more computationally intensive to name and having the note names is
  * less useful.
  */
-const maxSetSizeToName: number = 8;
+export const maxSetSizeToName: number = 8;
 
 export class NoteSet {
 

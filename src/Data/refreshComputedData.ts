@@ -2,7 +2,7 @@
 
 import * as fs from 'fs';
 import {IntervalSetFactory} from '../Utils/Music/IntervalSetFactory';
-import { NoteSet } from '../Utils/Music/NoteSet';
+import { NoteSet, maxSetSizeToName } from '../Utils/Music/NoteSet';
 import {musicTheory} from './musicTheory';
 
 const {octaveDivisions} = musicTheory;
@@ -10,24 +10,26 @@ const {octaveDivisions} = musicTheory;
 const outputFile = `${__dirname}/computed/intervalSets.json`;
 
 // const binaryList = [...Array(IntervalSet.chromatic.binary).keys()];
-const binaryList = [2741];
+const binaryList = [1, 145, 137, 745, 1169, 1717, 2477, 2741, 4095];
 
-const data = {} as any;
+const dataSet = {} as any;
 binaryList.forEach(binary => {
+  const dataPoint: any = {};
   const intervalSet = IntervalSetFactory.fromBinary(binary);
-  const tonalCenters = [...Array(octaveDivisions).keys()];
-  const noteSets = tonalCenters.map(tonalCenter => 
-    NoteSet.fromIntervalSetAndTonalCenter(intervalSet, tonalCenter)
-    .namedIfFeasible
-  );
-  const noteNameSetSignature = noteSets.map(noteSet => noteSet.nameSetSignature);
-  data[binary] = {
-    names: intervalSet.names,
-    noteNameSetSignature: noteNameSetSignature
-  };
   
+  if (intervalSet.type === 'scale' && intervalSet.count <= maxSetSizeToName) {
+    const tonalCenters = [...Array(octaveDivisions).keys()];
+    const noteSets = tonalCenters.map(tonalCenter => 
+      NoteSet.fromIntervalSetAndTonalCenter(intervalSet, tonalCenter).named
+    );
+    dataPoint.noteNameSetSignatures = noteSets.map(ns => ns.nameSetSignature);
+  }
+  
+  if (Object.keys(dataPoint).length > 0) {
+    dataSet[binary] = dataPoint;
+  }
 })
 
-const json = JSON.stringify(data, null, 2);
+const json = JSON.stringify(dataSet, null, 2);
 
 fs.writeFileSync(outputFile, json);

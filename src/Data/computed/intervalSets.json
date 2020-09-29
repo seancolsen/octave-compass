@@ -1,13 +1,38 @@
 {
+  "1717": {
+    "noteNameSetSignatures": [
+      "nnnnnnf",
+      "ssssssn",
+      "nnsnnnn",
+      "fnnffnf",
+      "nssnnsn",
+      "nnnfnnf",
+      "sssnssn",
+      "nnnnnnn",
+      "ffnffnf",
+      "nnsnnsn",
+      "fnnfnnf",
+      "nssnssn"
+    ]
+  },
+  "2477": {
+    "noteNameSetSignatures": [
+      "nnfnnfn",
+      "ssnssns",
+      "nnnnnfs",
+      "fnffffn",
+      "nsnnnns",
+      "nnffnfn",
+      "ssnnsns",
+      "nnfnnfs",
+      "ffffffn",
+      "nnnnnns",
+      "fnffnfn",
+      "nsnnsns"
+    ]
+  },
   "2741": {
-    "names": [
-      "Major",
-      "Ionian",
-      "Nid Murub",
-      "Thaat",
-      "Bilaval"
-    ],
-    "noteNameSetSignature": [
+    "noteNameSetSignatures": [
       "nnnnnnn",
       "ffnfffn",
       "nnsnnns",

@@ -54,6 +54,7 @@ export class Chord extends IntervalSet {
 
   constructor(chordData: ChordData) {
     super(chordData);
+    this.type = "chord";
     this.names = [chordData.name];
     this.defaultName = chordData.name;
     this.contents = chordData.contents;

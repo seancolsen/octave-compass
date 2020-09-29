@@ -4,6 +4,8 @@ import { IntervalSetBinary } from "./IntervalSetBinary";
 
 const divisions = musicTheory.octaveDivisions;
 
+export type IntervalSetType = null | 'scale' | 'chord';
+
 /**
  * This class stores a set of intervals using a binary representation of that
  * set. Functions also exist here to deal with an "ordinals" representation of
@@ -53,6 +55,12 @@ export class IntervalSet {
    * docs).
    */
   binary: number;
+
+  /**
+   * We use this to distinguish between Chord and Scale, which both inherit
+   * from IntervalSet.
+   */
+  type = null as IntervalSetType;
 
   /**
    * This constructor takes a kind of funny format in order to be similar to the

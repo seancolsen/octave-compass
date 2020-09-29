@@ -27,6 +27,7 @@ export class Scale extends IntervalSet {
 
   constructor(scaleData: ScaleData) {
     super(scaleData);
+    this.type = "scale";
     this.names = scaleData.names;
     this.defaultName = scaleData.defaultName;
     this.alternateNames = scaleData.alternateNames;
