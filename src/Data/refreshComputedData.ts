@@ -1,7 +1,6 @@
 #!/usr/bin/env ts-node-script
 
 import * as fs from 'fs';
-import { CustomMath } from '../Utils/Math/CustomMath';
 import { ChordSet } from '../Utils/Music/ChordSet';
 import {IntervalSetFactory} from '../Utils/Music/IntervalSetFactory';
 import { NoteSet, maxSetSizeToName } from '../Utils/Music/NoteSet';
@@ -35,7 +34,7 @@ intervalSets.forEach(intervalSet => {
 
 // ========================================================================== //
 
-const searchWeightData = {} as any;
+let searchableIntervalSetData = {} as any;
 intervalSets.forEach(intervalSet => {
 
   let points = 0;
@@ -65,26 +64,29 @@ intervalSets.forEach(intervalSet => {
     points += 100 * ( 7 - Math.abs(7 - intervalSet.count));
   }
   
+  const displayName = (name: string | null) => `${name} ${intervalSet.type}`;
   intervalSet.names.forEach(name => {
-    const displayName = `${name} ${intervalSet.type}`;
-    searchWeightData[displayName] = {
-      points: points,
-      intervalSetBinary: intervalSet.binary
+    const searchableName = displayName(name);
+    searchableIntervalSetData[searchableName] = {
+      searchPoints: points,
+      intervalSetBinary: intervalSet.binary,
+      defaultName: displayName(intervalSet.defaultName),
     };
   });
 });
-const searchWeights = {} as any;
-Object.entries(searchWeightData)
-  .sort((e1: any, e2: any) => e2[1].points - e1[1].points)
-  .forEach(([displayName, data]: any) => {
-    searchWeights[displayName] = data.intervalSetBinary;
-  })
+// Sort with highest points first so that we don't need to sort the search
+searchableIntervalSetData = Object.entries(searchableIntervalSetData)
+  .sort((e1: any, e2: any) => e2[1].searchPoints - e1[1].searchPoints)
+  .reduce((obj: any, [k, v]) => {
+    obj[k] = v;
+    return obj;
+  }, {});
 
 // ========================================================================== //
 
 const json = JSON.stringify({
   noteNameSetSignatures,
-  searchWeights,
+  searchableIntervalSetData,
 }, null, 2);
 
 fs.writeFileSync(outputFile, json);

@@ -43,22 +43,86 @@
       "nssnsss"
     ]
   },
-  "searchWeights": {
-    "Major Scale": 2741,
-    "Ionian Scale": 2741,
-    "Nid Murub Scale": 2741,
-    "Thaat Scale": 2741,
-    "Bilaval Scale": 2741,
-    "Mixolydian Scale": 1717,
-    "Adonai Malach Scale": 1717,
-    "Mitum Scale": 1717,
-    "Khamaj Scale": 1717,
-    "Ching Scale": 1717,
-    "Gregorian 7 Scale": 1717,
-    "Harmonic Minor Scale": 2477,
-    "Chromatic Scale": 4095,
-    "Major Chord": 145,
-    "Minor Chord": 137,
-    "Dominant 7 Chord": 1169
+  "searchableIntervalSetData": {
+    "Major Scale": {
+      "searchPoints": 755,
+      "intervalSetBinary": 2741,
+      "defaultName": "Major Scale"
+    },
+    "Ionian Scale": {
+      "searchPoints": 755,
+      "intervalSetBinary": 2741,
+      "defaultName": "Major Scale"
+    },
+    "Nid Murub Scale": {
+      "searchPoints": 755,
+      "intervalSetBinary": 2741,
+      "defaultName": "Major Scale"
+    },
+    "Thaat Scale": {
+      "searchPoints": 755,
+      "intervalSetBinary": 2741,
+      "defaultName": "Major Scale"
+    },
+    "Bilaval Scale": {
+      "searchPoints": 755,
+      "intervalSetBinary": 2741,
+      "defaultName": "Major Scale"
+    },
+    "Mixolydian Scale": {
+      "searchPoints": 754,
+      "intervalSetBinary": 1717,
+      "defaultName": "Mixolydian Scale"
+    },
+    "Adonai Malach Scale": {
+      "searchPoints": 754,
+      "intervalSetBinary": 1717,
+      "defaultName": "Mixolydian Scale"
+    },
+    "Mitum Scale": {
+      "searchPoints": 754,
+      "intervalSetBinary": 1717,
+      "defaultName": "Mixolydian Scale"
+    },
+    "Khamaj Scale": {
+      "searchPoints": 754,
+      "intervalSetBinary": 1717,
+      "defaultName": "Mixolydian Scale"
+    },
+    "Ching Scale": {
+      "searchPoints": 754,
+      "intervalSetBinary": 1717,
+      "defaultName": "Mixolydian Scale"
+    },
+    "Gregorian 7 Scale": {
+      "searchPoints": 754,
+      "intervalSetBinary": 1717,
+      "defaultName": "Mixolydian Scale"
+    },
+    "Harmonic Minor Scale": {
+      "searchPoints": 742,
+      "intervalSetBinary": 2477,
+      "defaultName": "Harmonic Minor Scale"
+    },
+    "Chromatic Scale": {
+      "searchPoints": 322,
+      "intervalSetBinary": 4095,
+      "defaultName": "Chromatic Scale"
+    },
+    "Major Chord": {
+      "searchPoints": 5,
+      "intervalSetBinary": 145,
+      "defaultName": "Major Chord"
+    },
+    "Minor Chord": {
+      "searchPoints": 5,
+      "intervalSetBinary": 137,
+      "defaultName": "Minor Chord"
+    },
+    "Dominant 7 Chord": {
+      "searchPoints": 5,
+      "intervalSetBinary": 1169,
+      "defaultName": "Dominant 7 Chord"
+    }
   }
 }
