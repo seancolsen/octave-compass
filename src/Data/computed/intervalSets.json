@@ -44,21 +44,21 @@
     ]
   },
   "searchWeights": {
-    "Major Chord": 5,
-    "Minor Chord": 5,
-    "Dominant 7 Chord": 5,
-    "Mixolydian Scale": 7,
-    "Adonai Malach Scale": 7,
-    "Mitum Scale": 7,
-    "Khamaj Scale": 7,
-    "Ching Scale": 7,
-    "Gregorian 7 Scale": 7,
-    "Harmonic Minor Scale": 7,
-    "Major Scale": 7,
-    "Ionian Scale": 7,
-    "Nid Murub Scale": 7,
-    "Thaat Scale": 7,
-    "Bilaval Scale": 7,
-    "Chromatic Scale": 7
+    "Major Scale": 2741,
+    "Ionian Scale": 2741,
+    "Nid Murub Scale": 2741,
+    "Thaat Scale": 2741,
+    "Bilaval Scale": 2741,
+    "Mixolydian Scale": 1717,
+    "Adonai Malach Scale": 1717,
+    "Mitum Scale": 1717,
+    "Khamaj Scale": 1717,
+    "Ching Scale": 1717,
+    "Gregorian 7 Scale": 1717,
+    "Harmonic Minor Scale": 2477,
+    "Chromatic Scale": 4095,
+    "Major Chord": 145,
+    "Minor Chord": 137,
+    "Dominant 7 Chord": 1169
   }
 }

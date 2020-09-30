@@ -19,6 +19,7 @@ const intervalSets = binaryList.map(binary =>
 );
 const tonalCenters = [...Array(octaveDivisions).keys()];
 
+// ========================================================================== //
 
 const noteNameSetSignatures = {} as any;
 intervalSets.forEach(intervalSet => {
@@ -32,30 +33,58 @@ intervalSets.forEach(intervalSet => {
   }
 });
 
-const searchWeights = {} as any;
+// ========================================================================== //
+
+const searchWeightData = {} as any;
 intervalSets.forEach(intervalSet => {
 
   let points = 0;
-  points += intervalSet.type === 'Chord' ? 5 : 7;
 
-  // if (intervalSet.type === 'Scale') {
-  //   const allChords = OrdinalChordSet
-  //     .arrayFromIntervalSet(intervalSet, ChordSet.fromAllChords)
-  //     .map(ocs => ocs.chordSet.chords.map(chord => chord.binary))
-  //     .flat();
-  //   const chordFrequencies = CustomMath.valueFrequency
-  // }
+  // Points for chords vs scales
+  points += ({'Scale': 7, 'Chord': 5, '': 0})[intervalSet.type ?? ''];
+
+  // Points for chords within scale, with additional points if the chord lies
+  // at the  tonal center or the perfect fourth or perfect fifth.
+  if (intervalSet.type === 'Scale') {
+    const ordinalChordSets = OrdinalChordSet
+      .arrayFromIntervalSet(intervalSet, ChordSet.fromAllChords);
+    ordinalChordSets.forEach(ordinalChordSet => {
+      const ordinal = ordinalChordSet.ordinal;
+      ordinalChordSet.chordSet.chords.forEach(chord => {
+        const ordinalFactor = ({'0': 10, '5': 2, '7': 2} as any)[ordinal] ?? 1;
+        const chordPoints = ({'145': 3, '137': 2} as any)[chord.binary] ?? 0;
+        points += ordinalFactor * chordPoints;
+      });
+    });
+  }
+
+  // Points for number of notes in the scale. This makes is so that all 7-note
+  // scales will appear before any scales of any other number of notes. Then
+  // all 6-note and 8-note scales will appear next and so on.
+  if (intervalSet.type === 'Scale') {
+    points += 100 * ( 7 - Math.abs(7 - intervalSet.count));
+  }
   
   intervalSet.names.forEach(name => {
     const displayName = `${name} ${intervalSet.type}`;
-    searchWeights[displayName] = points;
+    searchWeightData[displayName] = {
+      points: points,
+      intervalSetBinary: intervalSet.binary
+    };
   });
 });
+const searchWeights = {} as any;
+Object.entries(searchWeightData)
+  .sort((e1: any, e2: any) => e2[1].points - e1[1].points)
+  .forEach(([displayName, data]: any) => {
+    searchWeights[displayName] = data.intervalSetBinary;
+  })
+
+// ========================================================================== //
 
 const json = JSON.stringify({
   noteNameSetSignatures,
   searchWeights,
 }, null, 2);
-
 
 fs.writeFileSync(outputFile, json);
