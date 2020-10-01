@@ -16,21 +16,24 @@ pointAccumulators.push((intervalSet: IntervalSet) =>
  * the  tonal center or the perfect fourth or perfect fifth.
  */
 pointAccumulators.push((intervalSet: IntervalSet) => {
-  let points = 0;
-  if (intervalSet.type !== 'Scale') {
-    return points;
-  }
+  if (intervalSet.type !== 'Scale') return 0;
+  
   const ordinalChordSets = OrdinalChordSet
     .arrayFromIntervalSet(intervalSet, ChordSet.fromAllChords);
-  ordinalChordSets.forEach(ordinalChordSet => {
+
+  return ordinalChordSets.map(ordinalChordSet => {
     const ordinal = ordinalChordSet.ordinal;
-    ordinalChordSet.chordSet.chords.forEach(chord => {
-      const ordinalFactor = ({'0': 10, '5': 2, '7': 2} as any)[ordinal] ?? 1;
-      const chordPoints = ({'145': 3, '137': 2} as any)[chord.binary] ?? 0;
-      points += ordinalFactor * chordPoints;
-    });
-  });
-  return points;
+    // Chords at tonal center, fourth, and fifth get points.
+    const ordinalFactor = ({'0': 10, '5': 2, '7': 2} as any)[ordinal] ?? 1;
+    const chordPoints = ordinalChordSet.chordSet.chords
+      // Major chords and minor chords get points.
+      .map(chord => ({'145': 3, '137': 2} as any)[chord.binary] ?? 0)
+      // Take the max so that we're only tallying points for one chord per
+      // ordinal. Without this step, we end up giving scales like 953 loads of
+      // points.
+      .reduce((max: number, points: number) => Math.max(max, points), 0);
+    return ordinalFactor * chordPoints;
+  }).reduce((total: number, points: number) => total + points, 0);
 });
 
 /**
