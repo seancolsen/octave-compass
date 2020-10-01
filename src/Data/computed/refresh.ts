@@ -16,7 +16,7 @@ const intervalSets = binaryList.map(b => IntervalSetFactory.fromBinary(b));
 
 const outputFile = (name: string) => `${__dirname}/output/${name}.json`;
 Object.entries({
-  // noteNameSetSignatures: noteNameSetSignatures(intervalSets),
+  noteNameSetSignatures: noteNameSetSignatures(intervalSets),
   searchableIntervalSetData: searchableIntervalSetData(intervalSets),
 }).forEach(([name, data]: [string, any]) => {
   fs.writeFileSync(outputFile(name), JSON.stringify(data));
