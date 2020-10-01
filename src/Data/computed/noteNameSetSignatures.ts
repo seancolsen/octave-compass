@@ -7,6 +7,7 @@ const tonalCenters = [...Array(musicTheory.octaveDivisions).keys()];
 export const noteNameSetSignatures = (intervalSets: IntervalSet[]) => (
   intervalSets
     .filter(is => is.type === 'Scale' && is.count <= maxSetSizeToName)
+    // TODO filter out intervalSets that don't have a tonal center
     .map(intervalSet => {
       const noteSets = tonalCenters.map(tonalCenter => 
         NoteSet.fromIntervalSetAndTonalCenter(intervalSet, tonalCenter).named

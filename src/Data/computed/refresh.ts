@@ -7,7 +7,7 @@ import {noteNameSetSignatures} from './noteNameSetSignatures';
 import {searchableIntervalSetData} from './searchableIntervalSetData';
 
 // All interval sets
-const binaryList = [...Array(IntervalSet.chromatic.binary).keys()];
+const binaryList = [...Array(IntervalSet.chromatic.binary + 1).keys()];
 
 // Some IntervalSets  uncomment this to speed up testing)
 // const binaryList = [1, 145, 137, 745, 1169, 1717, 2477, 2741, 4095];

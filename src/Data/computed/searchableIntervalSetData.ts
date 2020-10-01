@@ -1,40 +1,21 @@
+import { Chord } from '../../Utils/Music/Chord';
 import { ChordSet } from '../../Utils/Music/ChordSet';
-import type { IntervalSet } from '../../Utils/Music/IntervalSet';
+import { IntervalSet } from '../../Utils/Music/IntervalSet';
 import { OrdinalChordSet } from '../../Utils/Music/OrdinalChordSet';
+
+const majorChord = Chord.fromName('Major');
+const minorChord = Chord.fromName('Minor');
+const triads = [majorChord, minorChord];
+const perfectOrdinals = [0, 5, 7];
 
 let pointAccumulators = [] as ((is: IntervalSet) => number)[];
 
-/**
- * Points for chords vs scales
+/** 
+ * Points for being the chromatic scale
  */
 pointAccumulators.push((intervalSet: IntervalSet) => 
-  ({'Scale': 7, 'Chord': 5, '': 0})[intervalSet.type ?? '']
-);
-
-/**
- * Points for chords within scale, with additional points if the chord lies at
- * the  tonal center or the perfect fourth or perfect fifth.
- */
-pointAccumulators.push((intervalSet: IntervalSet) => {
-  if (intervalSet.type !== 'Scale') return 0;
-  
-  const ordinalChordSets = OrdinalChordSet
-    .arrayFromIntervalSet(intervalSet, ChordSet.fromAllChords);
-
-  return ordinalChordSets.map(ordinalChordSet => {
-    const ordinal = ordinalChordSet.ordinal;
-    // Chords at tonal center, fourth, and fifth get points.
-    const ordinalFactor = ({'0': 10, '5': 2, '7': 2} as any)[ordinal] ?? 1;
-    const chordPoints = ordinalChordSet.chordSet.chords
-      // Major chords and minor chords get points.
-      .map(chord => ({'145': 3, '137': 2} as any)[chord.binary] ?? 0)
-      // Take the max so that we're only tallying points for one chord per
-      // ordinal. Without this step, we end up giving scales like 953 loads of
-      // points.
-      .reduce((max: number, points: number) => Math.max(max, points), 0);
-    return ordinalFactor * chordPoints;
-  }).reduce((total: number, points: number) => total + points, 0);
-});
+  intervalSet.isIdenticalTo(IntervalSet.chromatic) ? 1000 : 0
+)
 
 /**
  * Points for number of notes in the scale. This makes is so that all 7-note
@@ -48,15 +29,68 @@ pointAccumulators.push((intervalSet: IntervalSet) => {
   return 100 * ( 7 - Math.abs(7 - intervalSet.count));
 });
 
+/**
+ * Points for chords within the scale
+ */
+pointAccumulators.push((intervalSet: IntervalSet) => {
+  if (intervalSet.type !== 'Scale') return 0;
+  
+  const ordinalChordSets = OrdinalChordSet
+    .arrayFromIntervalSet(intervalSet, ChordSet.fromAllChords);
+
+  const triadIsPresentAtTonalCenter = ordinalChordSets
+    .filter(ocs => ocs.ordinal === 0)
+    .some(ocs => ocs.chordSet.containsAny(triads));
+
+  const numberOfOrdinalsWithATriad = ordinalChordSets
+    .filter(ocs => ocs.chordSet.containsAny(triads))
+    .length;
+
+  const numberOfMajorChords = ordinalChordSets
+    .filter(ocs => ocs.chordSet.containsChord(majorChord))
+    .length;
+  
+  const numberOfPerfectOrdinalsWithATriad = ordinalChordSets
+    .filter(ocs => perfectOrdinals.includes(ocs.ordinal))
+    .filter(ocs => ocs.chordSet.containsAny(triads))
+    .length;
+  
+  const numberOfPerfectOrdinalsWithAMajorChord = ordinalChordSets
+    .filter(ocs => perfectOrdinals.includes(ocs.ordinal))
+    .filter(ocs => ocs.chordSet.containsChord(majorChord))
+    .length;
+
+  const perfectOrdinalsAllContainTheSameTriad = triads.some(chord => 
+    perfectOrdinals.length === ordinalChordSets
+      .filter(ocs => perfectOrdinals.includes(ocs.ordinal))
+      .filter(ocs => ocs.chordSet.containsChord(chord))
+      .length
+  );
+
+  return (triadIsPresentAtTonalCenter ? 10 : 0) +
+    numberOfOrdinalsWithATriad +
+    numberOfPerfectOrdinalsWithATriad +
+    numberOfMajorChords +
+    numberOfPerfectOrdinalsWithAMajorChord +
+    (perfectOrdinalsAllContainTheSameTriad ? 3 : 0);
+});
+
+/**
+ * Points for chords vs scales
+ */
+pointAccumulators.push((intervalSet: IntervalSet) => 
+  ({'Scale': 7, 'Chord': 5, '': 0})[intervalSet.type ?? '']
+);
+
 export function searchableIntervalSetData(intervalSets: IntervalSet[]) {
 
   let searchData = {} as any;
   intervalSets.forEach(intervalSet => {
     let points = pointAccumulators.reduce((Σ, f) => Σ + f(intervalSet), 0);
-    intervalSet.names.forEach(name => {
+    intervalSet.names.forEach((name, index) => {
       const displayName = `${name} ${intervalSet.type}`;
       searchData[displayName] = {
-        searchPoints: points,
+        searchPoints: points * (index === 0 ? 10000 : 1),
         intervalSetBinary: intervalSet.binary,
       };
     });

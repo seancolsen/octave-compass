@@ -65,6 +65,13 @@ export class ChordSet {
   }
 
   /**
+   * Return true if this set contains any of the given chords.
+   */
+  containsAny(chords: Chord[]): boolean {
+    return this.chords.some(c => chords.some(_c => c.binary === _c.binary));
+  }
+
+  /**
    * Return a new ChordSet that's identical to this ChordSet, except with the
    * given chord added. If the given chord was already in the set, then the set
    * will be returned as-is.
