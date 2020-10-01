@@ -8,7 +8,7 @@
     "start": "sirv public --single",
     "test": "jest",
     "validate": "svelte-check",
-    "refreshComputedData": "ts-node src/Data/refreshComputedData.ts"
+    "refreshComputedData": "ts-node src/Data/computed/refresh.ts"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",

@@ -117,9 +117,9 @@ export class ChordSet {
    */
   static get fromDefaultChords(): ChordSet {
     return ChordSet.fromChordNames([
-      'major',
-      'minor',
-      'dominant 7',
+      'Major',
+      'Minor',
+      'Dominant 7',
     ]);
   }
 
