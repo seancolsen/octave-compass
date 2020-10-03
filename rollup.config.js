@@ -5,6 +5,7 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
+import json from '@rollup/plugin-json';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -48,6 +49,8 @@ export default {
 			},
 			preprocess: sveltePreprocess(),
 		}),
+
+		json({compact: true}),
 
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In

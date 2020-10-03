@@ -5,6 +5,9 @@
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"],
   "compilerOptions": {
     "moduleResolution": "node",
+
+    "resolveJsonModule": true,
+    
     "target": "es2017",
 
 

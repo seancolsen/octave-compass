@@ -1,5 +1,8 @@
 interface ModifierData {
-  [k: string]: string;
+  unicode: string,
+  ascii: string,
+  english: string,
+  shortCode: string,
 }
 
 const modifiers: { [k: string]: ModifierData } = {
@@ -89,6 +92,18 @@ export class Modifier {
         this.ascii.includes('b') ? 'flat' :
           'none'
     );
+  }
+
+  /**
+   * Return a new modifier that matches the given short code.
+   * 
+   * @param shortCode e.g. 'n' or 'f', etc.
+   */
+  static fromShortCode(shortCode: string) {
+    const modifierEntry = Object.entries(modifiers).find(
+      ([name, data]: [string, ModifierData]) => data.shortCode === shortCode
+    );
+    return modifierEntry ? new Modifier(modifierEntry[0]) : undefined;
   }
 
 }

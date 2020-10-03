@@ -4,6 +4,9 @@ import { Scalar } from "./../Math/Scalar";
 import { CustomMath } from "./../Math/CustomMath";
 import { NoteNameSet } from "./NoteNameSet";
 import { IntervalSet } from "./IntervalSet";
+import { Modifier } from "./Modifier";
+import { lookupNoteNameSetSignature } from
+  "../../Data/computed/noteNameSetSignatures";
 
 /**
  * Only name the NoteSet if we have 8 notes or fewer. With more notes, the notes
@@ -122,7 +125,7 @@ export class NoteSet {
    * property filled in. We don't do this in the constructor because it's a
    * computationally intensive task, especially for larger note sets.
    */
-  get named(): NoteSet {
+  get namedViaBruteForce(): NoteSet {
     let result = new NoteSet(this.notes);
     result.nameSet = result.bestNoteNameSet;
     result.nameSet.noteNames.forEach(name => {
@@ -132,14 +135,48 @@ export class NoteSet {
   }
 
   /**
-   * Return a NoteSet that *might* be named, but only if it's not too hard.
-   * Naming large sets is hard, and not really that useful. Only name the
-   * smaller sets.
+   * Figure out what the tonal center is of this NoteSet.
    */
-  get namedIfFeasible(): NoteSet {
-    return (this.count <= maxSetSizeToName) ? this.named : this;
+  get tonalCenter() {
+    return this.notes[0].id;
   }
 
+  /**
+   * Figure out what the interval set is of this NoteSet. 
+   */
+  get intervalSet() {
+    return IntervalSet
+      .fromOrdinals(this.notes.map(note => note.id))
+      .shift(-this.tonalCenter);
+  }
+
+  /**
+   * Return a new Note set that uses the giten "Note Name Set Signature" to name
+   * all the notes.
+   * 
+   * @param noteNameSetSignature e.g. 'nnfnffn'
+   */
+  namedViaNoteNameSetSignature(noteNameSetSignature: string) {
+    let result = new NoteSet(this.notes);
+    [...noteNameSetSignature].forEach((modifierShortCode, index) => {
+      const modifier = Modifier.fromShortCode(modifierShortCode);
+      if (modifier) {
+        result.notes[index] = result.notes[index].namedUsing(modifier.name);
+      }
+    });
+    return result;
+  }
+
+  /**
+   * Return a new NoteSet that uses previously calculated NoteNames to quickly
+   * name its notes without the performance hit of calculating them. If we don't
+   * find a matching entry in the cache, then we skip naming.
+   */
+  get namedViaCache() {
+    const sig = lookupNoteNameSetSignature(this.intervalSet, this.tonalCenter);
+    return sig ? this.namedViaNoteNameSetSignature(sig) : this;
+  }
+  
   /**
    * Return a copied NoteSet with names added, if possible, according to the
    * given direction.
