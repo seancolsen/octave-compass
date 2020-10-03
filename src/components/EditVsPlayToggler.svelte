@@ -39,14 +39,35 @@
   class='container'
   on:click={toggleWithTransition}
 >
-  <div class:active={isEdit}>Edit Scale</div>
-  <div class:active={isPlay}>Play Sounds</div>
+  <div
+    class='button top'
+    class:active={isEdit}
+  >
+    Edit Scale
+  </div>
+  <div
+    class='button bottom'
+    class:active={isPlay}
+  >
+    Play Sounds
+  </div>
 </div>
 
 <style>
   .container {
     cursor: pointer;
+    height: 100%;
+    border-radius: 1vmax;
+    background: #DDD;
   }
+
+  .button {
+    height: 50%;
+    text-align: center;
+  }
+
+  .button.top {border-radius: 1vmax 1vmax 0 0;}
+  .button.bottom {border-radius: 0 0 1vmax 1vmax;}
 
   .active {
     background: white;

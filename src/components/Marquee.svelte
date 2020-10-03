@@ -20,29 +20,25 @@
 
 </script>
 
-<div class={className} id='marquee'>
+<h1 class:isNamed >
+  {$title}
+  {#if $inversionText}<em>{$inversionText}</em>{/if}
+</h1>
 
-  <h1 class:isNamed >
-    {$title}
-    {#if $inversionText}<em>{$inversionText}</em>{/if}
-  </h1>
-
+<div class='subtitle'>
   {#if nameCount > 0}
-    <div class='subtitle'>
 
-      <span class='aka'>Also know as: </span>
-      {$alternateScaleNames[0]}
+    <span class='aka'>Also know as: </span>
+    {$alternateScaleNames[0]}
 
-      {#if nameCount > 1}
-        <span>, and </span>
-        <span class='show-more' on:click|preventDefault={showMore}>
-          {nameCount - 1} other name{nameCount > 2 && 's'}...
-        </span>
-      {/if}
+    {#if nameCount > 1}
+      <span>, and </span>
+      <span class='show-more' on:click|preventDefault={showMore}>
+        {nameCount - 1} other name{nameCount > 2 ? 's' : ''}...
+      </span>
+    {/if}
 
-    </div>
   {/if}
-
 </div>
 
 <style>
