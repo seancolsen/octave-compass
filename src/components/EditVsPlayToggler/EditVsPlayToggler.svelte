@@ -1,5 +1,7 @@
 <script lang="ts">
-  import {getStore} from '../store';
+  import {getStore} from '../../store';
+  import TogglerChoice from './TogglerChoice.svelte';
+
   const {editVsPlay} = getStore();
 
   $: isPlay = $editVsPlay === 1;
@@ -35,41 +37,18 @@
   }
 </script>
   
-<div
-  class='container'
-  on:click={toggleWithTransition}
->
-  <div
-    class='button top'
-    class:active={isEdit}
-  >
-    Edit Scale
-  </div>
-  <div
-    class='button bottom'
-    class:active={isPlay}
-  >
-    Play Sounds
-  </div>
+<div class='container' on:click={toggleWithTransition}>
+  <TogglerChoice label='Edit Scale' isActive={isEdit} />
+  <div class='or'>or</div>
+  <TogglerChoice label='Play Notes' isActive={isPlay} />
 </div>
 
 <style>
   .container {
     cursor: pointer;
     height: 100%;
-    border-radius: 1vmax;
+    border-radius: 0 0 2vmax 0;
     background: #DDD;
   }
-
-  .button {
-    height: 50%;
-    text-align: center;
-  }
-
-  .button.top {border-radius: 1vmax 1vmax 0 0;}
-  .button.bottom {border-radius: 0 0 1vmax 1vmax;}
-
-  .active {
-    background: white;
-  }
+  .or {width: 100%; text-align: center; position: absolute;}
 </style>

@@ -3,7 +3,7 @@
   import Wheel from "./Wheel/Wheel.svelte";
   import Keyboard from './Keyboard/Keyboard.svelte';
   import ChordSelection from './ChordSelection/ChordSelection.svelte';
-  import EditVsPlayToggler from './EditVsPlayToggler.svelte';
+  import EditVsPlayToggler from './EditVsPlayToggler/EditVsPlayToggler.svelte';
   import LinearKeyboard from './LinearKeyboard/LinearKeyboard.svelte';
 
   import {getStore} from '../store';
@@ -44,19 +44,24 @@
 }
 
 #marquee {
+  position: relative;
+  left: 20%;
+  top: -2vmax;
+  width: 60%;
   height: 8vmax;
-  background: #CCC;
-  box-shadow: 0 0 10px 0 black;
+  padding-top: 2vmax;
+  background: #AAA;
+  border: solid #CCC 0.3vmax;
+  /* box-shadow: 0 0 20px 0 black inset; */
+  border-radius: 0 0 2vmax 2vmax;
 }
 
 #edit-vs-play-togger {
   position: absolute;
-  top: 1vmax;
-  left: 1vmax;
-  height: 18vmax;
-  width: 9vmax;
-  border-radius: 1vmax;
-  box-shadow: 0 0 10px 0 black;  
+  top: 0vmax;
+  left: 0vmax;
+  height: 14vmax;
+  width: 11vmax;
 }
 
 </style>
