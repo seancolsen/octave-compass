@@ -22,7 +22,7 @@
 
   $: names = note.namesToUseForLabels;
   $: radius = 348 + $editVsPlay * 20;
-  $: color = isHighlight ? '#fffa58' : note.color;
+  $: color = isHighlight ? '#fff000' : note.color;
   $: keyLabelIntervalOffset = (index: number) => {
     const discreteWidth = names.length - 1;
     const discreteOffset = (2 * index) - discreteWidth;

@@ -8,8 +8,7 @@
 
   const checkboxRadius = 430;
   const arcRadius = 430;
-  const lateralExtensionFactor = 0.75
-  const arcSpan = 0.5 * lateralExtensionFactor;
+  const arcSpan = 0.5;
 
   let className: string | undefined = undefined;
   export {className as class};
@@ -20,21 +19,33 @@
 
   $: point = (new IrPoint(interval, checkboxRadius)).toXy();
 
+  function handleClick() {
+    if (isClickable) {
+      intervalSet.toggleInterval(interval);
+    }
+  }
 </script>
 
 <g
   class={className}
   class:isClickable
   class:isActive
-  on:click={() => isClickable ? intervalSet.toggleInterval(interval) : null}
+  on:mousedown|preventDefault|stopPropagation={handleClick}
+  on:touchstart|preventDefault|stopPropagation={handleClick}
 >
+  <!-- Arc is to catch touches that don't fall on the label or checkbox. -->
   <Arc
-    class='background'  
+    class='touch-receptor'  
     startInterval={interval - arcSpan}
     endInterval={interval + arcSpan}
     radius={arcRadius}
   />
-  <IntervalLabel {interval} {label} active={isActive} />
+  {#if isActive}
+    <IntervalLabel {interval} {label} {isActive} isHighlight
+      opacity={1 - $editVsPlay}
+    />
+  {/if}
+  <IntervalLabel {interval} {label} {isActive} />
   <SvgCheckbox
     x={point.x}
     y={point.y}
@@ -46,12 +57,13 @@
 
 <style>
   g.isClickable :global(*) { cursor: pointer; }
-  g.isClickable:hover { text-decoration: underline; }
-  g > :global(.background) {
+
+  g > :global(.touch-receptor) {
     stroke-width: 130px;
     stroke: #999;
     fill: none;
     stroke-linecap: butt;
+    visibility: hidden;
+    pointer-events: all;
   }
-  g.isActive > :global(.background) { stroke: #BBB; }
 </style>

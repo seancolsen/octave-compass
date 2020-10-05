@@ -3,6 +3,7 @@
   import IntervalSetPolygon from '../../common/IntervalSetPolygon.svelte';
   import { IntervalSet } from '../../../Utils/Music/IntervalSet';
   import {getStore} from '../../../store';
+  import { somethingIsRotating } from '../Wheel.svelte';
   const {editVsPlay, keyboardRadius, noteSet} = getStore();
 </script>
 
@@ -16,10 +17,9 @@
     radius={$keyboardRadius}
     intervalSet={IntervalSet.chromatic}
     opacity={1 - $editVsPlay}
-    
   />
   <KeySet noteSet={$noteSet.compliment} isActive={false} />
-  <KeySet noteSet={$noteSet} isActive={true} />
+  <KeySet noteSet={$noteSet} isActive={!$somethingIsRotating} />
 </g>
 
 <style>

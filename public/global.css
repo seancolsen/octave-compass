@@ -10,7 +10,6 @@
 body {
   margin: 0;
   padding: 0;
-  background: #999;
 }
 
 h1, h2, h3 {
@@ -48,13 +47,4 @@ svg text {
 
 svg text::selection {
   background: none;
-}
-
-body,
-#app,
-#layout {
-  height: 100vh;
-  overflow: hidden;
-  width: 100%;
-  position: fixed;
 }

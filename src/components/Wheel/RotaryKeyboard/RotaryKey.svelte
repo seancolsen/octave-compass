@@ -26,7 +26,7 @@
   <KeyLabelSet {note} {interval}
     class='key-label-highlight'
     isHighlight={true}
-    opacity={isPlay ? ($light) : (isActive ? 1 - $editVsPlay : 0)}
+    opacity={$light}
   />
   <KeyLabelSet {note} {interval}
     class='key-label'

@@ -26,9 +26,8 @@
 </g>
 
 <style>
-  rect { fill: #DDD; stroke: #BBB; stroke-width: 2px; }
-  rect.isChecked { fill: white; }
+  rect { fill: white; stroke: #BBB; stroke-width: 2px; }
   rect.isClickable { stroke: #666; }
-  text { font-size: 25px; text-anchor: middle; fill: #BBB; }
+  text { font-size: 28px; text-anchor: middle; fill: #BBB; }
   text.isClickable { fill: black; }
 </style>

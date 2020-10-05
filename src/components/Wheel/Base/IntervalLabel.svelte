@@ -10,7 +10,9 @@
   export {className as class};
   export let interval: number;
   export let label: string;
-  export let active: boolean;
+  export let isActive: boolean;
+  export let isHighlight = false as boolean;
+  export let opacity = 1;
 
   $: id = `interval-label-${interval}`;
   $: isOnBottom = (() => {
@@ -20,7 +22,11 @@
 
 </script>
 
-<g class={className}>
+<g {opacity}
+  class={className}
+  class:isHighlight
+  filter={isHighlight ? "url('#blur')" : 'none'}
+>
   <Arc
     class='text-path-arc'
     {id}
@@ -28,7 +34,7 @@
     startInterval={interval + (arcSpan * (isOnBottom ? 1 : -1))}
     endInterval={interval + (arcSpan * (isOnBottom ? -1 : 1))}
   />
-  <text class:active text-anchor={'middle'}>
+  <text class:isActive text-anchor={'middle'}>
     <textPath href={`#${id}`} startOffset={'50%'}>
       {label}
     </textPath>
@@ -36,7 +42,8 @@
 </g>
 
 <style>
-  text { font-size: 30px; fill: #666; }
-  text.active { fill: #555; }
+  text { font-size: 30px; fill: #999; }
+  text.isActive { fill: #222;}
+  g.isHighlight text { fill: #FFF000; stroke: #FFF000; stroke-width: 20px; }
   g > :global(.text-path-arc) { fill: none; stroke: none; }
 </style>

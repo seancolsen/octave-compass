@@ -38,30 +38,29 @@
 
 
 <style>
+  :global(body),
+  #app,
+  #layout {height: 100vh; overflow: hidden; width: 100%; position: fixed;}
+  :global(body) { background: #DDD; }
 
-#layout {
-  position: relative;
-}
+  #layout { position: relative; }
 
-#marquee {
-  position: relative;
-  left: 20%;
-  top: -2vmax;
-  width: 60%;
-  height: 8vmax;
-  padding-top: 2vmax;
-  background: #AAA;
-  border: solid #CCC 0.3vmax;
-  /* box-shadow: 0 0 20px 0 black inset; */
-  border-radius: 0 0 2vmax 2vmax;
-}
+  #marquee {
+    position: relative;
+    left: 20%;
+    top: -2vmax;
+    width: 60%;
+    height: 8vmax;
+    padding-top: 2vmax;
+    background: #DDD;
+    border-radius: 0 0 2vmax 2vmax;
+  }
 
-#edit-vs-play-togger {
-  position: absolute;
-  top: 0vmax;
-  left: 0vmax;
-  height: 14vmax;
-  width: 11vmax;
-}
-
+  #edit-vs-play-togger {
+    position: absolute;
+    top: 0vmax;
+    left: 0vmax;
+    height: 12vmax;
+    width: 12vmax;
+  }
 </style>

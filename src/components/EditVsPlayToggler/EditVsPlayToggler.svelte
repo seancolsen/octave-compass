@@ -37,9 +37,12 @@
   }
 </script>
   
-<div class='container' on:click={toggleWithTransition}>
+<div class='container'
+  on:mousedown|preventDefault|stopPropagation={toggleWithTransition}
+  on:touchstart|preventDefault|stopPropagation={toggleWithTransition}
+>
   <TogglerChoice label='Edit Scale' isActive={isEdit} />
-  <div class='or'>or</div>
+  <div class='or'><div class='hr' /><span>or</span></div>
   <TogglerChoice label='Play Notes' isActive={isPlay} />
 </div>
 
@@ -49,6 +52,31 @@
     height: 100%;
     border-radius: 0 0 2vmax 0;
     background: #DDD;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 1vmax;
   }
-  .or {width: 100%; text-align: center; position: absolute;}
+  .or {
+    text-align: center;
+    font-style: italic;
+    position: relative;
+  }
+  .hr {
+    border-top: solid #BBB 0.1vmax;
+    position: absolute;
+    z-index: 0;
+    top: 1.6vmax;
+    left: 10%;
+    height: 0.5vmax;
+    width: 80%;
+  }
+  .or span {
+    display: inline-block;
+    padding: 0 1vmax;
+    position: relative;
+    z-index: 1;
+    background: #DDD;
+    color: #666;
+  }
 </style>

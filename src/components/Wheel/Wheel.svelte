@@ -75,9 +75,9 @@
     text-rendering: optimizeLegibility;
   }
   svg > :global(.intervalSetPolygon_play) {
-    fill: #AAA;
-    stroke: #CCC;
-    stroke-width: 3px;
+    fill: #BBB;
+    stroke: white;
+    stroke-width: 5px;
   }
   .center-dot { fill: white; stroke: none; }
   #wheel.isRotatable :global(#scale) {

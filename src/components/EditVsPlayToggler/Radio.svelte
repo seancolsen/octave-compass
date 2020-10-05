@@ -1,9 +1,7 @@
 <script lang="ts">
-
   let className = undefined as string | undefined;
   export {className as class};
   export let isActive: boolean;
-
 </script>
 
 <svg viewBox='-100 -100 200 200' class={className}>
