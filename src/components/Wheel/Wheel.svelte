@@ -3,8 +3,10 @@
   import {RotatorStores} from './Rotator.svelte';
   export const scaleRotatorStores = new RotatorStores();
   export const keyboardRotatorStores = new RotatorStores();
+  export const scaleIsRotating = scaleRotatorStores.isRotating;
+  export const keyboardIsRotating = keyboardRotatorStores.isRotating;
   export const somethingIsRotating = derived(
-    [scaleRotatorStores.isRotating, keyboardRotatorStores.isRotating],
+    [scaleIsRotating, keyboardIsRotating],
     ([$s, $k]) => $s || $k
   );
 </script>
@@ -20,6 +22,7 @@
   import Tips from './Tips.svelte';
   import BlurFilter from './BlurFilter.svelte';
   import {getStore} from '../../store';
+import CurrentRotationStatus from './CurrentRotationStatus.svelte';
   const {
     editVsPlay,
     intervalSet,
@@ -32,7 +35,7 @@
    * all other numerical measurements within the SVG should be considered
    * relative to this value.
    */
-  const boxSize = 1000;
+  const boxSize = 1200;
   $: isRotatable = $editVsPlay === 0;
 </script>
 
@@ -62,12 +65,16 @@
       <ScaleComponent/>
     </Rotator>
     <circle cx={0} cy={0} r={5} class='center-dot' opacity={1 - $editVsPlay} />
+    <CurrentRotationStatus />
     <!-- <Tips /> -->
   </svg>
 </div>
 
 <style>
-  #wheel {width: 100%;}
+  #wheel {
+    width: 100%;
+    
+  }
   svg {
     display: inline-block;
     max-width: 100%;
@@ -106,4 +113,5 @@
      86% {transform: rotate( 0.5deg);}
     100% {transform: rotate( 0.0deg);}
   }
+
 </style>

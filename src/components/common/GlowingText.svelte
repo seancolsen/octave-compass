@@ -37,7 +37,7 @@
 
 <style>
   .glowing-text { position: relative; }
-  .glow { position: absolute; visibility: hidden; z-index: 0; }
+  .glow { position: absolute; visibility: hidden; z-index: 0; width: 100%; }
   .glowing-text.isGlowing .glow {visibility: visible;}
   .text { position: relative; z-index: 1; }
   span {display: inline-block;}

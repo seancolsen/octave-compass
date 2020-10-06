@@ -2,9 +2,9 @@
   import { Angle } from "../../../Utils/Geometry/Angle";
   import type { IntervalSet } from "../../../Utils/Music/IntervalSet";
   import { IntervalSetFactory } from "../../../Utils/Music/IntervalSetFactory";
-  import GlowingText from "../../common/GlowingText.svelte";
 
   export let intervalSet: IntervalSet;
+  export let selectedOrdinal = undefined as number | undefined;
 
   $: ordinalLabels = intervalSet.ordinals.map(ordinal => ({
     ordinal,
@@ -16,18 +16,13 @@
 {#each ordinalLabels as {ordinal, label}}
   <foreignObject
     x='-150'
-    y='-530'
+    y='-650'
     width='300'
     height='220'
     transform={`rotate(${Angle.iToD(ordinal)})`}
   >
-    <div>
-      <GlowingText
-        text={label}
-        blurRadius={0.5}
-        spreadRadius={1}
-        glowColor='#DDD'
-      />
+    <div class:isSelected={ordinal === selectedOrdinal}>
+      {label}
     </div>
   </foreignObject>
 {/each}
@@ -37,6 +32,12 @@
     height: 100%;
     padding: 50px;
     text-align: center;
-    font-size: 30px;
+    font-size: 40px;
+    font-style: italic;
+    color: #999;
+  }
+  div.isSelected {
+    font-weight: bold;
+    color: black;
   }
 </style>

@@ -5,8 +5,10 @@
   import SwarmOfChords from './SwarmOfChords.svelte';
   import ModeLabels from './ModeLabels.svelte';
   import {getStore} from '../../../store';
+import { Scalar } from '../../../Utils/Math/Scalar';
   const {editVsPlay, intervalSet, selectedChords} = getStore();
   const scaleIsRotating = scaleRotatorStores.isRotating;
+  const rotatorCurrentDetent = scaleRotatorStores.currentDetent;
   
   $: ordinalChordSets = OrdinalChordSet.arrayFromIntervalSet(
     $intervalSet,
@@ -23,7 +25,10 @@
   />
   <SwarmOfChords {ordinalChordSets} />
   {#if $scaleIsRotating}
-    <ModeLabels intervalSet={$intervalSet} />
+    <ModeLabels
+      intervalSet={$intervalSet}
+      selectedOrdinal={Scalar.wrapToOctave(-$rotatorCurrentDetent)}
+    />
   {/if}
 </g>
 

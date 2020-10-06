@@ -1,11 +1,10 @@
 <script lang="ts">
   import Marquee from "./Marquee.svelte";
-  import Wheel from "./Wheel/Wheel.svelte";
+  import Wheel, {scaleIsRotating} from "./Wheel/Wheel.svelte";
   import Keyboard from './Keyboard/Keyboard.svelte';
   import ChordSelection from './ChordSelection/ChordSelection.svelte';
   import EditVsPlayToggler from './EditVsPlayToggler/EditVsPlayToggler.svelte';
   import LinearKeyboard from './LinearKeyboard/LinearKeyboard.svelte';
-
   import {getStore} from '../store';
   const {editVsPlay} = getStore();
 
@@ -15,7 +14,9 @@
 <div id='app' className="App">
   <div id='layout'>
     <div id='marquee'>
-      <Marquee showMore={() => {modal = 'marquee'}}/>
+      {#if !$scaleIsRotating}
+        <Marquee showMore={() => {modal = 'marquee'}}/>
+      {/if}
     </div>
     <div id='edit-vs-play-togger'>
       <EditVsPlayToggler />
