@@ -37,7 +37,7 @@
   }
 </script>
   
-<div class='container'
+<div class='edit-vs-play-toggler'
   on:mousedown|preventDefault|stopPropagation={toggleWithTransition}
   on:touchstart|preventDefault|stopPropagation={toggleWithTransition}
 >
@@ -47,7 +47,7 @@
 </div>
 
 <style>
-  .container {
+  .edit-vs-play-toggler {
     cursor: pointer;
     height: 100%;
     border-radius: 0 0 2vmax 0;
@@ -57,10 +57,15 @@
     flex-direction: column;
     padding: 1vmax;
   }
+  .edit-vs-play-toggler > :global(.toggler-choice) {
+    position: relative;
+    z-index: 1;
+  }
   .or {
     text-align: center;
     font-style: italic;
     position: relative;
+    z-index: 0;
   }
   .hr {
     border-top: solid #BBB 0.1vmax;
