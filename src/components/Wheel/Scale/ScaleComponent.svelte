@@ -1,11 +1,13 @@
 <script lang="ts">
   import { OrdinalChordSet } from '../../../Utils/Music/OrdinalChordSet';
+  import {scaleRotatorStores} from './../Wheel.svelte';
   import IntervalSetPolygon from '../../common/IntervalSetPolygon.svelte';
   import SwarmOfChords from './SwarmOfChords.svelte';
   import ModeLabels from './ModeLabels.svelte';
   import {getStore} from '../../../store';
   const {editVsPlay, intervalSet, selectedChords} = getStore();
-
+  const scaleIsRotating = scaleRotatorStores.isRotating;
+  
   $: ordinalChordSets = OrdinalChordSet.arrayFromIntervalSet(
     $intervalSet,
     $selectedChords
@@ -20,7 +22,9 @@
     opacity={1 - $editVsPlay}
   />
   <SwarmOfChords {ordinalChordSets} />
-  <ModeLabels intervalSet={$intervalSet} />
+  {#if $scaleIsRotating}
+    <ModeLabels intervalSet={$intervalSet} />
+  {/if}
 </g>
 
 <style>
