@@ -32,7 +32,8 @@
     height: 100%;
     padding: 50px;
     text-align: center;
-    font-size: 40px;
+    font-size: 35px;
+    line-height: 1em;
     font-style: italic;
     color: #999;
   }

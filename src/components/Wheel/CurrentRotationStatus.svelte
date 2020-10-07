@@ -5,12 +5,12 @@
   import GlowingText from '../common/GlowingText.svelte';
   import { Note } from '../../Utils/Music/Note';
   import {scaleRotatorStores, keyboardRotatorStores} from './Wheel.svelte';
+  import { Scale } from '../../Utils/Music/Scale';
   const scaleIsRotating = scaleRotatorStores.isRotating;
   const scaleCurrentDetent = scaleRotatorStores.currentDetent;
   const keyboardIsRotating = keyboardRotatorStores.isRotating;
   const keyboardCurrentDetent = keyboardRotatorStores.currentDetent;
   const {tonalCenter, intervalSet, noteSet} = getStore();
-
 
   $: transposeTarget = (() => {
     const noteId = Scalar.wrapToOctave($tonalCenter - $keyboardCurrentDetent);
@@ -18,9 +18,13 @@
     return note.guaranteedName.unicode;
   })();
 
-  $: modeShiftTarget = IntervalSetFactory.fromIntervalSet(
-    $intervalSet.shift($scaleCurrentDetent)
-  ).displayName
+  $: modeShiftTarget = (() => {
+    const targetIntervalSet = IntervalSetFactory.fromIntervalSet(
+      $intervalSet.shift($scaleCurrentDetent)
+    );
+    return targetIntervalSet.displayName
+      + (targetIntervalSet instanceof Scale ? ' mode' : '');
+  })();
 
   const glowProps = {
     glowColor: '#E1E1E1',
@@ -42,7 +46,7 @@
 
       {#if $scaleIsRotating}
         <div class='status-item scale'>
-          <GlowingText text={`Shift to ${modeShiftTarget} mode`} {...glowProps}/>
+          <GlowingText text={`Shift to ${modeShiftTarget}`} {...glowProps}/>
         </div>
       {/if}
 
@@ -58,6 +62,7 @@
     flex-direction: column;
     justify-content: center;
     font-size: 35px;
+    line-height: 1em;
     text-align: center;
     margin: 100px;
     font-weight: bold;

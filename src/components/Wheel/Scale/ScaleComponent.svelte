@@ -5,7 +5,7 @@
   import SwarmOfChords from './SwarmOfChords.svelte';
   import ModeLabels from './ModeLabels.svelte';
   import {getStore} from '../../../store';
-import { Scalar } from '../../../Utils/Math/Scalar';
+  import { Scalar } from '../../../Utils/Math/Scalar';
   const {editVsPlay, intervalSet, selectedChords} = getStore();
   const scaleIsRotating = scaleRotatorStores.isRotating;
   const rotatorCurrentDetent = scaleRotatorStores.currentDetent;
