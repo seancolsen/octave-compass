@@ -6,61 +6,42 @@
   import EditVsPlayToggler from './EditVsPlayToggler/EditVsPlayToggler.svelte';
   import LinearKeyboard from './LinearKeyboard/LinearKeyboard.svelte';
   import {getStore} from '../store';
+  import { getContext } from "svelte";
   const {editVsPlay} = getStore();
-
-  let modal = null as 'marquee' | null;
+  const {open} = getContext('simple-modal');
 </script>
 
-<div id='app' className="App">
-  <div id='layout'>
-    <div id='marquee'>
-      {#if !$scaleIsRotating}
-        <Marquee showMore={() => {modal = 'marquee'}}/>
-      {/if}
-    </div>
-    <div id='edit-vs-play-togger'>
-      <EditVsPlayToggler />
-    </div>
-    <Keyboard isPlayable={$editVsPlay === 1}>
-      <Wheel/>
-      {#if $editVsPlay === 0}<ChordSelection />{/if}
-      {#if $editVsPlay === 1}<LinearKeyboard />{/if}
-    </Keyboard>
-  </div>
-  <div id='modals'>
-    <!-- <Modal
-      open={modal === 'marquee'}
-      onClose={() => setModal(null)}
-    >
-      <Marquee isWithinModal={true}/>
-    </Modal> -->
-  </div>
-</div>
+<div id='layout'>
 
+  <div id='toolbar'>
+    <EditVsPlayToggler />
+    <!-- <button on:click={}>Search Scales</button> -->
+    <button on:click={() => open(ChordSelection)}>Choose Chords</button>
+  </div>
+  
+  <div id='marquee'>
+    {#if !$scaleIsRotating}
+      <Marquee showMore={() => {}}/>
+    {/if}
+  </div>
+
+  <Keyboard isPlayable={$editVsPlay === 1}>
+    <Wheel/>
+    <LinearKeyboard />
+  </Keyboard>
+
+</div>
 
 <style>
   :global(body),
-  #app,
   #layout {height: 100vh; overflow: hidden; width: 100%; position: fixed;}
   :global(body) { background: #DDD; }
 
-  #layout { position: relative; }
-
-  #marquee {
-    position: relative;
-    left: 20%;
-    top: -2vmax;
-    width: 60%;
-    height: 8vmax;
-    padding-top: 2vmax;
-    background: #DDD;
-    border-radius: 0 0 2vmax 2vmax;
+  #toolbar {
+    display: flex;
   }
 
-  #edit-vs-play-togger {
-    position: absolute;
-    top: 0vmax;
-    left: 0vmax;
+  #toolbar > :global(.edit-vs-play-togger) {
     height: 12vmax;
     width: 12vmax;
   }

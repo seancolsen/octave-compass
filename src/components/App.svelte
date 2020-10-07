@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Modal from 'svelte-simple-modal';
   import Layout from "./Layout.svelte";
   import RouteProcessor from "./RouteProcessor.svelte";
   import { setStoreInContext } from '../store';
@@ -8,4 +9,6 @@
 </script>
 
 <RouteProcessor/>
-<Layout/>
+<Modal>
+  <Layout/>
+</Modal>
