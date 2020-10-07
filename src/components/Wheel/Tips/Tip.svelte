@@ -1,43 +1,49 @@
 <script lang='ts'>
-  export let centerX: number;
-  export let centerY: number;
-  export let targetX: number;
-  export let targetY: number;
+  import GlowingText from "../../common/GlowingText.svelte";
+
+  interface Point {x: number, y: number,}
+
+  export let text: string;
+  export let center: Point;
   export let width: number;
   export let height: number;
+  export let targets: Point[];
 
-  $: linePoints = `M ${centerX}, ${centerY} L ${targetX} ${targetY}`;
 </script>
 
-<circle cx={targetX} cy={targetY} r='6' />
-<path d={linePoints} />
-<foreignObject
-  x={centerX - width/2} y={centerY - width/2}
-  width={width} height={height}
->
-  <div class='container'>
-    <div class='text'><slot /></div>
-  </div>
-</foreignObject>
+<g>
+  {#each targets as target}
+    <circle cx={target.x} cy={target.y} r='6' />
+    <path d={`M ${center.x}, ${center.y} L ${target.x} ${target.y}`} />
+  {/each}
+  <foreignObject
+    x={center.x - width/2} y={center.y - width/2}
+    width={width} height={height}
+  >
+    <div class='container'>
+      <GlowingText {text} glowColor='#DDD' spreadRadius={0.4} blurRadius={0.2} />
+    </div>
+  </foreignObject>
+</g>
 
 <style>
+  g {pointer-events: none;}
   .container {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     width: 100%;
     font-size: 35px;
     line-height: 1em;
     text-align: center;
     color: #329cd0;
     font-style: italic;
-    pointer-events: none;
+    
   }
-  .text {
-    display: inline-block;
-    padding: 15px;
-    background: #DDD;
+  .container > :global(.glowing-text) {
+    margin: 1em;
   }
   path {
     fill: none;

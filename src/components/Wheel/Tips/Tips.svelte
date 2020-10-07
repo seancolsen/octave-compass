@@ -5,18 +5,21 @@
 </script>
 
 <g opacity={1 - $editVsPlay}>
-  <Tip centerX={-400} centerY={-420}
-    targetX={-240} targetY={-240} width={200} height={200} >
-    Rotate to transpose
-  </Tip>
+  <Tip
+    text='Rotate to transpose'
+    center={{x: -400, y: -420}} width={200} height={200}
+    targets={[{x: -240, y: -240}]}
+  />
 
-  <Tip centerX={400} centerY={-420}
-    targetX={100} targetY={-120} width={220} height={200} >
-    Rotate to shift modes
-  </Tip>
+  <Tip
+    text='Rotate to shift modes'
+    center={{x: 400, y: -400}} width={220} height={200}
+    targets={[{x: 100, y: -120}]}
+  />
 
-  <Tip centerX={-410} centerY={420}
-    targetX={-410} targetY={280} width={200} height={200} >
-    Click to toggle intervals
-  </Tip>
+  <Tip
+    text='Click to toggle intervals'
+    center={{x: -410, y: 400}} width={200} height={200}
+    targets={[{x: -435, y: 255}, {x: -258, y: 435}]}
+  />
 </g>
