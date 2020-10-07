@@ -5,6 +5,10 @@
   import Key from '../../Keyboard/Key.svelte';
   import {getStore} from '../../../store';
   import {useLight} from '../../Lighting/Light';
+  import {keyboardRotatorStores} from '../Wheel.svelte';
+import { Scalar } from '../../../Utils/Math/Scalar';
+
+  const keyboardCurrentDetent = keyboardRotatorStores.currentDetent;
   const {editVsPlay, tonalCenter} = getStore();
 
   export let note: Note;
@@ -13,9 +17,12 @@
   const light = useLight([`note-${note.id}`]);
   
   $: isEdit = $editVsPlay === 0;
-  $: isPlay = $editVsPlay === 1;
   $: isBlack = note.color === 'black';
   $: interval = note.id - $tonalCenter;
+  $: keyLabelOpacity = isActive
+    ? 1 - 0.1 * $editVsPlay
+    : Scalar.wrapToOctave($tonalCenter - $keyboardCurrentDetent) === note.id ? 1
+    : 0.25;
 
 </script>
 
@@ -31,7 +38,7 @@
   <KeyLabelSet {note} {interval}
     class='key-label'
     isHighlight={false}
-    opacity={isActive ? 1 - 0.1 * $editVsPlay : 0.25}
+    opacity={keyLabelOpacity}
     hasBackground={$editVsPlay !== 1 || !isActive}
     lightIsOn={!!$light}
   />
