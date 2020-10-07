@@ -8,7 +8,7 @@
 <div class='toggler-choice' class:isActive >
   <Radio class='radio' {isActive} />
   <div class='label'>
-    <GlowingText isGlowing={isActive} text={label} glowColor='#fff000' />
+    <GlowingText isGlowing={isActive} text={label} />
   </div>
 </div>
 
