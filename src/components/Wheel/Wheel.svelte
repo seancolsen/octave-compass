@@ -19,10 +19,10 @@
   import Rotator from './Rotator.svelte';
   import ShadowFilter from './ShadowFilter.svelte';
   import IntervalSetPolygon from '../common/IntervalSetPolygon.svelte';
-  import Tips from './Tips.svelte';
+  import Tips from './Tips/Tips.svelte';
   import BlurFilter from './BlurFilter.svelte';
   import {getStore} from '../../store';
-import CurrentRotationStatus from './CurrentRotationStatus.svelte';
+  import CurrentRotationStatus from './CurrentRotationStatus.svelte';
   const {
     editVsPlay,
     intervalSet,
@@ -66,7 +66,7 @@ import CurrentRotationStatus from './CurrentRotationStatus.svelte';
     </Rotator>
     <circle cx={0} cy={0} r={5} class='center-dot' opacity={1 - $editVsPlay} />
     <CurrentRotationStatus />
-    <!-- <Tips /> -->
+    {#if !$somethingIsRotating}<Tips />{/if}
   </svg>
 </div>
 
