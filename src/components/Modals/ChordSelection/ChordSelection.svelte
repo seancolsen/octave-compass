@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { ChordSet } from "../../Utils/Music/ChordSet";
+  import { ChordSet } from "../../../Utils/Music/ChordSet";
   import ChordChoice from './ChordChoice.svelte';
-  import {getStore} from '../../store';
+  import {getStore} from '../../../store';
   const {intervalSet, selectedChords} = getStore();
 
   const showAll = () => selectedChords.set(ChordSet.fromAllChords);

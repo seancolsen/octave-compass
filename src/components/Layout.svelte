@@ -2,11 +2,13 @@
   import Marquee from "./Marquee.svelte";
   import Wheel, {scaleIsRotating} from "./Wheel/Wheel.svelte";
   import Keyboard from './Keyboard/Keyboard.svelte';
-  import ChordSelection from './ChordSelection/ChordSelection.svelte';
+  import ChordSelection from './Modals/ChordSelection/ChordSelection.svelte';
+  import Search from './Modals/Search/Search.svelte';
   import EditVsPlayToggler from './EditVsPlayToggler/EditVsPlayToggler.svelte';
   import LinearKeyboard from './LinearKeyboard/LinearKeyboard.svelte';
   import {getStore} from '../store';
   import { getContext } from "svelte";
+  import Button from "./common/Button.svelte";
   const {editVsPlay} = getStore();
   const {open} = getContext('simple-modal');
 </script>
@@ -15,8 +17,8 @@
 
   <div id='toolbar'>
     <EditVsPlayToggler />
-    <!-- <button on:click={}>Search Scales</button> -->
-    <button on:click={() => open(ChordSelection)}>Choose Chords</button>
+    <Button on:click={() => open(Search)}>Search Scales</Button>
+    <Button on:click={() => open(ChordSelection)}>Choose Chords</Button>
   </div>
   
   <div id='marquee'>
