@@ -14,8 +14,18 @@
   import type { IntervalSet } from '../../../Utils/Music/IntervalSet';
   import { Scale } from '../../../Utils/Music/Scale';
   import { Chord } from '../../../Utils/Music/Chord';
+  import { getStore } from '../../../store';
+  import { getContext } from 'svelte';
 
+  const {intervalSet} = getStore();
+  const {close} = getContext('simple-modal');
+  
   let query = ''; 
+
+  function select(is: IntervalSet) {
+    intervalSet.smartUpdate(_ => is);
+    close();
+  }
 
   $: searchTerms = query.split(' ');
 
@@ -24,18 +34,15 @@
     intervalSet: IntervalSetFactory.fromBinary(intervalSetBinary),
   } as Result));
 
-  $: results = (() => {
-    if (query === '') {
-      return pool;
-    }
-    return pool.filter(({name}) => 
-      searchTerms.every(term => name.search(new RegExp(term, 'i')) !== -1)
-    );
-  })();
-
-  $: countUniqueResultsMatching = (matcher: (result: Result) => boolean) => (
-    new Set(results.filter(r => matcher(r))).size
+  $: results = pool.filter(({name}) => 
+    searchTerms.every(term => name.search(new RegExp(term, 'i')) !== -1)
   );
+
+  $: countResultsMatching = (matcher: (result: Result) => boolean) => (
+    new Set(results.filter(r => matcher(r)).map(r => r.intervalSet.binary)).size
+  );
+  $: countScales = countResultsMatching(r => r.intervalSet instanceof Scale);
+  $: countChords = countResultsMatching(r => r.intervalSet instanceof Chord);
 
 </script>
 
@@ -45,17 +52,13 @@
 
 <div class='stats'>
   Found: 
-  <WithPlural let:s let:count
-    count={countUniqueResultsMatching(r => r.intervalSet instanceof Scale)}
-  >{count} scale{s}</WithPlural>
+  <WithPlural let:s let:count count={countScales}>{count} scale{s}</WithPlural>
   and
-  <WithPlural let:s let:count
-    count={countUniqueResultsMatching(r => r.intervalSet instanceof Chord)}
-  >{count} chord{s}</WithPlural>
+  <WithPlural let:s let:count count={countChords}>{count} chord{s}</WithPlural>
 </div>
 
 <div class='results'>
   {#each results as result (result.name)}
-    <ResultRow {result} />
+    <ResultRow {result} on:click={() => select(result.intervalSet)} />
   {/each}
 </div>

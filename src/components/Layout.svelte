@@ -11,14 +11,16 @@
   import Button from "./common/Button.svelte";
   const {editVsPlay} = getStore();
   const {open} = getContext('simple-modal');
+  const modal = (component: any) => open(component, {}, {styleWindow: {}});
+
 </script>
 
 <div id='layout'>
 
   <div id='toolbar'>
     <EditVsPlayToggler />
-    <Button on:click={() => open(Search)}>Search Scales</Button>
-    <Button on:click={() => open(ChordSelection)}>Choose Chords</Button>
+    <Button on:click={() => modal(Search)}>Search Scales</Button>
+    <Button on:click={() => modal(ChordSelection)}>Choose Chords</Button>
   </div>
   
   <div id='marquee'>
