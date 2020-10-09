@@ -16,7 +16,7 @@
   );
 </script>
 
-<g class:isEdit={$editVsPlay === 0} id='scale'>
+<g class:isEdit={$editVsPlay === 0} class='scale-component'>
   <IntervalSetPolygon
     class='background'
     intervalSet={$intervalSet}

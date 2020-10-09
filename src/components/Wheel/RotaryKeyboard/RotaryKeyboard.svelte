@@ -8,7 +8,7 @@
 </script>
 
 <g
-  id='rotary-keyboard'
+  class='rotary-keyboard'
   filter="url('#shadow-when-edit')"
   class:isEdit={$editVsPlay === 0}
  >

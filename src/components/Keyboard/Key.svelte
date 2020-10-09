@@ -113,6 +113,7 @@
 -->
 {#if isInsideSvg}
   <g
+    class='key'
     class:isActive
     bind:this={ref}
     on:mousedown={handleMouseBegin}
@@ -130,6 +131,7 @@
     Because https://github.com/sveltejs/svelte/issues/2324
   -->
   <div
+    class='key'
     class:isActive
     bind:this={ref}
     on:mousedown={handleMouseBegin}

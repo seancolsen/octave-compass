@@ -12,7 +12,7 @@
 </script>
 
 <div
-  class='key'
+  class='linear-key'
   class:isPressed={$light === 1}
   class:isBlack={pitch.note.color === 'black'}
   class:isTonalCenter={pitch.note.id === $tonalCenter}
@@ -27,7 +27,7 @@
 </div>
 
 <style>
-  .key {
+  .linear-key {
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: 6vmax;
@@ -38,9 +38,9 @@
     position: relative;
   }
 
-  .key.isTonalCenter {height: 70%}
+  .linear-key.isTonalCenter {height: 70%}
 
-  .key > :global(*),
+  .linear-key > :global(*),
   .touch-receptor {
     height: 100%;
     width: 100%;
@@ -55,7 +55,7 @@
     filter: blur(0.6vmax);
   }
 
-  .key.isPressed .shadow {visibility: hidden;}
+  .linear-key.isPressed .shadow {visibility: hidden;}
 
   .touch-receptor {
     border: 0.4vmax rgba(0, 0, 0, 0);
@@ -64,9 +64,9 @@
     background: #EEE;
   }
 
-  .key.isBlack .touch-receptor {background: #222; color: white;}
+  .linear-key.isBlack .touch-receptor {background: #222; color: white;}
   
-  .key.isPressed :global(*) {z-index: 0;}
+  .linear-key.isPressed :global(*) {z-index: 0;}
   
   .pitch-name, .light {
     display: inline-block;
@@ -85,7 +85,7 @@
 
   .pitch-name {position: relative;} /* To get z stacking on top of .light */
   
-  .key.isPressed .light {visibility: visible;}
+  .linear-key.isPressed .light {visibility: visible;}
   
-  .key.isPressed.isBlack .pitch-name {color: black;}
+  .linear-key.isPressed.isBlack .pitch-name {color: black;}
 </style>

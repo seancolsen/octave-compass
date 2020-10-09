@@ -23,10 +23,13 @@
   import BlurFilter from './BlurFilter.svelte';
   import {getStore} from '../../store';
   import CurrentRotationStatus from './CurrentRotationStatus.svelte';
+  import { afterUpdate } from 'svelte';
+  import { setupKeyboard } from '../Keyboard/Keyboard';
   const {
     editVsPlay,
     intervalSet,
     tonalCenter,
+    keyElements
   } = getStore();
 
   /**
@@ -37,9 +40,19 @@
    */
   const boxSize = 1200;
   $: isRotatable = $editVsPlay === 0;
+
+  let ref: Element;
+  let destroyKeyboard = () => {};
+  
+  afterUpdate(() => {
+    destroyKeyboard();
+    if ($editVsPlay === 1) {
+      destroyKeyboard = setupKeyboard(ref, keyElements);
+    }
+  });
 </script>
 
-<div id='wheel' class:isRotatable >
+<div class='wheel' class:isRotatable bind:this={ref} >
   <svg viewBox={`-${boxSize/2} -${boxSize/2} ${boxSize} ${boxSize}`}>
     <ShadowFilter id='shadow-when-edit' opacity={1 - $editVsPlay} />
     <ShadowFilter id='shadow-when-play' opacity={$editVsPlay} />
@@ -71,10 +84,6 @@
 </div>
 
 <style>
-  #wheel {
-    width: 100%;
-    
-  }
   svg {
     display: inline-block;
     max-width: 100%;
@@ -82,15 +91,15 @@
     text-rendering: optimizeLegibility;
   }
   svg > :global(.intervalSetPolygon_play) {
-    fill: #BBB;
-    stroke: white;
-    stroke-width: 5px;
+    fill: #999;
+    stroke: #e8e8e8;
+    stroke-width: 3px;
   }
   .center-dot { fill: white; stroke: none; }
-  #wheel.isRotatable :global(#scale) {
+  .wheel.isRotatable :global(.scale-component) {
     animation: oscillate 700ms ease-in-out;
   }
-  #wheel.isRotatable :global(#rotary-keyboard) {
+  .wheel.isRotatable :global(.rotary-keyboard) {
     animation: oscillate-reverse 700ms ease-in-out;
   }
   @keyframes oscillate {

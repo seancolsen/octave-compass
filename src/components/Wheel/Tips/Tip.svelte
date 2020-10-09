@@ -21,7 +21,11 @@
     width={width} height={height}
   >
     <div class='container'>
-      <GlowingText {text} glowColor='#DDD' spreadRadius={0.4} blurRadius={0.2} />
+      <GlowingText {text}
+        glowColor='#C7C7C7'
+        spreadRadius={0.4}
+        blurRadius={0.2}
+      />
     </div>
   </foreignObject>
 </g>
@@ -38,7 +42,7 @@
     font-size: 35px;
     line-height: 1em;
     text-align: center;
-    color: #329cd0;
+    color: #1e88a8;
     font-style: italic;
     
   }
@@ -47,11 +51,11 @@
   }
   path {
     fill: none;
-    stroke: #329cd0;
+    stroke: #1e88a8;
     stroke-width: 3px;
   }
   circle {
-    fill: #329cd0;
+    fill: #1e88a8;
     stroke: none;
   }
 </style>

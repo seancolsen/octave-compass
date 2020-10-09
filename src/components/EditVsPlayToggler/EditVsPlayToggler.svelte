@@ -51,10 +51,10 @@
     cursor: pointer;
     height: 100%;
     border-radius: 0 0 2vmax 0;
-    background: #DDD;
+    /* background: #DDD; */
     display: flex;
     justify-content: space-between;
-    flex-direction: column;
+    flex-direction: row;
     padding: 1vmax;
   }
   .edit-vs-play-toggler > :global(.toggler-choice) {
