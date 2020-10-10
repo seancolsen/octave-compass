@@ -24,7 +24,7 @@
   </div>
 
   <div id='center'>
-    <!-- <div id='marquee'>{#if !$scaleIsRotating}<Marquee />{/if}</div> -->
+    <div id='marquee'>{#if !$scaleIsRotating}<Marquee />{/if}</div>
     <div id='wheel'><Wheel/></div>
   </div>
 
@@ -78,13 +78,13 @@
   }
 
   #marquee {
-    height: 5em;
+    height: 9vh;
     overflow: hidden;
   }
 
   #wheel {
     width: 120%;
-    max-height: 120%;
+    max-height: calc(120% - 9vh); /* #marquee height */
     margin-left: -10%;
     margin-top: -10%;
     margin-bottom: -10%;
