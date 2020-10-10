@@ -41,7 +41,7 @@
   const boxSize = 1200;
   $: isRotatable = $editVsPlay === 0;
 
-  let ref: Element;
+  let ref: SVGElement;
   let destroyKeyboard = () => {};
   
   afterUpdate(() => {
@@ -52,45 +52,46 @@
   });
 </script>
 
-<div class='wheel' class:isRotatable bind:this={ref} >
-  <svg viewBox={`-${boxSize/2} -${boxSize/2} ${boxSize} ${boxSize}`}>
-    <ShadowFilter id='shadow-when-edit' opacity={1 - $editVsPlay} />
-    <ShadowFilter id='shadow-when-play' opacity={$editVsPlay} />
-    <BlurFilter bounds={3} size={8} id='blur' />
-    <Base/>
-    <IntervalSetPolygon
-      intervalSet={$intervalSet}
-      radius={300}
-      class='intervalSetPolygon_play'
-      opacity={$editVsPlay}
-    />
-    <Rotator {isRotatable}
-      rotatorStores={keyboardRotatorStores}
-      onRotationRest={r => {tonalCenter.shift(r)}}
-    >
-      <RotaryKeyboard />
-    </Rotator>
-    <Rotator {isRotatable}
-      rotatorStores={scaleRotatorStores}
-      detents={$intervalSet.ordinals.map((o) => Scalar.wrapToOctave(-o))}
-      onRotationRest={r => {intervalSet.shift(r)}}
-    >
-      <ScaleComponent/>
-    </Rotator>
-    <circle cx={0} cy={0} r={5} class='center-dot' opacity={1 - $editVsPlay} />
-    <CurrentRotationStatus />
-    {#if !$somethingIsRotating}<Tips />{/if}
-  </svg>
-</div>
+<svg
+  class='wheel'
+  class:isRotatable
+  bind:this={ref}
+  viewBox={`-${boxSize/2} -${boxSize/2} ${boxSize} ${boxSize}`}
+>
+  <ShadowFilter id='shadow-when-edit' opacity={1 - $editVsPlay} />
+  <ShadowFilter id='shadow-when-play' opacity={$editVsPlay} />
+  <BlurFilter bounds={3} size={8} id='blur' />
+  <Base/>
+  <IntervalSetPolygon
+    intervalSet={$intervalSet}
+    radius={300}
+    class='intervalSetPolygon_play'
+    opacity={$editVsPlay}
+  />
+  <Rotator {isRotatable}
+    rotatorStores={keyboardRotatorStores}
+    onRotationRest={r => {tonalCenter.shift(r)}}
+  >
+    <RotaryKeyboard />
+  </Rotator>
+  <Rotator {isRotatable}
+    rotatorStores={scaleRotatorStores}
+    detents={$intervalSet.ordinals.map((o) => Scalar.wrapToOctave(-o))}
+    onRotationRest={r => {intervalSet.shift(r)}}
+  >
+    <ScaleComponent/>
+  </Rotator>
+  <circle cx={0} cy={0} r={5} class='center-dot' opacity={1 - $editVsPlay} />
+  <CurrentRotationStatus />
+  {#if !$somethingIsRotating}<Tips />{/if}
+</svg>
 
 <style>
-  svg {
-    display: inline-block;
-    max-width: 100%;
-    max-height: 100%;
+  .wheel {
+    display: block;
     text-rendering: optimizeLegibility;
   }
-  svg > :global(.intervalSetPolygon_play) {
+  .wheel > :global(.intervalSetPolygon_play) {
     fill: #999;
     stroke: #e8e8e8;
     stroke-width: 3px;

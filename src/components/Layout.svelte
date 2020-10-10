@@ -24,12 +24,8 @@
   </div>
 
   <div id='center'>
-    <div id='marquee'>
-      {#if !$scaleIsRotating}
-        <Marquee showMore={() => {}}/>
-      {/if}
-    </div>
-    <Wheel/>
+    <!-- <div id='marquee'>{#if !$scaleIsRotating}<Marquee />{/if}</div> -->
+    <div id='wheel'><Wheel/></div>
   </div>
 
   <div id='footer'>
@@ -51,11 +47,11 @@
   #layout {height: 100vh; overflow: hidden; width: 100%; position: fixed;}
   :global(body) { background: #C7C7C7; }
 
-  #layout {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
+  #layout >  * {box-sizing: border-box; overflow: hidden;}
+
+  #toolbar {height: 7%;}
+  #center {height: 77%;}
+  #footer {height: 16%;}
 
   #toolbar {
     display: flex;
@@ -73,9 +69,28 @@
   #center {
     box-shadow: 0 0 2vmax 0 black;
     border-bottom: solid 0.2vmax #E8E8E8;
-    flex-grow: 1;
     position: relative;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+  }
+
+  #marquee {
+    height: 5em;
+    overflow: hidden;
+  }
+
+  #wheel {
+    width: 120%;
+    max-height: 120%;
+    margin-left: -10%;
+    margin-top: -10%;
+    margin-bottom: -10%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
   }
 
   #footer {
