@@ -18,18 +18,12 @@ h1, h2, h3 {
 }
 
 body, button {
-  font-family: 'Spectral', 'freeserifmusic', serif;
-  font-size: 1.7vmax;
+  font-family: 'Spectral', 'freeserifmusic', serif; 
+  font-size: calc(1.1vh + 1.1vw);
 }
 
-h2 {
-  font-size: 2.3vmax;
-  font-weight: normal;
-}
-
-h1 {
-  font-size: 2.3vmax;
-}
+h1 { font-size: 150%; }
+h2 { font-size: 140%; font-weight: normal; }
 
 a {
   text-decoration: underline;

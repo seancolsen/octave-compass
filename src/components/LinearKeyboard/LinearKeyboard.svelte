@@ -33,12 +33,12 @@
 
 <style>
   .linear-keyboard {
+    height: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: flex-start;
     overflow-x: hidden;
     overflow-y: hidden;
-    height: 17vmax;
   }
 </style>

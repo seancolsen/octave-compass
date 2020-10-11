@@ -8,7 +8,7 @@
   export let pitch: Pitch
   
   const light = useLight([`note-${pitch.note.id}`]);
-  $: pitchName = `${pitch.note.name?.unicode}<sub>${pitch.spiOctave}</sub>`;
+  $: pitchName = `${pitch.note.guaranteedName?.unicode}<sub>${pitch.spiOctave}</sub>`;
 </script>
 
 <div
@@ -17,12 +17,19 @@
   class:isBlack={pitch.note.color === 'black'}
   class:isTonalCenter={pitch.note.id === $tonalCenter}
 >
-  <div class='shadow' />
   <Key pitches={[pitch]}>
-    <div class='touch-receptor'>
-      <div class='light'>{@html pitchName}</div>
-      <div class='pitch-name'>{@html pitchName}</div>
+    <!--
+      Why not use css box-shadow? Because those shadows would cover adjacent
+      keys.
+    -->
+    <div class='render'>
+      <div class='shadow' />
+      <div class='background'>
+        <div class='light'>{@html pitchName}</div>
+        <div class='pitch-name'>{@html pitchName}</div>
+      </div>
     </div>
+    <div class='touch-receptor' />
   </Key>
 </div>
 
@@ -30,55 +37,77 @@
   .linear-key {
     flex-grow: 0;
     flex-shrink: 0;
-    flex-basis: 6vmax;
+    flex-basis: 4em;
     height: 50%;
     text-align: center;
-    font-size: 2.4vmax;
-    margin: 0 0.2vmax;
+    margin: 0;
     position: relative;
   }
 
-  .linear-key.isTonalCenter {height: 70%}
+  .linear-key.isTonalCenter {height: 70%;}
 
-  .linear-key > :global(*),
-  .touch-receptor {
+  .linear-key > :global(.key) {
     height: 100%;
     width: 100%;
     position: relative;
-    z-index: 2;
+  }
+
+  .render {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0 0.15em; /* see .shadow when changing */
+  }
+
+  .touch-receptor {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   .shadow {
+    width: calc(100% - 0.3em); /* twice .render padding */
+    height: 100%;
     position: absolute;
-    z-index: 1;
+    top: 0;
+    left: 0;
     background: black;
-    filter: blur(0.6vmax);
+    border-radius: 0 0 0.5em 0.5em;
+    filter: blur(0.4em);
   }
 
   .linear-key.isPressed .shadow {visibility: hidden;}
 
-  .touch-receptor {
-    border: 0.4vmax rgba(0, 0, 0, 0);
-    pointer-events: all;
-    border-radius: 0 0 0.8vmax 0.8vmax;
+  .background {
+    height: 100%;
+    width: 100%;
+    border-radius: 0 0 0.5em 0.5em;
     background: #EEE;
+    position: relative;
   }
 
-  .linear-key.isBlack .touch-receptor {background: #222; color: white;}
+  .linear-key.isBlack .background {background: #222; color: white;}
   
-  .linear-key.isPressed :global(*) {z-index: 0;}
+  .linear-key.isPressed :global(*) {z-index: 0;}/* below the shadows of others*/
+  .shadow {z-index: 1;}
+  .background {z-index: 3;}
+  .touch-receptor {z-index: 4;}
+  
   
   .pitch-name, .light {
     display: inline-block;
-    margin: 1vmax 0;
-    padding: 0 0.7vmax;
-    border-radius: 0.7vmax;
+    margin: 0.6em 0;
+    padding: 0 0.2em;
+    border-radius: 0.2em;
   }
 
   .light {
     position: absolute;
     visibility: hidden;
-    filter: blur(0.6vmax);
+    filter: blur(0.2em);
     background: #fff000;
     color: #fff000;
   }

@@ -24,8 +24,10 @@
   </div>
 
   <div id='center'>
-    <div id='marquee'>{#if !$scaleIsRotating}<Marquee />{/if}</div>
-    <div id='wheel'><Wheel/></div>
+    <div id='center-content'>
+      <div id='marquee'>{#if !$scaleIsRotating}<Marquee />{/if}</div>
+      <div id='wheel'><Wheel/></div>
+    </div>
   </div>
 
   <div id='footer'>
@@ -45,7 +47,9 @@
 <style>
   :global(body),
   #layout {height: 100vh; overflow: hidden; width: 100%; position: fixed;}
-  :global(body) { background: #C7C7C7; }
+  :global(body) {
+    background: #C7C7C7;
+  }
 
   #layout >  * {box-sizing: border-box; overflow: hidden;}
 
@@ -57,9 +61,8 @@
     display: flex;
     justify-content: space-between;
     background: #E8E8E8;
-    border-bottom: solid 0.2vmax white;
-    box-shadow: 0 0 1vmax 0 black;
-    font-size: 120%;
+    border-bottom: solid 0.1em white;
+    box-shadow: 0 0 0.6em 0 black;
     line-height: 95%;
     padding: 0.5em;
     position: relative;
@@ -67,10 +70,19 @@
   }
 
   #center {
-    box-shadow: 0 0 2vmax 0 black;
-    border-bottom: solid 0.2vmax #E8E8E8;
+    box-shadow: 0 0 1em 0 black;
+    border-bottom: solid 0.1em #E8E8E8;
     position: relative;
     z-index: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+  }
+
+  #center-content {
+    max-width: 100%;
+    max-height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -78,13 +90,13 @@
   }
 
   #marquee {
-    height: 9vh;
+    height: 5em;
     overflow: hidden;
   }
 
   #wheel {
     width: 120%;
-    max-height: calc(120% - 9vh); /* #marquee height */
+    max-height: calc(120% - 5em); /* #marquee height */
     margin-left: -10%;
     margin-top: -10%;
     margin-bottom: -10%;
@@ -94,7 +106,7 @@
   }
 
   #footer {
-    background: #999;
+    background: #AAA;
     position: relative;
     z-index: 1;
   }

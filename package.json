@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public --single",
+    "start": "sirv public --single --host 0.0.0.0",
     "test": "jest",
     "validate": "svelte-check",
     "refreshComputedData": "ts-node src/Data/computed/refresh.ts"

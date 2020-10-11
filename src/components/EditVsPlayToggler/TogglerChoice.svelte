@@ -21,7 +21,7 @@
   
   .label {
     text-align: left;
-    width: 6.5vmax;
+    width: 4em;
   }
 
 </style>

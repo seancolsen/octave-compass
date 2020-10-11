@@ -41,7 +41,7 @@
     justify-content: center;
     flex-wrap: wrap;
   }
-  .heading > * { margin: 0 1vmax 0.5vmax 1vmax; }
+  .heading > * { margin: 0 1em 0.5em 1em; }
   .togglers span {font-style: italic;}
   .chord-choices {display: flex; flex-wrap: wrap; justify-content: center;}
 </style>

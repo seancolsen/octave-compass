@@ -20,15 +20,15 @@
 
 <style>
   .choice {
-    margin: 0.4vmax;
-    padding: 0.4vmax;
-    border-radius: 0.4vmax;
-    border: solid 0.4vmax transparent;
+    margin: 0.2em;
+    padding: 0.2em;
+    border-radius: 0.2em;
+    border: solid 0.2em transparent;
     background: none;
   }
   .choice.isSelected {background: white;}
   .choice, .choice :global(*) { cursor: pointer; }
-  svg { display: block; width: 3.5vmax; margin: auto; }
+  svg { display: block; width: 2em; margin: auto; }
   .choice:hover { border-color: white; }
   .choice:hover .chord-name { text-decoration: underline; }
 </style>
