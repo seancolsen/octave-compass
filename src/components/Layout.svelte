@@ -46,9 +46,10 @@
 
 <style>
   :global(body),
-  #layout {height: 100vh; overflow: hidden; width: 100%; position: fixed;}
+  #layout {height: 100%; width: 100%; overflow: hidden;}
   :global(body) {
     background: #C7C7C7;
+    overscroll-behavior: none; /* Disable pull-down-to-refresh on mobile */
   }
 
   #layout >  * {box-sizing: border-box; overflow: hidden;}
