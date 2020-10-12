@@ -15,6 +15,7 @@
     text='Rotate to shift modes'
     center={{x: 400, y: -400}} width={220} height={200}
     targets={[{x: 100, y: -120}]}
+    isTargetingScale
   />
 
   <Tip

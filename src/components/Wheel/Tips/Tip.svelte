@@ -1,5 +1,8 @@
 <script lang='ts'>
+  import { getStore } from "../../../store";
   import GlowingText from "../../common/GlowingText.svelte";
+  import IntervalSetPolygon from "../../common/IntervalSetPolygon.svelte";
+  const {intervalSet} = getStore();
 
   interface Point {x: number, y: number,}
 
@@ -8,13 +11,28 @@
   export let width: number;
   export let height: number;
   export let targets: Point[];
+  export let isTargetingScale = false as boolean;
+
+  $: d = (target: Point) => 
+    `M ${center.x}, ${center.y} L ${target.x} ${target.y}`;
 
 </script>
 
 <g>
   {#each targets as target}
-    <circle cx={target.x} cy={target.y} r='6' />
-    <path d={`M ${center.x}, ${center.y} L ${target.x} ${target.y}`} />
+    {#if isTargetingScale}
+      <clipPath id='scale-polygon-clip'>
+        <IntervalSetPolygon
+          class='scale-polygon-clip'
+          radius={300}
+          intervalSet={$intervalSet}
+        />
+      </clipPath>
+      <path class='target-line-bg' d={d(target)} />
+      <circle class='target-dot-bg' cx={target.x} cy={target.y} r='30' />
+    {/if}
+    <circle class='target-dot' cx={target.x} cy={target.y} r='6' />
+    <path class='target-line' d={d(target)} />
   {/each}
   <foreignObject
     x={center.x - width/2} y={center.y - width/2}
@@ -49,13 +67,13 @@
   .container > :global(.glowing-text) {
     margin: 1em;
   }
-  path {
+  .target-line { fill: none; stroke: #1e88a8; stroke-width: 3px; }
+  .target-line-bg {
     fill: none;
-    stroke: #1e88a8;
-    stroke-width: 3px;
+    stroke: #e1e1e1;
+    stroke-width: 30px;
+    clip-path: url('#scale-polygon-clip');
   }
-  circle {
-    fill: #1e88a8;
-    stroke: none;
-  }
+  .target-dot { fill: #1e88a8; }
+  .target-dot-bg { fill: #e1e1e1; }
 </style>
