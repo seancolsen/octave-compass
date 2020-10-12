@@ -19,7 +19,7 @@ h1, h2, h3 {
 
 body, button {
   font-family: 'Spectral', 'freeserifmusic', serif; 
-  font-size: calc(1.1vh + 1.1vw);
+  font-size: calc(1.5vh + 0.5vw);
 }
 
 h1 { font-size: 150%; }
