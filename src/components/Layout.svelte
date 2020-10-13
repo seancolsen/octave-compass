@@ -1,27 +1,13 @@
 <script lang="ts">
   import Marquee from "./Marquee.svelte";
   import Wheel, {scaleIsRotating} from "./Wheel/Wheel.svelte";
-  
-  import ChordSelection from './Modals/ChordSelection/ChordSelection.svelte';
-  import Search from './Modals/Search/Search.svelte';
-  import EditVsPlayToggler from './EditVsPlayToggler/EditVsPlayToggler.svelte';
   import LinearKeyboard from './LinearKeyboard/LinearKeyboard.svelte';
-  import {getStore} from '../store';
-  import { getContext } from "svelte";
-  import Button from "./common/Button.svelte";
-  const {editVsPlay} = getStore();
-  const {open} = getContext('simple-modal');
-  const modal = (component: any) => open(component, {}, {styleWindow: {}});
-
+  import Toolbar from "./Toolbar/Toolbar.svelte";
 </script>
 
 <div id='layout'>
 
-  <div id='toolbar'>
-    <Button on:click={() => modal(Search)}>Search Scales</Button>
-    <EditVsPlayToggler />
-    <Button on:click={() => modal(ChordSelection)}>Choose Chords</Button>
-  </div>
+  <div id='toolbar'><Toolbar /></div>
 
   <div id='center'>
     <div id='center-content'>
@@ -53,10 +39,6 @@
   }
 
   #layout >  * {box-sizing: border-box; overflow: hidden;}
-
-  #toolbar {height: 7%;}
-  #center {height: 77%;}
-  #footer {height: 16%;}
 
   #toolbar {
     display: flex;
@@ -110,6 +92,7 @@
     background: #AAA;
     position: relative;
     z-index: 1;
+    height: 7em;
   }
   #footer-links {
     width: 100%;

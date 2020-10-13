@@ -1,5 +1,7 @@
 <script lang="ts">
-  import {getStore} from '../../store';
+  import { getStore } from '../../../store';
+import EditScaleIcon from '../Icons/EditScaleIcon.svelte';
+import PlaySoundsIcon from '../Icons/PlaySoundsIcon.svelte';
   import TogglerChoice from './TogglerChoice.svelte';
 
   const {editVsPlay} = getStore();
@@ -41,9 +43,9 @@
   on:mousedown|preventDefault|stopPropagation={toggleWithTransition}
   on:touchstart|preventDefault|stopPropagation={toggleWithTransition}
 >
-  <TogglerChoice label='Edit Scale' isActive={isEdit} />
+  <TogglerChoice label='Edit Scale' isActive={isEdit} icon={EditScaleIcon} />
   <div class='or'><div class='hr' /><span>or</span></div>
-  <TogglerChoice label='Play Sounds' isActive={isPlay} />
+  <TogglerChoice label='Play Sounds' isActive={isPlay} icon={PlaySoundsIcon} />
 </div>
 
 <style>
