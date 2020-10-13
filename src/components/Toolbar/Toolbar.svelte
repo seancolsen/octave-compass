@@ -9,6 +9,7 @@
   import PlaySoundsIcon from "./Icons/PlaySoundsIcon.svelte";
   import EditScaleIcon from "./Icons/EditScaleIcon.svelte";
   import { getStore } from "../../store";
+import MoreOptionsIcon from "./Icons/MoreOptionsIcon.svelte";
 
   const {editVsPlay} = getStore();
   const {open} = getContext('simple-modal');
@@ -49,4 +50,5 @@
 <Button
   on:click={() => {}} 
   label='More Options'
+  icon={MoreOptionsIcon}
 />
