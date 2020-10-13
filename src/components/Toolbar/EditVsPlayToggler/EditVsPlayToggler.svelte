@@ -54,7 +54,7 @@ import PlaySoundsIcon from '../Icons/PlaySoundsIcon.svelte';
   .edit-vs-play-toggler {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
   }
 
   .label {

@@ -22,10 +22,10 @@
     padding: 0.2em 0.4em;
     background: #f2f2f2;
     border: solid 0.05em #bcbcbc;
-    border-radius: 0.4em 0 0 0.4em;
+    border-radius: 0 0 0 0.4em;
   }
   .toggler-choice:last-child {
-    border-radius:  0 0.4em 0.4em 0;
+    border-radius:  0 0 0.4em 0;
     border-left: none;
   }
   .toggler-choice.isActive {
