@@ -1,19 +1,18 @@
 <script lang='ts'>
+  export let label: string;
   export let icon = undefined as any;
+  export let isActive = false as boolean;
 </script>
 
-<div class='button' on:click >
+<div class='button' class:isActive on:click >
   {#if icon}<div class='icon'><svelte:component this={icon} /></div>{/if}
-  <div><slot /></div>
+  <div>{label}</div>
 </div>
 
 <style>
   .button {
     display: inline-block;
     padding: 0.2em 0.4em;
-    border-radius: 0.4em;
-    background: #f2f2f2;
-    border: solid 0.05em #bcbcbc;
     cursor: pointer;
     line-height: 1em;
     text-align: center;
@@ -23,6 +22,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border: solid 0.1em transparent;
+  }
+  .button.isActive {
+    border-radius: 0.4em;
+    background: #f7f7f7;
+    border-color: #AAA;
+    cursor: default;
   }
   .button > * {margin: 0.2em;}
   .icon {

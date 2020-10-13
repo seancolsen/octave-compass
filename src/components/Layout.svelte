@@ -2,34 +2,12 @@
   import Marquee from "./Marquee.svelte";
   import Wheel, {scaleIsRotating} from "./Wheel/Wheel.svelte";
   import LinearKeyboard from './LinearKeyboard/LinearKeyboard.svelte';
-
-  import { getContext } from "svelte";
-  import Button from "./Toolbar/Button.svelte";
-  import EditVsPlayToggler from "./Toolbar/EditVsPlayToggler/EditVsPlayToggler.svelte";
-  import ChordSelection from "./Modals/ChordSelection/ChordSelection.svelte";
-  import Search from "./Modals/Search/Search.svelte";
-  import ChooseChordsIcon from "./Toolbar/Icons/ChooseChordsIcon.svelte";
-  import SearchIcon from "./Toolbar/Icons/SearchIcon.svelte";
-
-  const {open} = getContext('simple-modal');
-  const modal = (component: any) => open(component, {}, {styleWindow: {}});
+  import Toolbar from "./Toolbar/Toolbar.svelte";
 </script>
 
 <div id='layout'>
 
-  <div id='toolbar'>
-    <Button on:click={() => modal(Search)} icon={SearchIcon}>
-      Search Scales
-    </Button>
-    <EditVsPlayToggler />
-    <Button on:click={() => modal(ChordSelection)} icon={ChooseChordsIcon}>
-      Choose Chords
-    </Button>
-    <Button on:click={() => {}} >
-      Options
-    </Button>
-  </div>
-    
+  <div id='toolbar'><Toolbar /></div>
 
   <div id='marquee'>{#if !$scaleIsRotating}<Marquee />{/if}</div>
 
@@ -83,7 +61,7 @@
   #marquee {
     box-sizing: border-box;
     margin: 0 6em;
-    background: #DDD;
+    background: #EEE;
     border-radius: 0 0 0.6em 0.6em;
     box-shadow: 0 0 0.6em 0 black;
     border: solid 0.1em white;
