@@ -10,6 +10,10 @@
 body {
   margin: 0;
   padding: 0;
+  overscroll-behavior: none; /* Disable pull-down-to-refresh on mobile */
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 h1, h2, h3 {

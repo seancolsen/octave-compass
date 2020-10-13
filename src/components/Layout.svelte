@@ -2,50 +2,85 @@
   import Marquee from "./Marquee.svelte";
   import Wheel, {scaleIsRotating} from "./Wheel/Wheel.svelte";
   import LinearKeyboard from './LinearKeyboard/LinearKeyboard.svelte';
-  import Toolbar from "./Toolbar/Toolbar.svelte";
+
+  import { getContext } from "svelte";
+  import Button from "./Toolbar/Button.svelte";
+  import EditVsPlayToggler from "./Toolbar/EditVsPlayToggler/EditVsPlayToggler.svelte";
+  import ChordSelection from "./Modals/ChordSelection/ChordSelection.svelte";
+  import Search from "./Modals/Search/Search.svelte";
+  import ChooseChordsIcon from "./Toolbar/Icons/ChooseChordsIcon.svelte";
+  import SearchIcon from "./Toolbar/Icons/SearchIcon.svelte";
+
+  const {open} = getContext('simple-modal');
+  const modal = (component: any) => open(component, {}, {styleWindow: {}});
 </script>
 
 <div id='layout'>
 
-  <div id='toolbar'><Toolbar /></div>
-
+  <div id='marquee-toolbar'>
+    <Button on:click={() => modal(Search)} icon={SearchIcon}>
+      Search Scales
+    </Button>
+    <div id='marquee'>{#if !$scaleIsRotating}<Marquee />{/if}</div>
+    <Button on:click={() => {}} >
+      Scale Info
+    </Button>
+  </div>
+  
   <div id='center'>
-    <div id='center-content'>
-      <div id='marquee'>{#if !$scaleIsRotating}<Marquee />{/if}</div>
-      <div id='wheel'><Wheel/></div>
-    </div>
+    <div id='wheel'><Wheel/></div>
+    <!-- <LinearKeyboard /> -->
+  </div>
+
+  <div id='config-toolbar'>
+    <EditVsPlayToggler />
+    <Button on:click={() => modal(ChordSelection)} icon={ChooseChordsIcon}>
+      Choose Chords
+    </Button>
   </div>
 
   <div id='footer'>
-    <!-- <LinearKeyboard /> -->
-    <div id='footer-links'>
-      <div id='source-code'>Octave Compass</div>
-      <div id='app-name'>
-        <a target="_blank"
-          href='https://github.com/seancolsen/octave-compass'
-        >Source code</a>
-      </div>
+    <div id='source-code'>Octave Compass</div>
+    <div id='app-name'>
+      <a target="_blank"
+        href='https://github.com/seancolsen/octave-compass'
+      >Source code</a>
     </div>
   </div>
 
 </div>
 
 <style>
-  :global(body),
-  #layout {height: 100%; width: 100%; overflow: hidden;}
-  :global(body) {
-    background: #C7C7C7;
-    overscroll-behavior: none; /* Disable pull-down-to-refresh on mobile */
+  #layout {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template: auto 1fr auto auto / auto 1fr;
   }
 
-  #layout >  * {box-sizing: border-box; overflow: hidden;}
+  #marquee-toolbar {grid-row: 1; grid-column: 1 / span 2;}
+  #center {grid-row: 2; grid-column: 1 / span 2;}
+  #config-toolbar {grid-row: 3; grid-column: 1 / span 2;}
+  #footer {grid-row: 4; grid-column: 1 / span 2;}
 
-  #toolbar {
+  #marquee-toolbar {
     display: flex;
     justify-content: space-between;
     background: #E8E8E8;
     border-bottom: solid 0.1em white;
-    box-shadow: 0 0 0.6em 0 black;
+    
+    line-height: 95%;
+    padding: 0.5em;
+    position: relative;
+    z-index: 3;
+  }
+
+  #config-toolbar {
+    display: flex;
+    justify-content: space-between;
+    background: #E8E8E8;
+    /* border-bottom: solid 0.1em white; */
+    /* box-shadow: 0 0 0.6em 0 black; */
     line-height: 95%;
     padding: 0.5em;
     position: relative;
@@ -53,7 +88,7 @@
   }
 
   #center {
-    /* box-shadow: 0 0 1em 0 black; */
+    box-shadow: 0 0 0.6em 0 black inset;
     /* border-bottom: solid 0.1em #E8E8E8; */
     position: relative;
     z-index: 2;
@@ -61,48 +96,35 @@
     flex-direction: row;
     justify-content: center;
     align-content: center;
+    background: #BBB;
   }
 
-  #center-content {
+  /* #center-content {
     max-width: 100%;
     max-height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
-  }
+  } */
 
-  #marquee {
-    height: 5em;
-    overflow: hidden;
-  }
 
   #wheel {
-    width: 120%;
-    max-height: calc(120% - 5em); /* #marquee height */
+    /* width: 120%;
     margin-left: -10%;
     margin-top: -10%;
-    margin-bottom: -10%;
+    margin-bottom: -10%; */
     display: flex;
     justify-content: center;
     align-content: center;
   }
 
   #footer {
-    background: #AAA;
-    position: relative;
-    z-index: 1;
-    height: 7em;
-  }
-  #footer-links {
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    background: #E8E8E8;
     display: flex;
     justify-content: space-between;
     font-size: 80%;
   }
-  #footer-links > * {padding: 0.7em 1.5em;}
-  #footer-links a {color: black; }
+  #footer > * {padding: 0.7em 1.5em;}
+  #footer a {color: black; }
 </style>
