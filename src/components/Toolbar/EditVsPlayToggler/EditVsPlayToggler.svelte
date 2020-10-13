@@ -43,45 +43,33 @@ import PlaySoundsIcon from '../Icons/PlaySoundsIcon.svelte';
   on:mousedown|preventDefault|stopPropagation={toggleWithTransition}
   on:touchstart|preventDefault|stopPropagation={toggleWithTransition}
 >
-  <TogglerChoice label='Edit Scale' isActive={isEdit} icon={EditScaleIcon} />
-  <div class='or'><div class='hr' /><span>or</span></div>
-  <TogglerChoice label='Play Sounds' isActive={isPlay} icon={PlaySoundsIcon} />
+  <div class='label'>Action:</div>
+  <div class='choices'>
+    <TogglerChoice label='Edit Scale' isActive={isEdit} icon={EditScaleIcon} />
+    <TogglerChoice label='Play Sounds' isActive={isPlay} icon={PlaySoundsIcon} />
+  </div>
 </div>
 
 <style>
   .edit-vs-play-toggler {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .label {
+    padding: 0.2em 1em;
+    border-radius: 0.4em 0.4em 0 0;
+    background: #f2f2f2;
+    border: solid 0.05em #bcbcbc;
+    margin-bottom: -0.1em;
+  }
+
+  .choices {
     cursor: pointer;
-    height: 100%;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    padding: 0.5em;
   }
-  .edit-vs-play-toggler > :global(.toggler-choice) {
-    position: relative;
-    z-index: 1;
-  }
-  .or {
-    text-align: center;
-    font-style: italic;
-    position: relative;
-    z-index: 0;
-  }
-  .hr {
-    border-top: solid #BBB 0.1em;
-    position: absolute;
-    z-index: 0;
-    top: 1em;
-    left: 10%;
-    height: 0.2em;
-    width: 80%;
-  }
-  .or span {
-    display: inline-block;
-    padding: 0 0.6em;
-    position: relative;
-    z-index: 1;
-    background: #DDD;
-    color: #666;
-  }
+
 </style>

@@ -16,9 +16,7 @@
   Search Scales
 </Button>
 
-<Button >
-  <EditVsPlayToggler />
-</Button>
+<EditVsPlayToggler />
 
 <Button on:click={() => modal(ChordSelection)} icon={ChooseChordsIcon}>
   Choose Chords

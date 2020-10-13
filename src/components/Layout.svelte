@@ -17,7 +17,7 @@
   </div>
 
   <div id='footer'>
-    <LinearKeyboard />
+    <!-- <LinearKeyboard /> -->
     <div id='footer-links'>
       <div id='source-code'>Octave Compass</div>
       <div id='app-name'>
@@ -53,8 +53,8 @@
   }
 
   #center {
-    box-shadow: 0 0 1em 0 black;
-    border-bottom: solid 0.1em #E8E8E8;
+    /* box-shadow: 0 0 1em 0 black; */
+    /* border-bottom: solid 0.1em #E8E8E8; */
     position: relative;
     z-index: 2;
     display: flex;
