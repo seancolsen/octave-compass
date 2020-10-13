@@ -1,4 +1,4 @@
-import { writable, derived } from 'svelte/store';
+import { writable, derived, get} from 'svelte/store';
 import { IntervalSet } from './Utils/Music/IntervalSet';
 import { IntervalSetFactory } from './Utils/Music/IntervalSetFactory';
 import { ChordSet } from './Utils/Music/ChordSet';
@@ -41,7 +41,35 @@ export const createStore = (
    * Values in between 0 and 1 mean that the app is transitioning between states
    * and that no interaction should be possible. 
    */
-  editVsPlay: writable(1),
+  editVsPlay: (() => {
+    const {subscribe, update, set} = writable(1);
+
+    return {
+      subscribe,
+      set,
+      update,
+
+      setWithTransition: (newValue: 0 | 1) => {
+        const currentValue = get({subscribe}) as number;
+        
+        if (currentValue === newValue) {return;}
+        const transitionDuration = 200; // (ms)
+        const direction = newValue ? 1 : -1;
+        const startValue = Math.round(currentValue);
+        const step = (currentTime: DOMHighResTimeStamp) => {
+          const timeElapsed = currentTime - transitionStartTime;
+          if (timeElapsed > transitionDuration) {
+            set(newValue)
+            return;
+          }
+          set(startValue + timeElapsed / transitionDuration * direction);
+          window.requestAnimationFrame(step)
+        };
+        const transitionStartTime = performance.now();
+        window.requestAnimationFrame(step)
+      },
+    }
+  })(),
 
   // ======================================================================== //
 

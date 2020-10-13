@@ -26,14 +26,14 @@ import MoreOptionsIcon from "./Icons/MoreOptionsIcon.svelte";
 <Divider />
 
 <Button
-  on:click={() => modal(ChordSelection)}
+  on:click={() => {editVsPlay.setWithTransition(0)}}
   icon={EditScaleIcon}
   label='Edit Scale'
   isActive={$editVsPlay === 0}
 />
   
 <Button
-  on:click={() => modal(ChordSelection)}
+  on:click={() => {editVsPlay.setWithTransition(1)}}
   icon={PlaySoundsIcon}
   label='Play Sounds'
   isActive={$editVsPlay === 1}
