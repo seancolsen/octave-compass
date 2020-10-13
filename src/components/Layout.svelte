@@ -17,27 +17,28 @@
 
 <div id='layout'>
 
-  <div id='marquee-toolbar'>
+  <div id='toolbar'>
     <Button on:click={() => modal(Search)} icon={SearchIcon}>
       Search Scales
     </Button>
-    <div id='marquee'>{#if !$scaleIsRotating}<Marquee />{/if}</div>
+    <EditVsPlayToggler />
+    <Button on:click={() => modal(ChordSelection)} icon={ChooseChordsIcon}>
+      Choose Chords
+    </Button>
     <Button on:click={() => {}} >
-      Scale Info
+      Options
     </Button>
   </div>
-  
+    
+
+  <div id='marquee'>{#if !$scaleIsRotating}<Marquee />{/if}</div>
+
+
   <div id='center'>
     <div id='wheel'><Wheel/></div>
     <!-- <LinearKeyboard /> -->
   </div>
 
-  <div id='config-toolbar'>
-    <EditVsPlayToggler />
-    <Button on:click={() => modal(ChordSelection)} icon={ChooseChordsIcon}>
-      Choose Chords
-    </Button>
-  </div>
 
   <div id='footer'>
     <div id='source-code'>Octave Compass</div>
@@ -51,44 +52,45 @@
 </div>
 
 <style>
+  :global(body) {
+    background: #BBB;
+  }
+
   #layout {
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template: auto 1fr auto auto / auto 1fr;
+    grid-template: auto 6em 1fr auto / auto 1fr;
   }
 
-  #marquee-toolbar {grid-row: 1; grid-column: 1 / span 2;}
-  #center {grid-row: 2; grid-column: 1 / span 2;}
-  #config-toolbar {grid-row: 3; grid-column: 1 / span 2;}
+  #toolbar {grid-row: 1; grid-column: 1 / span 2;}
+  #marquee {grid-row: 2; grid-column: 1 / span 2;}
+  #center {grid-row: 3; grid-column: 1 / span 2;}
   #footer {grid-row: 4; grid-column: 1 / span 2;}
 
-  #marquee-toolbar {
+  #toolbar {
     display: flex;
     justify-content: space-between;
-    background: #E8E8E8;
+    background: #DDD;
     border-bottom: solid 0.1em white;
-    
     line-height: 95%;
     padding: 0.5em;
     position: relative;
     z-index: 3;
+    box-shadow: 0 0 0.6em 0 black;
   }
 
-  #config-toolbar {
-    display: flex;
-    justify-content: space-between;
-    background: #E8E8E8;
-    /* border-bottom: solid 0.1em white; */
-    /* box-shadow: 0 0 0.6em 0 black; */
-    line-height: 95%;
-    padding: 0.5em;
-    position: relative;
-    z-index: 3;
+  #marquee {
+    box-sizing: border-box;
+    margin: 0 6em;
+    background: #DDD;
+    border-radius: 0 0 0.6em 0.6em;
+    box-shadow: 0 0 0.6em 0 black;
+    border: solid 0.1em white;
   }
 
   #center {
-    box-shadow: 0 0 0.6em 0 black inset;
+    /* box-shadow: 0 0 0.6em 0 black inset; */
     /* border-bottom: solid 0.1em #E8E8E8; */
     position: relative;
     z-index: 2;
@@ -96,7 +98,6 @@
     flex-direction: row;
     justify-content: center;
     align-content: center;
-    background: #BBB;
   }
 
   /* #center-content {
@@ -120,7 +121,7 @@
   }
 
   #footer {
-    background: #E8E8E8;
+    /* background: #E8E8E8; */
     display: flex;
     justify-content: space-between;
     font-size: 80%;
