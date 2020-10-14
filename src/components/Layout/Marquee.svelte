@@ -1,5 +1,6 @@
 <script lang="ts">
-  import {getStore} from '../store';
+  import {scaleIsRotating} from "../Wheel/Wheel.svelte";
+  import {getStore} from '../../store';
   const {
     title,
     alternateScaleNames,
@@ -17,28 +18,30 @@
 
 </script>
 
-<div class='marquee'>
-  <h1 class:isNamed >
-    {$title}
-    {#if $inversionText}<em>{$inversionText}</em>{/if}
-  </h1>
-  
-  <div class='subtitle'>
-    {#if nameCount > 0}
-  
-      <span class='aka'>Also know as: </span>
-      {$alternateScaleNames[0]}
-  
-      {#if nameCount > 1}
-        <span>, and </span>
-        <span class='show-more' on:click|preventDefault={showMore}>
-          {nameCount - 1} other name{nameCount > 2 ? 's' : ''}...
-        </span>
+{#if !$scaleIsRotating}
+  <div class='marquee'>
+    <h1 class:isNamed >
+      {$title}
+      {#if $inversionText}<em>{$inversionText}</em>{/if}
+    </h1>
+    
+    <div class='subtitle'>
+      {#if nameCount > 0}
+    
+        <span class='aka'>Also know as: </span>
+        {$alternateScaleNames[0]}
+    
+        {#if nameCount > 1}
+          <span>, and </span>
+          <span class='show-more' on:click|preventDefault={showMore}>
+            {nameCount - 1} other name{nameCount > 2 ? 's' : ''}...
+          </span>
+        {/if}
+    
       {/if}
-  
-    {/if}
+    </div>
   </div>
-</div>
+{/if}
 
 <style>
   .marquee {
@@ -54,10 +57,8 @@
   h1 { text-align: center; color: #222; }
   h1.isNamed { font-style: italic; }
   .subtitle {
-    /* padding: 0.5em; */
     box-sizing: border-box;
     text-align: center;
-    font-size: 85%;
     font-style: italic;
     color: #222;
   }
