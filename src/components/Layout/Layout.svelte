@@ -19,12 +19,12 @@
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template: auto 6em 1fr auto / auto 1fr;
+    grid-template: auto 6em 1fr 3em / auto 1fr;
   }
 
   #toolbar {grid-row: 1; grid-column: 1 / span 2;}
   #marquee {grid-row: 2; grid-column: 1 / span 2;}
-  #center {grid-row: 3; grid-column: 1 / span 2;}
+  #center {grid-row: 2 / span 3; grid-column: 1 / span 2;}
   #footer {grid-row: 4; grid-column: 1 / span 2;}
 
   #layout > * {position: relative;} /* For z-index */
@@ -33,7 +33,10 @@
   #center { z-index: 0; }
   #footer { z-index: 1; }
 
-  #center {height: 100%; overflow: hidden;}
+  #center {
+    height: 100%;
+    overflow: hidden;
+  }
 
   #marquee { margin: 0 6em; }
 </style>

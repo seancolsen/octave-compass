@@ -4,7 +4,7 @@
 </script>
 
 <div class='center'>
-  <div class='wheel'><Wheel/></div>
+  <Wheel/>
   <!-- <LinearKeyboard /> -->
 </div>
 
@@ -17,11 +17,4 @@
     align-content: center;
   }
 
-  .wheel {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-  }
 </style>

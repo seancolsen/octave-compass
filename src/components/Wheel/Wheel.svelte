@@ -33,12 +33,22 @@
   } = getStore();
 
   /**
-   * The width and height of the square SVG view box in user units (basically SVG
-   * pixels). This number is a bit arbitrary since the SVG is then scaled, but
-   * all other numerical measurements within the SVG should be considered
-   * relative to this value.
+   * The outer edges of the the interval label texet is at a radius of 1000, so
+   * that's what we're calling the 'boxSize' here. But the ModeShiftHelpText
+   * is placed beyond that radius (and usually hidden). This behavior makes this
+   * whole layout quite complex.
    */
-  const boxSize = 1200;
+  const viewBox = (() => {
+    const boxSize = 1000;
+    const marginTop = 200;
+    const marginBottom = 50;
+    const x = 0 - boxSize / 2;
+    const y = 0 - boxSize / 2 - marginTop;
+    const width = boxSize;
+    const height = boxSize + marginTop + marginBottom;
+    return `${x} ${y} ${width} ${height}`;
+  })();
+
   $: isRotatable = $editVsPlay === 0;
 
   let ref: SVGElement;
@@ -56,7 +66,7 @@
   class='wheel'
   class:isRotatable
   bind:this={ref}
-  viewBox={`-${boxSize/2} -${boxSize/2} ${boxSize} ${boxSize}`}
+  {viewBox}
 >
   <ShadowFilter id='shadow-when-edit' opacity={1 - $editVsPlay} />
   <ShadowFilter id='shadow-when-play' opacity={$editVsPlay} />
@@ -89,8 +99,8 @@
 <style>
   .wheel {
     display: inline-block;
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     text-rendering: optimizeLegibility;
   }
   .wheel > :global(.intervalSetPolygon_play) {
