@@ -43,7 +43,7 @@
         throw new Error('Unable to find target SVG element from mouse event');
       }
     const r = svg.getBoundingClientRect() as DOMRect;
-    return new XyPoint(r.x + r.height/2, r.y + r.width/2);
+    return new XyPoint(r.x + r.width/2, r.y + r.height/2);
   };
 
   /**
