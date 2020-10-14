@@ -88,8 +88,9 @@
 
 <style>
   .wheel {
-    display: block;
-    width: 100%;
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100%;
     text-rendering: optimizeLegibility;
   }
   .wheel > :global(.intervalSetPolygon_play) {

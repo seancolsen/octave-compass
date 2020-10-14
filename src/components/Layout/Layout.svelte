@@ -33,5 +33,7 @@
   #center { z-index: 0; }
   #footer { z-index: 1; }
 
+  #center {height: 100%; overflow: hidden;}
+
   #marquee { margin: 0 6em; }
 </style>
