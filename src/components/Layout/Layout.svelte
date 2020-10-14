@@ -3,9 +3,26 @@
   import Toolbar from "../Toolbar/Toolbar.svelte";
   import Footer from "./Footer.svelte";
   import Center from "./Center.svelte";
+  import { setContext } from "svelte";
+  import { derived, writable } from "svelte/store";
+  
+  let width = writable(1000);
+  let height = writable(1000);
+
+  const toolbarIsVertical = derived([width, height],
+    ([w, h]: [number, number]) => w / h > 0.9
+  );
+  setContext('toolbarIsVertical', toolbarIsVertical);
+  
 </script>
 
-<div id='layout'>
+
+<div
+  id='layout'
+  class:toolbarIsVertical={$toolbarIsVertical}
+  bind:clientWidth={$width}
+  bind:clientHeight={$height}
+>
   <div id='toolbar'><Toolbar /></div>
   <div id='marquee'><Marquee /></div>
   <div id='center'><Center /></div>
@@ -15,28 +32,40 @@
 <style>
   :global(body) { background: #AAA; }
 
-  #layout {
-    height: 100%;
-    width: 100%;
-    display: grid;
-    grid-template: auto 6em 1fr 3em / auto 1fr;
-  }
-
-  #toolbar {grid-row: 1; grid-column: 1 / span 2;}
-  #marquee {grid-row: 2; grid-column: 1 / span 2;}
-  #center {grid-row: 2 / span 3; grid-column: 1 / span 2;}
-  #footer {grid-row: 4; grid-column: 1 / span 2;}
-
-  #layout > * {position: relative;} /* For z-index */
+  /* Set z-index for everything. */
+  #layout > * {position: relative;}
   #toolbar { z-index: 3; }
   #marquee { z-index: 2; }
   #center { z-index: 0; }
   #footer { z-index: 1; }
+  
+  /* Region-specific stuff here */
+  /* #marquee { margin: 0 6em; } */
 
-  #center {
-    height: 100%;
-    overflow: hidden;
-  }
 
-  #marquee { margin: 0 6em; }
+  /* ======================================================================= */
+  /* Responsive stuff */
+  
+  #layout { height: 100%; width: 100%; display: grid; }
+
+  /* Begin with tall windows */
+  #layout {grid-template: auto 6em 1fr 3em / 1fr;}
+  #toolbar { grid-row: 1          ; grid-column: 1 ; }
+  #marquee { grid-row: 2          ; grid-column: 1 ; }
+  #center  { grid-row: 2 / span 3 ; grid-column: 1 ; }
+  #footer  { grid-row: 4          ; grid-column: 1 ; }
+
+  /*
+  Put the toolbar on the left when the screen gets wider.
+  We don't use media queries because we need to also change some other stuff
+  in more deeply nested components.
+  */
+  #layout.toolbarIsVertical {grid-template: 5em 1fr 3em / auto 1fr;}
+  #layout.toolbarIsVertical #toolbar { grid-row: 1 / span 3 ; grid-column: 1 ; }
+  #layout.toolbarIsVertical #marquee { grid-row: 1          ; grid-column: 2 ; }
+  #layout.toolbarIsVertical #center  { grid-row: 1 / span 3 ; grid-column: 2 ; }
+  #layout.toolbarIsVertical #footer  { grid-row: 3          ; grid-column: 2 ; }
+
+  
+  
 </style>
