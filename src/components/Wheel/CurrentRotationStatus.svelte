@@ -27,7 +27,7 @@
   })();
 
   const glowProps = {
-    glowColor: '#E1E1E1',
+    glowColor: '#EEE',
     blurRadius: 0.4,
     spreadRadius: 1,
   };

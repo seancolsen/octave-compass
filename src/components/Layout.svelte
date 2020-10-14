@@ -31,7 +31,7 @@
 
 <style>
   :global(body) {
-    background: #BBB;
+    background: #AAA;
   }
 
   #layout {
@@ -59,17 +59,10 @@
   }
 
   #marquee {
-    box-sizing: border-box;
     margin: 0 6em;
-    background: #EEE;
-    border-radius: 0 0 0.6em 0.6em;
-    box-shadow: 0 0 0.6em 0 black;
-    border: solid 0.1em white;
   }
 
   #center {
-    /* box-shadow: 0 0 0.6em 0 black inset; */
-    /* border-bottom: solid 0.1em #E8E8E8; */
     position: relative;
     z-index: 2;
     display: flex;
@@ -102,8 +95,7 @@
     /* background: #E8E8E8; */
     display: flex;
     justify-content: space-between;
-    font-size: 80%;
   }
   #footer > * {padding: 0.7em 1.5em;}
-  #footer a {color: black; }
+  #footer, #footer a {color: #444; }
 </style>

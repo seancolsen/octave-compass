@@ -22,7 +22,8 @@
 
   $: names = note.namesToUseForLabels;
   $: radius = 348 + $editVsPlay * 20;
-  $: color = isHighlight ? '#fff000' : note.color;
+  $: isBlack = note.color === 'black';
+  $: color = isHighlight ? '#fff000' : isBlack ? '#222' : '#EEE';
   $: keyLabelIntervalOffset = (index: number) => {
     const discreteWidth = names.length - 1;
     const discreteOffset = (2 * index) - discreteWidth;
@@ -44,7 +45,7 @@
     />
   {/if}
   {#each names as name, index (name.ascii)}
-    <KeyLabel {radius} {hasBackground} {color} {lightIsOn}
+    <KeyLabel {radius} {hasBackground} {color} {isBlack} {lightIsOn}
       interval={interval + keyLabelIntervalOffset(index)}
       isParenthetical={names.length > 1 && name.modifier.name === 'natural'}
       strokeWidth={isHighlight ? 35 : 0}

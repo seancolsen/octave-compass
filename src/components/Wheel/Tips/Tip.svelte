@@ -40,7 +40,7 @@
   >
     <div class='container'>
       <GlowingText {text}
-        glowColor='#C7C7C7'
+        glowColor='#AAA'
         spreadRadius={0.4}
         blurRadius={0.2}
       />
@@ -60,20 +60,20 @@
     font-size: 35px;
     line-height: 1em;
     text-align: center;
-    color: #1e88a8;
+    color: #005a75;
     font-style: italic;
     
   }
   .container > :global(.glowing-text) {
     margin: 1em;
   }
-  .target-line { fill: none; stroke: #1e88a8; stroke-width: 3px; }
+  .target-line { fill: none; stroke: #005a75; stroke-width: 3px; }
   .target-line-bg {
     fill: none;
-    stroke: #e1e1e1;
+    stroke: #EEE;
     stroke-width: 30px;
     clip-path: url('#scale-polygon-clip');
   }
-  .target-dot { fill: #1e88a8; }
-  .target-dot-bg { fill: #e1e1e1; }
+  .target-dot { fill: #005a75; }
+  .target-dot-bg { fill: #EEE; }
 </style>

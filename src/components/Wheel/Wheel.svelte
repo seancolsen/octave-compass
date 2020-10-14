@@ -93,11 +93,11 @@
     text-rendering: optimizeLegibility;
   }
   .wheel > :global(.intervalSetPolygon_play) {
-    fill: #999;
+    fill: #CCC;
     stroke: #e8e8e8;
     stroke-width: 3px;
   }
-  .center-dot { fill: white; stroke: none; }
+  .center-dot { fill: #444; stroke: none; }
   .wheel.isRotatable :global(.scale-component) {
     animation: oscillate 700ms ease-in-out;
   }

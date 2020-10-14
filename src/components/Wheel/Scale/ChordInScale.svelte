@@ -50,8 +50,8 @@
 
 <style>
   g > :global(.background) {
-    stroke: #e1e1e1;
-    fill: #e1e1e1;
+    stroke: #EEE;
+    fill: #EEE;
   }
   g.isClickable > :global(.background) {
     stroke: #ddd;

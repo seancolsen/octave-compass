@@ -34,8 +34,8 @@
 
 <style>
   g > :global(.background) {
-    fill: #E1E1E1;
-    stroke: #f7f7f7;
+    fill: #EEE;
+    stroke: white;
     stroke-width: 3px;
     filter: url('#shadow-when-edit');
   }

@@ -35,10 +35,10 @@
     font-size: 35px;
     line-height: 1em;
     font-style: italic;
-    color: #999;
+    color: #888;
+    font-weight: bold;
   }
   div.isSelected {
-    font-weight: bold;
     color: black;
   }
 </style>

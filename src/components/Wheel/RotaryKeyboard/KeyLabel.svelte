@@ -9,12 +9,12 @@
   export let interval: number;
   export let radius: number;
   export let color: string;
+  export let isBlack = false as boolean;
   export let hasBackground = true as boolean;
   export let isParenthetical: boolean = false;
   export let strokeWidth: number | undefined = undefined;
   export let lightIsOn = false as boolean;
 
-  $: isBlack = color === 'black' || color === '#000' || color === '#000000';
   $: point = (new IrPoint(interval, radius)).toXy();
   $: rotationDeg = -Angle.iToD($rotation);
   $: transform = `translate(${point.x} ${point.y}) rotate(${rotationDeg})`;

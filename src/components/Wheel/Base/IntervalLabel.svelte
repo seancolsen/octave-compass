@@ -42,7 +42,7 @@
 </g>
 
 <style>
-  text { font-size: 30px; fill: #999; }
+  text { font-size: 30px; fill: #777; }
   text.isActive { fill: #222;}
   g.isHighlight text { fill: white; stroke: #EEE; stroke-width: 30px; }
   g > :global(.text-path-arc) { fill: none; stroke: none; }

@@ -46,8 +46,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background: #EEE;
+    border-radius: 0 0 0.6em 0.6em;
+    box-shadow: 0 0 0.6em 0 black;
+    border: solid 0.1em white;
   }
-  h1 { text-align: center; }
+  h1 { text-align: center; color: #222; }
   h1.isNamed { font-style: italic; }
   .subtitle {
     /* padding: 0.5em; */
@@ -55,7 +59,8 @@
     text-align: center;
     font-size: 85%;
     font-style: italic;
+    color: #222;
   }
-  .aka { color: #333; }
+  .aka { color: #777; }
   .show-more {text-decoration: underline; cursor: pointer;}
 </style>
