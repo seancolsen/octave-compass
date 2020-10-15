@@ -2,20 +2,24 @@
   import type { Chord } from "../../../Utils/Music/Chord";
   import ChordEmblem from '../../common/ChordEmblem.svelte';
   import {getStore} from '../../../store';
+  import type { Note } from "../../../Utils/Music/Note";
   const {selectedChords} = getStore();
 
   export let chord: Chord;
-  export let isSelected: boolean;
+  export let isSelected = false as boolean;
+  export let note: Note | undefined;
+
   const iconSize = 100;
+  
+  $: noteName = note?.guaranteedName.unicode;
 </script>
 
 <div class='choice' class:isSelected
   on:click={() => selectedChords.toggle(chord)}
 >
   <svg viewBox={`-${iconSize / 2} -${iconSize / 2} ${iconSize} ${iconSize}`} >
-    <ChordEmblem size={iconSize / 2} {chord} />
+    <ChordEmblem size={iconSize / 2} {chord} {noteName} />
   </svg>
-  <div class='chord-name'>{chord.defaultName}</div>
 </div>
 
 <style>
@@ -29,6 +33,4 @@
   .choice.isSelected {background: white;}
   .choice, .choice :global(*) { cursor: pointer; }
   svg { display: block; width: 2em; margin: auto; }
-  .choice:hover { border-color: white; }
-  .choice:hover .chord-name { text-decoration: underline; }
 </style>

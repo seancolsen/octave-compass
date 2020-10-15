@@ -19,12 +19,7 @@
 </script>
 
 <div class='toolbar' class:isVertical={$isVertical} >
-  <Button
-    on:click={() => modal(Search)}
-    icon={SearchIcon}
-    label='Search Scales'
-  />
-  <Divider />
+
   <Button
     on:click={() => {editVsPlay.setWithTransition(0)}}
     icon={EditScaleIcon}
@@ -37,11 +32,16 @@
     label='Play Sounds'
     isActive={$editVsPlay === 1}
   />
-  <Divider />
   <Button
     on:click={() => modal(ChordSelection)}
     icon={ChooseChordsIcon}
     label='Choose Chords'
+  />
+  <Divider />
+  <Button
+    on:click={() => modal(Search)}
+    icon={SearchIcon}
+    label='Search Scales'
   />
   <Button
     on:click={() => {}} 

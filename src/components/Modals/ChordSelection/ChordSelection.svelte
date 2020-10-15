@@ -2,46 +2,57 @@
   import { ChordSet } from "../../../Utils/Music/ChordSet";
   import ChordChoice from './ChordChoice.svelte';
   import {getStore} from '../../../store';
-  const {intervalSet, selectedChords} = getStore();
+  import {romanNumerals} from '../../../Data/romanNumerals';
+  import { Chord } from "../../../Utils/Music/Chord";
+  import type { Note } from "../../../Utils/Music/Note";
+  const {intervalSet, selectedChords, noteSet, tonalCenter} = getStore();
 
-  const showAll = () => selectedChords.set(ChordSet.fromAllChords);
-  const showDefault = () => selectedChords.set(ChordSet.fromDefaultChords);
+  const allChords = ChordSet.fromAllChords;
+
+  $: notes = $noteSet.notes;
   
-  $: defaultChordsAreSelected = $selectedChords.equals(ChordSet.fromDefaultChords);
-  $: chordsInScale = ChordSet.fromContainingIntervalSet($intervalSet).chords;
+  /**
+   * Test whether the given chord at the given note exists within the current
+   * intervalSet.
+   */
+  const isValid = (chord: Chord, note: Note) => 
+    $intervalSet.contains(chord.shift(note.id - $tonalCenter))
+
 </script>
 
 <div id='chord-selection'>
 
-  <div class='heading'>
-    <h2>Chords in scale</h2>
-    <div class='togglers'>
-      {#if defaultChordsAreSelected}
-        <span on:click={showAll}>Show all</span>
-      {:else}
-        <span on:click={showDefault}>Show default</span>
-      {/if}
-    </div>
-  </div>
+  <h2>Choose Chords to Display Within Scale</h2>
 
-  <div class='chord-choices'>
-    {#each chordsInScale as chord (chord.binary)}
-      <ChordChoice {chord} isSelected={$selectedChords.containsChord(chord)} />
+  <table>
+    <tr>
+      <th></th>
+      {#each notes as note, index}
+        <th>{romanNumerals[index + 1]}</th>
+      {/each}
+    </tr>
+    <tr>
+      <th></th>
+      {#each notes as note}
+        <th>{note.guaranteedName.unicode}</th>
+      {/each}
+    </tr>
+    {#each allChords.chords as chord}
+      <tr>
+        <th>{chord.defaultName} chord</th>
+        {#each notes as note}
+          <td>
+            {#if isValid(chord, note)}
+              <ChordChoice {chord} {note} />
+            {/if}
+          </td>
+        {/each}
+      </tr>
     {/each}
-  </div>
+  </table>
 
 </div>
 
 <style>
-  #chord-selection {overflow: scroll;}
-  .heading {
-    display: flex;
-    align-items: baseline;
-    align-content: center;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .heading > * { margin: 0 1em 0.5em 1em; }
-  .togglers span {font-style: italic;}
-  .chord-choices {display: flex; flex-wrap: wrap; justify-content: center;}
+
 </style>
