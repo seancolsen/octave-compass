@@ -14,6 +14,11 @@ test('ordinals major chord', () => {
     .toEqual([0, 4, 7]);
 });
 
+test('intervals major chord', () => {
+  expect(IntervalSet.fromBinary(0b000010010001).intervals.map(i => i.shortName))
+    .toEqual(['1', '3', '5']);
+});
+
 test('isActive', () => {
   expect(IntervalSet.fromBinary(0b000010010001).isActive(0)).toBe(true);
   expect(IntervalSet.fromBinary(0b000010010001).isActive(1)).toBe(false);

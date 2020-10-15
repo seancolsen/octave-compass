@@ -1,5 +1,7 @@
+import { threadId } from "worker_threads";
 import { musicTheory } from "./../../Data/musicTheory";
 import { Scalar } from "./../Math/Scalar";
+import { Interval } from "./Interval";
 import { IntervalSetBinary } from "./IntervalSetBinary";
 
 const divisions = musicTheory.octaveDivisions;
@@ -104,6 +106,14 @@ export class IntervalSet {
    */
   get ordinals(): number[] {
     return IntervalSetBinary.toOrdinals(this.binary);
+  }
+
+  /**
+   * Return an array of Interval objects representing the intervals contained
+   * within this set.
+   */
+  get intervals(): Interval[] {
+    return this.ordinals.map(o => new Interval(o));
   }
 
   /**
