@@ -152,11 +152,12 @@
     initialGrabAngle = pointerGrabAngle(e);
     $isRotating = true;
     rotationWhenGrabbed = $rotation;
-    window.addEventListener('mousemove', updateRotationFromPointer, true);
-    window.addEventListener('touchmove', updateRotationFromPointer, true);
-    window.addEventListener('mouseup', transitionToRest, true);
-    window.addEventListener('touchend', transitionToRest, true);
-    window.addEventListener('touchcancel', transitionToRest, true);
+    const opts = {capture: true, passive: false};
+    window.addEventListener('mousemove', updateRotationFromPointer, opts);
+    window.addEventListener('touchmove', updateRotationFromPointer, opts);
+    window.addEventListener('mouseup', transitionToRest, opts);
+    window.addEventListener('touchend', transitionToRest, opts);
+    window.addEventListener('touchcancel', transitionToRest, opts);
   };
 
   /**
@@ -258,7 +259,7 @@
 <g
   transform={`rotate(${Angle.iToD($rotation)})`}
   on:mousedown={isRotatable ? startRotating : undefined}
-  on:touchstart={isRotatable ? startRotating : undefined}
+  on:touchstart|nonpassive={isRotatable ? startRotating : undefined}
   class:isRotatable
   class:isRotating={$isRotating}
   class:isOscillating={isRotatable && !$isRotating}
