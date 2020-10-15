@@ -17,7 +17,7 @@ test('fromOrdinalWithinIntervalSet', () => {
 
 test('arrayFromIntervalSet', () => {
   const intervalSet = IntervalSet.fromBinary(0b101010110101);
-  const setOfPossibleChords = new ChordSet([Chord.fromName('major')]);
+  const setOfPossibleChords = new ChordSet([Chord.fromName('Major')]);
   const ordinalChordSets = OrdinalChordSet.arrayFromIntervalSet(
     intervalSet, setOfPossibleChords
   );

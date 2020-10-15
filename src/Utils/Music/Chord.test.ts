@@ -28,7 +28,7 @@ test('fromBinary called for non-existent chord', () => {
 
 test('names', () => {
   const major0 = Chord.fromBinary(major0Binary);
-  expect(major0.names).toContain('major');
+  expect(major0.names).toContain('Major');
 });
 
 test('allChords', () => {
@@ -36,6 +36,6 @@ test('allChords', () => {
 });
 
 test('fromName', () => {
-  expect(Chord.fromName('major').defaultName).toBe('major');
+  expect(Chord.fromName('Major').defaultName).toBe('Major');
   expect(() => {Chord.fromName('foobar')}).toThrow();
 });

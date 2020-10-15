@@ -52,35 +52,35 @@ test('toggleChord', () => {
 test('uniqueChords', () => {
   expect(ChordSet.uniqueChords([majorChord, anotherMajorChord])
     .map(chord => chord.defaultName)
-  ).toEqual(['major'])
+  ).toEqual(['Major'])
 });
 
 test('sortedChords', () => {
   expect(ChordSet.sortedChords([dominant7Chord, majorChord])
     .map(chord => chord.defaultName)
-  ).toEqual(['major', 'dominant 7'])
+  ).toEqual(['Major', 'Dominant 7'])
 });
 
 test('ensure that chords are sorted and unique', () => {
   expect(dominant7AndMajor.chords.map(c => c.defaultName))
-    .toEqual(['major', 'dominant 7']);
+    .toEqual(['Major', 'Dominant 7']);
   expect(majorAndDiminished.chords.map(c => c.defaultName))
-    .toEqual(['major', 'diminished']);
+    .toEqual(['Major', 'Diminished']);
   expect(majorAndMajorAndDiminished.chords.map(c => c.defaultName))
-    .toEqual(['major', 'diminished']);
+    .toEqual(['Major', 'Diminished']);
 });
 
 test('fromUnion', () => {
   expect(ChordSet.fromUnion([dominant7AndMajor, majorAndDiminished]).chords
     .map(chord => chord.defaultName)
-  ).toEqual(['major', 'diminished', 'dominant 7'])
+  ).toEqual(['Major', 'Diminished', 'Dominant 7'])
 });
 
 test('fromContainingIntervalSet dominant7Chord', () => {
   const dominant7Chord = IntervalSet.fromBinary(0b010010010001);
   const chordSet = ChordSet.fromContainingIntervalSet(dominant7Chord);
   expect(chordSet.chords.map(chord => chord.defaultName))
-    .toEqual(['major', 'diminished', 'dominant 7']);
+    .toEqual(['Major', 'Diminished', 'Dominant 7']);
 });
 
 test('fromContainingIntervalSet chromatic', () => {
@@ -96,8 +96,8 @@ test('fromAllChords', () => {
 
 test('fromChordNames', () => {
   expect(ChordSet.fromChordNames([
-    'major',
-    'minor',
+    'Major',
+    'Minor',
   ]).count).toBe(2);
 });
 
@@ -106,9 +106,9 @@ test('fromDefaultChords', () => {
 });
 
 test('equals', () => {
-  const setA = ChordSet.fromChordNames(['major', 'diminished']);
-  const setB = ChordSet.fromChordNames(['diminished', 'major']);
-  const setC = ChordSet.fromChordNames(['major', 'augmented']);
+  const setA = ChordSet.fromChordNames(['Major', 'Diminished']);
+  const setB = ChordSet.fromChordNames(['Diminished', 'Major']);
+  const setC = ChordSet.fromChordNames(['Major', 'Augmented']);
   expect(setA.equals(setB)).toBe(true);
   expect(setB.equals(setA)).toBe(true);
   expect(setA.equals(setC)).toBe(false);
