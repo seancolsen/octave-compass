@@ -1,19 +1,19 @@
 <script lang="ts">
   import BaseInterval from './Base/BaseInterval.svelte';
-  import { musicTheory } from '../../Data/musicTheory';
   import { scaleRotatorStores } from './Wheel.svelte';
   import {getStore} from '../../store';
+  import { IntervalSet } from '../../Utils/Music/IntervalSet';
   const {intervalSet, editVsPlay} = getStore();
   const scaleIsRotating = scaleRotatorStores.isRotating;
 </script>
 
 <g>
-  {#each musicTheory.intervals as name, ordinal (ordinal)}
+  {#each IntervalSet.chromatic.intervals as interval}
     <BaseInterval
-      interval={ordinal}
-      label={name}
-      isActive={!$scaleIsRotating && $intervalSet.isActive(ordinal)}
-      isClickable={ordinal !== 0 && $editVsPlay === 0}
+      interval={interval.id}
+      label={interval.longName.toLowerCase()}
+      isActive={!$scaleIsRotating && $intervalSet.isActive(interval.id)}
+      isClickable={interval.id !== 0 && $editVsPlay === 0}
     />
   {/each}
 </g>
