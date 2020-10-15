@@ -10,10 +10,14 @@
 
 type StringMap = { [k: string]: string };
 type NotesData = { [k: number]: { names: StringMap } };
+type IntervalData = {
+  longName: string,
+  shortName: string,
+};
 type MusicTheoryData = {
   octaveDivisions: number,
   notes: NotesData,
-  intervals: string[],
+  intervals: IntervalData[],
 };
 
 export const musicTheory: MusicTheoryData = {
@@ -107,18 +111,54 @@ export const musicTheory: MusicTheoryData = {
   },
 
   intervals: [
-    "tonal center",
-    "minor 2",
-    "major 2",
-    "minor 3",
-    "major 3",
-    "perfect 4",
-    "tritone",
-    "perfect 5",
-    "minor 6",
-    "major 6",
-    "minor 7",
-    "major 7",
+    {
+      longName: "Tonal center",
+      shortName: "1",
+    },
+    {
+      longName: "Minor 2",
+      shortName: "♭2",
+    },
+    {
+      longName: "Major 2",
+      shortName: "2",
+    },
+    {
+      longName: "Minor 3",
+      shortName: "♭3",
+    },
+    {
+      longName: "Major 3",
+      shortName: "3",
+    },
+    {
+      longName: "Perfect 4",
+      shortName: "4",
+    },
+    {
+      longName: "Tritone",
+      shortName: "♭5",
+    },
+    {
+      longName: "Perfect 5",
+      shortName: "5",
+    },
+    {
+      longName: "Minor 6",
+      shortName: "♭6",
+    },
+    {
+      longName: "Major 6",
+      shortName: "6",
+    },
+    {
+      longName: "Minor 7",
+      shortName: "♭7",
+    },
+    {
+      longName: "Major 7",
+      shortName: "7",
+    },
   ],
 
 };
