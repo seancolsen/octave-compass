@@ -45,7 +45,50 @@ export class Angle {
    * coordinate system) in radians.
    */
   static iToP(i: number): number {
-    return Scalar.wrap((2 + 1 / 2) * PI - i * 2 * PI / musicTheory.octaveDivisions, 2 * PI);
+    return Scalar.wrap(
+      (2 + 1 / 2) * PI - i * 2 * PI / musicTheory.octaveDivisions,
+      2 * PI
+    );
+  }
+
+  /**
+   * Calculate the minimum distance between two angles. Move clockwise or
+   * counterclockwise. The distance returned will always be positive.
+   *
+   * @param a One angle
+   * @param b Another angle
+   * @param circleUnit Used to specify the units of both angles.
+   *  - Pass `2 * PI` here if both angles are in radians.
+   *  - Pass `1` here if both angles are in revolutions.
+   *  - Pass the number of octave divisions (e.g. 12) if both angles are in
+   *    "interval" units.
+   */
+  static betweenAngles(a: number, b: number, circleUnit: number): number {
+    return Math.min( ...[a - b, b - a].map(d => Scalar.wrap(d, circleUnit)) );
+  }
+
+  /**
+   * Return the value within choices that is nearest to angle. If multiple
+   * choices tie for nearest, return the first listed one.
+   *
+   * @param angle
+   * @param choices An array of possible angles.
+   * @param circleUnit Used to specify the units of both angles.
+   *  - Pass `2 * PI` here if both angles are in radians.
+   *  - Pass `1` here if both angles are in revolutions.
+   *  - Pass the number of octave divisions (e.g. 12) if both angles are in
+   *    "interval" units.
+   */
+  static nearest(
+    angle: number,
+    choices: number[],
+    circleUnit: number
+  ): any {
+    const distances = choices.map(choice =>
+      Angle.betweenAngles(choice, angle, circleUnit)
+    );
+    const minDistance = Math.min(...distances);
+    return choices[distances.indexOf(minDistance)];
   }
 
 }

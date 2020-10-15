@@ -23,7 +23,6 @@
 
 <script lang="ts">
   import { Scalar } from '../../Utils/Math/Scalar';
-  import { Ordinal } from '../../Utils/Music/Ordinal';
   import { XyPoint } from '../../Utils/Geometry/XyPoint';
   import { musicTheory } from '../../Data/musicTheory';
   import { Angle } from '../../Utils/Geometry/Angle';
@@ -173,7 +172,7 @@
     $rotation = grabAngle + (rotationWhenGrabbed||0) - (initialGrabAngle||0);
     $currentDetent = Scalar.wrapToOctave(
       detents ?
-        Ordinal.nearestValid($rotation, detents) :
+        Angle.nearest($rotation, detents, musicTheory.octaveDivisions) :
         // If we don't have detents then assume integers are detents.
         Math.round($rotation)
     );

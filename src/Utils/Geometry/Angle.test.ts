@@ -36,3 +36,27 @@ test('pToI', () => {
   expect(Angle.pToI(3 * PI / 2)).toBeRoughly(6);
   expect(Angle.pToI(PI)).toBeRoughly(9);
 });
+
+test('betweenAngles', () => {
+  expect(Angle.betweenAngles(1, 1, 12)).toBe(0);
+  expect(Angle.betweenAngles(1, 2, 12)).toBe(1);
+  expect(Angle.betweenAngles(0, 12, 12)).toBe(0);
+  expect(Angle.betweenAngles(0, 11, 12)).toBe(1);
+  expect(Angle.betweenAngles(1, 11, 12)).toBe(2);
+  expect(Angle.betweenAngles(0, 6, 12)).toBe(6);
+  expect(Angle.betweenAngles(1, 7, 12)).toBe(6);
+  expect(Angle.betweenAngles(1, 8, 12)).toBe(5);
+  expect(Angle.betweenAngles(0, 24, 12)).toBe(0);
+  expect(Angle.betweenAngles(3, 27, 12)).toBe(0);
+  expect(Angle.betweenAngles(3, 28, 12)).toBe(1);
+  expect(Angle.betweenAngles(-1, -1, 12)).toBe(0);
+  expect(Angle.betweenAngles(-1, -2, 12)).toBe(1);
+  expect(Angle.betweenAngles(-1, -9, 12)).toBe(4);
+});
+
+test('nearestValid', () => {
+  expect(Angle.nearest(6, [4, 7], 12)).toBe(7);
+  expect(Angle.nearest(4.5, [-1, 12, 0, 18, 12, 13], 12)).toBe(18);
+  expect(Angle.nearest(2, [1, 3], 12)).toBe(1);
+  expect(Angle.nearest(0, [10, 11], 12)).toBe(11);
+});
