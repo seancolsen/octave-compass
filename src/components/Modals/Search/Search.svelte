@@ -15,16 +15,14 @@
   import { Scale } from '../../../Utils/Music/Scale';
   import { Chord } from '../../../Utils/Music/Chord';
   import { getStore } from '../../../store';
-  import { getContext } from 'svelte';
 
   const {intervalSet} = getStore();
-  const {close} = getContext('simple-modal');
   
   let query = ''; 
 
   function select(is: IntervalSet) {
     intervalSet.smartUpdate(_ => is);
-    close();
+    // close();
   }
 
   $: searchTerms = query.split(' ');

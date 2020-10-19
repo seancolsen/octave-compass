@@ -13,9 +13,9 @@
   import type { Readable } from "svelte/store";
 
   const {editVsPlay} = getStore();
-  const {open} = getContext('simple-modal');
   const isVertical = getContext('toolbarIsVertical') as Readable<boolean>;
-  const modal = (component: any) => open(component, {}, {styleWindow: {}});
+  // const modal = (component: any) => open(component, {}, {styleWindow: {}});
+  const modal = (component: any) => {};
 </script>
 
 <div class='toolbar' class:isVertical={$isVertical} >
