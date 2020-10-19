@@ -1,7 +1,3 @@
 module.exports = {
-  "roots": [
-    "<rootDir>/src"
-  ],
-  preset: 'ts-jest',
-  testEnvironment: 'node',
+  ...require("@snowpack/app-scripts-svelte/jest.config.js")(),
 };
