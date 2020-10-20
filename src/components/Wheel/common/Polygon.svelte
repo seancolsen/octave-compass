@@ -1,6 +1,6 @@
 <script lang="ts">
   import { XyPoint } from './../../../Utils/Geometry/XyPoint';
-  import { IrPoint } from '../../../Utils/Geometry/IrPoint';
+  import type { IrPoint } from '../../../Utils/Geometry/IrPoint';
   
   let className = undefined as string | undefined;
   export {className as class};

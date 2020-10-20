@@ -1,6 +1,6 @@
 import { CustomMath } from './../Math/CustomMath';
-import { NoteName } from './NoteName';
-import { NoteSet } from './NoteSet';
+import type { NoteName } from './NoteName';
+import type { NoteSet } from './NoteSet';
 
 const demeritFactors = {
   accidentalInsteadOfNatural: 1,

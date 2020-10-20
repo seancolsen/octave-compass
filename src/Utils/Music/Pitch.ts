@@ -1,5 +1,5 @@
 import { musicTheory } from "./../../Data/musicTheory";
-import { Note } from './Note';
+import type { Note } from './Note';
 
 export class Pitch {
 

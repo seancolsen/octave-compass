@@ -1,4 +1,4 @@
-import { Chord } from "./Chord";
+import type { Chord } from "./Chord";
 
 /**
  * Stores a chord at a specific ordinal.

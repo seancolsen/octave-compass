@@ -1,6 +1,6 @@
 import { Chord } from "./Chord";
 import { OrdinalChordSet } from "./OrdinalChordSet";
-import { IntervalSet } from "./IntervalSet";
+import type { IntervalSet } from "./IntervalSet";
 
 /**
  * This represents a set of chords.

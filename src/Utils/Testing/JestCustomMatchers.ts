@@ -1,4 +1,4 @@
-import { Point } from './../Geometry/Point';
+import type { Point } from './../Geometry/Point';
 import { CustomMath } from './../Math/CustomMath';
 
 export function toBeRoughly(received: number, argument: number) {

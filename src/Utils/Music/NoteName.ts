@@ -1,5 +1,5 @@
 import { Modifier } from "./Modifier";
-import { Note } from './Note';
+import type { Note } from './Note';
 
 export class NoteName {
 

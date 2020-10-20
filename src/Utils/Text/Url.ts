@@ -1,7 +1,7 @@
 import { IntervalSetFactory } from "./../Music/IntervalSetFactory";
 import { Scalar } from "./../Math/Scalar";
 import { IntervalSetBinary } from "./../Music/IntervalSetBinary";
-import { IntervalSet } from "../Music/IntervalSet";
+import type { IntervalSet } from "../Music/IntervalSet";
 
 const separator = '-';
 const defaultIntervalSetBin = 0b101010110101;

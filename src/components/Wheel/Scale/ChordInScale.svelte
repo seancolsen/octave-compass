@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Chord } from '../../../Utils/Music/Chord';
+  import type { Chord } from '../../../Utils/Music/Chord';
   import { IrPoint } from '../../../Utils/Geometry/IrPoint';
   import { Note } from '../../../Utils/Music/Note';
   import ChordEmblem from '../../common/ChordEmblem.svelte';

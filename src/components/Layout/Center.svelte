@@ -1,6 +1,6 @@
 <script>
   import Wheel from "../Wheel/Wheel.svelte";
-  import LinearKeyboard from '../LinearKeyboard/LinearKeyboard.svelte';
+  // import LinearKeyboard from '../LinearKeyboard/LinearKeyboard.svelte';
 </script>
 
 <div class='center'>

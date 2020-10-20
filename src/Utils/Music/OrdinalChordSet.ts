@@ -1,6 +1,6 @@
 import { ChordSet } from "./ChordSet";
-import { IntervalSet } from "./IntervalSet";
-import { Chord } from "./Chord";
+import type { IntervalSet } from "./IntervalSet";
+import type { Chord } from "./Chord";
 
 /**
  * This represents a set of chords at a given interval within a scale.

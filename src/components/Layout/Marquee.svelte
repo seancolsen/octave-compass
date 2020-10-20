@@ -29,7 +29,7 @@
       <div class='subtitle'>
         {#if nameCount > 0}
       
-          <span class='aka'>Also know as: </span>
+          <span class='aka'>Also know as </span>
           {$alternateScaleNames[0]}
       
           {#if nameCount > 1}

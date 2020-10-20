@@ -1,7 +1,7 @@
 <script lang="ts">
   import KeyPolygon from './KeyPolygon.svelte';
   import KeyLabelSet from './KeyLabelSet.svelte';
-  import { Note } from '../../../Utils/Music/Note';
+  import type { Note } from '../../../Utils/Music/Note';
   import Key from '../../Keyboard/Key.svelte';
   import {getStore} from '../../../store';
   import {useLight} from '../../Lighting/Light';

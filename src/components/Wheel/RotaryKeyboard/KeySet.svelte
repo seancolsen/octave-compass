@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { NoteSet } from "../../../Utils/Music/NoteSet";
+  import type { NoteSet } from "../../../Utils/Music/NoteSet";
   import RotaryKey from "./RotaryKey.svelte";
   export let noteSet: NoteSet;
   export let isActive: boolean;

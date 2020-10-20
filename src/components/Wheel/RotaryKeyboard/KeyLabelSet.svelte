@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Note } from "../../../Utils/Music/Note";
+  import type { Note } from "../../../Utils/Music/Note";
   import Arc from "../common/Arc.svelte";
   import KeyLabel from './KeyLabel.svelte';
   import {getStore} from '../../../store';
-  const {editVsPlay, tonalCenter} = getStore();
+  const {editVsPlay} = getStore();
 
   const tieSpan = 0.2;
 

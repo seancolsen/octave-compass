@@ -1,5 +1,5 @@
 import { writable, derived, get} from 'svelte/store';
-import { IntervalSet } from './Utils/Music/IntervalSet';
+import type { IntervalSet } from './Utils/Music/IntervalSet';
 import { IntervalSetFactory } from './Utils/Music/IntervalSetFactory';
 import { ChordSet } from './Utils/Music/ChordSet';
 import { NoteSet } from './Utils/Music/NoteSet';

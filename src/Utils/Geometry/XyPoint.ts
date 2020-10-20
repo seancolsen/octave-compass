@@ -1,6 +1,6 @@
 import { Scalar } from "./../Math/Scalar";
 import { PrPoint } from "./PrPoint";
-import { IrPoint } from "./IrPoint";
+import type { IrPoint } from "./IrPoint";
 import { Point } from './Point';
 import { CustomMath } from "../Math/CustomMath";
 import { musicTheory } from "../../Data/musicTheory";

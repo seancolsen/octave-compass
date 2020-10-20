@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Scalar } from '../../../Utils/Math/Scalar';
-  import { ChordSet } from '../../../Utils/Music/ChordSet';
-  import { Note } from '../../../Utils/Music/Note';
+  import type { ChordSet } from '../../../Utils/Music/ChordSet';
+  import type { Note } from '../../../Utils/Music/Note';
   import ChordInScale from './ChordInScale.svelte';
   import {getStore} from '../../../store';
   const {editVsPlay} = getStore();
