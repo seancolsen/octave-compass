@@ -1,4 +1,3 @@
-import { threadId } from "worker_threads";
 import { musicTheory } from "./../../Data/musicTheory";
 import { Scalar } from "./../Math/Scalar";
 import { Interval } from "./Interval";
