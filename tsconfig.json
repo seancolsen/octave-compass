@@ -6,6 +6,10 @@
     "target": "es2017",
     "moduleResolution": "node",
     "jsx": "preserve",
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     "baseUrl": "./",
     /* paths - If you configure Snowpack import aliases, add them here. */
     "paths": {},
