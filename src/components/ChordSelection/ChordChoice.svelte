@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { Chord } from "../../../Utils/Music/Chord";
-  import ChordEmblem from '../../common/ChordEmblem.svelte';
-  import {getStore} from '../../../store';
-  import type { Note } from "../../../Utils/Music/Note";
+  import type { Chord } from "../../Utils/Music/Chord";
+  import ChordEmblem from '../common/ChordEmblem.svelte';
+  import {getStore} from '../../store';
+  import type { Note } from "../../Utils/Music/Note";
   const {selectedChords} = getStore();
 
   export let chord: Chord;

@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import ChordSelection from "../Modals/ChordSelection/ChordSelection.svelte";
+  import ChordSelection from "../ChordSelection/ChordSelection.svelte";
   import ScaleInfo from "../ScaleInfo.svelte";
   import Wheel from "../Wheel/Wheel.svelte";
   import LinearKeyboard from '../LinearKeyboard/LinearKeyboard.svelte';

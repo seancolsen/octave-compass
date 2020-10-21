@@ -7,14 +7,14 @@
 
 <script lang='ts'>
   import {default as data}
-    from '../../../Data/computed/output/searchableIntervalSetData.json';
-  import WithPlural from '../../common/WithPlural.svelte';
-  import { IntervalSetFactory } from "../../../Utils/Music/IntervalSetFactory";
+    from '../../Data/computed/output/searchableIntervalSetData.json';
+  import WithPlural from '../common/WithPlural.svelte';
+  import { IntervalSetFactory } from "../../Utils/Music/IntervalSetFactory";
   import ResultRow from './ResultRow.svelte';
-  import type { IntervalSet } from '../../../Utils/Music/IntervalSet';
-  import { Scale } from '../../../Utils/Music/Scale';
-  import { Chord } from '../../../Utils/Music/Chord';
-  import { getStore } from '../../../store';
+  import type { IntervalSet } from '../../Utils/Music/IntervalSet';
+  import { Scale } from '../../Utils/Music/Scale';
+  import { Chord } from '../../Utils/Music/Chord';
+  import { getStore } from '../../store';
 
   const {intervalSet} = getStore();
   

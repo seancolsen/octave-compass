@@ -1,18 +1,17 @@
 <script lang='ts'>
   import { getContext } from "svelte";
   import Button from "./Button.svelte";
-  import ChooseChordsIcon from "./Icons/ChooseChordsIcon.svelte";
-  import SearchIcon from "./Icons/SearchIcon.svelte";
+  import ChooseChordsIcon from "../common/Icons/ChooseChordsIcon.svelte";
+  import SearchIcon from "../common/Icons/SearchIcon.svelte";
   import Divider from "./Divider.svelte";
-  import PlaySoundsIcon from "./Icons/PlaySoundsIcon.svelte";
-  import EditScaleIcon from "./Icons/EditScaleIcon.svelte";
+  import PlaySoundsIcon from "../common/Icons/PlaySoundsIcon.svelte";
+  import EditScaleIcon from "../common/Icons/EditScaleIcon.svelte";
   import { getStore } from "../../store";
-  import MoreOptionsIcon from "./Icons/MoreOptionsIcon.svelte";
+  import MoreOptionsIcon from "../common/Icons/MoreOptionsIcon.svelte";
   import type { Readable } from "svelte/store";
   import {centerPanes as center} from '../Layout/Layout.svelte';
   import {modalPanes as modal} from '../Layout/Layout.svelte';
-  import ScaleInfoIcon from "./Icons/ScaleInfoIcon.svelte";
-import Search from "../Modals/Search/Search.svelte";
+  import ScaleInfoIcon from "../common/Icons/ScaleInfoIcon.svelte";
   
   const {editVsPlay} = getStore();
   const isVertical = getContext('toolbarIsVertical') as Readable<boolean>;
