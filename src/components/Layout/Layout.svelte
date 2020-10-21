@@ -3,16 +3,17 @@
 
   const center = new PaneAreaController({canBeEmpty: false});
   export const centerPanes = {
-    Wheel:          center.addPane({isInitiallyOpen: true}),
+    Wheel: center.addPane({isInitiallyOpen: true}),
     LinearKeyboard: center.addPane(),
     ChordSelection: center.addPane(),
-    ScaleInfo:      center.addPane(),
+    ScaleInfo: center.addPane(),
   };
 
-  // const modal = new PaneAreaController({
-  //   canBeEmpty: true,
-  // })
-
+  const modal = new PaneAreaController({canBeEmpty: true});
+  export const modalPanes = {
+    Search: modal.addPane(),
+    Options: modal.addPane(),
+  };
 </script>
 
 
@@ -23,6 +24,7 @@
   import Center from "./Center.svelte";
   import { setContext } from "svelte";
   import { derived, writable } from "svelte/store";
+  import Modals from "./Modals.svelte";
 
   let width = writable(1000);
   let height = writable(1000);
@@ -33,40 +35,39 @@
   setContext('toolbarIsVertical', toolbarIsVertical);
 </script>
 
-
-<div
-  id='layout'
-  class:toolbarIsVertical={$toolbarIsVertical}
-  bind:clientWidth={$width}
-  bind:clientHeight={$height}
->
-  <div id='toolbar'><Toolbar /></div>
-  <div id='marquee'><Marquee /></div>
-  <div id='center'><Center /></div>
-  <div id='footer'><Footer /></div>
+<div id='layout'>
+  <div
+    id='grid'
+    class:toolbarIsVertical={$toolbarIsVertical}
+    bind:clientWidth={$width}
+    bind:clientHeight={$height}
+  >
+    <div id='toolbar'><Toolbar /></div>
+    <div id='marquee'><Marquee /></div>
+    <div id='center'><Center /></div>
+    <div id='footer'><Footer /></div>
+  </div>
+  <Modals />
 </div>
 
 <style>
   :global(body) { background: #AAA; }
+  #layout { height: 100%; width: 100%; position: relative}
 
   /* Set z-index for everything. */
-  #layout > * {position: relative;}
+  #grid > * {position: relative;}
   #toolbar { z-index: 3; }
   #marquee { z-index: 2; }
   #center { z-index: 0; }
   #footer { z-index: 1; }
-  
-  /* Region-specific stuff here */
-  /* #marquee { margin: 0 6em; } */
-
 
   /* ======================================================================= */
   /* Responsive stuff */
   
-  #layout { height: 100%; width: 100%; display: grid; }
+  #grid { height: 100%; width: 100%; display: grid; }
 
   /* Begin with tall windows */
-  #layout {grid-template: auto 6em 1fr 3em / 1fr;}
+  #grid {grid-template: auto 6em 1fr 3em / 1fr;}
   #toolbar { grid-row: 1          ; grid-column: 1 ; }
   #marquee { grid-row: 2          ; grid-column: 1 ; }
   #center  { grid-row: 2 / span 3 ; grid-column: 1 ; }
@@ -77,10 +78,10 @@
   We don't use media queries because we need to also change some other stuff
   in more deeply nested components.
   */
-  #layout.toolbarIsVertical {grid-template: 5em 1fr 3em / auto 1fr;}
-  #layout.toolbarIsVertical #toolbar { grid-row: 1 / span 3 ; grid-column: 1 ; }
-  #layout.toolbarIsVertical #marquee { grid-row: 1          ; grid-column: 2 ; }
-  #layout.toolbarIsVertical #center  { grid-row: 1 / span 3 ; grid-column: 2 ; }
-  #layout.toolbarIsVertical #footer  { grid-row: 3          ; grid-column: 2 ; }
+  #grid.toolbarIsVertical {grid-template: 5em 1fr 3em / auto 1fr;}
+  #grid.toolbarIsVertical #toolbar { grid-row: 1 / span 3 ; grid-column: 1 ; }
+  #grid.toolbarIsVertical #marquee { grid-row: 1          ; grid-column: 2 ; }
+  #grid.toolbarIsVertical #center  { grid-row: 1 / span 3 ; grid-column: 2 ; }
+  #grid.toolbarIsVertical #footer  { grid-row: 3          ; grid-column: 2 ; }
   
 </style>

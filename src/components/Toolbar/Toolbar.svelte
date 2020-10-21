@@ -10,7 +10,9 @@
   import MoreOptionsIcon from "./Icons/MoreOptionsIcon.svelte";
   import type { Readable } from "svelte/store";
   import {centerPanes as center} from '../Layout/Layout.svelte';
+  import {modalPanes as modal} from '../Layout/Layout.svelte';
   import ScaleInfoIcon from "./Icons/ScaleInfoIcon.svelte";
+import Search from "../Modals/Search/Search.svelte";
   
   const {editVsPlay} = getStore();
   const isVertical = getContext('toolbarIsVertical') as Readable<boolean>;
@@ -44,20 +46,20 @@
     isActive={playButtonIsActive}
   />
   <Button
-    on:click={() => center.ChordSelection.open()}
+    on:click={center.ChordSelection.open}
     icon={ChooseChordsIcon}
     label='Choose Chords'
     isActive={$chordsIsOpen}
   />
   <Button
-    on:click={() => center.ScaleInfo.open()}
+    on:click={center.ScaleInfo.open}
     icon={ScaleInfoIcon}
     label='Scale Info'
     isActive={$infoIsOpen}
   />
   <Divider />
   <Button
-    on:click={() => {}}
+    on:click={modal.Search.open}
     icon={SearchIcon}
     label='Search Scales'
   />

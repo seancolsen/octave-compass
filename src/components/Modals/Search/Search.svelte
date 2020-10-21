@@ -44,8 +44,7 @@
 
 </script>
 
-<h2>Search for Scales &amp; Chords by Name</h2>
-
+Name: 
 <input bind:value={query} />
 
 <div class='stats'>
