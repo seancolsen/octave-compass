@@ -10,6 +10,7 @@
   import MoreOptionsIcon from "./Icons/MoreOptionsIcon.svelte";
   import type { Readable } from "svelte/store";
   import {centerPanes as center} from '../Layout/Layout.svelte';
+  import ScaleInfoIcon from "./Icons/ScaleInfoIcon.svelte";
   
   const {editVsPlay} = getStore();
   const isVertical = getContext('toolbarIsVertical') as Readable<boolean>;
@@ -50,7 +51,7 @@
   />
   <Button
     on:click={() => center.ScaleInfo.open()}
-    icon={ChooseChordsIcon}
+    icon={ScaleInfoIcon}
     label='Scale Info'
     isActive={$infoIsOpen}
   />
