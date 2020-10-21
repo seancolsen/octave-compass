@@ -1,8 +1,6 @@
 <script lang='ts'>
   import { getContext } from "svelte";
   import Button from "./Button.svelte";
-  import ChordSelection from "../Modals/ChordSelection/ChordSelection.svelte";
-  import Search from "../Modals/Search/Search.svelte";
   import ChooseChordsIcon from "./Icons/ChooseChordsIcon.svelte";
   import SearchIcon from "./Icons/SearchIcon.svelte";
   import Divider from "./Divider.svelte";
@@ -11,35 +9,54 @@
   import { getStore } from "../../store";
   import MoreOptionsIcon from "./Icons/MoreOptionsIcon.svelte";
   import type { Readable } from "svelte/store";
-
+  import {centerPanes as center} from '../Layout/Layout.svelte';
+  
   const {editVsPlay} = getStore();
   const isVertical = getContext('toolbarIsVertical') as Readable<boolean>;
-  // const modal = (component: any) => open(component, {}, {styleWindow: {}});
-  const modal = (component: any) => {};
+
+  const wheelIsOpen = center.Wheel.isOpen;
+  const chordsIsOpen = center.ChordSelection.isOpen;
+  const infoIsOpen = center.ScaleInfo.isOpen;
+  $: editButtonIsActive = $editVsPlay === 0 && $wheelIsOpen;
+  $: playButtonIsActive = $editVsPlay === 1 && $wheelIsOpen;
+  
 </script>
 
 <div class='toolbar' class:isVertical={$isVertical} >
 
   <Button
-    on:click={() => {editVsPlay.setWithTransition(0)}}
+    on:click={() => {
+      editVsPlay.setWithTransition(0);
+      center.Wheel.open();
+    }}
     icon={EditScaleIcon}
     label='Edit Scale'
-    isActive={$editVsPlay === 0}
+    isActive={editButtonIsActive}
   />
   <Button
-    on:click={() => {editVsPlay.setWithTransition(1)}}
+    on:click={() => {
+      editVsPlay.setWithTransition(1);
+      center.Wheel.open();
+    }}
     icon={PlaySoundsIcon}
     label='Play Sounds'
-    isActive={$editVsPlay === 1}
+    isActive={playButtonIsActive}
   />
   <Button
-    on:click={() => modal(ChordSelection)}
+    on:click={() => center.ChordSelection.open()}
     icon={ChooseChordsIcon}
     label='Choose Chords'
+    isActive={$chordsIsOpen}
+  />
+  <Button
+    on:click={() => center.ScaleInfo.open()}
+    icon={ChooseChordsIcon}
+    label='Scale Info'
+    isActive={$infoIsOpen}
   />
   <Divider />
   <Button
-    on:click={() => modal(Search)}
+    on:click={() => {}}
     icon={SearchIcon}
     label='Search Scales'
   />

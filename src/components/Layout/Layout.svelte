@@ -1,3 +1,21 @@
+<script lang="ts" context='module'>
+  import { PaneAreaController } from './Panes/PaneAreaController';
+
+  const center = new PaneAreaController({canBeEmpty: false});
+  export const centerPanes = {
+    Wheel:          center.addPane({isInitiallyOpen: true}),
+    LinearKeyboard: center.addPane(),
+    ChordSelection: center.addPane(),
+    ScaleInfo:      center.addPane(),
+  };
+
+  // const modal = new PaneAreaController({
+  //   canBeEmpty: true,
+  // })
+
+</script>
+
+
 <script lang="ts">
   import Marquee from "./Marquee.svelte";
   import Toolbar from "../Toolbar/Toolbar.svelte";
@@ -5,7 +23,7 @@
   import Center from "./Center.svelte";
   import { setContext } from "svelte";
   import { derived, writable } from "svelte/store";
-  
+
   let width = writable(1000);
   let height = writable(1000);
 
@@ -13,7 +31,6 @@
     ([w, h]: [number, number]) => w / h > 0.9
   );
   setContext('toolbarIsVertical', toolbarIsVertical);
-  
 </script>
 
 
@@ -65,7 +82,5 @@
   #layout.toolbarIsVertical #marquee { grid-row: 1          ; grid-column: 2 ; }
   #layout.toolbarIsVertical #center  { grid-row: 1 / span 3 ; grid-column: 2 ; }
   #layout.toolbarIsVertical #footer  { grid-row: 3          ; grid-column: 2 ; }
-
-  
   
 </style>

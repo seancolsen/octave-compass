@@ -1,11 +1,17 @@
-<script>
+<script lang='ts'>
+  import ChordSelection from "../Modals/ChordSelection/ChordSelection.svelte";
+  import ScaleInfo from "../ScaleInfo.svelte";
   import Wheel from "../Wheel/Wheel.svelte";
-  // import LinearKeyboard from '../LinearKeyboard/LinearKeyboard.svelte';
+  import LinearKeyboard from '../LinearKeyboard/LinearKeyboard.svelte';
+  import {centerPanes as panes} from './Layout.svelte';
+  import Pane from "./Panes/Pane.svelte";
 </script>
 
 <div class='center'>
-  <Wheel/>
-  <!-- <LinearKeyboard /> -->
+  <Pane ctrl={panes.Wheel}><Wheel /></Pane>
+  <Pane ctrl={panes.ChordSelection}><ChordSelection /></Pane>
+  <Pane ctrl={panes.LinearKeyboard}><LinearKeyboard /></Pane>
+  <Pane ctrl={panes.ScaleInfo}><ScaleInfo /></Pane>
 </div>
 
 <style>
@@ -16,5 +22,4 @@
     justify-content: center;
     align-content: center;
   }
-
 </style>

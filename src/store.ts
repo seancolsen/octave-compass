@@ -13,9 +13,9 @@ import { LightingController } from './components/Lighting/LightingController';
 /**
  * ABOUT THIS FILE:
  *
- * - The `====` line comments serve to delineate stores:rom one
+ * - The `====` line comments serve to delineate stores from one
  *   another.
- * - When one store needs several intermediate variables before I:rap
+ * - When one store needs several intermediate variables before I wrap
  *   it in an IIFE so that those variables can have their own scope.
  *
  * Originally, I used separate files for all these stores, which is an approach

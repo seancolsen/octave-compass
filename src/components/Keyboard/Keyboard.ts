@@ -68,7 +68,6 @@ export function setupKeyboard(
       newlyTouchedKeyElements
     } = pressKeysThatAreTouched(e.touches);
     const isImmediateReset = newlyTouchedKeyElements.length > 0;
-    console.log(keyElementsStore);
     releaseKeysThatAreNotTouched(
       get(keyElementsStore),
       touchedKeyElements,
