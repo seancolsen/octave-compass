@@ -29,6 +29,7 @@
     justify-content: flex-start;
     border-bottom: solid #DDD 0.1em;
     cursor: pointer;
+    padding: 0 0.6em;
   }
   .result:hover {
     background: #EEE;

@@ -4,9 +4,15 @@
   export let isActive = false as boolean;
 </script>
 
-<div class='button' class:isActive on:click >
+<div
+  class='button'
+  class:isActive
+  role="button"
+  aria-pressed={isActive ? 'true' : 'false'}
+  on:click
+>
   {#if icon}<div class='icon'><svelte:component this={icon} /></div>{/if}
-  <div>{label}</div>
+  {#if label}<div>{label}</div>{/if}
 </div>
 
 <style>

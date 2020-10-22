@@ -4,6 +4,7 @@
   import ModalPane from "./Panes/ModalPane.svelte";
 </script>
 
-<ModalPane ctrl={panes.Search}
-  title='Search for Scales and Chords'
-><Search /></ModalPane>
+<ModalPane ctrl={panes.Search}>
+  <span slot='title'>Search Scales &amp; Chords</span>
+  <Search />
+</ModalPane>
