@@ -1,6 +1,5 @@
 <script lang='ts'>
   import ChordSelection from "../ChordSelection/ChordSelection.svelte";
-  import ScaleInfo from "../ScaleInfo.svelte";
   import Wheel from "../Wheel/Wheel.svelte";
   import LinearKeyboard from '../LinearKeyboard/LinearKeyboard.svelte';
   import {centerPanes as panes} from './Layout.svelte';
@@ -11,7 +10,6 @@
   <Pane ctrl={panes.Wheel}><Wheel /></Pane>
   <Pane ctrl={panes.ChordSelection}><ChordSelection /></Pane>
   <Pane ctrl={panes.LinearKeyboard}><LinearKeyboard /></Pane>
-  <Pane ctrl={panes.ScaleInfo}><ScaleInfo /></Pane>
 </div>
 
 <style>

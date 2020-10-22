@@ -11,14 +11,12 @@
   import type { Readable } from "svelte/store";
   import {centerPanes as center} from '../Layout/Layout.svelte';
   import {modalPanes as modal} from '../Layout/Layout.svelte';
-  import ScaleInfoIcon from "../common/Icons/ScaleInfoIcon.svelte";
   
   const {editVsPlay} = getStore();
   const isVertical = getContext('toolbarIsVertical') as Readable<boolean>;
 
   const wheelIsOpen = center.Wheel.isOpen;
   const chordsIsOpen = center.ChordSelection.isOpen;
-  const infoIsOpen = center.ScaleInfo.isOpen;
   $: editButtonIsActive = $editVsPlay === 0 && $wheelIsOpen;
   $: playButtonIsActive = $editVsPlay === 1 && $wheelIsOpen;
   
@@ -49,12 +47,6 @@
     icon={ChooseChordsIcon}
     label='Choose Chords'
     isActive={$chordsIsOpen}
-  />
-  <Button
-    on:click={center.ScaleInfo.open}
-    icon={ScaleInfoIcon}
-    label='Scale Info'
-    isActive={$infoIsOpen}
   />
   <Divider />
   <Button

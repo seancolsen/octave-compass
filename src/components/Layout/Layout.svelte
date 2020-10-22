@@ -6,16 +6,15 @@
     Wheel: center.addPane({isInitiallyOpen: true}),
     LinearKeyboard: center.addPane(),
     ChordSelection: center.addPane(),
-    ScaleInfo: center.addPane(),
   };
 
   const modal = new PaneAreaController({canBeEmpty: true});
   export const modalPanes = {
     Search: modal.addPane(),
     Options: modal.addPane(),
+    ScaleInfo: modal.addPane(),
   };
 </script>
-
 
 <script lang="ts">
   import Marquee from "./Marquee.svelte";

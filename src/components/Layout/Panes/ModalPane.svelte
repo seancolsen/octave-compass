@@ -2,7 +2,14 @@
   import CloseIcon from '../../common/Icons/CloseIcon.svelte';
   import Pane from "./Pane.svelte";
   import type { PaneController } from "./PaneController";
+
   export let ctrl: PaneController;
+
+  /**
+   * When true (default), the window content will have padding. Use false if you
+   * want your content to touch the inner sides of the window.
+   */
+  export let hasPadding = true as boolean;
 </script>
 
 <Pane {ctrl}>
@@ -13,7 +20,7 @@
         <h2 class='title'><slot name='title' /></h2>
         <div class='close-button' on:click={ctrl.close}><CloseIcon /></div>
       </div>
-      <div class='content'><slot /></div>
+      <div class='content' class:hasPadding><slot /></div>
     </div>
   </div>
 </Pane>
@@ -75,5 +82,8 @@
     height: 100%;
     background: #F4F4F4;
     box-sizing: border-box;
+  }
+  .content.hasPadding {
+    padding: 1em;
   }
 </style>

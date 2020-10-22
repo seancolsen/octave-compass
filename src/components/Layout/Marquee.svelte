@@ -1,18 +1,14 @@
 <script lang="ts">
   import {scaleIsRotating} from "../Wheel/Wheel.svelte";
   import {getStore} from '../../store';
+  import { modalPanes as modal } from "./Layout.svelte";
+
   const {
     title,
     alternateScaleNames,
     inversionText,
     isNamed,
   } = getStore();
-
-  /**
-   * Function to execute when the user clicks the "Show more" link within the
-   * list of alternate scale names.
-   */
-  export let showMore = () => {};
 
   $: nameCount = $alternateScaleNames.length;
 
@@ -34,7 +30,11 @@
       
           {#if nameCount > 1}
             <span>, and </span>
-            <span class='show-more' on:click|preventDefault={showMore}>
+            <span
+              class='show-more'
+              role='button'
+              on:click={modal.ScaleInfo.open}
+            >
               {nameCount - 1} other name{nameCount > 2 ? 's' : ''}...
             </span>
           {/if}
