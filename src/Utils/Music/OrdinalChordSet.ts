@@ -31,7 +31,7 @@ export class OrdinalChordSet {
   ): OrdinalChordSet {
     let chords: Chord[] = [];
     setOfPossibleChords.chords.forEach(chord => {
-      const shiftedChord = chord.shift(ordinal);
+      const shiftedChord = chord.intervalSet.shift(ordinal);
       if (intervalSet.contains(shiftedChord)) {
         chords.push(chord);
       }

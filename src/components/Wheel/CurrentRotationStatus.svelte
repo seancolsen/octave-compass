@@ -1,11 +1,9 @@
 <script lang="ts">
   import { getStore } from '../../store';
   import { Scalar } from '../../Utils/Math/Scalar';
-  import { IntervalSetFactory } from '../../Utils/Music/IntervalSetFactory';
   import GlowingText from '../common/GlowingText.svelte';
   import { Note } from '../../Utils/Music/Note';
   import {scaleRotatorStores, keyboardRotatorStores} from './Wheel.svelte';
-  import { Scale } from '../../Utils/Music/Scale';
   const scaleIsRotating = scaleRotatorStores.isRotating;
   const scaleCurrentDetent = scaleRotatorStores.currentDetent;
   const keyboardIsRotating = keyboardRotatorStores.isRotating;
@@ -18,13 +16,8 @@
     return note.guaranteedName.unicode;
   })();
 
-  $: modeShiftTarget = (() => {
-    const targetIntervalSet = IntervalSetFactory.fromIntervalSet(
-      $intervalSet.shift($scaleCurrentDetent)
-    );
-    return targetIntervalSet.displayName
-      + (targetIntervalSet instanceof Scale ? ' mode' : '');
-  })();
+  $: modeShiftTarget
+    = $intervalSet.shift($scaleCurrentDetent).analyzed.name.full;
 
   const glowProps = {
     glowColor: '#EEE',

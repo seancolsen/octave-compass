@@ -1,15 +1,11 @@
 <script lang='ts'>
   import type {Result} from './Search.svelte';
   import IntervalSetPolygon from "../common/IntervalSetPolygon.svelte";
-  import { Scale } from '../../Utils/Music/Scale';
-  import { Chord } from '../../Utils/Music/Chord';
 
   export let result: Result;
   $: intervalSet = result.intervalSet;
   $: name = result.name;
-  $: primaryName = intervalSet.displayName
-    + (intervalSet instanceof Scale ? ' Scale' : '')
-    + (intervalSet instanceof Chord ? ' Chord' : '');
+  $: primaryName = intervalSet.name.full;
 </script>
 
 <div class='result' on:click >

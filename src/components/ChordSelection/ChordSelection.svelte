@@ -16,7 +16,7 @@
    * intervalSet.
    */
   const isValid = (chord: Chord, note: Note) => 
-    $intervalSet.contains(chord.shift(note.id - $tonalCenter))
+    $intervalSet.contains(chord.intervalSet.shift(note.id - $tonalCenter))
 
 </script>
 
@@ -39,7 +39,7 @@
     </tr>
     {#each allChords.chords as chord}
       <tr>
-        <th>{chord.defaultName} chord</th>
+        <th>{chord.abbreviation}</th>
         {#each notes as note}
           <td>
             {#if isValid(chord, note)}

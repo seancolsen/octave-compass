@@ -15,7 +15,7 @@ export class OrdinalChord {
   }
 
   get intervalSet() {
-    return this.chord.shift(this.ordinal);
+    return this.chord.intervalSet.shift(this.ordinal);
   }
 
 }

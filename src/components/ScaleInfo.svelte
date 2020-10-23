@@ -1,23 +1,30 @@
 <script lang="ts">
   import {getStore} from '../store';
+  const { intervalSet } = getStore();
 
-  const {
-    title,
-    alternateScaleNames,
-    inversionText,
-    isNamed,
-  } = getStore();
-
+  $: scale = $intervalSet.scale;
+  $: invertedChords = $intervalSet.invertedChords;
 </script>
 
-{#if $isNamed}
+{#if invertedChords}
+  <h3>Chord names:</h3>
+  <ul>
+    {#each invertedChords as invertedChord}
+      <li>{invertedChord.intervalSetName.full}</li>
+    {/each}
+  </ul>
+{/if}
+
+{#if scale}
   <h3>Scale names:</h3>
   <ul>
-    <li>{$title}</li>
-    {#each $alternateScaleNames as name}
+    {#each scale.names as name}
       <li>{name}</li>
     {/each}
   </ul>
-{:else}
-  <p><em>This scale is</em></p>
+{/if}
+
+{#if !invertedChords && !scale}
+  <h3>Scale names:</h3>
+  <p><em>Our data does not inclued any names for this scale.</em></p>
 {/if}

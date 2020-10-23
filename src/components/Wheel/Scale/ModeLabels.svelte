@@ -1,15 +1,13 @@
 <script lang='ts'>
   import { Angle } from "../../../Utils/Geometry/Angle";
   import type { IntervalSet } from "../../../Utils/Music/IntervalSet";
-  import { IntervalSetFactory } from "../../../Utils/Music/IntervalSetFactory";
 
   export let intervalSet: IntervalSet;
   export let selectedOrdinal = undefined as number | undefined;
 
   $: ordinalLabels = intervalSet.ordinals.map(ordinal => ({
     ordinal,
-    label: IntervalSetFactory.fromIntervalSet(intervalSet.shift(-ordinal))
-      .displayName
+    label: intervalSet.shift(-ordinal).analyzed.name.full
   }))
 </script>
 

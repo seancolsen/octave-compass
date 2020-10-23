@@ -9,9 +9,8 @@
   import {default as data}
     from '../../Data/computed/output/searchableIntervalSetData.json';
   import WithPlural from '../common/WithPlural.svelte';
-  import { IntervalSetFactory } from "../../Utils/Music/IntervalSetFactory";
   import ResultRow from './ResultRow.svelte';
-  import type { IntervalSet } from '../../Utils/Music/IntervalSet';
+  import { IntervalSet } from '../../Utils/Music/IntervalSet';
   import { Scale } from '../../Utils/Music/Scale';
   import { Chord } from '../../Utils/Music/Chord';
   import { getStore } from '../../store';
@@ -31,7 +30,7 @@
 
   $: pool = Object.entries(data).map(([name, intervalSetBinary]) => ({
     name,
-    intervalSet: IntervalSetFactory.fromBinary(intervalSetBinary),
+    intervalSet: IntervalSet.fromBinary(intervalSetBinary).analyzed,
   } as Result));
 
   $: results = pool.filter(({name}) => 
@@ -41,8 +40,8 @@
   $: countResultsMatching = (matcher: (result: Result) => boolean) => (
     new Set(results.filter(r => matcher(r)).map(r => r.intervalSet.binary)).size
   );
-  $: countScales = countResultsMatching(r => r.intervalSet instanceof Scale);
-  $: countChords = countResultsMatching(r => r.intervalSet instanceof Chord);
+  $: countScales = countResultsMatching(r => r.intervalSet.isScale || false);
+  $: countChords = countResultsMatching(r => r.intervalSet.isChord || false);
 
   function focus (el: HTMLElement){
     el.focus();

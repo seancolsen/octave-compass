@@ -22,7 +22,7 @@
   $: overlap = (() => {
     const centerDeadZone = 30;
     const availableSpace = constellationRadius - centerDeadZone;
-    const spaceNeededIfStacked = chordSet.totalEmblemSize * circleRadius * 2;
+    const spaceNeededIfStacked = chordSet.count * circleRadius * 2;
     const totalOverlap = spaceNeededIfStacked - availableSpace;
     const requiredOverlap = totalOverlap / (chordSet.count - 1);
     const minOverlap = 10; // for aesthetics with few chords
@@ -41,13 +41,11 @@
     let outerBound = constellationRadius;
 
     return chordSet.chords.map(chord => {
-      const emblemRadius = chord.emblemSize * circleRadius;
-
       // Move from the outer edge of the emblem to the center of the emblem.
-      const radialPosition = outerBound - emblemRadius;
+      const radialPosition = outerBound - circleRadius;
 
       // Move the outer bound inwards in preparation for the next emblem.
-      outerBound -= emblemRadius * 2 - overlap;
+      outerBound -= circleRadius * 2 - overlap;
       return radialPosition;
     }).reverse(); // Reverse so that common chords display on top
   })();
@@ -59,7 +57,7 @@
   <ChordInScale
     {note}
     radialPosition={radialPositions[index]}
-    size={chord.emblemSize * circleRadius}
+    size={circleRadius}
     {chord}
     interval={ordinal}
   />

@@ -54,7 +54,7 @@ test('isIdenticalTo', () => {
     IntervalSet.fromBinary(0b000010010001))).toBe(false);
 });
 
-test('shift(0)', () => {
+test('shift', () => {
   expect(IntervalSet.fromBinary(0b101100111000).shift(0).binary).toBe(0b101100111000);
   expect(IntervalSet.fromBinary(0b101100111000).shift(1).binary).toBe(0b011001110001);
   expect(IntervalSet.fromBinary(0b101100111000).shift(-1).binary).toBe(0b010110011100);
@@ -109,20 +109,18 @@ test('count', () => {
 
 
 test('inversions', () => {
-  expect(IntervalSet.fromBinary(0b000010010001).inversions.map(
-    intervalSet => intervalSet.binary)
-  )
+  expect(IntervalSet.fromBinary(0b000010010001).modes.map(is => is.binary))
     .toEqual([0b000010010001, 0b000100001001, 0b001000100001]);
 });
 
-test('inversionsToBeIdenticalTo', () => {
+test('modeShiftsToBeIdenticalTo', () => {
   const major0 = IntervalSet.fromBinary(0b000010010001);
   const major1 = IntervalSet.fromBinary(0b000100001001);
   const major2 = IntervalSet.fromBinary(0b001000100001);
   const diminished0 = IntervalSet.fromBinary(0b0000001001001);
-  expect(major0.inversionsToBeIdenticalTo(major1)).toBe(1);
-  expect(major0.inversionsToBeIdenticalTo(major2)).toBe(2);
-  expect(major0.inversionsToBeIdenticalTo(diminished0)).toBeNull();
+  expect(major0.modeShiftsToBeIdenticalTo(major1)).toBe(1);
+  expect(major0.modeShiftsToBeIdenticalTo(major2)).toBe(2);
+  expect(major0.modeShiftsToBeIdenticalTo(diminished0)).toBeNull();
 });
 
 test('all binary values should be masked against chromatic', () => {
@@ -138,6 +136,52 @@ test('modeShift', () => {
   expect(IntervalSet.fromBinary(2873).modeShift(7).binary).toBe(2873);
 });
 
-test('modeShift of a set without a tonal center should go to the first available ordinal', () => {
+test('modeShift of a set with no tonal center should go to the 1st available ordinal', () => {
   expect(IntervalSet.fromBinary(2872).modeShift(0).binary).toBe(359);
+});
+
+test('analysis of sus2 and sus4 chords', () => {
+  const binarySus4Chord = 161;
+  const binarySus2Chord = 133;
+  const sus2Chord = new IntervalSet(binarySus2Chord);
+  const sus4Chord = new IntervalSet(binarySus4Chord);
+  const sus2ChordA = sus2Chord.analyzed;
+  const sus4ChordA = sus4Chord.analyzed;
+  expect(sus4Chord.isChord).toBeUndefined();
+  expect(sus4Chord.isScale).toBeUndefined();
+  expect(sus4Chord.invertedChords).toBeUndefined();
+  expect(sus4Chord.scale).toBeUndefined();
+  expect(sus4Chord.isAnalyzed).toBe(false);
+  expect(sus4ChordA.isAnalyzed).toBe(true);
+  expect(sus4ChordA.scale).toBe(undefined);
+  expect(sus4ChordA.invertedChords?.length).toBe(2);
+  expect(sus4ChordA.invertedChords?.[0].chord.binary).toBe(binarySus4Chord);
+  expect(sus4ChordA.invertedChords?.[0].inversion).toBe(0);
+  expect(sus4ChordA.invertedChords?.[1].chord.binary).toBe(binarySus2Chord);
+  expect(sus4ChordA.invertedChords?.[1].inversion).toBe(2);
+  expect(sus4ChordA.isChord).toBe(true);
+  expect(sus4ChordA.isScale).toBe(false);
+  expect(sus2ChordA.name.full).toBe('Suspended 2 Chord');
+  expect(sus4ChordA.name.full).toBe('Suspended 4 Chord');
+});
+
+test('analysis of a major scale', () => {
+  const majorScale = 2741;
+  const majorScaleA = (new IntervalSet(majorScale)).analyzed;
+  expect(majorScaleA.invertedChords).toEqual([]);
+  expect(majorScaleA.scale?.defaultName).toBe('Major');
+  expect(majorScaleA.scale?.defaultName).toBe('Major');
+  expect(majorScaleA.isChord).toBe(false);
+  expect(majorScaleA.isScale).toBe(true);
+  expect(majorScaleA.name.full).toBe("Major Scale");
+});
+
+test('analysis of an unknown scale', () => {
+  const unknownScale = 2047;
+  const unknownScaleA = (new IntervalSet(unknownScale)).analyzed;
+  expect(unknownScaleA.invertedChords).toEqual([]);
+  expect(unknownScaleA.scale).toBeUndefined();
+  expect(unknownScaleA.isChord).toBe(false);
+  expect(unknownScaleA.isScale).toBe(false);
+  expect(unknownScaleA.name.full).toBe("Scale 2047");
 });

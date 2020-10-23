@@ -49,15 +49,6 @@ export class ChordSet {
   }
 
   /**
-   * If you stack all the emblems, end to end, how big would they be?
-   */
-  get totalEmblemSize(): number {
-    return this.chords
-      .map(chord => chord.emblemSize || 0)
-      .reduce((a, b) => a + b, 0);
-  }
-
-  /**
    * Return true if this set contains the given chord, false otherwise.
    */
   containsChord(chord: Chord): boolean {

@@ -25,10 +25,6 @@ test('count', () => {
   expect(majorAndDiminished.count).toBe(2);
 });
 
-test('totalEmblemSize', () => {
-  expect(majorAndDiminished.totalEmblemSize).toBeGreaterThan(0);
-});
-
 test('containsChord', () => {
   expect(majorAndDiminished.containsChord(majorChord)).toBe(true);
   expect(majorAndDiminished.containsChord(dominant7Chord)).toBe(false);
@@ -51,43 +47,43 @@ test('toggleChord', () => {
 
 test('uniqueChords', () => {
   expect(ChordSet.uniqueChords([majorChord, anotherMajorChord])
-    .map(chord => chord.defaultName)
+    .map(chord => chord.name)
   ).toEqual(['Major'])
 });
 
 test('sortedChords', () => {
   expect(ChordSet.sortedChords([dominant7Chord, majorChord])
-    .map(chord => chord.defaultName)
+    .map(chord => chord.name)
   ).toEqual(['Major', 'Dominant 7'])
 });
 
 test('ensure that chords are sorted and unique', () => {
-  expect(dominant7AndMajor.chords.map(c => c.defaultName))
+  expect(dominant7AndMajor.chords.map(c => c.name))
     .toEqual(['Major', 'Dominant 7']);
-  expect(majorAndDiminished.chords.map(c => c.defaultName))
+  expect(majorAndDiminished.chords.map(c => c.name))
     .toEqual(['Major', 'Diminished']);
-  expect(majorAndMajorAndDiminished.chords.map(c => c.defaultName))
+  expect(majorAndMajorAndDiminished.chords.map(c => c.name))
     .toEqual(['Major', 'Diminished']);
 });
 
 test('fromUnion', () => {
   expect(ChordSet.fromUnion([dominant7AndMajor, majorAndDiminished]).chords
-    .map(chord => chord.defaultName)
+    .map(chord => chord.name)
   ).toEqual(['Major', 'Diminished', 'Dominant 7'])
 });
 
 test('fromContainingIntervalSet dominant7Chord', () => {
   const dominant7Chord = IntervalSet.fromBinary(0b010010010001);
   const chordSet = ChordSet.fromContainingIntervalSet(dominant7Chord);
-  expect(chordSet.chords.map(chord => chord.defaultName))
+  expect(chordSet.chords.map(chord => chord.name))
     .toEqual(['Major', 'Diminished', 'Dominant 7']);
 });
 
 test('fromContainingIntervalSet chromatic', () => {
   const chordsInChromatic =
     ChordSet.fromContainingIntervalSet(IntervalSet.chromatic).chords;
-  expect(chordsInChromatic.map(chord => chord.defaultName))
-    .toEqual(ChordSet.fromAllChords.chords.map(chord => chord.defaultName));
+  expect(chordsInChromatic.map(chord => chord.name))
+    .toEqual(ChordSet.fromAllChords.chords.map(chord => chord.name));
 });
 
 test('fromAllChords', () => {

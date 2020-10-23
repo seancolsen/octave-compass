@@ -43,13 +43,12 @@ export class Scalar {
     if (intervalWidth === 0) {
       throw new Error('Wrap bounds must have a width greater than zero.');
     }
-    if (value < min) {
-      return max - ((min - value) % intervalWidth);
-    }
-    else if (value >= max) {
-      return min + ((value - max) % intervalWidth);
-    }
-    return value;
+    const result = 
+        value < min  ? max - ((min - value) % intervalWidth)
+      : value >= max ? min + ((value - max) % intervalWidth)
+      : value;
+    // Ensure we don't return negative zero.
+    return Object.is(result, -0) ? 0 : result;
   }
 
   /**

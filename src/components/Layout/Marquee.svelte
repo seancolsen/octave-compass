@@ -2,40 +2,35 @@
   import {scaleIsRotating} from "../Wheel/Wheel.svelte";
   import {getStore} from '../../store';
   import { modalPanes as modal } from "./Layout.svelte";
+import WithPlural from "../common/WithPlural.svelte";
 
-  const {
-    title,
-    alternateScaleNames,
-    inversionText,
-    isNamed,
-  } = getStore();
+  const { title, intervalSet } = getStore();
 
-  $: nameCount = $alternateScaleNames.length;
+  $: alternateNames = $intervalSet.scale?.alternateNames || [];
 
 </script>
 
 <div class='marquee'>
   {#if !$scaleIsRotating}
     <div class='inner'>
-      <h1 class:isNamed >
-        {$title}
-        {#if $inversionText}<em>{$inversionText}</em>{/if}
-      </h1>
+      <h1 class:isNamed={$intervalSet.isNamed}>{$title}</h1>
       
       <div class='subtitle'>
-        {#if nameCount > 0}
+        {#if alternateNames.length > 0}
       
           <span class='aka'>Also know as: </span>
-          {$alternateScaleNames[0]}
+          {alternateNames[0]}
       
-          {#if nameCount > 1}
+          {#if alternateNames.length > 1}
             <span>, and </span>
             <span
               class='show-more'
               role='button'
               on:click={modal.ScaleInfo.open}
             >
-              {nameCount - 1} other name{nameCount > 2 ? 's' : ''}...
+              <WithPlural count={alternateNames.length - 1} let:count let:s>
+                {count} other name{s}...
+              </WithPlural>
             </span>
           {/if}
       

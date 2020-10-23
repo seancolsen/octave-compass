@@ -1,11 +1,13 @@
 import { musicTheory } from "./../../Data/musicTheory";
 import { Scalar } from "./../Math/Scalar";
+import { Chord } from "./Chord";
 import { Interval } from "./Interval";
 import { IntervalSetBinary } from "./IntervalSetBinary";
+import { IntervalSetName } from "./IntervalSetName";
+import { InvertedChord } from "./InvertedChord";
+import { Scale } from "./Scale";
 
 const divisions = musicTheory.octaveDivisions;
-
-export type IntervalSetType = null | 'Scale' | 'Chord';
 
 /**
  * This class stores a set of intervals using a binary representation of that
@@ -39,43 +41,81 @@ export type IntervalSetType = null | 'Scale' | 'Chord';
 export class IntervalSet {
 
   /**
-   * Possible names for this IntervalSet. We intentionally don't fill this array
-   * in this class. The sub-classes are the ones which do that work.
-   */
-  names: string[] = [];
-
-  /**
-   * This property is set by child classes. Scales and chords have names,
-   * sometimes multiple names. The defaultName represents the primary name
-   * that we display.
-   */
-  defaultName: string | null = null;
-
-  /**
    * The binary representation of this IntervalSet (as explained in IntervalSet
    * docs).
    */
   binary: number;
 
   /**
-   * We use this to distinguish between Chord and Scale, which both inherit
-   * from IntervalSet.
+   * The named Scale associated with this IntervalSet.
    */
-  type = null as IntervalSetType;
+  scale = undefined as Scale | undefined;
 
   /**
-   * This constructor takes a kind of funny format in order to be similar to the
-   * constructors of Scale and Chord which inherit from this class.
+   * The chords that this IntervalSet represents. NOT the chords "within" this
+   * IntervalSet, but the chords that this IntervalSet "is". It's a list and
+   * not just one value because some chords are inversions of each other, e.g.
+   * sus2 & sus4.
    */
-  constructor(intervalSetData: {'binary': number}) {
-    this.binary = IntervalSetBinary.onlyChromatic(intervalSetData.binary);
+  invertedChords = undefined as InvertedChord[] | undefined;
+
+  /**
+   * True when analysis has been performed to locate named scales and chords
+   * associated with this IntervalSet. False when we haven't gone through the
+   * trouble yet.
+   */
+  isAnalyzed = false;
+
+  /**
+   * @param binary The binary representation of the IntervalSet
+   * @param shouldAnalyze When true, attempt to identify named scales and chords
+   * for this IntervalSet. We don't do this by default because it's expensive.
+   */
+  constructor(binary: number, shouldAnalyze = false) {
+    this.binary = IntervalSetBinary.onlyChromatic(binary);
+    if (shouldAnalyze) {
+      this.initScale();
+      this.initInvertedChords();
+      this.isAnalyzed = true;
+    }
+  }
+
+  private initScale() {
+    try {
+      this.scale = Scale.fromBinary(this.binary);
+    }
+    catch {
+      this.scale = undefined;
+    }
+  }
+  
+  private initInvertedChords() {
+    let result = [] as InvertedChord[];
+    this.modes.forEach((intervalSet, modeShift) => {
+      try {
+        const chord = Chord.fromBinary(intervalSet.binary);
+        const inversion = Scalar.wrap(-modeShift, this.count);
+        result.push(new InvertedChord(chord, inversion));
+      }
+      catch { }
+    });
+    this.invertedChords = result;
+  }
+  
+  static fromBinary(binary: number) {
+    return new IntervalSet(binary);
   }
 
   /**
-   * Return a new IntervalSet with the binary intervals as specified.
+   * Return an IntervalSet equal to this one, but with the scale and chord info
+   * filled in. We don't do this in the constructor because it's somewhat
+   * expensive.
    */
-  static fromBinary(binary: number) {
-    return new IntervalSet({binary: binary});
+  get analyzed() {
+    if (this.isAnalyzed) {
+      return this;
+    }
+    return new IntervalSet(this.binary, true);
   }
 
   /**
@@ -84,14 +124,14 @@ export class IntervalSet {
    * @param ordinals - e.g. [0, 4, 7] for a major chord
    */
   static fromOrdinals(ordinals: number[]): IntervalSet {
-    return IntervalSet.fromBinary(IntervalSetBinary.fromOrdinals(ordinals));
+    return new IntervalSet(IntervalSetBinary.fromOrdinals(ordinals));
   }
 
   /**
    * Return an interval set containing all the intervals.
    */
   static get chromatic(): IntervalSet {
-    return IntervalSet.fromBinary(IntervalSetBinary.chromatic);
+    return new IntervalSet(IntervalSetBinary.chromatic);
   }
 
   static get chromaticOrdinals(): number[] {
@@ -138,13 +178,70 @@ export class IntervalSet {
   }
 
   /**
-   * Return a name for every scale. If we have a name for this interval set,
-   * then use that. If the scale doesn't have a known name, then return
-   * something like ('Scale 647') by using the base-10 integer equal to the
-   * binary representation of the scale.
+   * True if this IntervalSet represents a Scale. Undefined if analysis hasn't
+   * yet been performed. Note that an IntervalSet can be a Scale and a Chord at
+   * the same time (in rare cases).
    */
-  get displayName(): string {
-    return this.defaultName || `Scale ${this.binary}`;
+  get isScale() {
+    if (!this.isAnalyzed) {
+      return undefined;
+    }
+    return !!this.scale;
+  }
+
+  /**
+   * True if this IntervalSet represents a Chord. Undefined if analysis hasn't
+   * yet been performed. Note that an IntervalSet can be a Scale and a Chord at
+   * the same time (in rare cases).
+   */
+  get isChord() {
+    if (!this.isAnalyzed) {
+      return undefined;
+    }
+    return (this.invertedChords?.length ?? 0) > 0;
+  }
+
+  get isNamed() {
+    return this.isScale || this.isChord;
+  }
+
+  /**
+   * If this IntervalSet represents a chord, return the InvertedChord that
+   * contains that Chord. If this IntervalSet represents multiple chords of
+   * different inversions (uncommon, but for example, sus2 and sus4), then we
+   * use some complex logic to pick the best one.
+   */
+  get invertedChord() {
+    // If we don't have chords, then give up early.
+    const invertedChords = this.invertedChords;
+    if (!invertedChords || invertedChords.length === 0) {
+      return undefined;
+    }
+
+    // If we have a chord at the tonal center, then use that one.
+    const plainChord = invertedChords.find(ic => ic.inversion === 0);
+    if (plainChord) {
+      return plainChord;
+    }
+
+    // Otherwise, use the chord with the minimum weight.
+    const minWeight = Math.min(...invertedChords.map(ic => ic.chord.weight));
+    const bestIChord = invertedChords.find(ic => ic.chord.weight === minWeight);
+    return bestIChord;
+  }
+
+  get chordName(): IntervalSetName | undefined {
+    return this.invertedChord?.intervalSetName;
+  }
+
+  get scaleName(): IntervalSetName | undefined {
+    return this.scale?.intervalSetName;
+  }
+
+  get name(): IntervalSetName {
+    return this.chordName
+      ?? this.scaleName
+      ?? new IntervalSetName({binary: this.binary});
   }
 
   /**
@@ -156,7 +253,7 @@ export class IntervalSet {
     const shift = Scalar.wrap(Math.round(shiftAmount), divisions);
     const shiftToWrap = divisions - shift;
     const allBits = (this.binary << shift) | (this.binary >> shiftToWrap);
-    return IntervalSet.fromBinary(allBits);
+    return new IntervalSet(allBits);
   }
 
   /**
@@ -172,7 +269,7 @@ export class IntervalSet {
    * bits are true.
    */
   toggleBinaryIntervals(binary: number): IntervalSet {
-    return IntervalSet.fromBinary(this.binary ^ binary);
+    return new IntervalSet(this.binary ^ binary);
   }
 
   /**
@@ -199,34 +296,31 @@ export class IntervalSet {
   }
 
   /**
-   * Return an array of IntervalSets which are inversions of this IntervalSet.
-   * By "inversion" here, we mean inversion in the sense of a chord. The first
-   * inversion is produced by shifting this interval down just enough to place
-   * its "1 ordinal" in the "0 ordinal" position.
+   * Return an array of IntervalSets which are modes of this IntervalSet.
    */
-  get inversions(): IntervalSet[] {
+  get modes(): IntervalSet[] {
     return this.ordinals.map(ordinal => this.shift(-ordinal));
   }
 
   /**
-   * Compare this IntervalSet to the given IntervalSet. If this IntervalSet
-   * can be shifted to become the given intervalSet, then return the minimum
-   * number of (positive) shifts necessary. If there is no way that this
-   * IntervalSet can be shifted to become the given intervalSet, then return
-   * null.
+   * Compare this IntervalSet to the given IntervalSet. If this IntervalSet can
+   * be shifted to become the given intervalSet, then return the minimum number
+   * of (positive) shifts necessary. If there is no way that this IntervalSet
+   * can be shifted to become the given intervalSet, then return null.
    *
    * @return e.g.
-   *   - 0 if this chord and the given chord are identical
-   *   - 1 if this chord can become the given chord when inverted once
+   *   - 0 if this IntervalSet and the given IntervalSet are identical.
+   *   - 1 if this IntervalSet can become the given IntervalSet with one mode
+   *     shift.
    *   - 2, 3, 4... and so on.
-   *   - null if the two chords are not inversions of each other
+   *   - null if the two IntervalSets are not modes of each other.
    */
-  inversionsToBeIdenticalTo(intervalSet: IntervalSet): number | null {
+  modeShiftsToBeIdenticalTo(intervalSet: IntervalSet): number | null {
     // For performance, abandon early if we have a count mismatch.
     if (this.count !== intervalSet.count) {
       return null;
     }
-    const i = this.inversions.findIndex(inv => inv.isIdenticalTo(intervalSet));
+    const i = this.modes.findIndex(inv => inv.isIdenticalTo(intervalSet));
     return i >= 0 ? i : null;
   }
 

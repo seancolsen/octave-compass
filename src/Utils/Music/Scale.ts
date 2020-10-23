@@ -1,55 +1,53 @@
-import { IntervalSet } from "./IntervalSet";
 import { scales as allScales } from "./../../Data/scales";
+import { IntervalSet } from "./IntervalSet";
+import { IntervalSetName } from "./IntervalSetName";
 
 export interface ScaleData {
   binary: number;
   names: string[];
-  defaultName: string;
-  alternateNames: string[];
 }
 
-export class Scale extends IntervalSet {
+export class Scale {
 
-  /**
-   * All the names that can be used to refer to this scale.
-   */
+  binary: number;
+
   names: string[];
 
-  /**
-   * The primary name to display when this scale is selected.
-   */
-  defaultName: string;
+  constructor(data: ScaleData) {
+    this.binary = data.binary;
+    this.names = data.names;
+  }
 
-  /**
-   * The non-primary names.
-   */
-  alternateNames: string[];
+  get defaultName() {
+    return this.names[0];
+  }
 
-  constructor(scaleData: ScaleData) {
-    super(scaleData);
-    this.type = "Scale";
-    this.names = scaleData.names;
-    this.defaultName = scaleData.defaultName;
-    this.alternateNames = scaleData.alternateNames;
+  get alternateNames() {
+    return this.names.slice(1);
+  }
+
+  get intervalSetName() {
+    return new IntervalSetName({
+      binary: this.binary,
+      baseName: this.defaultName,
+      genus: 'Scale',
+    });
+  }
+
+  get intervalSet() {
+    return IntervalSet.fromBinary(this.binary);
   }
 
   /**
    * Given the binary intervals of a scale, search for the definition of that
    * scale and return a Scale object if possible.
-   * 
-   * @throws {Error} if the scale can not be found
    */
-  static fromBinary(binary: number): Scale {
+  static fromBinary(binary: number) {
     const scaleEntry = allScales[binary];
     if (!scaleEntry) {
-      throw new Error("Unknown scale");
+      throw new Error('Unknown scale');
     }
-    return new Scale({
-      binary: binary,
-      names: scaleEntry,
-      defaultName: scaleEntry[0],
-      alternateNames: scaleEntry.slice(1),
-    });
+    return new Scale({binary, names: scaleEntry});
   }
 
 }

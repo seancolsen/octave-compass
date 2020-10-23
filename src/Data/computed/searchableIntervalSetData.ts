@@ -23,7 +23,7 @@ pointAccumulators.push((intervalSet: IntervalSet) =>
  * 6-note and 8-note scales will appear next and so on.
  */
 pointAccumulators.push((intervalSet: IntervalSet) => {
-  if (intervalSet.type !== 'Scale') {
+  if (!intervalSet.isScale) {
     return 0;
   }
   return 100 * ( 7 - Math.abs(7 - intervalSet.count));
@@ -33,7 +33,7 @@ pointAccumulators.push((intervalSet: IntervalSet) => {
  * Points for chords within the scale
  */
 pointAccumulators.push((intervalSet: IntervalSet) => {
-  if (intervalSet.type !== 'Scale') return 0;
+  if (!intervalSet.isScale) return 0;
   
   const ordinalChordSets = OrdinalChordSet
     .arrayFromIntervalSet(intervalSet, ChordSet.fromAllChords);
@@ -79,7 +79,7 @@ pointAccumulators.push((intervalSet: IntervalSet) => {
  * Points for chords vs scales
  */
 pointAccumulators.push((intervalSet: IntervalSet) => 
-  ({'Scale': 7, 'Chord': 5, '': 0})[intervalSet.type ?? '']
+   intervalSet.isScale ? 7 : intervalSet.isChord ? 5 : 0
 );
 
 export function searchableIntervalSetData(intervalSets: IntervalSet[]) {
@@ -87,8 +87,9 @@ export function searchableIntervalSetData(intervalSets: IntervalSet[]) {
   let searchData = {} as any;
   intervalSets.forEach(intervalSet => {
     let points = pointAccumulators.reduce((Σ, f) => Σ + f(intervalSet), 0);
-    intervalSet.names.forEach((name, index) => {
-      const displayName = `${name} ${intervalSet.type}`;
+    // TODO I think we need to do further work to include chords
+    intervalSet.scale?.names.forEach((name, index) => {
+      const displayName = `${name} ${intervalSet.name.genus}`;
       searchData[displayName] = {
         searchPoints: points * (index === 0 ? 10000 : 1),
         intervalSetBinary: intervalSet.binary,

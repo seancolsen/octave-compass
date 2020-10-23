@@ -17,7 +17,7 @@
   export let radialPosition: number;
   export let size: number;
 
-  $: pitches = chord.ordinals.map(ordinal => {
+  $: pitches = chord.intervalSet.ordinals.map(ordinal => {
     const noteId = Scalar.wrapToOctave(ordinal + (note?.id || 0));
     return (new Note(noteId)).pitchInOctave(4);
   });

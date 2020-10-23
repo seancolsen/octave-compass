@@ -2,7 +2,6 @@
 
 import * as fs from 'fs';
 import { IntervalSet } from '../../Utils/Music/IntervalSet';
-import {IntervalSetFactory} from '../../Utils/Music/IntervalSetFactory';
 import {generateNoteNameSetSignatures} from './noteNameSetSignatures';
 import {searchableIntervalSetData} from './searchableIntervalSetData';
 
@@ -12,7 +11,7 @@ const binaryList = [...Array(IntervalSet.chromatic.binary + 1).keys()];
 // Some IntervalSets  uncomment this to speed up testing)
 // const binaryList = [1, 145, 137, 745, 1169, 1717, 2477, 2741, 4095];
 
-const intervalSets = binaryList.map(b => IntervalSetFactory.fromBinary(b));
+const intervalSets = binaryList.map(b => IntervalSet.fromBinary(b).analyzed);
 
 const outputFile = (name: string) => `${__dirname}/output/${name}.json`;
 Object.entries({

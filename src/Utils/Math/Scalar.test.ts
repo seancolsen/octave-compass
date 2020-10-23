@@ -9,6 +9,10 @@ test('wrap between 0 and target', () => {
   expect(() => Scalar.wrap(100, 0)).toThrow();
 });
 
+test('wrap at negative zero', () => {
+  expect(Scalar.wrap(-0, 1)).toBe(0);
+});
+
 test('wrap between two targets', () => {
   expect(Scalar.wrap(150, -100, 100)).toBe(-50);
   expect(Scalar.wrap(-2, -100, 100)).toBe(-2);

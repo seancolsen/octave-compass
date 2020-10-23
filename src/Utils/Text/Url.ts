@@ -1,7 +1,6 @@
-import { IntervalSetFactory } from "./../Music/IntervalSetFactory";
 import { Scalar } from "./../Math/Scalar";
 import { IntervalSetBinary } from "./../Music/IntervalSetBinary";
-import type { IntervalSet } from "../Music/IntervalSet";
+import { IntervalSet } from "../Music/IntervalSet";
 
 const separator = '-';
 const defaultIntervalSetBin = 0b101010110101;
@@ -39,13 +38,10 @@ export class Url {
       parseInt(parts[0], 10) || defaultIntervalSetBin;
     const validIntervalSetBin =
       IntervalSetBinary.guaranteedToContainTonalCenter(parsedIntervalSetBin);
-    const intervalSet = IntervalSetFactory.fromBinary(validIntervalSetBin);
+    const intervalSet = IntervalSet.fromBinary(validIntervalSetBin).analyzed;
     const parsedTonalCenter = parseInt(parts[1], 10) || defaultTonalCenter;
     const tonalCenter = Scalar.wrapToOctave(parsedTonalCenter);
-    return {
-      intervalSet: intervalSet,
-      tonalCenter: tonalCenter,
-    };
+    return {intervalSet, tonalCenter };
   }
 
   /**

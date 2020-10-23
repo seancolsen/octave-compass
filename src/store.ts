@@ -1,10 +1,8 @@
 import { writable, derived, get} from 'svelte/store';
 import type { IntervalSet } from './Utils/Music/IntervalSet';
-import { IntervalSetFactory } from './Utils/Music/IntervalSetFactory';
 import { ChordSet } from './Utils/Music/ChordSet';
 import { NoteSet } from './Utils/Music/NoteSet';
-import { Chord } from './Utils/Music/Chord';
-import { Scale } from './Utils/Music/Scale';
+import type { Chord } from './Utils/Music/Chord';
 import { Scalar } from './Utils/Math/Scalar';
 import type { KeyElement } from './components/Keyboard/KeyController';
 import { setContext, getContext } from 'svelte';
@@ -90,13 +88,15 @@ export const createStore = (
   intervalSet: (() => {
     const {subscribe, update} = writable(initialIntervalSet);
 
+    type Updater = (oldIntervalSet: IntervalSet) => IntervalSet;
+    
     /**
      * We run any newly computed IntervalSet through this function in order to
      * determine which Scale or Chord the new IntervalSet is. This has more of a
      * performance hit than just setting the interval set directly.
      */
-    function smartUpdate(updater: (oldIntervalSet: IntervalSet) => IntervalSet) {
-      update(is => IntervalSetFactory.fromIntervalSet(updater(is)));
+    function smartUpdate(updater: Updater) {
+      update(intervalSet => updater(intervalSet).analyzed);
     }
     
     return {
@@ -187,23 +187,11 @@ export const createStore = (
   // ======================================================================== //
 
   /**
-   * If the current interval set is a chord, then give the inversion of that
-   * chord. If not, then give null.
-   */
-  get inversion() {
-    return derived(this.intervalSet, intervalSet => 
-      intervalSet instanceof Chord ? intervalSet.inversion : null
-    );
-  },
-
-  // ======================================================================== //
-
-  /**
    * E.g. "G♭"
    */
   get tonalCenterName() {
-    return derived([this.noteSet, this.inversion],
-      ([ns, i]) => ns.rootNote(i || 0).nameToUseForLabels
+    return derived([this.noteSet, this.intervalSet], ([ns, is]) => 
+      ns.rootNote(is.invertedChord?.inversion || 0).nameToUseForLabels
     )
   },
 
@@ -214,60 +202,9 @@ export const createStore = (
    * set.
    */
   get title() {
-    return derived([this.intervalSet, this.tonalCenterName],
-      ([intervalSet, tonalCenterName]) => {
-        const displayName = intervalSet.displayName;
-        if (intervalSet instanceof Chord) {
-          return `${tonalCenterName} ${displayName} chord`
-        }
-        else if (intervalSet instanceof Scale) {
-          return `${tonalCenterName} ${displayName} Scale`;
-        }
-        else {
-          return `${displayName} in ${tonalCenterName}`;
-        }
-      }
-    )
-  },
-
-  // ======================================================================== //
-
-  get alternateScaleNames() {
-    return derived(this.intervalSet, is => 
-      is instanceof Scale ? is.alternateNames : [] as string[]
-    )
-  },
-
-  // ======================================================================== //
-
-    /**
-   * E.g. "1st inversion"
-   */
-  get inversionText() {
-    return derived(this.inversion, inversion => {
-      const ordinalAbbreviations = [
-        '0th',
-        '1st',
-        '2nd',
-        '3rd',
-        '4th',
-        '5th',
-      ];
-      return inversion
-        ? ` (${ordinalAbbreviations[inversion]} inversion)`
-        : undefined;
-    })
-  },
-
-  // ======================================================================== //
-
-  /**
-   * True if we know the name of the current interval set.
-   */
-  get isNamed() {
-    return derived(this.intervalSet, intervalSet => 
-      intervalSet instanceof Chord || intervalSet instanceof Scale
-    )
+    return derived([this.intervalSet, this.tonalCenterName], ([is, tcn]) => 
+      `${tcn} ${is.name.full}`
+    );
   },
 
   // ======================================================================== //
