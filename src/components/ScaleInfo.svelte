@@ -6,7 +6,7 @@
   $: invertedChords = $intervalSet.invertedChords;
 </script>
 
-{#if invertedChords}
+{#if invertedChords && invertedChords.length > 0 }
   <h3>Chord names:</h3>
   <ul>
     {#each invertedChords as invertedChord}

@@ -76,6 +76,7 @@
     margin: 0.2em 0 0 0;
     padding: 0 3em 0.7em 3em;
     border-bottom: solid #DDD 0.1em;
+    text-align: center;
   }
   .content {
     overflow-y: hidden;

@@ -4,7 +4,7 @@
   import Search from "../Search/Search.svelte";
   import { modalPanes as panes } from "./Layout.svelte";
   import ModalPane from "./Panes/ModalPane.svelte";
-  const {title} = getStore();
+  const {intervalSet} = getStore();
 </script>
 
 <ModalPane ctrl={panes.Search} hasPadding={false}>
@@ -13,6 +13,6 @@
 </ModalPane>
 
 <ModalPane ctrl={panes.ScaleInfo}>
-  <span slot='title'>{$title}</span>
+  <span slot='title'>{$intervalSet.name.full}</span>
   <ScaleInfo />
 </ModalPane>
