@@ -3,13 +3,20 @@
   import IntervalSetPolygon from '../../common/IntervalSetPolygon.svelte';
   import { IntervalSet } from '../../../Utils/Music/IntervalSet';
   import {getStore} from '../../../store';
-  const {editVsPlay, keyboardRadius, noteSet, somethingIsRotating} = getStore();
+  const {
+    editVsPlay,
+    keyboardRadius,
+    noteSet,
+    scaleIsRotating,
+    somethingIsRotating,
+  } = getStore();
 </script>
 
 <g
   class='rotary-keyboard'
-  filter="url('#shadow-when-edit')"
   class:isEdit={$editVsPlay === 0}
+  class:isHidden={$scaleIsRotating}
+  filter="url('#shadow-when-edit')"
  >
   <IntervalSetPolygon
     class='background'
@@ -23,4 +30,8 @@
 
 <style>
   g > :global(.background) {fill: #CCC;}
+  .isHidden {
+    opacity: 0.2;
+    filter: blur(3px);
+  }
 </style>

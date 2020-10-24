@@ -5,13 +5,19 @@
   const {intervalSet, editVsPlay, scaleIsRotating} = getStore();
 </script>
 
-<g>
+<g class:isHidden={$scaleIsRotating}>
   {#each IntervalSet.chromatic.intervals as interval}
     <BaseInterval
       interval={interval.id}
       label={interval.longName.toLowerCase()}
-      isActive={!$scaleIsRotating && $intervalSet.isActive(interval.id)}
+      isActive={$intervalSet.isActive(interval.id)}
       isClickable={interval.id !== 0 && $editVsPlay === 0}
     />
   {/each}
 </g>
+
+<style>
+  .isHidden {
+    visibility: hidden;
+  }
+</style>
