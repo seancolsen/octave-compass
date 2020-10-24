@@ -1,31 +1,9 @@
-<script lang="ts" context="module">
-  import {writable} from 'svelte/store';
-  export class RotatorStores {
-    /**
-     * The current value of rotation, which changes constantly as the user
-     * interacts with the object.
-     */
-    rotation = writable(0);
-
-    /**
-     * The rotation value that will be set if the user releases the object at
-     * its current position.
-     */
-    currentDetent = writable(0);
-
-    /**
-     * True when the user is rotating the object and also when the object is
-     * transitioning to rest after the user has released it.
-     */
-    isRotating = writable(false as boolean);
-  }
-</script>
-
 <script lang="ts">
-  import { Scalar } from '../../Utils/Math/Scalar';
-  import { XyPoint } from '../../Utils/Geometry/XyPoint';
-  import { musicTheory } from '../../Data/musicTheory';
-  import { Angle } from '../../Utils/Geometry/Angle';
+  import type { RotationController } from './RotationController';
+  import { Scalar } from '../../../Utils/Math/Scalar';
+  import { XyPoint } from '../../../Utils/Geometry/XyPoint';
+  import { musicTheory } from '../../../Data/musicTheory';
+  import { Angle } from '../../../Utils/Geometry/Angle';
 
   const transitionVelocity = 0.01; // (Interval / ms)
 
@@ -52,8 +30,8 @@
    * Rotator instance upon instantiation. Here's where that state gets passed
    * in.
    */
-  export let rotatorStores: RotatorStores;
-  const {rotation, currentDetent, isRotating} = rotatorStores;
+  export let controller: RotationController;
+  const {rotation, currentDetent, isRotating} = controller;
   
   /**
    * When true the user will be able to rotate the object. Defaults to true.

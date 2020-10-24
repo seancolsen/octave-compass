@@ -3,12 +3,18 @@
   import { Scalar } from '../../Utils/Math/Scalar';
   import GlowingText from '../common/GlowingText.svelte';
   import { Note } from '../../Utils/Music/Note';
-  import {scaleRotatorStores, keyboardRotatorStores} from './Wheel.svelte';
-  const scaleIsRotating = scaleRotatorStores.isRotating;
-  const scaleCurrentDetent = scaleRotatorStores.currentDetent;
-  const keyboardIsRotating = keyboardRotatorStores.isRotating;
-  const keyboardCurrentDetent = keyboardRotatorStores.currentDetent;
-  const {tonalCenter, intervalSet, noteSet} = getStore();
+  const {
+    tonalCenter,
+    intervalSet,
+    noteSet,
+    scaleRotator,
+    keyboardRotator,
+    scaleIsRotating,
+    keyboardIsRotating
+  } = getStore();
+
+  const scaleCurrentDetent = scaleRotator.currentDetent;
+  const keyboardCurrentDetent = keyboardRotator.currentDetent;
 
   $: transposeTarget = (() => {
     const noteId = Scalar.wrapToOctave($tonalCenter - $keyboardCurrentDetent);

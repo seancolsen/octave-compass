@@ -3,8 +3,7 @@
   import IntervalSetPolygon from '../../common/IntervalSetPolygon.svelte';
   import { IntervalSet } from '../../../Utils/Music/IntervalSet';
   import {getStore} from '../../../store';
-  import { somethingIsRotating } from '../Wheel.svelte';
-  const {editVsPlay, keyboardRadius, noteSet} = getStore();
+  const {editVsPlay, keyboardRadius, noteSet, somethingIsRotating} = getStore();
 </script>
 
 <g

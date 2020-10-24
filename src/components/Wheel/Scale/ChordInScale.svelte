@@ -3,11 +3,10 @@
   import { IrPoint } from '../../../Utils/Geometry/IrPoint';
   import { Note } from '../../../Utils/Music/Note';
   import ChordEmblem from '../../common/ChordEmblem.svelte';
-  import { somethingIsRotating } from '../Wheel.svelte';
   import Key from '../../Keyboard/Key.svelte';
   import { Scalar } from '../../../Utils/Math/Scalar';
   import {getStore} from '../../../store';
-  const {editVsPlay} = getStore();
+  const {editVsPlay, somethingIsRotating} = getStore();
 
   let className: string | undefined = undefined;
   export {className as class};

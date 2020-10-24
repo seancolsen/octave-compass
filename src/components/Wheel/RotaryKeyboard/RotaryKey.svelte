@@ -5,11 +5,10 @@
   import Key from '../../Keyboard/Key.svelte';
   import {getStore} from '../../../store';
   import {useLight} from '../../Lighting/Light';
-  import {keyboardRotatorStores} from '../Wheel.svelte';
-import { Scalar } from '../../../Utils/Math/Scalar';
+  import { Scalar } from '../../../Utils/Math/Scalar';
 
-  const keyboardCurrentDetent = keyboardRotatorStores.currentDetent;
-  const {editVsPlay, tonalCenter} = getStore();
+  const {editVsPlay, tonalCenter, keyboardRotator} = getStore();
+  const {currentDetent} = keyboardRotator;
 
   export let note: Note;
   export let isActive: boolean;
@@ -21,7 +20,7 @@ import { Scalar } from '../../../Utils/Math/Scalar';
   $: interval = note.id - $tonalCenter;
   $: keyLabelOpacity = isActive
     ? 1 - 0.1 * $editVsPlay
-    : Scalar.wrapToOctave($tonalCenter - $keyboardCurrentDetent) === note.id ? 1
+    : Scalar.wrapToOctave($tonalCenter - $currentDetent) === note.id ? 1
     : 0.25;
 
 </script>

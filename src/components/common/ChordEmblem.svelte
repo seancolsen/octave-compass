@@ -1,8 +1,10 @@
 <script lang='ts'>
   import { Angle } from '../../Utils/Geometry/Angle';
   import type { Chord } from '../../Utils/Music/Chord';
-  import { scaleRotatorStores } from '../Wheel/Wheel.svelte'
-  const {rotation} = scaleRotatorStores;
+  import { getStore } from '../../store';
+
+  const {scaleRotator} = getStore();
+  const {rotation} = scaleRotator;
   
   export let size: number;
   export let chord: Chord;

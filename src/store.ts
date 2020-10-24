@@ -7,6 +7,7 @@ import { Scalar } from './Utils/Math/Scalar';
 import type { KeyElement } from './components/Keyboard/KeyController';
 import { setContext, getContext } from 'svelte';
 import { LightingController } from './components/Lighting/LightingController';
+import { RotationController } from './components/Wheel/Rotator/RotationController';
 
 /**
  * ABOUT THIS FILE:
@@ -204,6 +205,26 @@ export const createStore = (
   get title() {
     return derived([this.intervalSet, this.tonalCenterName], ([is, tcn]) => 
       `${tcn} ${is.name.full}`
+    );
+  },
+
+  // ======================================================================== //
+
+  scaleRotator: new RotationController(),
+
+  keyboardRotator: new RotationController(),
+
+  get scaleIsRotating() {
+    return this.scaleRotator.isRotating;
+  },
+  
+  get keyboardIsRotating() {
+    return this.keyboardRotator.isRotating;
+  },
+
+  get somethingIsRotating() {
+    return derived([this.scaleIsRotating, this.keyboardIsRotating],
+      ([s, k]) => s || k
     );
   },
 

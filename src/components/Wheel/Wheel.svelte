@@ -1,22 +1,9 @@
-<script context="module" lang="ts">
-  import {derived} from 'svelte/store';
-  import {RotatorStores} from './Rotator.svelte';
-  export const scaleRotatorStores = new RotatorStores();
-  export const keyboardRotatorStores = new RotatorStores();
-  export const scaleIsRotating = scaleRotatorStores.isRotating;
-  export const keyboardIsRotating = keyboardRotatorStores.isRotating;
-  export const somethingIsRotating = derived(
-    [scaleIsRotating, keyboardIsRotating],
-    ([$s, $k]) => $s || $k
-  );
-</script>
-
 <script lang="ts">
   import { Scalar } from '../../Utils/Math/Scalar';
   import RotaryKeyboard from './RotaryKeyboard/RotaryKeyboard.svelte';
   import Base from './Base.svelte';
   import ScaleComponent from './Scale/ScaleComponent.svelte';
-  import Rotator from './Rotator.svelte';
+  import Rotator from './Rotator/Rotator.svelte';
   import ShadowFilter from './ShadowFilter.svelte';
   import IntervalSetPolygon from '../common/IntervalSetPolygon.svelte';
   import Tips from './Tips/Tips.svelte';
@@ -29,7 +16,10 @@
     editVsPlay,
     intervalSet,
     tonalCenter,
-    keyElements
+    keyElements,
+    scaleRotator,
+    keyboardRotator,
+    somethingIsRotating
   } = getStore();
 
   /**
@@ -79,13 +69,13 @@
     opacity={$editVsPlay}
   />
   <Rotator {isRotatable}
-    rotatorStores={keyboardRotatorStores}
+    controller={keyboardRotator}
     onRotationRest={r => {tonalCenter.shift(r)}}
   >
     <RotaryKeyboard />
   </Rotator>
   <Rotator {isRotatable}
-    rotatorStores={scaleRotatorStores}
+    controller={scaleRotator}
     detents={$intervalSet.ordinals.map((o) => Scalar.wrapToOctave(-o))}
     onRotationRest={r => {intervalSet.shift(r)}}
   >

@@ -1,10 +1,8 @@
 <script lang="ts">
   import BaseInterval from './Base/BaseInterval.svelte';
-  import { scaleRotatorStores } from './Wheel.svelte';
   import {getStore} from '../../store';
   import { IntervalSet } from '../../Utils/Music/IntervalSet';
-  const {intervalSet, editVsPlay} = getStore();
-  const scaleIsRotating = scaleRotatorStores.isRotating;
+  const {intervalSet, editVsPlay, scaleIsRotating} = getStore();
 </script>
 
 <g>

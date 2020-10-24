@@ -1,10 +1,9 @@
 <script lang="ts">
-  import {scaleIsRotating} from "../Wheel/Wheel.svelte";
   import {getStore} from '../../store';
   import { modalPanes as modal } from "./Layout.svelte";
-import WithPlural from "../common/WithPlural.svelte";
+  import WithPlural from "../common/WithPlural.svelte";
 
-  const { title, intervalSet } = getStore();
+  const { title, intervalSet, scaleIsRotating } = getStore();
 
   $: alternateNames = $intervalSet.scale?.alternateNames || [];
 

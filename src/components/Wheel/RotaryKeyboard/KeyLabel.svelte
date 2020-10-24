@@ -1,9 +1,10 @@
 <script lang="ts">
   import { IrPoint } from '../../../Utils/Geometry/IrPoint';
   import { Angle } from '../../../Utils/Geometry/Angle';
-  import { keyboardRotatorStores } from '../Wheel.svelte';
+  import { getStore } from '../../../store';
 
-  const {rotation} = keyboardRotatorStores;
+  const {keyboardRotator} = getStore();
+  const {rotation} = keyboardRotator;
   const size = 60;
 
   export let interval: number;
