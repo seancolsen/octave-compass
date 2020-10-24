@@ -6,18 +6,17 @@
     Wheel: center.addPane({isInitiallyOpen: true}),
     LinearKeyboard: center.addPane(),
     ChordSelection: center.addPane(),
+    ScaleInfo: center.addPane(),
   };
 
   const modal = new PaneAreaController({canBeEmpty: true});
   export const modalPanes = {
     Search: modal.addPane(),
     Options: modal.addPane(),
-    ScaleInfo: modal.addPane(),
   };
 </script>
 
 <script lang="ts">
-  import Marquee from "./Marquee.svelte";
   import Toolbar from "../Toolbar/Toolbar.svelte";
   import Footer from "./Footer.svelte";
   import Center from "./Center.svelte";
@@ -28,22 +27,21 @@
   let width = writable(1000);
   let height = writable(1000);
 
-  const toolbarIsVertical = derived([width, height],
-    ([w, h]: [number, number]) => w / h > 0.9
+  const windowIsWide = derived([width, height],
+    ([w, h]: [number, number]) => w / h > 1.25
   );
-  setContext('toolbarIsVertical', toolbarIsVertical);
+  setContext('windowIsWide', windowIsWide);
   
 </script>
 
 <div id='layout'>
   <div
     id='grid'
-    class:toolbarIsVertical={$toolbarIsVertical}
+    class:windowIsWide={$windowIsWide}
     bind:clientWidth={$width}
     bind:clientHeight={$height}
   >
     <div id='toolbar'><Toolbar /></div>
-    <div id='marquee'><Marquee /></div>
     <div id='center'><Center /></div>
     <div id='footer'><Footer /></div>
   </div>
@@ -56,8 +54,7 @@
 
   /* Set z-index for everything. */
   #grid > * {position: relative;}
-  #toolbar { z-index: 3; }
-  #marquee { z-index: 2; }
+  #toolbar { z-index: 2; }
   #center { z-index: 0; }
   #footer { z-index: 1; }
 
@@ -70,21 +67,19 @@
   #grid { height: 100%; width: 100%; display: grid; }
 
   /* Begin with tall windows */
-  #grid {grid-template: auto 6em 1fr 3em / 1fr;}
-  #toolbar { grid-row: 1 ; grid-column: 1 ; }
-  #marquee { grid-row: 2 ; grid-column: 1 ; }
-  #center  { grid-row: 3 ; grid-column: 1 ; }
-  #footer  { grid-row: 4 ; grid-column: 1 ; }
+  #grid {grid-template: auto 1fr auto / 1fr;}
+  #toolbar { grid-row: 1          ; grid-column: 1 ; }
+  #center  { grid-row: 2 / span 2 ; grid-column: 1 ; }
+  #footer  { grid-row: 3          ; grid-column: 1 ; }
   
   /*
   Put the toolbar on the left when the screen gets wider.
   We don't use media queries because we need to also change some other stuff
   in more deeply nested components.
   */
-  #grid.toolbarIsVertical {grid-template: 5em 1fr 3em / auto 1fr;}
-  #grid.toolbarIsVertical #toolbar { grid-row: 1 / span 3 ; grid-column: 1 ; }
-  #grid.toolbarIsVertical #marquee { grid-row: 1          ; grid-column: 2 ; }
-  #grid.toolbarIsVertical #center  { grid-row: 2          ; grid-column: 2 ; }
-  #grid.toolbarIsVertical #footer  { grid-row: 3          ; grid-column: 2 ; }
+  #grid.windowIsWide {grid-template: 1fr auto / 13em 1fr;}
+  #grid.windowIsWide #toolbar { grid-row: 1 / span 2 ; grid-column: 1 ; }
+  #grid.windowIsWide #center  { grid-row: 1 / span 2 ; grid-column: 2 ; }
+  #grid.windowIsWide #footer  { grid-row: 2          ; grid-column: 2 ; }
   
 </style>

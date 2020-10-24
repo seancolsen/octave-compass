@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext } from "svelte";
   import type { Readable } from "svelte/store";
-  const isVertical = getContext('toolbarIsVertical') as Readable<boolean>;
+  const isVertical = getContext('windowIsWide') as Readable<boolean>;
 </script>
 
 <div class='divider' class:isVertical={$isVertical} />
