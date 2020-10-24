@@ -3,13 +3,13 @@
   import Wheel from "../Wheel/Wheel.svelte";
   import LinearKeyboard from '../LinearKeyboard/LinearKeyboard.svelte';
   import {centerPanes as panes} from './Layout.svelte';
-  import CenterPane from "./Panes/CenterPane.svelte";
+  import Pane from "./Panes/Pane.svelte";
 </script>
 
 <div class='center'>
-  <CenterPane ctrl={panes.Wheel} isExtended ><Wheel /></CenterPane>
-  <CenterPane ctrl={panes.ChordSelection}><ChordSelection /></CenterPane>
-  <CenterPane ctrl={panes.LinearKeyboard}><LinearKeyboard /></CenterPane>
+  <Pane ctrl={panes.Wheel}><Wheel /></Pane>
+  <Pane ctrl={panes.ChordSelection}><ChordSelection /></Pane>
+  <Pane ctrl={panes.LinearKeyboard}><LinearKeyboard /></Pane>
 </div>
 
 <style>

@@ -33,16 +33,12 @@
   );
   setContext('toolbarIsVertical', toolbarIsVertical);
   
-  let centerIsExtended = writable(true);
-  setContext('centerIsExtended', centerIsExtended);
-
 </script>
 
 <div id='layout'>
   <div
     id='grid'
     class:toolbarIsVertical={$toolbarIsVertical}
-    class:centerIsExtended={$centerIsExtended}
     bind:clientWidth={$width}
     bind:clientHeight={$height}
   >
@@ -55,8 +51,7 @@
 </div>
 
 <style>
-  #grid { background: #EEE; }
-  #grid.centerIsExtended { background: #AAA; }
+  :global(body) {background: #AAA;}
   #layout { height: 100%; width: 100%; position: relative}
 
   /* Set z-index for everything. */
@@ -66,6 +61,9 @@
   #center { z-index: 0; }
   #footer { z-index: 1; }
 
+  /* Specifics */
+  #center {overflow: hidden;}
+  
   /* ======================================================================= */
   /* Responsive stuff */
   
@@ -77,7 +75,6 @@
   #marquee { grid-row: 2 ; grid-column: 1 ; }
   #center  { grid-row: 3 ; grid-column: 1 ; }
   #footer  { grid-row: 4 ; grid-column: 1 ; }
-  #grid.centerIsExtended #center  { grid-row: 2 / span 3 ; grid-column: 1 ; }
   
   /*
   Put the toolbar on the left when the screen gets wider.
@@ -89,8 +86,5 @@
   #grid.toolbarIsVertical #marquee { grid-row: 1          ; grid-column: 2 ; }
   #grid.toolbarIsVertical #center  { grid-row: 2          ; grid-column: 2 ; }
   #grid.toolbarIsVertical #footer  { grid-row: 3          ; grid-column: 2 ; }
-  #grid.toolbarIsVertical.centerIsExtended #center  {
-    grid-row: 1 / span 3 ; grid-column: 2 ;
-  }
   
 </style>

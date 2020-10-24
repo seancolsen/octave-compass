@@ -22,21 +22,10 @@
     somethingIsRotating
   } = getStore();
 
-  /**
-   * The outer edges of the the interval label texet is at a radius of 1000, so
-   * that's what we're calling the 'boxSize' here. But the ModeShiftHelpText
-   * is placed beyond that radius (and usually hidden). This behavior makes this
-   * whole layout quite complex.
-   */
   const viewBox = (() => {
     const boxSize = 1000;
-    const marginTop = 200;
-    const marginBottom = 50;
     const x = 0 - boxSize / 2;
-    const y = 0 - boxSize / 2 - marginTop;
-    const width = boxSize;
-    const height = boxSize + marginTop + marginBottom;
-    return `${x} ${y} ${width} ${height}`;
+    return `${x} ${x} ${boxSize} ${boxSize}`;
   })();
 
   $: isRotatable = $editVsPlay === 0;
