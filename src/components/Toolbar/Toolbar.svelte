@@ -26,38 +26,51 @@
 
 <div class='toolbar' class:isVertical={$isVertical} >
 
-  <div class='marquee'><Marquee /></div>
+  <div class='marquee-and-buttons'>
 
-  <div class='buttons'>
-    <div class='group'>
-      <Button
-        on:click={() => { editVsPlay.setWithTransition(1); center.Wheel.open(); }}
-        icon={PlaySoundsIcon} label='Play Sounds' isActive={playButtonIsActive}
-      />
-      <Button
-        on:click={() => {editVsPlay.setWithTransition(0); center.Wheel.open(); }}
-        icon={EditScaleIcon} label='Edit Scale' isActive={editButtonIsActive}
-      />
-      <Button
-        on:click={center.ChordSelection.open}
-        icon={ChooseChordsIcon} label='Choose Chords' isActive={$chordsIsOpen}
-      />
-      <Button
-        on:click={center.ScaleInfo.open}
-        icon={ScaleInfoIcon} label='Scale Info' isActive={$scaleInfoIsOpen}
-      />
+    <div class='marquee'><Marquee /></div>
+
+    <div class='buttons'>
+      <div class='group'>
+        <Button
+          on:click={() => { editVsPlay.setWithTransition(1); center.Wheel.open(); }}
+          icon={PlaySoundsIcon} label='Play Sounds' isActive={playButtonIsActive}
+        />
+        <Button
+          on:click={() => {editVsPlay.setWithTransition(0); center.Wheel.open(); }}
+          icon={EditScaleIcon} label='Edit Scale' isActive={editButtonIsActive}
+        />
+        <Button
+          on:click={center.ChordSelection.open}
+          icon={ChooseChordsIcon} label='Choose Chords' isActive={$chordsIsOpen}
+        />
+        <Button
+          on:click={center.ScaleInfo.open}
+          icon={ScaleInfoIcon} label='Scale Info' isActive={$scaleInfoIsOpen}
+        />
+      </div>
+      <div class='group'>
+        <Button
+          on:click={modal.Search.open}
+          icon={SearchIcon}
+          label='Search Scales'
+        />
+        <Button
+          on:click={() => {}} 
+          label='More Options'
+          icon={MoreOptionsIcon}
+        />
+      </div>
     </div>
-    <div class='group'>
-      <Button
-        on:click={modal.Search.open}
-        icon={SearchIcon}
-        label='Search Scales'
-      />
-      <Button
-        on:click={() => {}} 
-        label='More Options'
-        icon={MoreOptionsIcon}
-      />
+
+  </div>
+
+  <div class='app-info'>
+    <div class='brand'>Octave Compass</div>
+    <div>
+      <a target="_blank"
+        href='https://github.com/seancolsen/octave-compass'
+      >Source code</a>
     </div>
   </div>
 
@@ -80,19 +93,47 @@
   /* positioning */
 
   .toolbar {
+    height: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .toolbar.isVertical {
+    flex-direction: column;
+  }
+
+  .marquee-and-buttons {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     line-height: 95%;
-    padding: 0.5em;
+    padding: 0 0.5em 0.5em 0.5em;
     box-sizing: border-box;
   }
-  .toolbar.isVertical {
-    height: 100%;
+  .toolbar.isVertical .marquee-and-buttons {
+    padding-top: 0.5em;
   }
 
+  .app-info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0.5em 0.5em 0 0.5em;
+  }
+  .toolbar.isVertical .app-info {
+    justify-content: center;
+    padding: 0.5em;
+    margin-top: 1em;
+  }
+  .app-info > *, .app-info a {
+    margin: 0 0.5em;
+    color: #777;
+  }
+
+
   .marquee {
-    padding: 0.2em 0 1em 0;
+    padding: 0 0 1em 0;
   }
   .toolbar.isVertical .marquee {
     padding: 0.5em 0 1.5em 0;
@@ -125,6 +166,6 @@
   }
   .toolbar.isVertical .buttons :global(.button) {
     margin: 1em 0 0 0;
-    width: 40%;
+    width: 38%;
   }
 </style>
