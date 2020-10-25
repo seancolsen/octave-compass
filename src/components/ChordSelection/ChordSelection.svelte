@@ -15,7 +15,13 @@
    * Test whether the given chord at the given note exists within the current
    * intervalSet.
    */
-  const isValid = (chord: Chord, note: Note) => 
+  const rowExists = (c: Chord) => $intervalSet.canContain(c.intervalSet);
+  
+  /**
+   * Test whether the given chord at the given note exists within the current
+   * intervalSet.
+   */
+  const cellExists = (chord: Chord, note: Note) => 
     $intervalSet.contains(chord.intervalSet.shift(note.id - $tonalCenter))
   
 
@@ -29,8 +35,9 @@
   </p>
 
   <ul>
-    <li>Chords circled in white will appear within the scale when playing or
-      editing. Click the chord's row header (e.g. <strong>Maj</strong>) to toggle the
+    <li>Rows <span class='highlight'>highlighted in white</span> contain chords
+      that will appear within the scale when playing or
+      editing. Click the row header (e.g. <strong>Maj</strong>) to toggle the
       visibilty of all chords of that type.</li>
     <li>Click on a chord circle to hear the chord.</li>
   </ul>
@@ -49,18 +56,33 @@
       {/each}
     </tr>
     {#each allChords.chords as chord}
-      <tr>
-        <th class='chord-type'>{chord.abbreviation}</th>
-        {#each notes as note}
-          <td>
-            {#if isValid(chord, note)}
-              <ChordChoice {chord} {note} />
-            {/if}
-          </td>
-        {/each}
-      </tr>
+      {#if rowExists(chord)}
+        <tr>
+          <th class='chord-type'>{chord.abbreviation}</th>
+          {#each notes as note}
+            <td>
+              {#if cellExists(chord, note)}
+                <ChordChoice {chord} {note} />
+              {/if}
+            </td>
+          {/each}
+        </tr>
+      {/if}
     {/each}
   </table>
+
+  <p>More info...</p>
+
+  <ul>
+    <li>
+      <div><strong>Q:</strong> Where are the "nineth" chords, and other extended
+        chords?</div>
+      <div><strong>A:</strong> This app doesn't display any extended chords
+        because those chords are difficult to represent within a strictly
+        octave-repeating context such as the wheel for playing and editing
+        scales.</div>
+    </li>
+  </ul>
 
 </div>
 
@@ -78,5 +100,8 @@
   .chord-type {
     text-decoration: underline;
     cursor: pointer;
+  }
+  .highlight {
+    background: white;
   }
 </style>

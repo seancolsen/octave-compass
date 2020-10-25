@@ -170,6 +170,33 @@ export class IntervalSet {
   }
 
   /**
+   * Return true if the given set can be a subset of this set if the two sets
+   * are properly shifted with respect to one another.
+   */
+  canContain(intervalSet: IntervalSet): boolean {
+    if (intervalSet.count > this.count) {
+      return false;
+    }
+    const sub = intervalSet.shiftedToHaveTonalCenter;
+    return this.modes.some(is => is.contains(sub));
+  }
+
+  /**
+   * If this set doesn't have a tonal center, return a new set that does by
+   * shifting this one.
+   */
+  get shiftedToHaveTonalCenter() {
+    return this.shift(this.ordinals[0]);
+  }
+
+  /**
+   * Return true if this set has a tonal center. False if not.
+   */
+  get hasTonalCenter() {
+    return this.contains(new IntervalSet(1));
+  }
+
+  /**
    * Return true if all of the intervals in this set match all of the intervals
    * in the given set.
    */
