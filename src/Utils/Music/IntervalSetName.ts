@@ -71,5 +71,19 @@ export class IntervalSetName {
     }
     return result;
   }
+
+  /**
+   * e.g. "The Harmonic Minor Scale", "a Major Chord"
+   */
+  get withArticle() {
+    if (!this.genus) {
+      return `Scale ${this.binary}`;
+    }
+    const article =
+        this.genus === 'Scale' ? 'the '
+      : this.genus === 'Chord' ? 'a '
+      : '';
+    return `${article}${this.baseName} ${this.genus}`;
+  }
   
 }

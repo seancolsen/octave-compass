@@ -17,29 +17,40 @@
    */
   const isValid = (chord: Chord, note: Note) => 
     $intervalSet.contains(chord.intervalSet.shift(note.id - $tonalCenter))
+  
 
 </script>
 
 <div id='chord-selection'>
 
-  <p>Choose chords to display within scale</p>
+  <p>
+    All the chords within {$intervalSet.name.withArticle} are shown in the
+    table below.
+  </p>
+
+  <ul>
+    <li>Chords circled in white will appear within the scale when playing or
+      editing. Click the chord's row header (e.g. <strong>Maj</strong>) to toggle the
+      visibilty of all chords of that type.</li>
+    <li>Click on a chord circle to hear the chord.</li>
+  </ul>
 
   <table>
     <tr>
       <th></th>
       {#each notes as note, index}
-        <th>{romanNumerals[index + 1]}</th>
+        <th class='degree'>{romanNumerals[index + 1]}</th>
       {/each}
     </tr>
     <tr>
       <th></th>
       {#each notes as note}
-        <th>{note.guaranteedName.unicode}</th>
+        <th class='note-name'>{note.guaranteedName.unicode}</th>
       {/each}
     </tr>
     {#each allChords.chords as chord}
       <tr>
-        <th>{chord.abbreviation}</th>
+        <th class='chord-type'>{chord.abbreviation}</th>
         {#each notes as note}
           <td>
             {#if isValid(chord, note)}
@@ -53,6 +64,19 @@
 
 </div>
 
+
 <style>
-  h2 {text-align: center;}
+  table {
+    border-collapse: collapse;
+  }
+  td {
+    border: solid 0.1em #CCC;
+  }
+  .degree {
+    font-style: italic;
+  }
+  .chord-type {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 </style>
