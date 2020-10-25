@@ -22,7 +22,7 @@
 
 <div id='chord-selection'>
 
-  <h2>Choose Chords to Display Within Scale</h2>
+  <p>Choose chords to display within scale</p>
 
   <table>
     <tr>

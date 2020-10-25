@@ -47,7 +47,6 @@
 </div>
 
 <style>
-  :global(body) {background: #AAA;}
   #layout { height: 100%; width: 100%; position: relative}
 
   /* Set z-index for everything. */
@@ -56,7 +55,7 @@
   #center { z-index: 1; }
 
   /* Specifics */
-  #center {overflow: hidden;}
+  #center {height: 100%; overflow: hidden;}
   
   /* ======================================================================= */
   /* Responsive stuff */

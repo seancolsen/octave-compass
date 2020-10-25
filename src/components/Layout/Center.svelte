@@ -3,23 +3,12 @@
   import Wheel from "../Wheel/Wheel.svelte";
   import LinearKeyboard from '../LinearKeyboard/LinearKeyboard.svelte';
   import {centerPanes as panes} from './Layout.svelte';
-  import Pane from "./Panes/Pane.svelte";
   import ScaleInfo from "../ScaleInfo.svelte";
+  import Pane from "./Panes/Pane.svelte";
+import Page from "./Page.svelte";
 </script>
 
-<div class='center'>
-  <Pane ctrl={panes.Wheel}><Wheel /></Pane>
-  <Pane ctrl={panes.ChordSelection}><ChordSelection /></Pane>
-  <Pane ctrl={panes.LinearKeyboard}><LinearKeyboard /></Pane>
-  <Pane ctrl={panes.ScaleInfo}><ScaleInfo /></Pane>
-</div>
-
-<style>
-  .center {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-  }
-</style>
+<Pane ctrl={panes.Wheel}><Wheel /></Pane>
+<Pane ctrl={panes.ChordSelection}><Page><ChordSelection /></Page></Pane>
+<Pane ctrl={panes.LinearKeyboard}><LinearKeyboard /></Pane>
+<Pane ctrl={panes.ScaleInfo}><Page><ScaleInfo /></Page></Pane>
