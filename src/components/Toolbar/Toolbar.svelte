@@ -26,43 +26,38 @@
 
 <div class='toolbar' class:isVertical={$isVertical} >
 
-  <div class='marquee-and-buttons'>
+  <div class='marquee'><Marquee /></div>
 
-    <div class='marquee'><Marquee /></div>
+  <div class='button-group scale-buttons'>
+    <Button
+      on:click={() => { editVsPlay.setWithTransition(1); center.Wheel.open(); }}
+      icon={PlaySoundsIcon} label='Circular Keyboard' isActive={playButtonIsActive}
+    />
+    <Button
+      on:click={() => {editVsPlay.setWithTransition(0); center.Wheel.open(); }}
+      icon={EditScaleIcon} label='Scale Editor' isActive={editButtonIsActive}
+    />
+    <Button
+      on:click={center.ChordSelection.open}
+      icon={ChooseChordsIcon} label='Chord Table' isActive={$chordsIsOpen}
+    />
+    <Button
+      on:click={center.ScaleInfo.open}
+      icon={ScaleInfoIcon} label='Scale Info' isActive={$scaleInfoIsOpen}
+    />
+  </div>
 
-    <div class='buttons'>
-      <div class='group'>
-        <Button
-          on:click={() => { editVsPlay.setWithTransition(1); center.Wheel.open(); }}
-          icon={PlaySoundsIcon} label='Circular Keyboard' isActive={playButtonIsActive}
-        />
-        <Button
-          on:click={() => {editVsPlay.setWithTransition(0); center.Wheel.open(); }}
-          icon={EditScaleIcon} label='Scale Editor' isActive={editButtonIsActive}
-        />
-        <Button
-          on:click={center.ChordSelection.open}
-          icon={ChooseChordsIcon} label='Chord Table' isActive={$chordsIsOpen}
-        />
-        <Button
-          on:click={center.ScaleInfo.open}
-          icon={ScaleInfoIcon} label='Scale Info' isActive={$scaleInfoIsOpen}
-        />
-      </div>
-      <div class='group'>
-        <Button
-          on:click={modal.Search.open}
-          icon={SearchIcon}
-          label='Scale Index'
-        />
-        <Button
-          on:click={() => {}} 
-          label='More Options'
-          icon={MoreOptionsIcon}
-        />
-      </div>
-    </div>
-
+  <div class='button-group app-buttons'>
+    <Button
+      on:click={modal.Search.open}
+      icon={SearchIcon}
+      label='Scale Index'
+    />
+    <!-- <Button
+      on:click={() => {}} 
+      label='More Options'
+      icon={MoreOptionsIcon}
+    /> -->
   </div>
 
   <div class='app-info'>
@@ -74,9 +69,85 @@
     </div>
   </div>
 
+  <div class='divider' />
+
 </div>
 
 <style>
+  .toolbar {
+    height: 100%;
+    padding: 0.5em;
+    display: grid;
+    grid-gap: 1em;
+    grid-template: auto auto / auto auto
+  }
+  .toolbar.isVertical {
+    grid-template: auto 1fr auto auto / auto
+  }
+
+  .toolbar .marquee       {grid-row: 1; grid-column: 1;}
+  .toolbar .scale-buttons {grid-row: 2; grid-column: 1;}
+  .toolbar .app-buttons   {grid-row: 2; grid-column: 2;}
+  .toolbar .app-info      {grid-row: 1; grid-column: 2;}
+
+  .toolbar.isVertical .marquee       {grid-row: 1; grid-column: 1;}
+  .toolbar.isVertical .scale-buttons {grid-row: 2; grid-column: 1;}
+  .toolbar.isVertical .app-buttons   {grid-row: 3; grid-column: 1;}
+  .toolbar.isVertical .app-info      {grid-row: 4; grid-column: 1;}
+
+
+  .app-info {
+    text-align: right;
+    line-height: 1.1em;
+  }
+  .toolbar.isVertical .app-info {
+    text-align: center;
+    padding: 0.5em;
+    margin-top: 1em;
+  }
+  .app-info > *, .app-info a {
+    color: #777;
+  }
+
+  .marquee {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .toolbar.isVertical .marquee {
+    min-height: 6em;
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+  }
+  .toolbar.isVertical .button-group {
+    flex-wrap: wrap;
+  }
+  .button-group :global(.button) {
+    width: min-content;
+    margin: 0 0.2em;
+  }
+  .toolbar.isVertical .button-group :global(.button) {
+    margin: 1em 0 0 0;
+    box-sizing: border-box;
+    width: 50%;
+  }
+  .scale-buttons {
+    align-content: flex-start;
+  }
+
+  .divider {
+    grid-row: 2;
+    grid-column: 2;
+    height: 100%;
+    border-left: solid #AAA 0.1em;
+  }
+  .toolbar.isVertical .divider {display: none;}
+
   /* colors */
 
   .toolbar {
@@ -88,84 +159,5 @@
     border-bottom: none;
     border-right: solid 0.1em white;
     box-sizing: border-box;
-  }
-
-  /* positioning */
-
-  .toolbar {
-    height: 100%;
-    display: flex;
-    flex-direction: column-reverse;
-  }
-  .toolbar.isVertical {
-    flex-direction: column;
-  }
-
-  .marquee-and-buttons {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    line-height: 95%;
-    padding: 0 0.5em 0.5em 0.5em;
-    box-sizing: border-box;
-  }
-  .toolbar.isVertical .marquee-and-buttons {
-    padding-top: 0.5em;
-  }
-
-  .app-info {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 0.5em 0.5em 0 0.5em;
-  }
-  .toolbar.isVertical .app-info {
-    justify-content: center;
-    padding: 0.5em;
-    margin-top: 1em;
-  }
-  .app-info > *, .app-info a {
-    margin: 0 0.5em;
-    color: #777;
-  }
-
-
-  .marquee {
-    padding: 0 0 1em 0;
-  }
-  .toolbar.isVertical .marquee {
-    padding: 0.5em 0 1.5em 0;
-    min-height: 4em;
-  }
-
-  .buttons {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: space-around;
-  }
-  .toolbar.isVertical .buttons {
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .group {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-  }
-
-  .buttons :global(.button) {
-    width: min-content;
-    margin: 0 0.2em;
-  }
-  .toolbar.isVertical .buttons :global(.button) {
-    margin: 1em 0 0 0;
-    width: 38%;
   }
 </style>
