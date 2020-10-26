@@ -34,15 +34,15 @@
       <div class='group'>
         <Button
           on:click={() => { editVsPlay.setWithTransition(1); center.Wheel.open(); }}
-          icon={PlaySoundsIcon} label='Play Sounds' isActive={playButtonIsActive}
+          icon={PlaySoundsIcon} label='Circular Keyboard' isActive={playButtonIsActive}
         />
         <Button
           on:click={() => {editVsPlay.setWithTransition(0); center.Wheel.open(); }}
-          icon={EditScaleIcon} label='Edit Scale' isActive={editButtonIsActive}
+          icon={EditScaleIcon} label='Scale Editor' isActive={editButtonIsActive}
         />
         <Button
           on:click={center.ChordSelection.open}
-          icon={ChooseChordsIcon} label='Choose Chords' isActive={$chordsIsOpen}
+          icon={ChooseChordsIcon} label='Chord Table' isActive={$chordsIsOpen}
         />
         <Button
           on:click={center.ScaleInfo.open}
@@ -53,7 +53,7 @@
         <Button
           on:click={modal.Search.open}
           icon={SearchIcon}
-          label='Search Scales'
+          label='Scale Index'
         />
         <Button
           on:click={() => {}} 

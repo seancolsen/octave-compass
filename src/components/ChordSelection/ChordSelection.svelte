@@ -5,11 +5,22 @@
   import {romanNumerals} from '../../Data/romanNumerals';
   import type { Chord } from "../../Utils/Music/Chord";
   import type { Note } from "../../Utils/Music/Note";
-  const {intervalSet, noteSet, tonalCenter} = getStore();
+  import Checkbox from "../common/Checkbox.svelte";
+  import CheckboxTip from "./CheckboxTip.svelte";
+  const {intervalSet, noteSet, tonalCenter, title, selectedChords} = getStore();
 
   const allChords = ChordSet.fromAllChords;
 
   $: notes = $noteSet.notes;
+
+  /** 
+   * Originally I though I'd want to hide empty rows, but then decided to show
+   * them so that it's clearer to the user that chord types can be toggled even
+   * for chords not present within the scale. I left this variable her in case
+   * I'd like to alter this setting (or make it user-configurable) in the
+   * future.
+   */
+  const showEmptyRows = true;
   
   /**
    * Test whether the given chord at the given note exists within the current
@@ -23,64 +34,66 @@
    */
   const cellExists = (chord: Chord, note: Note) => 
     $intervalSet.contains(chord.intervalSet.shift(note.id - $tonalCenter))
-  
 
 </script>
 
+
 <div id='chord-selection'>
 
-  <p>
-    All the chords within {$intervalSet.name.withArticle} are shown in the
-    table below.
-  </p>
+  <p>Here all the chords within the <em>{$title}</em>.</p>
 
-  <ul>
-    <li>Rows <span class='highlight'>highlighted in white</span> contain chords
-      that will appear within the scale when playing or
-      editing. Click the row header (e.g. <strong>Maj</strong>) to toggle the
-      visibilty of all chords of that type.</li>
-    <li>Click on a chord circle to hear the chord.</li>
-  </ul>
-
-  <table>
-    <tr>
-      <th></th>
-      {#each notes as note, index}
-        <th class='degree'>{romanNumerals[index + 1]}</th>
-      {/each}
-    </tr>
-    <tr>
-      <th></th>
-      {#each notes as note}
-        <th class='note-name'>{note.guaranteedName.unicode}</th>
-      {/each}
-    </tr>
-    {#each allChords.chords as chord}
-      {#if rowExists(chord)}
-        <tr>
-          <th class='chord-type'>{chord.abbreviation}</th>
-          {#each notes as note}
-            <td>
+  <div class='table'>
+    <CheckboxTip />
+    <table>
+      <tr>
+        <th></th>
+        <th></th>
+        {#each notes as note, index}
+          <th class='degree'>{romanNumerals[index + 1]}</th>
+        {/each}
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+        {#each notes as note}
+          <th class='note-name'>{note.guaranteedName.unicode}</th>
+        {/each}
+      </tr>
+      {#each allChords.chords as chord}
+        {#if showEmptyRows || rowExists(chord)}
+          <tr class:isSelected={$selectedChords.containsChord(chord)}>
+            <th
+              class='chord-type'
+              on:click={() => selectedChords.toggle(chord)}
+            >
+              {chord.abbreviation}
+            </th>
+            <th on:click={() => selectedChords.toggle(chord)}>
+              <div class='indicator-selected'><Checkbox isChecked /></div>
+              <div class='indicator-not-selected'><Checkbox /></div>
+            </th>
+            {#each notes as note}
               {#if cellExists(chord, note)}
-                <ChordChoice {chord} {note} />
+                <td class='has-chord'><ChordChoice {chord} {note} /></td>
+              {:else}
+                <td></td>
               {/if}
-            </td>
-          {/each}
-        </tr>
-      {/if}
-    {/each}
-  </table>
+            {/each}
+          </tr>
+        {/if}
+      {/each}
+    </table>
+  </div>
 
   <p>More info...</p>
 
   <ul>
     <li>
-      <div><strong>Q:</strong> Where are the "nineth" chords, and other extended
-        chords?</div>
-      <div><strong>A:</strong> This app doesn't display any extended chords
+      <div class='question'><strong>Q:</strong> Where are the ninth chords
+         and other extended chords?</div>
+      <div class='answer'><strong>A:</strong> This app doesn't display any extended chords
         because those chords are difficult to represent within a strictly
-        octave-repeating context such as the wheel for playing and editing
-        scales.</div>
+        octave-repeating context such as the circular keyboard.</div>
     </li>
   </ul>
 
@@ -88,11 +101,29 @@
 
 
 <style>
+  .table {
+    position: relative; /* For tips positioned absolutely */
+    margin-top: 1.8em;
+    padding-top: 3em;
+  }
   table {
     border-collapse: collapse;
   }
+  tr.isSelected td {
+    background: white;
+  }
+  tr .indicator-selected {display: none; }
+  tr .indicator-not-selected {display: inherit; }
+  tr.isSelected .indicator-selected {display: inherit; }
+  tr.isSelected .indicator-not-selected {display: none; }
   td {
     border: solid 0.1em #CCC;
+    padding: 0.4em;
+    height: 2.5em;
+    width: 2.5em;
+  }
+  td.has-chord {
+    cursor: pointer;
   }
   .degree {
     font-style: italic;
@@ -100,8 +131,9 @@
   .chord-type {
     text-decoration: underline;
     cursor: pointer;
+    text-align: right;
   }
-  .highlight {
-    background: white;
+  .question {
+    font-style: italic;
   }
 </style>

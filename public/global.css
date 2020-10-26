@@ -20,6 +20,10 @@ h1, h2, h3, h4, h5 {
   margin: 0;
 }
 
+ul, ol {
+  padding-inline-start: 2.5em;
+}
+
 body, button {
   font-family: 'Spectral', 'freeserifmusic', serif; 
   font-size: calc(1.5vh + 0.5vw);
