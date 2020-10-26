@@ -8,7 +8,7 @@
     Display these chords within the circular keyboard and scale editor.
   </div>
   
-  <svg viewBox='0 0 50 50' width='50em' height='50em' >
+  <svg viewBox='0 0 30 30' width='30em' height='30em' >
     <circle class='dot' cx={a.x} cy={a.y} r={0.2} />
     <path
       class='line'
