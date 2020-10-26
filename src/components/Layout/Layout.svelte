@@ -60,18 +60,20 @@
   /* ======================================================================= */
   /* Responsive stuff */
   
-  #grid { height: 100%; width: 100%; display: flex; }
+  #grid { height: 100%; width: 100%; display: grid; }
 
   /* Begin with tall windows */
-  #grid {flex-direction: column;}
-  #center { flex-grow: 1;}
+  #grid {grid-template: auto 1fr / 1fr;}
+  #toolbar { grid-row: 1; grid-column: 1;}
+  #center { grid-row: 2; grid-column: 1;}
   
   /*
   Put the toolbar on the left when the screen gets wider.
   We don't use media queries because we need to also change some other stuff
   in more deeply nested components.
   */
-  #grid.windowIsWide { flex-direction: row;}
-  #grid.windowIsWide #toolbar { width: 13em; }
+  #grid.windowIsWide { grid-template: 1fr / 13em 1fr;}
+  #grid.windowIsWide #toolbar { grid-row: 1; grid-column: 1; }
+  #grid.windowIsWide #center { grid-row: 1; grid-column: 2; }
   
 </style>
