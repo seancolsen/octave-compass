@@ -48,7 +48,6 @@ export class PaneAreaController {
     this.paneRecords = [...this.paneRecords, record];
     return {
       isOpen: derived(record.isOpen, o => o),
-      isPersistent: record.isPersistent,
       close: this.closePane(record),
       open: this.openPane(record),
     };

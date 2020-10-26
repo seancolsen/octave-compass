@@ -5,7 +5,7 @@
   export const centerPanes = {
     Wheel: center.addPane({isInitiallyOpen: true}),
     LinearKeyboard: center.addPane(),
-    ChordSelection: center.addPane({isPersistent: true}),
+    ChordSelection: center.addPane(),
     ScaleInfo: center.addPane(),
   };
 

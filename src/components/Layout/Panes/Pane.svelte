@@ -4,6 +4,6 @@
   const isOpen = ctrl.isOpen;
 </script>
 
-{#if ctrl.isPersistent || $isOpen}
-  <slot {ctrl} />
+{#if $isOpen}
+  <slot {ctrl} {isOpen} />
 {/if}

@@ -4,11 +4,23 @@
   import LinearKeyboard from '../LinearKeyboard/LinearKeyboard.svelte';
   import {centerPanes as panes} from './Layout.svelte';
   import ScaleInfo from "../ScaleInfo.svelte";
-  import Pane from "./Panes/Pane.svelte";
-import Page from "./Page.svelte";
+  import Page from "./Page.svelte";
+  import PersistentPane from "./Panes/PersistentPane.svelte";
 </script>
 
-<Pane ctrl={panes.Wheel}><Wheel /></Pane>
-<Pane ctrl={panes.ChordSelection}><Page><ChordSelection /></Page></Pane>
-<Pane ctrl={panes.LinearKeyboard}><LinearKeyboard /></Pane>
-<Pane ctrl={panes.ScaleInfo}><Page><ScaleInfo /></Page></Pane>
+<PersistentPane ctrl={panes.Wheel}>
+  <Wheel />
+</PersistentPane>
+
+<PersistentPane ctrl={panes.LinearKeyboard}>
+  <LinearKeyboard />
+</PersistentPane>
+
+<PersistentPane ctrl={panes.ChordSelection}>
+  <Page><ChordSelection /></Page>
+</PersistentPane>
+
+<PersistentPane ctrl={panes.ScaleInfo}>
+  <Page><ScaleInfo /></Page>
+</PersistentPane>
+
