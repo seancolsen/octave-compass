@@ -17,7 +17,9 @@
     width={size} height={size}
     rx={size / 5} ry={size / 5}
   />
-  <text x={1} y={10} >✔</text>
+  {#if isChecked}
+    <text x={1} y={10} >✔</text>
+  {/if}
 </g>
 
 <style>
@@ -28,8 +30,6 @@
     font-size: 28px;
     text-anchor: middle;
     fill: #777;
-    visibility: hidden;
   }
-  g.isChecked text {visibility: visible;}
   g.isClickable text { fill: black; }
 </style>
