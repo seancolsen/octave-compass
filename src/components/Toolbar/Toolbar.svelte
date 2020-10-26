@@ -3,15 +3,15 @@
   import Button from "./Button.svelte";
   import ChooseChordsIcon from "../common/Icons/ChooseChordsIcon.svelte";
   import SearchIcon from "../common/Icons/SearchIcon.svelte";
-  import PlaySoundsIcon from "../common/Icons/PlaySoundsIcon.svelte";
   import EditScaleIcon from "../common/Icons/EditScaleIcon.svelte";
   import { getStore } from "../../store";
-  import MoreOptionsIcon from "../common/Icons/MoreOptionsIcon.svelte";
+  // import MoreOptionsIcon from "../common/Icons/MoreOptionsIcon.svelte";
   import type { Readable } from "svelte/store";
   import {centerPanes as center} from '../Layout/Layout.svelte';
   import {modalPanes as modal} from '../Layout/Layout.svelte';
   import Marquee from "../Layout/Marquee.svelte";
   import ScaleInfoIcon from "../common/Icons/ScaleInfoIcon.svelte";
+  import CircularKeyboardIcon from "../common/Icons/CircularKeyboardIcon.svelte";
   
   const {editVsPlay} = getStore();
   const isVertical = getContext('windowIsWide') as Readable<boolean>;
@@ -31,7 +31,7 @@
   <div class='button-group scale-buttons'>
     <Button
       on:click={() => { editVsPlay.setWithTransition(1); center.Wheel.open(); }}
-      icon={PlaySoundsIcon} label='Circular Keyboard' isActive={playButtonIsActive}
+      icon={CircularKeyboardIcon} label='Circular Keyboard' isActive={playButtonIsActive}
     />
     <Button
       on:click={() => {editVsPlay.setWithTransition(0); center.Wheel.open(); }}
