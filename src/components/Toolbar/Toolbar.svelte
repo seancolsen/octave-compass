@@ -145,6 +145,7 @@
     grid-column: 2;
     height: 100%;
     border-left: solid #AAA 0.1em;
+    pointer-events: none;
   }
   .toolbar.isVertical .divider {display: none;}
 
