@@ -12,7 +12,6 @@
   const modal = new PaneAreaController({canBeEmpty: true});
   export const modalPanes = {
     Search: modal.addPane(),
-    Options: modal.addPane(),
   };
 </script>
 

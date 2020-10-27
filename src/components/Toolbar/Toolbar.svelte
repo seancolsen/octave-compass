@@ -5,7 +5,6 @@
   import SearchIcon from "../common/Icons/SearchIcon.svelte";
   import EditScaleIcon from "../common/Icons/EditScaleIcon.svelte";
   import { getStore } from "../../store";
-  // import MoreOptionsIcon from "../common/Icons/MoreOptionsIcon.svelte";
   import type { Readable } from "svelte/store";
   import {centerPanes as center} from '../Layout/Layout.svelte';
   import {modalPanes as modal} from '../Layout/Layout.svelte';
@@ -53,11 +52,6 @@
       icon={SearchIcon}
       label='Scale Index'
     />
-    <!-- <Button
-      on:click={() => {}} 
-      label='More Options'
-      icon={MoreOptionsIcon}
-    /> -->
   </div>
 
   <div class='app-info'>
