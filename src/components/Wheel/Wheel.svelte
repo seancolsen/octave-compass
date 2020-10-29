@@ -82,7 +82,6 @@
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    background: #AAA;
   }
   
   svg {

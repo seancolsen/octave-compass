@@ -9,7 +9,7 @@ interface Options {
 }
 
 const defaults = {
-  canBeEmpty: false,
+  canBeEmpty: true,
   canOpenMultiple: false,
 }
 
@@ -50,6 +50,7 @@ export class PaneAreaController {
       isOpen: derived(record.isOpen, o => o),
       close: this.closePane(record),
       open: this.openPane(record),
+      toggle: this.togglePane(record),
     };
   }
 
@@ -65,6 +66,24 @@ export class PaneAreaController {
 
   private closePane(paneRecord: PaneRecord) {
     return this.canBeEmpty ? () => paneRecord.isOpen.set(false) : () => {};
+  }
+
+  private closeOtherPanes(paneRecord: PaneRecord) {
+    this.paneRecords.forEach(p => p !== paneRecord && p.isOpen.set(false));
+  }
+
+  private togglePane(paneRecord: PaneRecord) {
+    const closeOthers = () => this.closeOtherPanes(paneRecord);
+    const clear = this.canOpenMultiple ? () => {} : closeOthers;
+    const open = () => {clear(); paneRecord.isOpen.set(true);}
+    const toggle = () => {clear(); paneRecord.isOpen.update(o => !o);}
+    return this.canBeEmpty ? toggle : open;
+    /**
+     * TODO: handle case where
+     * canBeEmpty === false && canOpenMultiple === true
+     * For this case we would need to check to see if the supplied paneRecord
+     * is the last one open.
+     */
   }
 
   closeAllOpenPanes() {

@@ -108,6 +108,10 @@
   }
   table {
     border-collapse: collapse;
+    table-layout:fixed;
+  }
+  th {
+    min-width: 2.5em;
   }
   tr.isSelected td {
     background: white;
@@ -118,9 +122,9 @@
   tr.isSelected .indicator-not-selected {display: none; }
   td {
     border: solid 0.1em #CCC;
-    padding: 0.4em;
+    padding: 0.1em;
     height: 2.5em;
-    width: 2.5em;
+    overflow: hidden;
   }
   td.has-chord {
     cursor: pointer;

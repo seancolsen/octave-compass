@@ -26,11 +26,14 @@ ul, ol {
 
 body, button {
   font-family: 'Spectral', 'freeserifmusic', serif; 
-  font-size: calc(1.5vh + 0.5vw);
+  font-size: calc(1vh + 1vw);
 }
 
 h1 { font-size: 150%; }
-h2 { font-size: 140%; font-weight: normal; }
+h2 { 
+  font-size: 110%;
+  font-weight: bold;
+}
 
 a {
   text-decoration: underline;

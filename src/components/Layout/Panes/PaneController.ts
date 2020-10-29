@@ -4,4 +4,5 @@ export interface PaneController {
   isOpen: Readable<boolean>;
   close: () => void;
   open: () => void;
+  toggle: () => void;
 }
