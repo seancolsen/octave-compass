@@ -14,10 +14,12 @@
 <svg
   on:click
   viewBox={`-${iconSize / 2} -${iconSize / 2} ${iconSize} ${iconSize}`}
+  width='2em'
+  height='2em'
 >
   <ChordEmblem size={iconSize / 2} {chord} {noteName} />
 </svg>
 
-<style>
-  svg { display: block; width: 100%; height: 100%; }
-</style>
+<!-- <style>
+  svg { display: block;  }
+</style> -->

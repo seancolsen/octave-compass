@@ -1,6 +1,6 @@
 <script lang="ts">
-  const a = {x: 9, y: 1};
-  const b = {x: 6.45, y: 5.5};
+  const b = {x: 5.3, y: 7};
+  const a = {x: b.x + 2.55, y: 1};
 </script>
 
 <div class='checkbox-tip'>
@@ -8,11 +8,11 @@
     Display these chords within the circular keyboard and scale editor.
   </div>
   
-  <svg viewBox='0 0 30 30' width='30em' height='30em' >
+  <svg viewBox='0 0 10 10' width='10em' height='10em' >
     <circle class='dot' cx={a.x} cy={a.y} r={0.2} />
     <path
       class='line'
-      d={`M ${a.x},${a.y} C ${a.x-2},${a.y} ${b.x},${b.y-1} ${b.x},${b.y}`}
+      d={`M ${a.x},${a.y} C ${a.x-2.5},${a.y} ${b.x},${b.y-1} ${b.x},${b.y}`}
     />
     <path
       class='arrow'
@@ -25,17 +25,16 @@
 
 <style>
   .checkbox-tip {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     pointer-events: none;
     color: #005a75;
     font-style: italic;
+    margin-bottom: 0.8em;
   }
   .text {
-    width: 18em;
+    width: 13em;
     line-height: 1.1em;
-    margin-left: 10em;
+    margin-left: 8.5em;
   }
   svg {
     position: absolute;

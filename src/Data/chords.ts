@@ -14,7 +14,7 @@ export const chords: ChordData[] = [
   {
     binary: 0b000010001001,
     name: "Minor",
-    abbreviation: "Min",
+    abbreviation: "min",
     weight: 2,
     textSizeFactor: 1,
     color: '#2d5da6',
@@ -85,7 +85,7 @@ export const chords: ChordData[] = [
   {
     binary: 0b010010001001,
     name: "Minor 7",
-    abbreviation: "Min7",
+    abbreviation: "min7",
     weight: 9,
     textSizeFactor: 1,
     color: '#9a6b2b',
@@ -96,7 +96,7 @@ export const chords: ChordData[] = [
   {
     binary: 0b100010001001,
     name: "Minor-Major 7",
-    abbreviation: "Min/Maj7",
+    abbreviation: "m/M7",
     weight: 10,
     textSizeFactor: 0.7,
     color: '#85800c',
@@ -107,7 +107,7 @@ export const chords: ChordData[] = [
   {
     binary: 0b001010001001,
     name: "Minor 6",
-    abbreviation: "Min6",
+    abbreviation: "min6",
     weight: 11,
     textSizeFactor: 0.8,
     color: '#9a225c',
@@ -129,7 +129,7 @@ export const chords: ChordData[] = [
   {
     binary: 0b100100010001,
     name: "Augmented Major 7",
-    abbreviation: "Aug Maj7",
+    abbreviation: "Aug M7",
     weight: 13,
     textSizeFactor: 0.75,
     color: '#748d64',

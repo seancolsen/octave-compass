@@ -4,15 +4,24 @@
   import LinearKeyboard from '../LinearKeyboard/LinearKeyboard.svelte';
   import {auxPanes as panes} from './Layout.svelte';
   import ScaleInfo from "../ScaleInfo.svelte";
-  import { getContext } from "svelte";
-  import type { Readable } from "svelte/store";
+  import { writable, derived } from "svelte/store";
   import Notation from "../Notation/Notation.svelte";
   import AuxPane from "./Panes/AuxPane.svelte";
 
-  const windowIsWide = getContext('windowIsWide') as Readable<boolean>;
+  let width = writable(1000);
+  let height = writable(1000);
+  const isWide = derived([width, height],
+    ([w, h]: [number, number]) => w / h > 1.1
+  );
 </script>
 
-<div class="center" class:windowIsWide={$windowIsWide}>
+<div
+  class="center"
+  class:isWide={$isWide}
+  class:isTall={!$isWide}
+  bind:clientWidth={$width}
+  bind:clientHeight={$height}
+>
 
   <div class='wheel'><Wheel /></div>
 
@@ -62,10 +71,10 @@
       "aux-tall " auto
       "aux-wide " auto / 100%;
   }
-  .center.windowIsWide {
+  .center.isWide {
     grid-template:
       "aux-tall  wheel   " minmax(50%, 1fr)
-      "aux-wide  aux-wide" auto / auto minmax(50%, 1fr);
+      "aux-wide  aux-wide" auto / auto minmax(45%, 1fr);
   }
   .wheel {grid-area: wheel;}
   .aux-tall {grid-area: aux-tall;}
@@ -81,8 +90,18 @@
     min-width: 0;
     min-height: 0;
   }
-  .center.windowIsWide .aux-tall {
+  .center.isWide .aux-tall {
     margin: 2em 0 2em -0.4em;
+  }
+
+
+  /*
+    When panes get placed on the side, make sure they're as narrow as possible.
+    But don't worry they won't get ridiculously narrow because Page has a
+    min-width;
+  */
+  .center.isWide .aux-tall :global(.aux-pane) {
+    max-width: min-content;
   }
 
 </style>

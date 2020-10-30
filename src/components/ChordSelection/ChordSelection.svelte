@@ -66,7 +66,7 @@
               class='chord-type'
               on:click={() => selectedChords.toggle(chord)}
             >
-              {chord.abbreviation}
+              <div class='chord-type-label'>{chord.abbreviation}</div>
             </th>
             <th on:click={() => selectedChords.toggle(chord)}>
               <div class='indicator-selected'><Checkbox isChecked /></div>
@@ -104,14 +104,18 @@
   .table {
     position: relative; /* For tips positioned absolutely */
     margin-top: 1.8em;
-    padding-top: 3em;
+  }
+  table, tr, th, td {
+    margin: 0;
+    padding: 0;
   }
   table {
     border-collapse: collapse;
     table-layout:fixed;
   }
-  th {
-    min-width: 2.5em;
+  th, td {
+    min-width: 2em;
+    min-height: 2em;
   }
   tr.isSelected td {
     background: white;
@@ -123,7 +127,6 @@
   td {
     border: solid 0.1em #CCC;
     padding: 0.1em;
-    height: 2.5em;
     overflow: hidden;
   }
   td.has-chord {
@@ -132,10 +135,11 @@
   .degree {
     font-style: italic;
   }
-  .chord-type {
+  .chord-type-label {
     text-decoration: underline;
     cursor: pointer;
     text-align: right;
+    min-width: max-content;
   }
   .question {
     font-style: italic;

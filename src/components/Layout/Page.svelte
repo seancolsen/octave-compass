@@ -8,5 +8,6 @@
     padding: 1em;
     height: 100%;
     overflow-y: auto;
+    min-width: 15em;
   }
 </style>
