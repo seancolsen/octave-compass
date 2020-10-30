@@ -24,7 +24,6 @@
   </ul>
 {/if}
 
-{#if !invertedChords && !scale}
-  <h3>Scale names:</h3>
-  <p><em>Our data does not inclued any names for this scale.</em></p>
+{#if !scale && (!invertedChords || invertedChords.length === 0)}
+  <p><em>Our data does not inclued any info about this scale.</em></p>
 {/if}
