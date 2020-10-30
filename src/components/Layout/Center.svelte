@@ -1,4 +1,5 @@
 <script lang='ts'>
+  import Page from "./Page.svelte";
   import Wheel from "../Wheel/Wheel.svelte";
   import ChordSelection from "../ChordSelection/ChordSelection.svelte";
   import LinearKeyboard from '../LinearKeyboard/LinearKeyboard.svelte';
@@ -31,10 +32,10 @@
    -->
   <div class='aux aux-tall'>
     <AuxPane ctrl={panes.ChordSelection} title='Chord Table'>
-      <ChordSelection />
+      <Page><ChordSelection /></Page>
     </AuxPane>
     <AuxPane ctrl={panes.ScaleInfo} title="Scale Info">
-        <ScaleInfo />
+        <Page><ScaleInfo /></Page>
     </AuxPane>
   </div>
 
@@ -47,7 +48,7 @@
       <LinearKeyboard />
     </AuxPane>
     <AuxPane ctrl={panes.Notation} title='Staff Notation'>
-      <Notation />
+      <Page><Notation /></Page>
     </AuxPane>
   </div>
 

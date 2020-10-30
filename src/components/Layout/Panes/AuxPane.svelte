@@ -1,5 +1,4 @@
 <script lang='ts'>
-  import Page from "../Page.svelte";
   import Window from "../Window.svelte";
   import type { PaneController } from "./PaneController";
 
@@ -11,15 +10,9 @@
 
 {#if $isOpen}
   <div class='aux-pane'>
-    <Window
-      on:close={ctrl.close}
-      hasPadding={false}
-      contentBackground='#EEE'
-    >
+    <Window on:close={ctrl.close} contentBackground='#EEE'>
       <h2 slot="title">{title}</h2>
-      <Page>
-        <slot />
-      </Page>
+      <slot />
     </Window>
   </div>
 {/if}

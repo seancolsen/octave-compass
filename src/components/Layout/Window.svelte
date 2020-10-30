@@ -4,13 +4,7 @@
 
   const dispatch = createEventDispatcher();
 
-  /**
-   * When true (default), the window content will have padding. Use false if you
-   * want your content to touch the inner sides of the window.
-   */
-   export let hasPadding = true as boolean;
-
-   export let contentBackground: string = '#F4F4F4';
+  export let contentBackground: string = '#F4F4F4';
 
 </script>
 
@@ -23,7 +17,6 @@
   </div>
   <div
     class='content'
-    class:hasPadding
     style={`background: ${contentBackground};`}
   >
     <slot />
@@ -64,8 +57,5 @@
     overflow-y: hidden;
     height: 100%;
     box-sizing: border-box;
-  }
-  .content.hasPadding {
-    padding: 1em;
   }
 </style>

@@ -4,7 +4,6 @@
   import type { PaneController } from "./PaneController";
 
   export let ctrl: PaneController;
-  export let hasPadding = true as boolean;
 </script>
 
 <Pane {ctrl}>
@@ -12,7 +11,7 @@
     
     <div class='overlay' on:click|capture|stopPropagation={ctrl.close} />
 
-    <Window {hasPadding} on:close={ctrl.close}>
+    <Window on:close={ctrl.close}>
       <div slot="title"><slot name="title" /></div>
       <slot />
     </Window>
