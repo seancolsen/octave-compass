@@ -1,25 +1,26 @@
 <script lang='ts'>
-  import { Pitch } from '../../Utils/Music/Pitch';
   import { afterUpdate } from 'svelte';
   import Vex from 'vexflow';
   import { CustomMath } from "../../Utils/Math/CustomMath";
   import { getStore } from '../../store';
 
-  const {noteSet} = getStore();
+  const {noteSet, tonalCenter} = getStore();
   const VF = Vex.Flow;
   const clef = 'treble';
 
   let container: HTMLDivElement;
 
+  function getPitches() {
+    return $noteSet.notes.map(note => 
+      note.pitchAboveTonalCenterInOctave($tonalCenter, 4)
+    );
+  }
+
   /**
    * Return an array containing one VF StaveNote for each pitch in our NoteSet.
    */
   function getStaveNotes() {
-
-    // TODO
-    const pitches = $noteSet.notes.map(note => new Pitch(note, 4));
-    
-    return pitches.map(pitch => {
+    return getPitches().map(pitch => {
       let staveNote = new VF.StaveNote({
         clef: clef,
         keys: [pitch.slashNotation],
