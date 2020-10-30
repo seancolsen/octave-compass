@@ -23,6 +23,7 @@
     "snowpack": "^2.15.1",
     "svelte-check": "^1.1.2",
     "svelte-preprocess": "^4.5.2",
-    "typescript": "^4.0.0"
+    "typescript": "^4.0.0",
+    "vexflow": "^3.0.9"
   }
 }
