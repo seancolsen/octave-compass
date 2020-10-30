@@ -11,8 +11,6 @@
   import WithPlural from '../common/WithPlural.svelte';
   import ResultRow from './ResultRow.svelte';
   import { IntervalSet } from '../../Utils/Music/IntervalSet';
-  import { Scale } from '../../Utils/Music/Scale';
-  import { Chord } from '../../Utils/Music/Chord';
   import { getStore } from '../../store';
   import DeleteIcon from '../common/Icons/DeleteIcon.svelte';
   import {modalPanes as modal} from '../Layout/Layout.svelte';

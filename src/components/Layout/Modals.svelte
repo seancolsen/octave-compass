@@ -4,7 +4,7 @@
   import ModalPane from "./Panes/ModalPane.svelte";
 </script>
 
-<ModalPane ctrl={panes.Search} hasPadding={false}>
+<ModalPane ctrl={panes.Search}>
   <h2 slot='title'>Search Scales &amp; Chords</h2>
   <Search />
 </ModalPane>
