@@ -45,10 +45,10 @@
       on:click={auxPanes.ScaleInfo.toggle}
       isActiveStore={auxPanes.ScaleInfo.isOpen}
     />
-    <!-- <Button label='Staff Notation' icon={NotationIcon}
+    <Button label='Staff Notation' icon={NotationIcon}
       on:click={auxPanes.Notation.toggle}
       isActiveStore={auxPanes.Notation.isOpen}
-    /> -->
+    />
     <Button label='Linear Keyboard' icon={PianoIcon}
       on:click={auxPanes.LinearKeyboard.toggle}
       isActiveStore={auxPanes.LinearKeyboard.isOpen}
