@@ -62,6 +62,13 @@ export class NoteSet {
     return new NoteSet(notes);
   }
 
+  /**
+   * Find the note within this set that has an ID matching the given ID.
+   */
+  noteById(id: number) {
+    return this.notes.find(note => note.id === id);
+  }
+
   get nameSetSignature() {
     return this.notes
       .map(note => note.name?.modifier.shortCode || '?')

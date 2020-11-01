@@ -11,6 +11,10 @@ test('fromBinary called for non-existent chord', () => {
   expect(() => Chord.fromBinary(chromaticBinary)).toThrow();
 });
 
+test('major chord, 1st inversion', () => {
+  expect(() => Chord.fromBinary(265)).toThrow();
+});
+
 test('allChords', () => {
   expect(Chord.allChords.length).toBeGreaterThan(5);
 });

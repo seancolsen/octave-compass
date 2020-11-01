@@ -8,6 +8,7 @@ import type { KeyElement } from './components/Keyboard/KeyController';
 import { setContext, getContext } from 'svelte';
 import { LightingController } from './components/Lighting/LightingController';
 import { RotationController } from './components/Wheel/Rotator/RotationController';
+import { NoteIdSet } from './Utils/Music/NoteIdSet';
 
 /**
  * ABOUT THIS FILE:
@@ -152,6 +153,15 @@ export const createStore = (
     
   })(),
 
+  // ======================================================================== //
+
+  /**
+   * This is just here to displaying the chord polygon for currently-playing
+   * notes. It has nothing to do with the functionality that lights up keys when
+   * pressed. That all happens in LightController.
+   */
+  notesPlaying: writable(NoteIdSet.fromArray([0, 5, 7])),
+  
   // ======================================================================== //
 
   /**

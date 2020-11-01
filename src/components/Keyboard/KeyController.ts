@@ -1,3 +1,5 @@
+import type { NoteIdSet } from 'src/Utils/Music/NoteIdSet';
+import type { Writable } from 'svelte/store';
 import type {Pitch} from '../../Utils/Music/Pitch';
 import type {
   LightingController,
@@ -12,6 +14,13 @@ const releaseTime = 0.25; // seconds
  * time between consecutive note attacks.
  */
 const strumStagger = 0.03 // seconds
+
+interface Props {
+  audioContext: AudioContext,
+  lightingController: LightingController,
+  pitches: Pitch[],
+  notesPlaying: Writable<NoteIdSet>,
+}
 
 /**
  * Each Key component gets a corresponding KeyController instance to control
@@ -40,21 +49,12 @@ export class KeyController {
 
   releaseTimeoutId = null as number | null;
 
-  /**
-   * When null, this indicates that the key is not currently being pressed.
-   * When set to a function this indicates that they key is currently being
-   * pressed, AND gives us a method to release the synth upon release of the
-   * key.
-   */
-  // doReleaseSynth = writable(null as null | (() => void));
-  
-  constructor(
-    audioContext: AudioContext,
-    lightingController: LightingController,
-    pitches: Pitch[]
-  ) {
-    this.audioContext = audioContext;
-    this.pitches = pitches;
+  notesPlaying: Writable<NoteIdSet>;
+
+  constructor(props: Props) {
+    this.audioContext = props.audioContext;
+    this.pitches = props.pitches;
+    this.notesPlaying = props.notesPlaying;
 
     /**
      * This function is used to select the correct lights to turn on and off
@@ -65,11 +65,25 @@ export class KeyController {
      */
     const lightClassMatcher = (classes: string[]) => 
       classes.some(
-        _class => pitches.map(pitch => `note-${pitch.note.id}`).includes(_class)
+        _class => props.pitches.map(p => `note-${p.note.id}`).includes(_class)
       );
     this.lightingDispatch = (lightCommand: LightCommand) => {
-      lightingController.dispatch(lightClassMatcher, lightCommand)
+      props.lightingController.dispatch(lightClassMatcher, lightCommand)
     };
+  } 
+
+  get noteIds() {
+    return this.pitches.map(pitch => pitch.note.id);
+  }
+
+  startVisuals() {
+    this.lightingDispatch(l => l.turnOn());
+    this.notesPlaying.update(np => np.add(this.noteIds));
+  }
+
+  stopVisuals() {
+    this.lightingDispatch(l => l.turnOff());
+    this.notesPlaying.update(np => np.delete(this.noteIds));
   }
 
   /**
@@ -104,7 +118,7 @@ export class KeyController {
       this.oscillators = [...this.oscillators, oscillator];
     });
     this.state = 'playing';
-    this.lightingDispatch(l => l.turnOn());
+    this.startVisuals();
     return true;
   }
 
@@ -120,7 +134,7 @@ export class KeyController {
     this.releaseTimeoutId = 
       window.setTimeout(() => this.reset(), releaseTime * 1000);
     this.state = 'releasing';
-    this.lightingDispatch(l => l.turnOff());
+    this.stopVisuals();
   }
 
   reset() {
@@ -138,7 +152,7 @@ export class KeyController {
     this.gain = null;
     this.oscillators = [];
     this.state = 'resting';
-    this.lightingDispatch(l => l.turnOff());
+    this.stopVisuals();
   }
 
 }

@@ -7,8 +7,9 @@
   export {className as class};
   export let intervalSet: IntervalSet;
   export let radius: number;
+  export let fill: string | undefined = undefined;
 
   $: points = intervalSet.ordinals.map(i => IrPoint.fromArray([i, radius]));
 </script>
 
-<Polygon {points} class={className} {...$$restProps} />
+<Polygon {points} class={className} {...$$restProps} {fill} />

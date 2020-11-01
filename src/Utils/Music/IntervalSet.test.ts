@@ -56,6 +56,7 @@ test('isIdenticalTo', () => {
 
 test('shift', () => {
   expect(IntervalSet.fromBinary(0b101100111000).shift(0).binary).toBe(0b101100111000);
+  expect(IntervalSet.fromBinary(0b101100111000).shift(-0).binary).toBe(0b101100111000);
   expect(IntervalSet.fromBinary(0b101100111000).shift(1).binary).toBe(0b011001110001);
   expect(IntervalSet.fromBinary(0b101100111000).shift(-1).binary).toBe(0b010110011100);
   expect(IntervalSet.fromBinary(0b101100111000).shift(6).binary).toBe(0b111000101100);

@@ -12,6 +12,7 @@
   import CurrentRotationStatus from './CurrentRotationStatus.svelte';
   import { afterUpdate } from 'svelte';
   import { setupKeyboard } from '../Keyboard/Keyboard';
+import IntervalsPlaying from './IntervalsPlaying.svelte';
   const {
     editVsPlay,
     intervalSet,
@@ -54,6 +55,7 @@
       class='intervalSetPolygon_play'
       opacity={$editVsPlay}
     />
+    
     <Rotator {isRotatable}
       controller={keyboardRotator}
       onRotationRest={r => {tonalCenter.shift(r)}}
@@ -69,6 +71,7 @@
     </Rotator>
     <circle cx={0} cy={0} r={5} class='center-dot' opacity={1 - $editVsPlay} />
     <CurrentRotationStatus />
+    <IntervalsPlaying />
     {#if !$somethingIsRotating}<Tips />{/if}
   </svg>
 </div>
