@@ -5,17 +5,25 @@
   const {intervalSet} = getStore();
 
   interface Point {x: number, y: number,}
+  interface ControlPoint extends Point {
+    xc?: number,
+    yc?: number,
+  }
 
   export let text: string;
   export let center: Point;
   export let width: number;
   export let height: number;
-  export let targets: Point[];
+  export let targets: ControlPoint[] = [];
   export let isTargetingScale = false as boolean;
 
-  $: d = (target: Point) => 
-    `M ${center.x}, ${center.y} L ${target.x} ${target.y}`;
-
+  $: d = (target: ControlPoint) => {
+    const c = center;
+    const t = {xc: 0, yc: 0, ...target};
+    const relativeCenter = `${c.x - t.x}, ${c.y - t.y}`;
+    return `M ${t.x}, ${t.y} ` +
+    `c ${t.xc}, ${t.yc}, ${relativeCenter}, ${relativeCenter}`;
+  }
 </script>
 
 <g>
@@ -35,7 +43,7 @@
     <path class='target-line' d={d(target)} />
   {/each}
   <foreignObject
-    x={center.x - width/2} y={center.y - width/2}
+    x={center.x - width/2} y={center.y - height/2}
     width={width} height={height}
   >
     <div class='container'>
