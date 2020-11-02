@@ -9,13 +9,15 @@
   
   const light = useLight([`note-${pitch.note.id}`]);
   $: pitchName = `${pitch.note.guaranteedName?.unicode}<sub>${pitch.spiOctave}</sub>`;
+  $: isTonalCenter = pitch.note.id === $tonalCenter;
+  
 </script>
 
 <div
   class='linear-key'
   class:isPressed={$light === 1}
   class:isBlack={pitch.note.color === 'black'}
-  class:isTonalCenter={pitch.note.id === $tonalCenter}
+  class:isTonalCenter
 >
   <Key pitches={[pitch]}>
     <!--
@@ -31,6 +33,9 @@
     </div>
     <div class='touch-receptor' />
   </Key>
+  {#if isTonalCenter}
+    <div class='tip'>tonal center</div>
+  {/if}
 </div>
 
 <style>
@@ -117,4 +122,15 @@
   .linear-key.isPressed .light {visibility: visible;}
   
   .linear-key.isPressed.isBlack .pitch-name {color: black;}
+
+  .tip {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    line-height: 1em;
+    bottom: -2.5em;
+    color: #005a75;
+    left: 0;
+    pointer-events: none;
+  }
 </style>
