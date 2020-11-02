@@ -160,7 +160,7 @@ export const createStore = (
    * notes. It has nothing to do with the functionality that lights up keys when
    * pressed. That all happens in LightController.
    */
-  notesPlaying: writable(NoteIdSet.fromArray([0, 5, 7])),
+  notesPlaying: writable(NoteIdSet.fromArray([])),
   
   // ======================================================================== //
 

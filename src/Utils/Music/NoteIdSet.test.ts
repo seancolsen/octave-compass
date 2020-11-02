@@ -1,21 +1,7 @@
 import { NoteIdSet } from "./NoteIdSet";
 
-// const ordinalsToOrdinals = (o: number[], tonalCenter: number) =>
-//   NoteIdSet.fromArray(o).toIntervalSet(tonalCenter).ordinals;
-
 const placedChords = (o: number[]) => NoteIdSet.fromArray(o) 
   .placedChords.map(pc => [pc.chord.abbreviation, pc.rootNoteId]);
-
-// test('toIntervalSet', () => {
-//   expect(ordinalsToOrdinals([0, 4, 7], 0)).toEqual([0, 4, 7]);
-//   expect(ordinalsToOrdinals([7, 4, 0], 0)).toEqual([0, 4, 7]);
-//   expect(ordinalsToOrdinals([0, 4, 7], 1)).toEqual([3, 6, 11]);
-//   expect(ordinalsToOrdinals([0, 4, 7], 4)).toEqual([0, 3, 8]);
-//   expect(ordinalsToOrdinals([0, 4, 7], 7)).toEqual([0, 5, 9]);
-//   expect(ordinalsToOrdinals([11, 3, 6], 11)).toEqual([0, 4, 7]);
-//   expect(ordinalsToOrdinals([11, 3, 6], 0)).toEqual([3, 6, 11]);
-//   expect(ordinalsToOrdinals([11, 3, 6], 3)).toEqual([0, 3, 8]);
-// });
 
 test('placedChords', () => {
   expect(placedChords([])).toEqual([]);

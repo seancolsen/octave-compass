@@ -5,7 +5,6 @@
   import IntervalSetPolygon from "../common/IntervalSetPolygon.svelte";
 
   const {notesPlaying, noteSet, tonalCenter} = getStore();
-  const box = 300;
 
   $: placedChords = $notesPlaying.placedChords;
   $: name = (placedChord: PlacedChord) =>
@@ -22,16 +21,25 @@
     {#if intervalSet}
       <IntervalSetPolygon {intervalSet} radius={300} {fill} />
     {/if}
-    <foreignObject x={-box/2} y={-box/2} width={box} height={box} >
+    <foreignObject x={-200} y={-300} width={400} height={600} >
       <div class='container'>
         <div class='content' >
           {#each placedChords as placedChord}
             <div class='placed-chord'>
               <div class='name'>
-                {name(placedChord)} {placedChord.chord.name} Chord
-                <!-- <GlowingText text={``}/> -->
+                <GlowingText
+                  text={`${name(placedChord)} ${placedChord.chord.name} Chord`}
+                  blurRadius={0}
+                  glowColor='white'
+                />
               </div>
-              <div class='separator'>— or —</div>
+              <div class='separator'>
+                <GlowingText
+                  text='— or —'
+                  blurRadius={0}
+                  glowColor='white'
+                />
+              </div>
             </div>
           {/each}
         </div>
@@ -46,8 +54,8 @@
   }
   g > :global(polygon) {
     stroke: white;
-    stroke-width: 2px;
-    opacity: 0.5;
+    stroke-width: 5px;
+    opacity: 0.7;
   }
   .container {
     width: 100%;
@@ -57,16 +65,11 @@
     align-items: center;
     font-size: 28px;
     color: black;
-    /* font-weight: bold; */
   }
   .content {
     border-radius: 20px;
     padding: 10px;
     text-align: center;
-    background: rgba(204, 204, 204, 0.4);
-  }
-  .name {
-    /* text-shadow: -0.08em -0.08em 0 white; */
   }
   .separator {
     font-style: italic;

@@ -36,10 +36,6 @@ export class NoteIdSet {
     return new NoteIdSet(result);
   }
 
-  // toIntervalSet(tonalCenterId: number) {
-  //   return IntervalSet.fromOrdinals([...this.noteIds]).shift(-tonalCenterId);
-  // }
-
   get placedChords() {
     // For performance, give up if we don't have between 3 and 5 notes
     if (this.noteIds.size < 3 || this.noteIds.size > 5) {

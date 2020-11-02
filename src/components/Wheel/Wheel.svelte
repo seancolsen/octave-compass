@@ -12,7 +12,8 @@
   import CurrentRotationStatus from './CurrentRotationStatus.svelte';
   import { afterUpdate } from 'svelte';
   import { setupKeyboard } from '../Keyboard/Keyboard';
-import IntervalsPlaying from './IntervalsPlaying.svelte';
+  import IntervalsPlaying from './IntervalsPlaying.svelte';
+  
   const {
     editVsPlay,
     intervalSet,
