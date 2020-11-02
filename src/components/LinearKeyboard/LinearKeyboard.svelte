@@ -20,17 +20,17 @@
     $noteSet.notes[0].pitchAboveTonalCenterInOctave($tonalCenter, 6)
   ];
 
-  onMount(() => {
-    /* Horizontally scroll the keybord window to center the keyboard. */
+  function setScrollPositionToCenter() {
     if (windowElement) {
       const maxScroll = windowElement.scrollWidth - windowElement.clientWidth;
       windowElement.scrollLeft = maxScroll / 2;
     }
-  });
+  }
 
   afterUpdate(() => {
     destroyKeyboard();
     destroyKeyboard = setupKeyboard(keyboardElement, keyElements);
+    setScrollPositionToCenter();
   });
 
 </script>
