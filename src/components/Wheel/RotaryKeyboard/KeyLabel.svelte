@@ -22,7 +22,13 @@
 </script>
 
 
-<g class:isParenthetical class:isBlack class:lightIsOn transform={transform}>
+<g
+  class:isParenthetical
+  class:isBlack
+  class:lightIsOn 
+  class:hasBackground
+  transform={transform}
+>
   {#if hasBackground}
     <rect
       x={-size/2} y={-size/2}
@@ -55,4 +61,5 @@
   g.isParenthetical > :global(text) { font-size: 34px; font-weight: normal; }
   g.isBlack > :global(text) { fill: white; }
   g.lightIsOn > :global(text) { fill: black; }
+  g.isBlack.lightIsOn.hasBackground > :global(text) { fill: white; }
 </style>
