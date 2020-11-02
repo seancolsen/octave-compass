@@ -241,7 +241,7 @@ export const createStore = (
   // ======================================================================== //
 
   audioContext: new AudioContext({
-    latencyHint: "playback",
+    latencyHint: "interactive",
     sampleRate: 12000,
   }),
 
