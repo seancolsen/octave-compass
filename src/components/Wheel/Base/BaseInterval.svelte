@@ -4,11 +4,10 @@
   import Arc from '../common/Arc.svelte';
   import SvgCheckbox from './SvgCheckbox.svelte';
   import {getStore} from '../../../store';
-  const {editVsPlay, intervalSet} = getStore();
-
-  const checkboxRadius = 430;
-  const arcRadius = 430;
-  const arcSpan = 0.5;
+  import StandaloneKey from '../../Keyboard/StandaloneKey.svelte';
+  import { Note } from '../../../Utils/Music/Note';
+  import { Scalar } from '../../../Utils/Math/Scalar';
+  const {editVsPlay, intervalSet, tonalCenter} = getStore();
 
   let className: string | undefined = undefined;
   export {className as class};
@@ -17,29 +16,18 @@
   export let isActive: boolean = true;
   export let isClickable: boolean = true;
 
-  $: point = (new IrPoint(interval, checkboxRadius)).toXy();
+  $: checkboxCenter = (new IrPoint(interval, 430)).toXy();
+  $: noteId = Scalar.wrapToOctave(interval + $tonalCenter);
+  $: pitch = (new Note(noteId)).pitchAboveTonalCenterInOctave($tonalCenter, 4);
 
-  function handleClick() {
-    if (isClickable) {
-      intervalSet.toggleInterval(interval);
-    }
+  function press() {
+    if (!isClickable) {return;}
+    intervalSet.toggleInterval(interval);
   }
 </script>
 
-<g
-  class={className}
-  class:isClickable
-  class:isActive
-  on:mousedown|preventDefault|stopPropagation={handleClick}
-  on:touchstart|preventDefault|stopPropagation={handleClick}
->
-  <!-- Arc is to catch touches that don't fall on the label or checkbox. -->
-  <Arc
-    class='touch-receptor'  
-    startInterval={interval - arcSpan}
-    endInterval={interval + arcSpan}
-    radius={arcRadius}
-  />
+<g class={className} class:isClickable class:isActive>
+
   {#if isActive}
     <IntervalLabel {interval} {label} {isActive} isHighlight
       opacity={1 - $editVsPlay}
@@ -47,19 +35,33 @@
   {/if}
   <IntervalLabel {interval} {label} {isActive} />
   <SvgCheckbox
-    x={point.x}
-    y={point.y}
+    x={checkboxCenter.x}
+    y={checkboxCenter.y}
     isChecked={isActive}
     {isClickable}
     opacity={1 - $editVsPlay}
   />
+
+  <StandaloneKey
+    pitches={[pitch]}
+    isActive={$editVsPlay === 0}
+    on:press={press}
+  >
+    <Arc
+      class='touch-receptor'  
+      startInterval={interval - 0.5}
+      endInterval={interval + 0.5}
+      radius={450}
+    />
+  </StandaloneKey>
+
 </g>
 
 <style>
   g.isClickable :global(*) { cursor: pointer; }
 
-  g > :global(.touch-receptor) {
-    stroke-width: 130px;
+  g :global(.touch-receptor) {
+    stroke-width: 150px;
     stroke: #999;
     fill: none;
     stroke-linecap: butt;
