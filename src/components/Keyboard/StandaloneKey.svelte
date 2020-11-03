@@ -35,7 +35,7 @@
 </script>
 
 <g
-  class='key'
+  class='standalone-key'
   class:isActive
   on:mousedown={press}
   on:touchstart={press}
@@ -50,15 +50,7 @@
 </g>
 
 <style>
-  /**
-   * This is to make elementFromPoint() work correctly within Keyboard.svelte.
-   * We want elementFromPoint() to return the `.touch-receptor` element.
-   */
-  g :global(*) {
-    pointer-events: none;
-  }
-  g.isActive > :global(.touch-receptor) {
-    pointer-events: all;
+  .standalone-key.isActive {
     cursor: pointer;
   }
 </style>

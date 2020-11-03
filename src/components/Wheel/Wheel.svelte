@@ -72,8 +72,8 @@
     </Rotator>
     <circle cx={0} cy={0} r={5} class='center-dot' opacity={1 - $editVsPlay} />
     <CurrentRotationStatus />
-    <IntervalsPlaying />
     {#if !$somethingIsRotating}<Tips />{/if}
+    <IntervalsPlaying />
   </svg>
 </div>
 

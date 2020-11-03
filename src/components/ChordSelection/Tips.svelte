@@ -1,10 +1,15 @@
 <script lang="ts">
   const b = {x: 5.3, y: 7};
-  const a = {x: b.x + 2.55, y: 1};
+  const a = {x: b.x + 4, y: 1};
 </script>
 
-<div class='checkbox-tip'>
-  <div class='text'>
+<div class='tips'>
+
+  <div class='tip circle-tip'>
+    Press circles to play chords.
+  </div>
+
+  <div class='tip checkbox-tip'>
     Display these chords within the circular keyboard and scale editor.
   </div>
   
@@ -24,17 +29,27 @@
 </div>
 
 <style>
-  .checkbox-tip {
+  .tips {
     position: relative;
     pointer-events: none;
+    height: 5em;
+  }
+  .tip {
+    position: absolute;
     color: #005a75;
     font-style: italic;
-    margin-bottom: 0.8em;
-  }
-  .text {
-    width: 13em;
     line-height: 1.1em;
-    margin-left: 8.5em;
+  }
+  .circle-tip {
+    width: 6em;
+    top: 0;
+    left: 0;
+    text-align: center;
+  }
+  .checkbox-tip {
+    width: 12em;
+    top: 0;
+    left: 10em;
   }
   svg {
     position: absolute;

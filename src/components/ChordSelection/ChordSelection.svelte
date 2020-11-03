@@ -6,7 +6,7 @@
   import type { Chord } from "../../Utils/Music/Chord";
   import type { Note } from "../../Utils/Music/Note";
   import Checkbox from "../common/Checkbox.svelte";
-  import CheckboxTip from "./CheckboxTip.svelte";
+  import Tips from "./Tips.svelte";
   const {intervalSet, noteSet, tonalCenter, title, selectedChords} = getStore();
 
   const allChords = ChordSet.fromAllChords;
@@ -43,7 +43,7 @@
   <p>Here all the chords within the <em>{$title}</em>.</p>
 
   <div class='table'>
-    <CheckboxTip />
+    <Tips />
     <table>
       <tr>
         <th></th>

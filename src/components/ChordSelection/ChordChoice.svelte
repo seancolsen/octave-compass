@@ -1,7 +1,11 @@
 <script lang="ts">
   import type { Chord } from "../../Utils/Music/Chord";
   import ChordEmblem from '../common/ChordEmblem.svelte';
-  import type { Note } from "../../Utils/Music/Note";
+  import { Note } from "../../Utils/Music/Note";
+  import StandaloneKey from "../Keyboard/StandaloneKey.svelte";
+  import { Scalar } from "../../Utils/Math/Scalar";
+  import { getStore } from "../../store";
+  const {tonalCenter} = getStore();
 
   export let chord: Chord;
   export let note: Note | undefined;
@@ -9,6 +13,14 @@
   const iconSize = 100;
   
   $: noteName = note?.guaranteedName.unicode;
+  $: pitches = (() => {
+    if (!note) {return undefined;}
+    const rootNoteId = note.id;
+    return chord.intervalSet.ordinals.map(ordinal => {
+      const noteId = Scalar.wrapToOctave(rootNoteId + ordinal);
+      return (new Note(noteId)).pitchAboveTonalCenterInOctave($tonalCenter, 4);
+    });
+  })();
 </script>
 
 <svg
@@ -17,9 +29,12 @@
   width='2em'
   height='2em'
 >
-  <ChordEmblem size={iconSize / 2} {chord} {noteName} />
-</svg>
+  {#if pitches}
+    <StandaloneKey pitches={pitches}>
+      <ChordEmblem size={iconSize / 2} {chord} {noteName} />
+    </StandaloneKey>
+  {:else}
+    <ChordEmblem size={iconSize / 2} {chord} {noteName} />
+  {/if}
 
-<!-- <style>
-  svg { display: block;  }
-</style> -->
+</svg>
