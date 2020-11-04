@@ -1,4 +1,5 @@
 import { musicTheory } from "./../../Data/musicTheory";
+import { Midi } from "./Midi";
 import type { Note } from './Note';
 
 export class Pitch {
@@ -34,7 +35,7 @@ export class Pitch {
    * that's how MIDI works.
    */
   get frequency(): number {
-    return 440 * Math.pow(2, (this.midiNumber - 69) / 12);
+    return Midi.noteNumberToFrequency(this.midiNumber);
   }
 
   /**

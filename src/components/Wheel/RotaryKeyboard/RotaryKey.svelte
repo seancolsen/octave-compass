@@ -6,8 +6,9 @@
   import {getStore} from '../../../store';
   import {useLight} from '../../Lighting/Light';
   import { Scalar } from '../../../Utils/Math/Scalar';
+  import { ShepardVoice } from '../../Keyboard/Voices/ShepardVoice';
 
-  const {editVsPlay, tonalCenter, keyboardRotator} = getStore();
+  const {editVsPlay, tonalCenter, keyboardRotator, audioContext} = getStore();
   const {currentDetent} = keyboardRotator;
 
   export let note: Note;
@@ -45,6 +46,7 @@
     <Key
       pitches={[note.pitchAboveTonalCenterInOctave($tonalCenter, 4)]}
       isInsideSvg={true}
+      voice={new ShepardVoice({audioContext})}
     >
       <KeyPolygon class='touch-receptor' {interval} />
     </Key>

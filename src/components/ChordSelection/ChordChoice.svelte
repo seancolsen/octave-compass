@@ -5,7 +5,8 @@
   import StandaloneKey from "../Keyboard/StandaloneKey.svelte";
   import { Scalar } from "../../Utils/Math/Scalar";
   import { getStore } from "../../store";
-  const {tonalCenter} = getStore();
+  import { ShepardVoice } from "../Keyboard/Voices/ShepardVoice";
+  const {tonalCenter, audioContext} = getStore();
 
   export let chord: Chord;
   export let note: Note | undefined;
@@ -30,7 +31,10 @@
   height='2em'
 >
   {#if pitches}
-    <StandaloneKey pitches={pitches}>
+    <StandaloneKey
+      pitches={pitches}
+      voice={new ShepardVoice({audioContext})}
+    >
       <ChordEmblem size={iconSize / 2} {chord} {noteName} />
     </StandaloneKey>
   {:else}

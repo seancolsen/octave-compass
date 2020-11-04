@@ -1,4 +1,4 @@
-import type { NoteIdSet } from 'src/Utils/Music/NoteIdSet';
+import type { NoteIdSet } from '../../Utils/Music/NoteIdSet';
 import type { Writable } from 'svelte/store';
 import type {Pitch} from '../../Utils/Music/Pitch';
 import type {

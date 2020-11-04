@@ -4,14 +4,17 @@
   import {createEventDispatcher} from 'svelte';
   import {getStore} from '../../store';
   import type { Voice } from './Voices/Voice';
-  import { TriangleVoice } from './Voices/TriangleVoice';
+  import { OscillatorVoice } from './Voices/OscillatorVoice';
 
   const dispatch = createEventDispatcher();
   const {audioContext, lightingController, notesPlaying} = getStore();
 
   export let pitches: Pitch[];
   export let isActive = true as boolean;
-  export let voice: Voice = new TriangleVoice({audioContext});
+  export let voice: Voice = new OscillatorVoice({
+    audioContext,
+    type: "triangle"
+  });
 
   $: keyController = new KeyController({
     voice,

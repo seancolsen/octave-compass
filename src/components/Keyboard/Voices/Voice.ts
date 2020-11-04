@@ -25,10 +25,49 @@ export abstract class Voice {
     this.audioContext = props.audioContext;
   }
 
-  abstract attack(pitches: Pitch[]): void
+  attack(pitches: Pitch[]) {
+    if (this.state === 'playing') {return false;}
+    if (this.state === 'releasing') {this.reset();}
+
+    /**
+     * This resume() call is here to accommodate the Chrome policy of suspending
+     * until user interaction. Tutorials recommend running this with `await`,
+     * but I had trouble with redundant key presses when making press() an async
+     * function.
+     */
+    this.audioContext.resume();
+
+    this.onAttack(pitches);
+
+    this.state = 'playing';
+    return true;
+  }
   
-  abstract release(): void
+  release() {
+    if (this.state !== 'playing') {return;}
+
+    this.onRelease();
+
+    this.releaseTimeoutId = 
+      window.setTimeout(() => this.reset(), this.releaseTime * 1000);
+    this.state = 'releasing';
+  }
   
-  abstract reset(): void
+  reset() {
+    if (this.releaseTimeoutId) {
+      clearTimeout(this.releaseTimeoutId);
+      this.releaseTimeoutId = null;
+    }
+
+    this.onReset();
+
+    this.state = 'resting';
+  }
+  
+  protected abstract onAttack(pitches: Pitch[]): void
+  
+  protected abstract onRelease(): void
+  
+  protected abstract onReset(): void
 
 }

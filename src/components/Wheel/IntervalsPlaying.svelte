@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import type { PlacedChord } from "src/Utils/Music/NoteIdSet";
+  import type { PlacedChord } from "../../Utils/Music/NoteIdSet";
   import { getStore } from "../../store";
   import GlowingText from "../common/GlowingText.svelte";
   import IntervalSetPolygon from "../common/IntervalSetPolygon.svelte";

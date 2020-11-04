@@ -49,7 +49,7 @@
   import {onMount, afterUpdate, onDestroy} from 'svelte';
   import {getStore} from '../../store';
   import type { Voice } from './Voices/Voice';
-  import { TriangleVoice } from './Voices/TriangleVoice';
+  import { OscillatorVoice } from './Voices/OscillatorVoice';
   const {
     audioContext,
     keyElements,
@@ -60,7 +60,10 @@
   export let pitches: Pitch[];
   export let isInsideSvg = false as boolean;
   export let isActive = true as boolean;
-  export let voice: Voice = new TriangleVoice({audioContext});
+  export let voice: Voice = new OscillatorVoice({
+    audioContext,
+    type: "sawtooth",
+  });
   
   /** 
    * Using `any` because I can't figure out a better way. At first ref is either
@@ -107,7 +110,7 @@
     // glissando).
     $keyElements
       .map(keyElement => keyElement.keyController)
-      .filter(keyController => keyController.state === 'releasing')
+      .filter(keyController => keyController.voice.state === 'releasing')
       .forEach(keyController => keyController.reset());
   }
 

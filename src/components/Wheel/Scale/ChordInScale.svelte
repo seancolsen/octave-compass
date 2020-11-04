@@ -6,7 +6,8 @@
   import Key from '../../Keyboard/Key.svelte';
   import { Scalar } from '../../../Utils/Math/Scalar';
   import {getStore} from '../../../store';
-  const {editVsPlay, somethingIsRotating} = getStore();
+  import { ShepardVoice } from '../../Keyboard/Voices/ShepardVoice';
+  const {editVsPlay, somethingIsRotating, audioContext} = getStore();
 
   let className: string | undefined = undefined;
   export {className as class};
@@ -41,7 +42,11 @@
   <circle class='background' cx={0} cy={0} r={size} stroke-width={strokeWidth}/>
   <ChordEmblem {size} {chord} {noteName} opacity={1 - 0.2*(1-$editVsPlay)} />
   {#if isClickable}
-    <Key {pitches} isInsideSvg={true} >
+    <Key
+      {pitches}
+      isInsideSvg={true}
+      voice={new ShepardVoice({audioContext})}
+    >
       <circle class='touch-receptor' cx={0} cy={0} r={size} />
     </Key>
   {/if}

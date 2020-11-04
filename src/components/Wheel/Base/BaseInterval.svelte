@@ -7,7 +7,8 @@
   import StandaloneKey from '../../Keyboard/StandaloneKey.svelte';
   import { Note } from '../../../Utils/Music/Note';
   import { Scalar } from '../../../Utils/Math/Scalar';
-  const {editVsPlay, intervalSet, tonalCenter} = getStore();
+  import { ShepardVoice } from '../../Keyboard/Voices/ShepardVoice';
+  const {editVsPlay, intervalSet, tonalCenter, audioContext} = getStore();
 
   let className: string | undefined = undefined;
   export {className as class};
@@ -44,6 +45,7 @@
 
   <StandaloneKey
     pitches={[pitch]}
+    voice={new ShepardVoice({audioContext})}
     isActive={$editVsPlay === 0}
     on:press={press}
   >
