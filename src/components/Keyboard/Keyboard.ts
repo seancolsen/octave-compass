@@ -38,7 +38,7 @@ const releaseKeysThatAreNotTouched = (
     .filter(keyElement => !touchedKeyElements.includes(keyElement))
     .filter(keyElement => !!keyElement.keyController)
     .map(keyElement => keyElement.keyController)
-    .filter(keyController => keyController.state === 'playing')
+    .filter(keyController => keyController.voice.state === 'playing')
     .forEach(keyController => {
       if (isImmediateReset) { keyController.reset(); }
       else { keyController.release(); }

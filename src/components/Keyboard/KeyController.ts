@@ -5,18 +5,10 @@ import type {
   LightingController,
   LightCommand,
 } from '../Lighting/LightingController';
-
-const releaseTime = 0.25; // seconds
-
-/**
- * When multiple frequencies are present, they'll start with offsets to sound
- * like a guitar strum. The value specified below (in seconds) represents the
- * time between consecutive note attacks.
- */
-const strumStagger = 0.03 // seconds
+import type { Voice } from './Voices/Voice';
 
 interface Props {
-  audioContext: AudioContext,
+  voice: Voice,
   lightingController: LightingController,
   pitches: Pitch[],
   notesPlaying: Writable<NoteIdSet>,
@@ -35,24 +27,16 @@ interface Props {
  */
 export class KeyController {
 
-  audioContext: AudioContext;
+  voice: Voice;
 
   lightingDispatch: (lightCommand: LightCommand) => void;
 
   pitches: Pitch[];
 
-  oscillators = [] as OscillatorNode[];
-
-  gain = null as GainNode | null;
-
-  state = 'resting' as 'resting' | 'playing' | 'releasing';
-
-  releaseTimeoutId = null as number | null;
-
   notesPlaying: Writable<NoteIdSet>;
 
   constructor(props: Props) {
-    this.audioContext = props.audioContext;
+    this.voice = props.voice;
     this.pitches = props.pitches;
     this.notesPlaying = props.notesPlaying;
 
@@ -87,7 +71,7 @@ export class KeyController {
   }
 
   /**
-   * Begins playing a SynthNote (sound to speakers!) and also tells the Key
+   * Begins playing a voice (sound to speakers!) and also tells the Key
    * component to render a visual indication that sound is playing.
    * 
    * @returns
@@ -95,63 +79,21 @@ export class KeyController {
    *   pressed. Returns false if the key was already pressed.
    */
   press() {
-    if (this.state === 'playing') {return false;}
-    if (this.state === 'releasing') {this.reset();}
-
-    /**
-     * This resume() call is here to accommodate the Chrome policy of suspending
-     * until user interaction. Tutorials recommend running this with `await`,
-     * but I had trouble with redundant key presses when making press() an async
-     * function.
-     */
-    this.audioContext.resume();
-
-    this.gain = this.audioContext.createGain();
-    this.gain.connect(this.audioContext.destination);
-    this.oscillators = [];
-    this.pitches.map(pitch => pitch.frequency).forEach((frequency, i) => {
-      const oscillator = this.audioContext.createOscillator();
-      oscillator.connect(this.gain as GainNode); // unsure why TS complains here
-      oscillator.type = 'triangle';
-      oscillator.frequency.value = frequency;
-      oscillator.start(this.audioContext.currentTime + i * strumStagger);
-      this.oscillators = [...this.oscillators, oscillator];
-    });
-    this.state = 'playing';
+    if (this.voice.state === 'playing') {return false;}
+    if (this.voice.state === 'releasing') {this.reset();}
+    this.voice.attack(this.pitches);
     this.startVisuals();
     return true;
   }
 
   release() {
-    if (this.state !== 'playing') {return;}
-    if (!this.gain) {return;}
-    const points = new Float32Array([1, 0]);
-    this.gain.gain.setValueCurveAtTime(
-      points,
-      this.audioContext.currentTime,
-      releaseTime
-    );
-    this.releaseTimeoutId = 
-      window.setTimeout(() => this.reset(), releaseTime * 1000);
-    this.state = 'releasing';
+    if (this.voice.state !== 'playing') {return;}
+    this.voice.release();
     this.stopVisuals();
   }
 
   reset() {
-    if (this.releaseTimeoutId) {
-      clearTimeout(this.releaseTimeoutId);
-      this.releaseTimeoutId = null;
-    }
-    this.oscillators.forEach(oscillator => {
-      oscillator.stop();
-      oscillator.disconnect();
-    });
-    if (this.gain) {
-      this.gain.disconnect();
-    }
-    this.gain = null;
-    this.oscillators = [];
-    this.state = 'resting';
+    this.voice.reset();
     this.stopVisuals();
   }
 

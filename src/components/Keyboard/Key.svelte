@@ -48,6 +48,8 @@
   import {KeyController} from './KeyController';
   import {onMount, afterUpdate, onDestroy} from 'svelte';
   import {getStore} from '../../store';
+  import type { Voice } from './Voices/Voice';
+  import { TriangleVoice } from './Voices/TriangleVoice';
   const {
     audioContext,
     keyElements,
@@ -58,6 +60,7 @@
   export let pitches: Pitch[];
   export let isInsideSvg = false as boolean;
   export let isActive = true as boolean;
+  export let voice: Voice = new TriangleVoice({audioContext});
   
   /** 
    * Using `any` because I can't figure out a better way. At first ref is either
@@ -79,7 +82,7 @@
        * if a new KeyController is passed it, we can use that updated one.
        */
       const keyController = new KeyController({
-        audioContext,
+        voice,
         lightingController,
         pitches,
         notesPlaying
