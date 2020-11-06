@@ -45,7 +45,9 @@
 
 
 <div class='wheel' class:isRotatable>
-  <svg bind:this={ref} {viewBox} >
+  <svg bind:this={ref} {viewBox}
+    text-rendering={$somethingIsRotating ? 'optimizeSpeed' : 'optimizeLegibility'}
+  >
     <ShadowFilter id='shadow-when-edit' opacity={1 - $editVsPlay} />
     <ShadowFilter id='shadow-when-play' opacity={$editVsPlay} />
     <BlurFilter bounds={3} size={8} id='blur' />
@@ -92,7 +94,6 @@
     display: inline-block;
     width: 100%;
     height: 100%;
-    text-rendering: optimizeLegibility;
   }
   svg > :global(.intervalSetPolygon_play) {
     fill: #CCC;
