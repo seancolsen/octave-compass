@@ -44,7 +44,7 @@
   class='standalone-key'
   class:isActive
   on:mousedown={press}
-  on:touchstart={press}
+  on:touchstart|nonpassive={press}
   on:contextmenu|preventDefault|stopPropagation={() => {}}
   on:mouseup={release}
   on:mouseout={release}

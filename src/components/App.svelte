@@ -6,11 +6,11 @@
   const {tonalCenter, intervalSet} = Url.parse(window.location.pathname);
   setStoreInContext(tonalCenter, intervalSet);
 
-  // TODO Disable default drag-related behaviors
-  // document.body.ondrag = () => false;
-  // document.body.ondragstart = () => false;
-  // document.body.ondrop = () => false;
-  // document.body.ondblclick = () => false;
+  // Disable default drag-related behaviors
+  document.body.ondrag = () => false;
+  document.body.ondragstart = () => false;
+  document.body.ondrop = () => false;
+  document.body.ondblclick = () => false;
   
 </script>
 

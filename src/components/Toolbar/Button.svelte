@@ -78,5 +78,10 @@
   .label {
     width: min-content;
     flex-grow: 1;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
   }
 </style>
