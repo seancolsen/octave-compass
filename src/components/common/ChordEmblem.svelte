@@ -14,7 +14,7 @@
   $: transform = `rotate(${-Angle.iToD($rotation)})`;
 </script>
 
-<g {opacity} {transform}>
+<g {opacity} {transform} class='chord-emblem'>
   <circle
     cx={0} cy={0}
     r={size}
@@ -31,6 +31,7 @@
 </g>
 
 <style>
+  .chord-emblem { pointer-events: none; }
   text { fill: white;}
   text > :global(tspan.bold) { font-weight: bold; }
   text > :global(tspan.italic) { font-style: italic; }

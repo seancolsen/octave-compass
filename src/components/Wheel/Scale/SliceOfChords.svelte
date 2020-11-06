@@ -51,7 +51,7 @@
   })();
 </script>
 
-<g>
+<g class='slice-of-chords'>
   <!-- Reverse so that common chords display on top -->
   {#each chordSet.chords.reverse() as chord, index}
   <ChordInScale

@@ -9,8 +9,6 @@
   import { ShepardVoice } from '../../Keyboard/Voices/ShepardVoice';
   const {editVsPlay, somethingIsRotating, audioContext} = getStore();
 
-  let className: string | undefined = undefined;
-  export {className as class};
   export let interval: number;
   export let note: Note | undefined = undefined;
   export let chord: Chord;
@@ -33,7 +31,7 @@
 
 </script>
 
-<g class:isClickable {transform} class={className} >
+<g class:isClickable {transform} class='chord-in-scale' >
   <!-- 
     This "background" circle is here and filled solid because the chord
     emblem becomes translucent during editing and needs a background to
