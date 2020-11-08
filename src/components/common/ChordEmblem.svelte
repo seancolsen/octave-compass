@@ -1,17 +1,15 @@
 <script lang='ts'>
   import { Angle } from '../../Utils/Geometry/Angle';
   import type { Chord } from '../../Utils/Music/Chord';
-  import { getStore } from '../../store';
-
-  const {scaleRotator} = getStore();
-  const {rotation} = scaleRotator;
   
   export let size: number;
   export let chord: Chord;
   export let noteName: string | undefined = undefined;
   export let opacity = 1;
+  export let rotation: number = 0;
+
   $: fontSize = size * chord.textSizeFactor * 0.85;
-  $: transform = `rotate(${-Angle.iToD($rotation)})`;
+  $: transform = `rotate(${-Angle.iToD(rotation)})`;
 </script>
 
 <g {opacity} {transform} class='chord-emblem'>

@@ -7,7 +7,13 @@
   import { Scalar } from '../../../Utils/Math/Scalar';
   import {getStore} from '../../../store';
   import { ShepardVoice } from '../../Keyboard/Voices/ShepardVoice';
-  const {editVsPlay, somethingIsRotating, audioContext} = getStore();
+  const {
+    editVsPlay,
+    somethingIsRotating,
+    audioContext,
+    scaleRotator
+  } = getStore();
+  const {rotation} = scaleRotator;
 
   export let interval: number;
   export let note: Note | undefined = undefined;
@@ -19,7 +25,6 @@
     const noteId = Scalar.wrapToOctave(ordinal + (note?.id || 0));
     return (new Note(noteId)).pitchInOctave(4);
   });
-
   $: displayNoteName = !$somethingIsRotating;
   $: noteName = displayNoteName ? (note?.name?.unicode || '') : undefined;
   $: transform = (() => {
@@ -38,7 +43,9 @@
     separate it from the other emblems.
   -->
   <circle class='background' cx={0} cy={0} r={size} stroke-width={strokeWidth}/>
-  <ChordEmblem {size} {chord} {noteName} opacity={1 - 0.2*(1-$editVsPlay)} />
+  <ChordEmblem {size} {chord} {noteName} rotation={$rotation}
+    opacity={1 - 0.2*(1-$editVsPlay)}
+  />
   {#if isClickable}
     <Key
       {pitches}
