@@ -1,0 +1,21 @@
+{
+    "name": "Octave Compass",
+    "description": "An tool for exploring musical scales and chords",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#AAAAAA",
+    "background_color": "#AAAAAA",
+    "display": "standalone",
+    "scope": "https://octavecompass.com/",
+    "categories": ["music", "education"]
+}
