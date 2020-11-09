@@ -34,7 +34,7 @@
     <div class='touch-receptor' />
   </Key>
   {#if isTonalCenter}
-    <div class='tip'>tonal center</div>
+    <div class='tip'>tonal ctr.</div>
   {/if}
 </div>
 
@@ -132,10 +132,11 @@
 
   .tip {
     position: absolute;
+    font-size: 90%;
     width: 100%;
     text-align: center;
     line-height: 1em;
-    bottom: -2.5em;
+    bottom: -1.5em;
     color: #005a75;
     left: 0;
     pointer-events: none;
