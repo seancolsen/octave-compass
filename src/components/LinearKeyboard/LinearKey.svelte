@@ -3,13 +3,18 @@
   import Key from '../Keyboard/Key.svelte';
   import type {Pitch} from '../../Utils/Music/Pitch';
   import {getStore} from '../../store';
-  const {tonalCenter} = getStore();
+import { OscillatorVoice } from "../Keyboard/Voices/OscillatorVoice";
+  const {tonalCenter, createKeyController} = getStore();
 
   export let pitch: Pitch
   
   const light = useLight([`note-${pitch.note.id}`]);
   $: pitchName = `${pitch.note.guaranteedName?.unicode}<sub>${pitch.spiOctave}</sub>`;
   $: isTonalCenter = pitch.note.id === $tonalCenter;
+  $: keyController = createKeyController({
+    pitches: [pitch],
+    createVoice: audioContext => new OscillatorVoice({audioContext}),
+  })
   
 </script>
 
@@ -19,7 +24,7 @@
   class:isBlack={pitch.note.color === 'black'}
   class:isTonalCenter
 >
-  <Key pitches={[pitch]}>
+  <Key controller={keyController} >
     <!--
       Why not use css box-shadow? Because those shadows would cover adjacent
       keys.

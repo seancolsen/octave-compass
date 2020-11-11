@@ -4,11 +4,14 @@ import { ChordSet } from './Utils/Music/ChordSet';
 import { NoteSet } from './Utils/Music/NoteSet';
 import type { Chord } from './Utils/Music/Chord';
 import { Scalar } from './Utils/Math/Scalar';
-import type { KeyElement } from './components/Keyboard/KeyController';
+import { KeyController, KeyElement } from './components/Keyboard/KeyController';
 import { setContext, getContext } from 'svelte';
 import { LightingController } from './components/Lighting/LightingController';
 import { RotationController } from './components/Wheel/Rotator/RotationController';
 import { NoteIdSet } from './Utils/Music/NoteIdSet';
+import type { Voice } from './components/Keyboard/Voices/Voice';
+import type { Pitch } from './Utils/Music/Pitch';
+import { ShepardVoice } from './components/Keyboard/Voices/ShepardVoice';
 
 /**
  * ABOUT THIS FILE:
@@ -277,6 +280,28 @@ export const createStore = (
   })(),
 
   lightingController: new LightingController(),
+
+  /**
+   * Return a helper function that makes it easier for components to create
+   * KeyControllers. It's easier because those components don't need to import
+   * a bunch of stuff if they use this function.
+   */
+  get createKeyController() {
+    return (props: {
+      pitches?: Pitch[],
+      createVoice?: (audioContext: AudioContext) => Voice,
+    }) => {
+      const voice = props.createVoice
+        ? props.createVoice(this.audioContext)
+        : new ShepardVoice({audioContext: this.audioContext});
+      return new KeyController({
+        voice,
+        pitches: props.pitches ?? [],
+        lightingController: this.lightingController,
+        notesPlaying: this.notesPlaying,
+      }); 
+    }
+  }
 
 });
 

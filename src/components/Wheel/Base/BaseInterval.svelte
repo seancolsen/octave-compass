@@ -7,8 +7,12 @@
   import StandaloneKey from '../../Keyboard/StandaloneKey.svelte';
   import { Note } from '../../../Utils/Music/Note';
   import { Scalar } from '../../../Utils/Math/Scalar';
-  import { ShepardVoice } from '../../Keyboard/Voices/ShepardVoice';
-  const {editVsPlay, intervalSet, tonalCenter, audioContext} = getStore();
+  const {
+    editVsPlay,
+    intervalSet,
+    tonalCenter,
+    createKeyController,
+  } = getStore();
 
   let className: string | undefined = undefined;
   export {className as class};
@@ -20,6 +24,7 @@
   $: checkboxCenter = (new IrPoint(interval, 430)).toXy();
   $: noteId = Scalar.wrapToOctave(interval + $tonalCenter);
   $: pitch = (new Note(noteId)).pitchAboveTonalCenterInOctave($tonalCenter, 4);
+  $: keyController = createKeyController({pitches: [pitch]});
 
   function press() {
     if (!isClickable) {return;}
@@ -44,8 +49,7 @@
   />
 
   <StandaloneKey
-    pitches={[pitch]}
-    voice={new ShepardVoice({audioContext})}
+    controller={keyController}
     isActive={$editVsPlay === 0}
     on:press={press}
   >

@@ -6,12 +6,11 @@
   import Key from '../../Keyboard/Key.svelte';
   import { Scalar } from '../../../Utils/Math/Scalar';
   import {getStore} from '../../../store';
-  import { ShepardVoice } from '../../Keyboard/Voices/ShepardVoice';
   const {
     editVsPlay,
     somethingIsRotating,
-    audioContext,
-    scaleRotator
+    scaleRotator,
+    createKeyController,
   } = getStore();
   const {rotation} = scaleRotator;
 
@@ -25,6 +24,7 @@
     const noteId = Scalar.wrapToOctave(ordinal + (note?.id || 0));
     return (new Note(noteId)).pitchInOctave(4);
   });
+  $: keyController = createKeyController({pitches});
   $: displayNoteName = !$somethingIsRotating;
   $: noteName = displayNoteName ? (note?.name?.unicode || '') : undefined;
   $: transform = (() => {
@@ -47,11 +47,7 @@
     opacity={1 - 0.2*(1-$editVsPlay)}
   />
   {#if isClickable}
-    <Key
-      {pitches}
-      isInsideSvg={true}
-      voice={new ShepardVoice({audioContext})}
-    >
+    <Key controller={keyController} isInsideSvg={true}>
       <circle class='touch-receptor' cx={0} cy={0} r={size} />
     </Key>
   {/if}

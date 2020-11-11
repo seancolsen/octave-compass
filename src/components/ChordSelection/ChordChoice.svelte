@@ -5,8 +5,7 @@
   import StandaloneKey from "../Keyboard/StandaloneKey.svelte";
   import { Scalar } from "../../Utils/Math/Scalar";
   import { getStore } from "../../store";
-  import { ShepardVoice } from "../Keyboard/Voices/ShepardVoice";
-  const {tonalCenter, audioContext} = getStore();
+  const {tonalCenter, createKeyController} = getStore();
 
   export let chord: Chord;
   export let note: Note | undefined;
@@ -22,6 +21,7 @@
       return (new Note(noteId)).pitchAboveTonalCenterInOctave($tonalCenter, 4);
     });
   })();
+  $: keyController = createKeyController({pitches: pitches ?? []})
 </script>
 
 <svg
@@ -31,10 +31,7 @@
   height='2em'
 >
   {#if pitches}
-    <StandaloneKey
-      pitches={pitches}
-      voice={new ShepardVoice({audioContext})}
-    >
+    <StandaloneKey controller={keyController}>
       <ChordEmblem size={iconSize / 2} {chord} {noteName} />
     </StandaloneKey>
   {:else}

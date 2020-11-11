@@ -2,7 +2,11 @@ import type { Pitch } from "../../../Utils/Music/Pitch";
 import { Voice, VoiceProps } from "./Voice";
 
 export interface OscillatorVoiceProps extends VoiceProps {
-  type: OscillatorType;
+  type?: OscillatorType;
+}
+
+const defaults: Required<Pick<OscillatorVoiceProps, 'type'>> = {
+  type: 'sawtooth',
 }
 
 export class OscillatorVoice extends Voice {
@@ -15,7 +19,8 @@ export class OscillatorVoice extends Voice {
 
   constructor(props: OscillatorVoiceProps) {
     super(props);
-    this.type = props.type;
+    const p = {...defaults, ...props};
+    this.type = p.type;
   }
 
   onAttack(pitches: Pitch[]) {

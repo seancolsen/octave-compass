@@ -44,26 +44,14 @@
   
 -->
 <script lang="ts">
-  import type {Pitch} from '../../Utils/Music/Pitch';
-  import {KeyController} from './KeyController';
+  import type {KeyController} from './KeyController';
   import {onMount, afterUpdate, onDestroy} from 'svelte';
   import {getStore} from '../../store';
-  import type { Voice } from './Voices/Voice';
-  import { OscillatorVoice } from './Voices/OscillatorVoice';
-  const {
-    audioContext,
-    keyElements,
-    lightingController,
-    notesPlaying
-  } = getStore();
+  const { keyElements } = getStore();
 
-  export let pitches: Pitch[];
+  export let controller: KeyController;
   export let isInsideSvg = false as boolean;
   export let isActive = true as boolean;
-  export let voice: Voice = new OscillatorVoice({
-    audioContext,
-    type: "sawtooth",
-  });
   
   /** 
    * Using `any` because I can't figure out a better way. At first ref is either
@@ -84,13 +72,7 @@
        * element via document.elementFromPoint(). We do this afterUpdate so that
        * if a new KeyController is passed it, we can use that updated one.
        */
-      const keyController = new KeyController({
-        voice,
-        lightingController,
-        pitches,
-        notesPlaying
-      });
-      ref.keyController = keyController;
+      ref.keyController = controller;
     }
     else {
       ref.keyController = undefined;

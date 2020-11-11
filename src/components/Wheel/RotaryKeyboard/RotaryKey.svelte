@@ -6,9 +6,13 @@
   import {getStore} from '../../../store';
   import {useLight} from '../../Lighting/Light';
   import { Scalar } from '../../../Utils/Math/Scalar';
-  import { ShepardVoice } from '../../Keyboard/Voices/ShepardVoice';
 
-  const {editVsPlay, tonalCenter, keyboardRotator, audioContext} = getStore();
+  const {
+    editVsPlay,
+    tonalCenter,
+    keyboardRotator,
+    createKeyController
+  } = getStore();
   const {currentDetent} = keyboardRotator;
 
   export let note: Note;
@@ -23,6 +27,8 @@
     ? 1 - 0.1 * $editVsPlay
     : Scalar.wrapToOctave($tonalCenter - $currentDetent) === note.id ? 1
     : 0.25;
+  $: pitch = note.pitchAboveTonalCenterInOctave($tonalCenter, 4);
+  $: keyController = createKeyController({pitches: [pitch]});
 
 </script>
 
@@ -43,11 +49,7 @@
     lightIsOn={!!$light}
   />
   {#if isActive && !isEdit}
-    <Key
-      pitches={[note.pitchAboveTonalCenterInOctave($tonalCenter, 4)]}
-      isInsideSvg={true}
-      voice={new ShepardVoice({audioContext})}
-    >
+    <Key controller={keyController} isInsideSvg={true} >
       <KeyPolygon class='touch-receptor' {interval} />
     </Key>
   {/if}
