@@ -3,11 +3,12 @@
   import {createEventDispatcher} from 'svelte';
 
   export let controller: KeyController;
-  export let isActive = true as boolean;
+  export let isActive: boolean = true;
 
   const dispatch = createEventDispatcher();
 
   const press = (e: Event) => {
+    console.log('press')
     if (!isActive) {return;}
     e.preventDefault();
     e.stopPropagation();

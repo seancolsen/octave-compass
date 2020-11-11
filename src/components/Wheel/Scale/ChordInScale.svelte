@@ -68,4 +68,14 @@
   g :global(.touch-receptor) {
     visibility: hidden;
   }
+
+  /**
+   * Ignore pointer events in order to prevent funny touch behaviors when
+   * rotating the scale.
+   * Why put this here instead of within ChordEmblem? Because that would mess up
+   * the chord emblems that display within the chord table.
+   */
+  g > :global(.chord-emblem) {
+    pointer-events: none;
+  }
 </style>

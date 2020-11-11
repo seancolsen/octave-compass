@@ -29,7 +29,6 @@
 </g>
 
 <style>
-  .chord-emblem { pointer-events: none; }
   text { fill: white;}
   text > :global(tspan.bold) { font-weight: bold; }
   text > :global(tspan.italic) { font-style: italic; }
