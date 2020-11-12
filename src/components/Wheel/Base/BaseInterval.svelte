@@ -22,9 +22,9 @@
   export let isClickable: boolean = true;
 
   $: checkboxCenter = (new IrPoint(interval, 430)).toXy();
-  $: noteId = Scalar.wrapToOctave(interval + $tonalCenter);
-  $: pitch = (new Note(noteId)).pitchAboveTonalCenterInOctave($tonalCenter, 4);
-  $: keyController = createKeyController({pitches: [pitch]});
+  $: keyController = createKeyController({
+    notes: [new Note(Scalar.wrapToOctave(interval + $tonalCenter))]
+  });
 
   function press() {
     if (!isClickable) {return;}

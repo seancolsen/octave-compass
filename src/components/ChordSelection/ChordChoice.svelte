@@ -5,7 +5,7 @@
   import StandaloneKey from "../Keyboard/StandaloneKey.svelte";
   import { Scalar } from "../../Utils/Math/Scalar";
   import { getStore } from "../../store";
-  const {tonalCenter, createKeyController} = getStore();
+  const {createKeyController} = getStore();
 
   export let chord: Chord;
   export let note: Note | undefined;
@@ -13,15 +13,14 @@
   const iconSize = 100;
   
   $: noteName = note?.guaranteedName.unicode;
-  $: pitches = (() => {
+  $: keyController = (() => {
     if (!note) {return undefined;}
     const rootNoteId = note.id;
-    return chord.intervalSet.ordinals.map(ordinal => {
-      const noteId = Scalar.wrapToOctave(rootNoteId + ordinal);
-      return (new Note(noteId)).pitchAboveTonalCenterInOctave($tonalCenter, 4);
-    });
+    const notes = chord.intervalSet.ordinals.map(ordinal => 
+      new Note(Scalar.wrapToOctave(rootNoteId + ordinal))
+    );
+    return createKeyController({notes})
   })();
-  $: keyController = createKeyController({pitches: pitches ?? []})
 </script>
 
 <svg
@@ -30,7 +29,7 @@
   width='2em'
   height='2em'
 >
-  {#if pitches}
+  {#if keyController}
     <StandaloneKey controller={keyController}>
       <ChordEmblem size={iconSize / 2} {chord} {noteName} />
     </StandaloneKey>

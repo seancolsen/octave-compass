@@ -12,6 +12,7 @@ import { NoteIdSet } from './Utils/Music/NoteIdSet';
 import type { Voice } from './components/Keyboard/Voices/Voice';
 import type { Pitch } from './Utils/Music/Pitch';
 import { ShepardVoice } from './components/Keyboard/Voices/ShepardVoice';
+import type { Note } from './Utils/Music/Note';
 
 /**
  * ABOUT THIS FILE:
@@ -287,16 +288,16 @@ export const createStore = (
    * a bunch of stuff if they use this function.
    */
   get createKeyController() {
-    return (props: {
-      pitches?: Pitch[],
-      createVoice?: (audioContext: AudioContext) => Voice,
-    }) => {
+    return (props: 
+      {createVoice?: (audioContext: AudioContext) => Voice} &
+      ( { pitches: Pitch[] } | { notes: Note[] } )
+    ) => {
       const voice = props.createVoice
         ? props.createVoice(this.audioContext)
         : new ShepardVoice({audioContext: this.audioContext});
       return new KeyController({
+        ...props,
         voice,
-        pitches: props.pitches ?? [],
         lightingController: this.lightingController,
         notesPlaying: this.notesPlaying,
       }); 

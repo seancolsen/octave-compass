@@ -3,12 +3,13 @@
   import Key from '../Keyboard/Key.svelte';
   import type {Pitch} from '../../Utils/Music/Pitch';
   import {getStore} from '../../store';
-import { OscillatorVoice } from "../Keyboard/Voices/OscillatorVoice";
+  import { OscillatorVoice } from "../Keyboard/Voices/OscillatorVoice";
+  import { lightClassesForPitchLight } from "../Lighting/LightClasses";
   const {tonalCenter, createKeyController} = getStore();
 
   export let pitch: Pitch
   
-  const light = useLight([`note-${pitch.note.id}`]);
+  const light = useLight(lightClassesForPitchLight(pitch));
   $: pitchName = `${pitch.note.guaranteedName?.unicode}<sub>${pitch.spiOctave}</sub>`;
   $: isTonalCenter = pitch.note.id === $tonalCenter;
   $: keyController = createKeyController({

@@ -6,13 +6,17 @@ import type {
   LightCommand,
 } from '../Lighting/LightingController';
 import type { Voice } from './Voices/Voice';
+import type { Note } from 'src/Utils/Music/Note';
+import { classMatcher } from '../Lighting/LightClasses';
 
-interface Props {
+type Props = {
   voice: Voice,
   lightingController: LightingController,
-  pitches: Pitch[],
   notesPlaying: Writable<NoteIdSet>,
-}
+} & (
+  { pitches: Pitch[] } |
+  { notes: Note[] }
+);
 
 /**
  * Each Key component gets a corresponding KeyController instance to control
@@ -37,20 +41,13 @@ export class KeyController {
 
   constructor(props: Props) {
     this.voice = props.voice;
-    this.pitches = props.pitches;
     this.notesPlaying = props.notesPlaying;
+    
+    this.pitches = 'pitches' in props
+      ? props.pitches
+      : props.notes.map(note => note.pitchInOctave(4));
 
-    /**
-     * This function is used to select the correct lights to turn on and off
-     * when pressing and releasing this key. It says: if one of the pitches in
-     * this Key has a signature that matches one of the classes in the given
-     * light, then the light matches and we want to include it in any commands
-     * dispatched to lights.
-     */
-    const lightClassMatcher = (classes: string[]) => 
-      classes.some(
-        _class => props.pitches.map(p => `note-${p.note.id}`).includes(_class)
-      );
+    const lightClassMatcher = classMatcher(props);
     this.lightingDispatch = (lightCommand: LightCommand) => {
       props.lightingController.dispatch(lightClassMatcher, lightCommand)
     };

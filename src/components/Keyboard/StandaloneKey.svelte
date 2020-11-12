@@ -8,7 +8,6 @@
   const dispatch = createEventDispatcher();
 
   const press = (e: Event) => {
-    console.log('press')
     if (!isActive) {return;}
     e.preventDefault();
     e.stopPropagation();

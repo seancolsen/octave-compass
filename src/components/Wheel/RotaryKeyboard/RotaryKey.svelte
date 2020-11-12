@@ -6,6 +6,7 @@
   import {getStore} from '../../../store';
   import {useLight} from '../../Lighting/Light';
   import { Scalar } from '../../../Utils/Math/Scalar';
+  import { lightClassesForNoteLight } from '../../Lighting/LightClasses';
 
   const {
     editVsPlay,
@@ -18,7 +19,7 @@
   export let note: Note;
   export let isActive: boolean;
 
-  const light = useLight([`note-${note.id}`]);
+  const light = useLight(lightClassesForNoteLight(note));
   
   $: isEdit = $editVsPlay === 0;
   $: isBlack = note.color === 'black';
@@ -27,8 +28,7 @@
     ? 1 - 0.1 * $editVsPlay
     : Scalar.wrapToOctave($tonalCenter - $currentDetent) === note.id ? 1
     : 0.25;
-  $: pitch = note.pitchAboveTonalCenterInOctave($tonalCenter, 4);
-  $: keyController = createKeyController({pitches: [pitch]});
+  $: keyController = createKeyController({notes: [note]});
 
 </script>
 

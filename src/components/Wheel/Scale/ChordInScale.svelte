@@ -20,11 +20,10 @@
   export let radialPosition: number;
   export let size: number;
 
-  $: pitches = chord.intervalSet.ordinals.map(ordinal => {
-    const noteId = Scalar.wrapToOctave(ordinal + (note?.id || 0));
-    return (new Note(noteId)).pitchInOctave(4);
-  });
-  $: keyController = createKeyController({pitches});
+  $: notes = chord.intervalSet.ordinals.map(ordinal => 
+    new Note(Scalar.wrapToOctave(ordinal + (note?.id || 0)))
+  );
+  $: keyController = createKeyController({notes});
   $: displayNoteName = !$somethingIsRotating;
   $: noteName = displayNoteName ? (note?.name?.unicode || '') : undefined;
   $: transform = (() => {
