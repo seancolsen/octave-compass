@@ -84,16 +84,18 @@
     const e = event as MouseEvent;
     e.preventDefault();
     e.stopPropagation();
-    // Validate `buttons` for two reasons:
-    // - Don't fire when hovering on `mouseover`.
-    // - Don't fire when right-clicking on `mousedown`.
-    e.buttons === 1 ? ref.keyController.press() : null
+
     // Reset any currently releasing KeyControllers (to avoid dissonance during
     // glissando).
     $keyElements
       .map(keyElement => keyElement.keyController)
       .filter(keyController => keyController.voice.state === 'releasing')
       .forEach(keyController => keyController.reset());
+
+    // Validate `buttons` for two reasons:
+    // - Don't fire when hovering on `mouseover`.
+    // - Don't fire when right-clicking on `mousedown`.
+    e.buttons === 1 ? ref.keyController.press() : null
   }
 
   const handleMouseEnd = (event: Event) => {
