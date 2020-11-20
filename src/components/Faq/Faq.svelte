@@ -13,6 +13,29 @@
 <!--  -->
 
 <QA>
+  <Q>What is Octave Compass?</Q>
+  <A>
+    Octave Compass is an app that helps you figure out the details of
+    particular musical scales.
+    
+    <ul>
+      <li>The "Circular Keyboard" and "Scale Editor" present all pitches as
+        octave-equivalent notes, allowing you to visualize scales as
+        polygons. The circular keyboard lets you play notes and chords; and
+        the scale editor lets you transpose, mode shift, and toggle
+        intervals.</li>
+      <li>You can see which chords fit into the scale by looking at the colored
+        circles placed throughout the scale. Go to the "Chord Table" to display
+        even more chords. In the circular keyboard, you can press the chord
+        circles to hear the chord and see a visualization of the way in which
+        that chord fits into the scale.</li>
+      <li>Choose "Scale Index" to look up a scale by name, or explore news
+        scales.</li>
+    </ul>
+  </A>
+</QA>
+
+<QA>
   <Q>How can I use Octave Compass to find the scale for a song?</Q>
   <A>
     <ol>
