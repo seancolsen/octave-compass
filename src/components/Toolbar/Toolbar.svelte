@@ -40,7 +40,7 @@
       on:click={auxPanes.ChordSelection.toggle}
       isActiveStore={auxPanes.ChordSelection.isOpen}
     />
-    <Button label='Scale Info' icon={ScaleInfoIcon}
+    <Button label='Scale Names' icon={ScaleInfoIcon}
       on:click={auxPanes.ScaleInfo.toggle}
       isActiveStore={auxPanes.ScaleInfo.isOpen}
     />

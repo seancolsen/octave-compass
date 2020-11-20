@@ -34,7 +34,7 @@
     <AuxPane ctrl={panes.ChordSelection} title='Chord Table'>
       <Page><ChordSelection /></Page>
     </AuxPane>
-    <AuxPane ctrl={panes.ScaleInfo} title="Scale Info">
+    <AuxPane ctrl={panes.ScaleInfo} title="Scale Names">
         <Page><ScaleInfo /></Page>
     </AuxPane>
   </div>

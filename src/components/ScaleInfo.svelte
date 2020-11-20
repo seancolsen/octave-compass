@@ -7,7 +7,6 @@
 </script>
 
 {#if invertedChords && invertedChords.length > 0 }
-  <h3>Chord names:</h3>
   <ul>
     {#each invertedChords as invertedChord}
       <li>{invertedChord.intervalSetName.full}</li>
@@ -16,7 +15,6 @@
 {/if}
 
 {#if scale}
-  <h3>Scale names:</h3>
   <ul>
     {#each scale.names as name}
       <li>{name}</li>
