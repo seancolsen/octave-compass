@@ -65,7 +65,6 @@
     box-sizing: border-box;
     background: #DDD;
     border-bottom: solid 0.1em white;
-    box-shadow: 0 0 1em 0 black;
   }
   .toolbar.isVertical {
     border-bottom: none;
