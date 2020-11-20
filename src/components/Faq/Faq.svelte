@@ -15,20 +15,20 @@
 <QA>
   <Q>What is Octave Compass?</Q>
   <A>
-    Octave Compass is an app that helps you figure out the details of
-    particular musical scales.
+    Octave Compass is a tool for exploring musical scales and the chords within
+    them.
     
     <ul>
-      <li>The "Circular Keyboard" and "Scale Editor" present all pitches as
-        octave-equivalent notes, allowing you to visualize scales as
-        polygons. The circular keyboard lets you play notes and chords; and
-        the scale editor lets you transpose, mode shift, and toggle
-        intervals.</li>
+      <li>The Circular Keyboard and Scale Editor both represent pitches from
+        different octaves as the same note by wrapping the octave around a
+        circle. Within this circle, the app displays polygons to represent
+        scales and chords.</li>
+      <li>Play the Circular Keyboard like an instrument; or switch over to the
+        Scale Editor when you want to "set up your instrument" by toggling
+        intervals, transposing, and mode-shifting.</li>
       <li>You can see which chords fit into the scale by looking at the colored
         circles placed throughout the scale. Go to the "Chord Table" to display
-        even more chords. In the circular keyboard, you can press the chord
-        circles to hear the chord and see a visualization of the way in which
-        that chord fits into the scale.</li>
+        even more chords.</li>
       <li>Choose "Scale Index" to look up a scale by name, or explore news
         scales.</li>
     </ul>
