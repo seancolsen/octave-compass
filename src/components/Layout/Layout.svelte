@@ -12,6 +12,7 @@
   const modal = new PaneAreaController();
   export const modalPanes = {
     Search: modal.addPane(),
+    Faq: modal.addPane(),
   };
 </script>
 
@@ -74,6 +75,7 @@
   #center  { grid-row: 3; grid-column: 1;}
 
   #center {overflow: hidden;}
+  #toolbar {overflow: hidden;}
 
   /* ======================================================================= */
   /* wide windows */

@@ -85,18 +85,6 @@
     </table>
   </div>
 
-  <p>More info...</p>
-
-  <ul>
-    <li>
-      <div class='question'><strong>Q:</strong> Where are the ninth chords
-         and other extended chords?</div>
-      <div class='answer'><strong>A:</strong> This app doesn't display any extended chords
-        because those chords are difficult to represent within a strictly
-        octave-repeating context such as the circular keyboard.</div>
-    </li>
-  </ul>
-
 </div>
 
 

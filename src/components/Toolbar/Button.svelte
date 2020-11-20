@@ -1,9 +1,10 @@
 <script lang="ts" context='module'>
   /**
-   * - "portrait": Make the button as tall and narrow.
-   * - "landscape": Make the button as short and wide.
+   * - "portrait": Make the button tall and narrow.
+   * - "landscape": Make the button short and wide.
+   * - "menu": Make the button as short as possible.
    */
-  export type ButtonLayout = 'portrait' | 'landscape';
+  export type ButtonLayout = 'portrait' | 'landscape' | 'menu';
 </script>
 
 <script lang='ts'>
@@ -34,6 +35,7 @@
   class:isActive={computedIsActive}
   class:isPortrait={computedLayout === 'portrait'}
   class:isLandscape={computedLayout === 'landscape'}
+  class:isMenu={computedLayout === 'menu'}
   role="button"
   aria-pressed={computedIsActive ? 'true' : 'false'}
   on:click
@@ -64,6 +66,12 @@
   .button.isLandscape .label {
     text-align: left;
   }
+  .button.isMenu {
+    flex-direction: row;
+  }
+  .button.isMenu .label {
+    width: max-content;
+  }
   .button.isActive {
     border-radius: 0.4em;
     background: #f7f7f7;
@@ -74,6 +82,11 @@
     height: 2em;
     width: 2em;
     min-width: 2em;
+  }
+  .button.isMenu .icon {
+    width: 1.4em;
+    height: 1.4em;
+    min-width: 1.4em;
   }
   .label {
     width: min-content;

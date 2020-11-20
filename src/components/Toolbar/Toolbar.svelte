@@ -3,17 +3,16 @@
   import Button from "./Button.svelte";
   import type { ButtonLayout } from "./Button.svelte";
   import ChooseChordsIcon from "../common/Icons/ChooseChordsIcon.svelte";
-  import SearchIcon from "../common/Icons/SearchIcon.svelte";
   import EditScaleIcon from "../common/Icons/EditScaleIcon.svelte";
   import { getStore } from "../../store";
   import { derived } from "svelte/store";
   import type { Readable } from "svelte/store";
   import {auxPanes} from '../Layout/Layout.svelte';
-  import {modalPanes as modal} from '../Layout/Layout.svelte';
   import ScaleInfoIcon from "../common/Icons/ScaleInfoIcon.svelte";
   import CircularKeyboardIcon from "../common/Icons/CircularKeyboardIcon.svelte";
   import PianoIcon from "../common/Icons/PianoIcon.svelte";
   import NotationIcon from "../common/Icons/NotationIcon.svelte";
+  
   
   const {editVsPlay} = getStore();
   const isVertical = getContext('windowIsWide') as Readable<boolean>;
@@ -55,12 +54,6 @@
     />
   </div>
 
-  <div class='button-group app-buttons'>
-    <Button label='Scale Index' icon={SearchIcon}
-      on:click={modal.Search.open} 
-    />
-  </div>
-
 </div>
 
 <style>
@@ -85,7 +78,6 @@
   .toolbar {
     display: flex;
     flex-direction: row;
-    /* flex-wrap: wrap; */
     overflow-x: auto;
   }
   .toolbar.isVertical {
@@ -119,11 +111,11 @@
 
   /* dividers */
   .button-group {
-    border-right: solid #888 0.1em;
+    border-right: solid #BBB 0.1em;
   }
   .toolbar.isVertical .button-group {
     border-right: none;
-    border-bottom: solid #888 0.1em;
+    border-bottom: solid #BBB 0.1em;
   }
   .button-group:last-child {
     border: none !important;
