@@ -54,6 +54,8 @@
     />
   </div>
 
+  <div class='brand'>Octave Compass</div>
+
 </div>
 
 <style>
@@ -110,14 +112,25 @@
 
   /* dividers */
   .button-group {
-    border-right: solid #BBB 0.1em;
+    border-left: solid #BBB 0.1em;
   }
   .toolbar.isVertical .button-group {
-    border-right: none;
-    border-bottom: solid #BBB 0.1em;
+    border-left: none;
+    border-top: solid #BBB 0.1em;
   }
-  .button-group:last-child {
+  .button-group:first-child {
     border: none !important;
+  }
+
+
+  /* brand */
+  .brand {
+    display: none;
+    color: #666;
+    font-style: italic;
+  }
+  .toolbar.isVertical .brand {
+    display: block;
   }
 
 </style>

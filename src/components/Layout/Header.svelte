@@ -65,6 +65,9 @@
     color: #333;
     font-size: 120%;
   }
+  .header.windowIsWide .brand {
+    display: none;
+  }
   .app-buttons {
     display: flex;
   }
@@ -76,7 +79,7 @@
     flex-grow: 1;
     text-align: center;
     color: #222;
-    line-height: 1.1em;
+    line-height: 1.5em;
     padding: 1em;
   }
   .marquee.scaleIsRotating {
@@ -87,6 +90,7 @@
   }
   .header.windowIsWide .marquee {
     text-align: left;
+    padding: 0 1em;
   }
 
 </style>
