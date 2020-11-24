@@ -3,18 +3,15 @@
   import IntervalSetPolygon from "../common/IntervalSetPolygon.svelte";
 
   export let result: Result;
-  $: intervalSet = result.intervalSet;
-  $: name = result.name;
-  $: primaryName = intervalSet.name.full;
 </script>
 
 <div class='result' on:click >
   <svg viewBox='-100 -100 200 200' width='3em' height='3em' >
-    <IntervalSetPolygon radius={100} {intervalSet} />
+    <IntervalSetPolygon radius={100} intervalSet={result.intervalSet} />
   </svg>
-  <div class='matching-name'>{name}</div>
-  {#if primaryName !== name}
-    <div class='primary-name'>({primaryName})</div>
+  <div class='matching-name'>{result.name} Scale</div>
+  {#if !result.nameIsPrimary}
+    <div class='primary-name'>({result.primaryName} Scale)</div>
   {/if}
 </div>
 

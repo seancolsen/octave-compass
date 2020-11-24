@@ -8,4 +8,11 @@ module.exports = {
     '@snowpack/plugin-dotenv',
     "@snowpack/plugin-typescript",
   ],
+  installOptions: {
+    externalPackage: [
+    // ignore `import fs from 'fs'` etc.
+    ...require('module').builtinModules,
+    'js-yaml',
+    ]
+  }
 };

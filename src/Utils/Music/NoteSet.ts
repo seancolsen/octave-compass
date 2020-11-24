@@ -5,8 +5,7 @@ import { CustomMath } from "./../Math/CustomMath";
 import { NoteNameSet } from "./NoteNameSet";
 import { IntervalSet } from "./IntervalSet";
 import { Modifier } from "./Modifier";
-import { lookupNoteNameSetSignature } from
-  "../../Data/computed/noteNameSetSignatures";
+import {default as computedData} from "../../Data/computedData.json";
 
 /**
  * Only name the NoteSet if we have 8 notes or fewer. With more notes, the notes
@@ -158,9 +157,9 @@ export class NoteSet {
   }
 
   /**
-   * Return a new Note set that uses the giten "Note Name Set Signature" to name
-   * all the notes.
-   * 
+   * Return a new Note set that uses the cached "Note Name Set Signature" to
+   * name all the notes.
+   *
    * @param noteNameSetSignature e.g. 'nnfnffn'
    */
   namedViaNoteNameSetSignature(noteNameSetSignature: string) {
@@ -180,8 +179,10 @@ export class NoteSet {
    * find a matching entry in the cache, then we skip naming.
    */
   get namedViaCache() {
-    const sig = lookupNoteNameSetSignature(this.intervalSet, this.tonalCenter);
-    return sig ? this.namedViaNoteNameSetSignature(sig) : this;
+    const scaleData = computedData.scales
+      .find(scale => scale.binary === this.intervalSet.binary);
+    const signature = scaleData?.noteNameSetSignatures?.[this.tonalCenter];
+    return signature ? this.namedViaNoteNameSetSignature(signature) : this;
   }
   
   /**

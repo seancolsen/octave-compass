@@ -21,9 +21,10 @@
     <ul>
       <li>The Circular Keyboard and Scale Editor both represent pitches from
         different octaves as the same note by wrapping the octave around a
-        circle. Within this circle, the app displays polygons to represent
+        circle. Within this circle, the app uses polygons to represent
         scales and chords.</li>
-      <li>Play the Circular Keyboard like an instrument; or switch over to the
+      <li>You can play the Circular Keyboard like an instrument, with
+        multi-touch supported. Or you can switch over to the
         Scale Editor when you want to "set up your instrument" by toggling
         intervals, transposing, and mode-shifting.</li>
       <li>You can see which chords fit into the scale by looking at the colored
@@ -67,7 +68,9 @@
 
 <QA>
   <Q>Where can I find the source code for Octave Compass?</Q>
-  <A>Octave Compass is open source (GPL v3.0) and welcomes contributions!
+  <A>Octave Compass is open source (licensed as
+    <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPL v3.0</a>)
+    and welcomes contributions!
     You can head to the
     <a href='https://github.com/seancolsen/octave-compass'>
       GitHub repository
@@ -76,9 +79,28 @@
 </QA>
 
 <QA>
+  <Q>Where does the scale name data come from?</Q>
+  <A>Octave Compass pulls data directly from the
+    <a href='https://github.com/seancolsen/music-theory-data'>
+      <em>music-theory-data</em> repository
+    </a>
+    (licensed as
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA 4.0</a>)
+    which stores data about scales in yaml format for ease of editing. You can
+    help improve this data by opening an issue or submitting a pull request
+    within that repository. (Almost all the data within that repository came
+    from Francesco Balena's fantastic self-published PDF
+    <a href="http://www.saxopedia.com/the-scale-omnibus/">
+      The Scale Omnibus
+    </a>.)
+  </A>
+</QA>
+
+<QA>
   <Q>How can I save a scale or share it with someone else?</Q>
   <A>Your browser's URL will change as you modify the scale and tonal center.
-    You can bookmark the URL or copy it somewhere to follow later.</A>
+    You can bookmark the URL or copy it somewhere to follow later.
+    (Chord selections will not be saved.)</A>
 </QA>
 
 <QA>

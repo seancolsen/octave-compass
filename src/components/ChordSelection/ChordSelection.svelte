@@ -2,7 +2,6 @@
   import { ChordSet } from "../../Utils/Music/ChordSet";
   import ChordChoice from './ChordChoice.svelte';
   import {getStore} from '../../store';
-  import {romanNumerals} from '../../Data/romanNumerals';
   import type { Chord } from "../../Utils/Music/Chord";
   import type { Note } from "../../Utils/Music/Note";
   import Checkbox from "../common/Checkbox.svelte";
@@ -10,6 +9,21 @@
   const {intervalSet, noteSet, tonalCenter, title, selectedChords} = getStore();
 
   const allChords = ChordSet.fromAllChords;
+  const romanNumerals = [
+    'N',
+    'I',
+    'II',
+    'III',
+    'IV',
+    'V',
+    'VI',
+    'VII',
+    'VIII',
+    'IX',
+    'X',
+    'XI',
+    'XII',
+  ];
 
   $: notes = $noteSet.notes;
 

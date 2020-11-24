@@ -7,7 +7,7 @@ import Page from "./Page.svelte";
 </script>
 
 <ModalPane ctrl={panes.Search}>
-  <h2 slot='title'>Search Scales &amp; Chords</h2>
+  <h2 slot='title'>Search Scales</h2>
   <Search />
 </ModalPane>
 

@@ -1,4 +1,4 @@
-import { scales as allScales } from "./../../Data/scales";
+import {default as computedData} from "../../Data/computedData.json";
 import { IntervalSet } from "./IntervalSet";
 import { IntervalSetName } from "./IntervalSetName";
 
@@ -43,11 +43,11 @@ export class Scale {
    * scale and return a Scale object if possible.
    */
   static fromBinary(binary: number) {
-    const scaleEntry = allScales[binary];
-    if (!scaleEntry) {
+    const scaleEntry = computedData.scales.find(s => s.binary === binary);
+    if (!scaleEntry?.names) {
       throw new Error('Unknown scale');
     }
-    return new Scale({binary, names: scaleEntry});
+    return new Scale({binary, names: scaleEntry.names});
   }
 
 }

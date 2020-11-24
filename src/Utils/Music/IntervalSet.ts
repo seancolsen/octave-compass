@@ -5,6 +5,7 @@ import { Interval } from "./Interval";
 import { IntervalSetBinary } from "./IntervalSetBinary";
 import { IntervalSetName } from "./IntervalSetName";
 import { InvertedChord } from "./InvertedChord";
+import { NoteSet } from "./NoteSet";
 import { Scale } from "./Scale";
 
 const divisions = musicTheory.octaveDivisions;
@@ -349,6 +350,23 @@ export class IntervalSet {
     }
     const i = this.modes.findIndex(inv => inv.isIdenticalTo(intervalSet));
     return i >= 0 ? i : null;
+  }
+
+  get noteNameSetSignatures() {
+    /**
+     * Only calculate signatures for 6, 7, and 8 note scales. Naming larger sets
+     * gets pretty ugly, with lots of double sharps and double flats. Naming
+     * smaller sets isn't so useful because they usually look pretty decent just
+     * named as flats, and we don't want to store that much data in the cache
+     * file that the client has to download.
+     */
+    if (this.count < 6 || this.count > 8) {return undefined;}
+
+    const tonalCenters = [...Array(musicTheory.octaveDivisions).keys()];
+    const noteSets = tonalCenters.map(tc => 
+      NoteSet.fromIntervalSetAndTonalCenter(this, tc).namedViaBruteForce
+    );
+    return noteSets.map(noteSet => noteSet.nameSetSignature);
   }
 
 }

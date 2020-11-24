@@ -186,3 +186,20 @@ test('analysis of an unknown scale', () => {
   expect(unknownScaleA.isScale).toBe(false);
   expect(unknownScaleA.name.full).toBe("Scale 2047");
 });
+
+test('noteNameSetSignatures', () => {
+  expect(IntervalSet.fromBinary(2741).noteNameSetSignatures).toEqual([
+    "nnnnnnn",
+    "ffnfffn",
+    "nnsnnns",
+    "fnnffnn",
+    "nssnnss",
+    "nnnfnnn",
+    "sssnsss",
+    "nnnnnns",
+    "ffnffnn",
+    "nnsnnss",
+    "fnnfnnn",
+    "nssnsss"
+  ]);
+});

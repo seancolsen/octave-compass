@@ -1,7 +1,7 @@
-import { Chord } from '../../Utils/Music/Chord';
-import { ChordSet } from '../../Utils/Music/ChordSet';
-import { IntervalSet } from '../../Utils/Music/IntervalSet';
-import { OrdinalChordSet } from '../../Utils/Music/OrdinalChordSet';
+import { Chord } from './Chord';
+import { ChordSet } from './ChordSet';
+import { IntervalSet } from './IntervalSet';
+import { OrdinalChordSet } from './OrdinalChordSet';
 
 const majorChord = Chord.fromName('Major');
 const minorChord = Chord.fromName('Minor');
@@ -22,18 +22,14 @@ pointAccumulators.push((intervalSet: IntervalSet) =>
  * scales will appear before any scales of any other number of notes. Then all
  * 6-note and 8-note scales will appear next and so on.
  */
-pointAccumulators.push((intervalSet: IntervalSet) => {
-  if (!intervalSet.isScale) {
-    return 0;
-  }
-  return 100 * ( 7 - Math.abs(7 - intervalSet.count));
-});
+pointAccumulators.push((intervalSet: IntervalSet) => 
+   100 * ( 7 - Math.abs(7 - intervalSet.count))
+);
 
 /**
  * Points for chords within the scale
  */
 pointAccumulators.push((intervalSet: IntervalSet) => {
-  if (!intervalSet.isScale) return 0;
   
   const ordinalChordSets = OrdinalChordSet
     .arrayFromIntervalSet(intervalSet, ChordSet.fromAllChords);
@@ -75,32 +71,5 @@ pointAccumulators.push((intervalSet: IntervalSet) => {
     (perfectOrdinalsAllContainTheSameTriad ? 3 : 0);
 });
 
-/**
- * Points for chords vs scales
- */
-pointAccumulators.push((intervalSet: IntervalSet) => 
-   intervalSet.isScale ? 7 : intervalSet.isChord ? 5 : 0
-);
-
-export function searchableIntervalSetData(intervalSets: IntervalSet[]) {
-
-  let searchData = {} as any;
-  intervalSets.forEach(intervalSet => {
-    let points = pointAccumulators.reduce((Σ, f) => Σ + f(intervalSet), 0);
-    // TODO I think we need to do further work to include chords
-    intervalSet.scale?.names.forEach((name, index) => {
-      const displayName = `${name} ${intervalSet.name.genus}`;
-      searchData[displayName] = {
-        searchPoints: points * (index === 0 ? 10000 : 1),
-        intervalSetBinary: intervalSet.binary,
-      };
-    });
-  });
-
-  // Return sorted with highest points first so that we don't need to sort the
-  // search results presented to the user.
-  return Object.entries(searchData)
-    .sort((e1: any, e2: any) => e2[1].searchPoints - e1[1].searchPoints)
-    .map(([displayName, data]: any) => [displayName, data.intervalSetBinary])
-    .reduce((obj: any, [k, v]) => {obj[k] = v; return obj;}, {});
-}
+export const intervalSetSearchPoints = (intervalSet: IntervalSet) =>
+  pointAccumulators.reduce((sum, f) => sum + f(intervalSet), 0);

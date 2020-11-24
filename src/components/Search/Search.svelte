@@ -1,13 +1,14 @@
 <script context='module' lang='ts'>
   export interface Result {
     name: string,
+    nameIsPrimary: boolean,
+    primaryName: string,
     intervalSet: IntervalSet,
   }
 </script>
 
 <script lang='ts'>
-  import {default as data}
-    from '../../Data/computed/output/searchableIntervalSetData.json';
+  import {default as computedData} from '../../Data/computedData.json';
   import WithPlural from '../common/WithPlural.svelte';
   import ResultRow from './ResultRow.svelte';
   import { IntervalSet } from '../../Utils/Music/IntervalSet';
@@ -24,22 +25,32 @@
     modal.Search.close();
   }
 
-  $: searchTerms = query.split(' ');
+  $: searchTerms = query.split(' ').filter(i => i.length > 0);
 
-  $: pool = Object.entries(data).map(([name, intervalSetBinary]) => ({
-    name,
-    intervalSet: IntervalSet.fromBinary(intervalSetBinary).analyzed,
-  } as Result));
+  $: pool = (() => {
+    let items: Result[] = [];
+    computedData.scales.forEach(scaleData => { 
+      const intervalSet = IntervalSet.fromBinary(scaleData.binary);
+      scaleData.names?.forEach((name, index, names) => {
+        const primaryName = names[0];
+        items.push({
+          name,
+          nameIsPrimary: name === primaryName,
+          primaryName,
+          intervalSet,
+        });
+      });
+    });
+    return items;
+  })();
 
-  $: results = pool.filter(({name}) => 
-    searchTerms.every(term => name.search(new RegExp(term, 'i')) !== -1)
-  );
+  $: results = searchTerms.length === 0
+    ? pool.filter(result => result.nameIsPrimary)
+    : pool.filter(({name}) => 
+        searchTerms.every(term => name.search(new RegExp(term, 'i')) !== -1)
+      );
 
-  $: countResultsMatching = (matcher: (result: Result) => boolean) => (
-    new Set(results.filter(r => matcher(r)).map(r => r.intervalSet.binary)).size
-  );
-  $: countScales = countResultsMatching(r => r.intervalSet.isScale || false);
-  $: countChords = countResultsMatching(r => r.intervalSet.isChord || false);
+  $: countResults = searchTerms.length === 0 ? pool.length : results.length;
 
   function focus (el: HTMLElement){
     el.focus();
@@ -64,18 +75,14 @@
     
     <div class='stats'>
       Found: 
-      <WithPlural let:s let:count count={countScales}>
-        {count} scale{s}
-      </WithPlural>
-      and
-      <WithPlural let:s let:count count={countChords}>
-        {count} chord{s}
+      <WithPlural let:s let:count count={countResults}>
+        {count} named scale{s}
       </WithPlural>
     </div>
   </div>
   
   <div class='results'>
-    {#each results as result (result.name)}
+    {#each results as result}
       <ResultRow {result} on:click={() => select(result.intervalSet)} />
     {/each}
   </div>
