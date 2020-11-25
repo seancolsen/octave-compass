@@ -48,7 +48,7 @@
       <LinearKeyboard />
     </AuxPane>
     <AuxPane ctrl={panes.Notation} title='Staff Notation'>
-      <Page><Notation /></Page>
+      <Notation />
     </AuxPane>
   </div>
 

@@ -105,6 +105,7 @@
       return;
     }
     svg.setAttribute('viewBox', `${-margin} 10 ${width + 2 * margin} 95`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
   }
 
   afterUpdate(draw);
@@ -130,7 +131,8 @@
     overflow: hidden;
   }
   .staff > :global(svg) {
+    display: block;
     width: 100%;
-    height: 100%;
+    max-height: 6em;
   }
 </style>
