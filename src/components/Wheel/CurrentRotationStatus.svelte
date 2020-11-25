@@ -1,29 +1,12 @@
 <script lang="ts">
   import { getStore } from '../../store';
-  import { Scalar } from '../../Utils/Math/Scalar';
   import GlowingText from '../common/GlowingText.svelte';
-  import { Note } from '../../Utils/Music/Note';
   const {
-    tonalCenter,
-    intervalSet,
-    noteSet,
-    scaleRotator,
-    keyboardRotator,
     scaleIsRotating,
-    keyboardIsRotating
+    keyboardIsRotating,
+    transposeTarget,
+    modeShiftTarget,
   } = getStore();
-
-  const scaleCurrentDetent = scaleRotator.currentDetent;
-  const keyboardCurrentDetent = keyboardRotator.currentDetent;
-
-  $: transposeTarget = (() => {
-    const noteId = Scalar.wrapToOctave($tonalCenter - $keyboardCurrentDetent);
-    const note = $noteSet.notes.find(n => n.id === noteId) ?? new Note(noteId);
-    return note.guaranteedName.unicode;
-  })();
-
-  $: modeShiftTarget
-    = $intervalSet.shift($scaleCurrentDetent).analyzed.name.full;
 
   const glowProps = {
     glowColor: '#EEE',
@@ -39,13 +22,13 @@
 
       {#if $keyboardIsRotating}
         <div class='status-item keyboard'>
-          <GlowingText text={`Transpose to ${transposeTarget}`} {...glowProps}/>
+          <GlowingText text={`Transpose to ${$transposeTarget}`} {...glowProps}/>
         </div>
       {/if}
 
       {#if $scaleIsRotating}
         <div class='status-item scale'>
-          <GlowingText text={`Shift to ${modeShiftTarget}`} {...glowProps}/>
+          <GlowingText text={`Shift to ${$modeShiftTarget}`} {...glowProps}/>
         </div>
       {/if}
 

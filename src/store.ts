@@ -12,7 +12,7 @@ import { NoteIdSet } from './Utils/Music/NoteIdSet';
 import type { Voice } from './components/Keyboard/Voices/Voice';
 import type { Pitch } from './Utils/Music/Pitch';
 import { ShepardVoice } from './components/Keyboard/Voices/ShepardVoice';
-import type { Note } from './Utils/Music/Note';
+import { Note } from './Utils/Music/Note';
 
 /**
  * ABOUT THIS FILE:
@@ -222,6 +222,33 @@ export const createStore = (
     );
   },
 
+  // ======================================================================== //
+
+  get transposeTarget() {
+    return derived(
+      [
+        this.tonalCenter,
+        this.noteSet,
+        this.keyboardRotator.currentDetent
+      ],
+      ([tonalCenter, noteSet, currentDetent]) => {
+        const noteId = Scalar.wrapToOctave(tonalCenter - currentDetent);
+        const note = noteSet.notes.find(n => n.id === noteId)
+          ?? new Note(noteId);
+        return note.guaranteedName.unicode;
+      }
+    ) 
+  },
+  
+  // ======================================================================== //
+  
+  get modeShiftTarget() {
+    return derived([this.intervalSet, this.scaleRotator.currentDetent],
+      ([intervalSet, currentDetent]) =>
+      intervalSet.shift(currentDetent).analyzed.name.full
+    )
+  },
+  
   // ======================================================================== //
 
   scaleRotator: new RotationController(),

@@ -7,8 +7,14 @@
   import FaqIcon from "../common/Icons/FaqIcon.svelte";
   import SearchIcon from "../common/Icons/SearchIcon.svelte";
 
-  const { title, intervalSet, scaleIsRotating } = getStore();
+  const {
+    intervalSet,
+    transposeTarget,
+    modeShiftTarget,
+  } = getStore();
+
   const windowIsWide = getContext('windowIsWide') as Readable<boolean>;
+
 </script>
 
 <div class='header' class:windowIsWide={$windowIsWide}>
@@ -27,10 +33,12 @@
   
   <div
     class='marquee'
-    class:scaleIsRotating={$scaleIsRotating}
     class:isNamed={$intervalSet.isNamed}
   >
-    <h1>{$title}</h1>
+    <h1 class='title'>
+      <span class='tonal-center-name'>{$transposeTarget}</span>
+      <span class="interval-set-name">{$modeShiftTarget}</span>
+    </h1>
   </div>
   
 </div>
@@ -81,9 +89,6 @@
     color: #222;
     line-height: 1.5em;
     padding: 1em;
-  }
-  .marquee.scaleIsRotating {
-    visibility: hidden;
   }
   .marquee.isNamed {
     font-style: italic;
