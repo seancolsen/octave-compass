@@ -18,6 +18,8 @@ export class NoteSet {
 
   notes: Note[] = [];
 
+  private isNamed: boolean = false;
+
   /**
    * This NoteSet starts out without any names. Names are filled in only when
    * necessary because that task is expensive.
@@ -137,6 +139,7 @@ export class NoteSet {
     result.nameSet.noteNames.forEach(name => {
       name.note.name = name
     });
+    result.isNamed = true;
     return result;
   }
 
@@ -170,6 +173,7 @@ export class NoteSet {
         result.notes[index] = result.notes[index].namedUsing(modifier.name);
       }
     });
+    result.isNamed = true;
     return result;
   }
 
@@ -184,6 +188,13 @@ export class NoteSet {
     const signature = scaleData?.noteNameSetSignatures?.[this.tonalCenter];
     return signature ? this.namedViaNoteNameSetSignature(signature) : this;
   }
+
+  get namedViaCacheOrFlat() {
+    const namedViaCache = this.namedViaCache;
+    return namedViaCache.isNamed
+      ? namedViaCache
+      : this.directionallyNamed('flat');
+  }
   
   /**
    * Return a copied NoteSet with names added, if possible, according to the
@@ -196,6 +207,7 @@ export class NoteSet {
     result.notes.forEach((note, index, notes) => {
       notes[index] = note.namedToMatch(direction, fallback);
     });
+    result.isNamed = true;
     return result;
   }
 

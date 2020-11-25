@@ -195,7 +195,7 @@ export const createStore = (
    */
   get noteSet() {
     return derived([this.intervalSet, this.tonalCenter], ([is, tc]) =>
-      NoteSet.fromIntervalSetAndTonalCenter(is, tc).namedViaCache
+      NoteSet.fromIntervalSetAndTonalCenter(is, tc).namedViaCacheOrFlat
     );
   },
 

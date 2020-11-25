@@ -129,6 +129,28 @@
 </QA>
 
 <QA>
+  <Q>How does Octave Compass decide whether to name notes as sharp or flat?</Q>
+  <A>
+    <ul>
+      <li>For scales with fewer than 6 notes or greater than 8 notes, we
+        simply name all the black keys as flats.</li>
+      <li>For 6, 7, and 8 note scales (the scales people care about most),
+        we use a sophisticated algorithm to choose note names that will
+        work well as an entire set. This algorithm seeks to avoid sets of note
+        names with the following less-than-ideal characteristics: a mix of
+        sharps and flats, any double modifiers, and any sharp or flat on a
+        white key. Common scales can be named easily without any of those
+        problems, but some scales require a mix of sacrifices when naming the
+        notes. If you find a scale that you think should be named differently,
+        then feel free to
+        <a href="fhttps://github.com/seancolsen/octave-compass/issues">
+          report an issue
+        </a>.</li>
+    </ul>
+  </A>
+</QA>
+
+<QA>
   <Q>Can I use Octave Compass to visualize a non-octave-repeating scale such as a
     <a href='https://en.wikipedia.org/wiki/Bohlen%E2%80%93Pierce_scale'>
       Bohlen Pierce Scale
@@ -152,7 +174,7 @@
 </QA>
 
 <style>
-  ol {
+  ol, ul {
     margin: 0;
   }
 </style>
