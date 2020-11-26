@@ -1,4 +1,4 @@
-<div class='page'>
+<div class='page enable-touch-action'>
   <slot />
 </div>
 

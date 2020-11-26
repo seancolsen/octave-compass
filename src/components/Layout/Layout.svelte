@@ -52,6 +52,20 @@
   :global(body) {
     background: #AAA;
   }
+
+  /**
+   * DISABLE ALL TOUCH SCROLLING EVERYWHERE!
+   * This is a pretty aggressive measure! We can still override it manually by
+   * setting the value to auto for other elements, but we start by disabling
+   * it globally since this app relies so heavily on touch for other things.
+   */
+  :global(*) {
+    touch-action: none;
+  }
+  :global(.enable-touch-action, .enable-touch-action *) {
+    touch-action: auto;
+  }
+
   #layout { height: 100%; width: 100%; position: relative; }
 
   /* Set z-index for everything. */

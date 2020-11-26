@@ -22,7 +22,7 @@
   
 </script>
 
-<div class='toolbar' class:isVertical={$isVertical} >
+<div class='toolbar enable-touch-action' class:isVertical={$isVertical} >
 
   <div class='button-group wheel-buttons'>
     <Button label='Circular Keyboard' icon={CircularKeyboardIcon}

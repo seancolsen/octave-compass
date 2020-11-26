@@ -129,12 +129,11 @@
     initialGrabAngle = pointerGrabAngle(e);
     $isRotating = true;
     rotationWhenGrabbed = $rotation;
-    const opts = {capture: true, passive: false};
-    window.addEventListener('mousemove', updateRotationFromPointer, opts);
-    window.addEventListener('touchmove', updateRotationFromPointer, opts);
-    window.addEventListener('mouseup', transitionToRest, opts);
-    window.addEventListener('touchend', transitionToRest, opts);
-    window.addEventListener('touchcancel', transitionToRest, opts);
+    window.addEventListener('mousemove', updateRotationFromPointer, true);
+    window.addEventListener('touchmove', updateRotationFromPointer, true);
+    window.addEventListener('mouseup', transitionToRest, true);
+    window.addEventListener('touchend', transitionToRest, true);
+    window.addEventListener('touchcancel', transitionToRest, true);
   };
 
   /**
@@ -143,7 +142,6 @@
    */
   const updateRotationFromPointer = (e: MouseEvent | TouchEvent) => {
     if (!$isRotating) { return; }
-    e.preventDefault();
     e.stopPropagation();
     const grabAngle = pointerGrabAngle(e);
     if (!grabAngle) { transitionToRest(e); return; }

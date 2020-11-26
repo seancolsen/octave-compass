@@ -48,6 +48,10 @@
 </div>
 
 <style>
+  .window {
+    touch-action: pan-x !important;
+  }
+
   .linear-keyboard {
     height: 20vh;
     position: relative;

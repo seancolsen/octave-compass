@@ -58,7 +58,7 @@
 
 </script>
 
-<div class='search'>
+<div class='search enable-touch-action'>
   
   <div class='top'>
     <form>
