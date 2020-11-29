@@ -90,7 +90,14 @@
 
 
 <style>
+  .search {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
   .top {
+    flex-shrink: 0; /* For WebKit bug */
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -101,11 +108,6 @@
   }
   .top > * {
     padding: 0.3em 1em;
-  }
-  .search {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
   }
   .form-row {
     display: flex;
