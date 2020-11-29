@@ -1,6 +1,5 @@
 <script lang='ts'>
   import { getStore } from "../../../store";
-  import GlowingText from "../../common/GlowingText.svelte";
   import IntervalSetPolygon from "../../common/IntervalSetPolygon.svelte";
   const {intervalSet} = getStore();
 
@@ -10,7 +9,7 @@
     yc?: number,
   }
 
-  export let text: string;
+  export let lines: string[];
   export let center: Point;
   export let width: number;
   export let height: number;
@@ -26,7 +25,7 @@
   }
 </script>
 
-<g>
+<g class='tip'>
   {#each targets as target}
     {#if isTargetingScale}
       <clipPath id='scale-polygon-clip'>
@@ -42,18 +41,18 @@
     <circle class='target-dot' cx={target.x} cy={target.y} r='6' />
     <path class='target-line' d={d(target)} />
   {/each}
+
   <foreignObject
     x={center.x - width/2} y={center.y - height/2}
     width={width} height={height}
   >
     <div class='container'>
-      <GlowingText {text}
-        glowColor='#AAA'
-        spreadRadius={0.4}
-        blurRadius={0.2}
-      />
+      {#each lines as line}
+        <div class='line'>{line}</div>
+      {/each}
     </div>
   </foreignObject>
+
 </g>
 
 <style>
@@ -70,10 +69,17 @@
     text-align: center;
     color: #005a75;
     font-style: italic;
-    
+    /* background: tan; */
   }
-  .container > :global(.glowing-text) {
-    margin: 1em;
+  .line {
+    background: #AAA;
+    padding: 0 0.3em;
+  }
+  .line:first-child {
+    padding-top: 0.3em;
+  }
+  .line:last-child {
+    padding-bottom: 0.3em;
   }
   .target-line { fill: none; stroke: #005a75; stroke-width: 3px; }
   .target-line-bg {

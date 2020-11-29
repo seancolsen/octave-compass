@@ -1,19 +1,11 @@
 <script lang="ts">
   import { getStore } from '../../store';
-  import GlowingText from '../common/GlowingText.svelte';
   const {
     scaleIsRotating,
     keyboardIsRotating,
     transposeTarget,
     modeShiftTarget,
   } = getStore();
-
-  const glowProps = {
-    glowColor: '#EEE',
-    blurRadius: 0.4,
-    spreadRadius: 1,
-  };
-
 </script>
 
 {#if $scaleIsRotating || $keyboardIsRotating}
@@ -22,13 +14,13 @@
 
       {#if $keyboardIsRotating}
         <div class='status-item keyboard'>
-          <GlowingText text={`Transpose to ${$transposeTarget}`} {...glowProps}/>
+          Transpose to {$transposeTarget}
         </div>
       {/if}
 
       {#if $scaleIsRotating}
         <div class='status-item scale'>
-          <GlowingText text={`Shift to ${$modeShiftTarget}`} {...glowProps}/>
+          Shift to {$modeShiftTarget}
         </div>
       {/if}
 
@@ -49,5 +41,10 @@
     margin: 100px;
     font-weight: bold;
   }
-  
+  .status-item {
+    background: white;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    box-shadow: 0 0 1.5em black;
+  }
 </style>

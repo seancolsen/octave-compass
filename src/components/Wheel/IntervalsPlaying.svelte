@@ -1,7 +1,6 @@
 <script lang='ts'>
   import type { PlacedChord } from "../../Utils/Music/NoteIdSet";
   import { getStore } from "../../store";
-  import GlowingText from "../common/GlowingText.svelte";
   import IntervalSetPolygon from "../common/IntervalSetPolygon.svelte";
 
   const {notesPlaying, noteSet, tonalCenter} = getStore();
@@ -27,18 +26,10 @@
           {#each placedChords as placedChord}
             <div class='placed-chord'>
               <div class='name'>
-                <GlowingText
-                  text={`${name(placedChord)} ${placedChord.chord.name} Chord`}
-                  blurRadius={0}
-                  glowColor='white'
-                />
+                <span>{name(placedChord)} {placedChord.chord.name} Chord</span>
               </div>
               <div class='separator'>
-                <GlowingText
-                  text='— or —'
-                  blurRadius={0}
-                  glowColor='white'
-                />
+                <span>— or —</span>
               </div>
             </div>
           {/each}
@@ -70,6 +61,12 @@
     border-radius: 20px;
     padding: 10px;
     text-align: center;
+  }
+  .name span,
+  .separator span {
+    background: white;
+    padding: 0.2em;
+    margin: 0.2em 0;
   }
   .separator {
     font-style: italic;
