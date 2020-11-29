@@ -271,10 +271,17 @@ export const createStore = (
 
   // ======================================================================== //
 
-  audioContext: new AudioContext({
-    latencyHint: "interactive",
-    sampleRate: 12000,
-  }),
+  audioContext: (() => {
+    const opts: AudioContextOptions = {
+      latencyHint: "interactive",
+      sampleRate: 12000,
+    };
+    if ('webkitAudioContext' in window) {
+      // @ts-ignore because ts doesn't know about Safari's vendor prefix.
+      return new webkitAudioContext(opts) as AudioContext;
+    }
+    return new AudioContext(opts);
+  })(),
 
   // ======================================================================== //
 
