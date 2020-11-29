@@ -3,6 +3,8 @@
   import RouteProcessor from "./RouteProcessor.svelte";
   import { setStoreInContext } from '../store';
   import { Url } from './../Utils/Text/Url';
+  import 'array-flat-polyfill';
+  
   const {tonalCenter, intervalSet} = Url.parse(window.location.pathname);
   setStoreInContext(tonalCenter, intervalSet);
 
