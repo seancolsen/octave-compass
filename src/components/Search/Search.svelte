@@ -52,10 +52,6 @@
 
   $: countResults = searchTerms.length === 0 ? pool.length : results.length;
 
-  function focus (el: HTMLElement){
-    el.focus();
-  }
-
 </script>
 
 <div class='search enable-touch-action'>
@@ -65,7 +61,7 @@
       <div class='form-row'>
         <label for='form_name'>Name:</label>
         <div class='input'>
-          <input id='form_name' type="text" bind:value={query} use:focus />
+          <input id='form_name' type="text" bind:value={query} />
           <div class='delete' role="button" on:click={() => {query = '';}}>
             <DeleteIcon />
           </div>
