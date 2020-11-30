@@ -12,18 +12,9 @@
   import WithPlural from '../common/WithPlural.svelte';
   import ResultRow from './ResultRow.svelte';
   import { IntervalSet } from '../../Utils/Music/IntervalSet';
-  import { getStore } from '../../store';
   import DeleteIcon from '../common/Icons/DeleteIcon.svelte';
-  import {modalPanes as modal} from '../Layout/Layout.svelte';
-
-  const {intervalSet} = getStore();
   
   let query = ''; 
-
-  function select(is: IntervalSet) {
-    intervalSet.smartUpdate(_ => is);
-    modal.Search.close();
-  }
 
   $: searchTerms = query.split(' ').filter(i => i.length > 0);
 
@@ -79,7 +70,7 @@
   
   <div class='results'>
     {#each results as result}
-      <ResultRow {result} on:click={() => select(result.intervalSet)} />
+      <ResultRow {result} />
     {/each}
   </div>
 </div>
