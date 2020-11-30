@@ -26,11 +26,11 @@
 
   <div class='button-group wheel-buttons'>
     <Button label='Circular Keyboard' icon={CircularKeyboardIcon}
-      on:click={() => editVsPlay.setWithTransition(1)} 
+      on:click={editVsPlay.toggleWithTransition} 
       isActive={$editVsPlay === 1}
     />
     <Button label='Scale Editor' icon={EditScaleIcon}
-      on:click={() => editVsPlay.setWithTransition(0)}
+      on:click={editVsPlay.toggleWithTransition}
       isActive={$editVsPlay === 0}
     />
   </div>

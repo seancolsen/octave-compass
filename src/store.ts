@@ -48,31 +48,38 @@ export const createStore = (
   editVsPlay: (() => {
     const {subscribe, update, set} = writable(1);
 
+    const setWithTransition = (newValue: 0 | 1) => {
+      const currentValue = get({subscribe}) as number;
+      if (currentValue === newValue) {return;}
+      const transitionDuration = 200; // (ms)
+      const direction = newValue ? 1 : -1;
+      const startValue = Math.round(currentValue);
+      const step = (currentTime: DOMHighResTimeStamp) => {
+        const timeElapsed = currentTime - transitionStartTime;
+        if (timeElapsed > transitionDuration) {
+          set(newValue)
+          return;
+        }
+        set(startValue + timeElapsed / transitionDuration * direction);
+        window.requestAnimationFrame(step)
+      };
+      const transitionStartTime = performance.now();
+      window.requestAnimationFrame(step)
+    };
+
+    const toggleWithTransition = () => {
+      const currentValue = get({subscribe}) as number;
+      const targetValue = Math.round(currentValue) ? 0 : 1;
+      setWithTransition(targetValue);
+    };
+
     return {
       subscribe,
       set,
       update,
-
-      setWithTransition: (newValue: 0 | 1) => {
-        const currentValue = get({subscribe}) as number;
-        
-        if (currentValue === newValue) {return;}
-        const transitionDuration = 200; // (ms)
-        const direction = newValue ? 1 : -1;
-        const startValue = Math.round(currentValue);
-        const step = (currentTime: DOMHighResTimeStamp) => {
-          const timeElapsed = currentTime - transitionStartTime;
-          if (timeElapsed > transitionDuration) {
-            set(newValue)
-            return;
-          }
-          set(startValue + timeElapsed / transitionDuration * direction);
-          window.requestAnimationFrame(step)
-        };
-        const transitionStartTime = performance.now();
-        window.requestAnimationFrame(step)
-      },
-    }
+      setWithTransition,
+      toggleWithTransition,
+    };
   })(),
 
   // ======================================================================== //
