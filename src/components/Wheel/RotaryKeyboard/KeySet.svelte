@@ -5,7 +5,7 @@
   export let isActive: boolean;
 </script>
 
-<g filter={isActive ? "url('#shadow-when-play')" : 'none'}>
+<g>
   {#each noteSet.notes as note (note.id)}
     <RotaryKey {note} {isActive} />
   {/each}

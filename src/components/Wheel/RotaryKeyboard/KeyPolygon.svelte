@@ -47,7 +47,11 @@
   $: pointsString = XyPoint.stringFromIrArray(points);
 </script>
 
-<polygon points={pointsString} class={className} />
+<polygon
+  filter="url('#shadow-when-play')"
+  points={pointsString}
+  class={className}
+/>
 
 <style>
   polygon {
