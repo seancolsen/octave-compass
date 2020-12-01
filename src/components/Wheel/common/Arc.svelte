@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { XyPoint } from '../../../Utils/Geometry/XyPoint';
   import { IrPoint } from '../../../Utils/Geometry/IrPoint';
 
   let className = undefined as string | undefined;
@@ -8,10 +9,11 @@
   export let radius: number;
   export let id: string | undefined = undefined;
   export let color: string | undefined = undefined;
+  export let translate: XyPoint = new XyPoint(0, 0);
   
   $: d = (() => {
-    const startPoint = (new IrPoint(startInterval, radius)).toXy();
-    const endPoint = (new IrPoint(endInterval, radius)).toXy();
+    const startPoint = (new IrPoint(startInterval, radius)).toXy().plus(translate);
+    const endPoint = (new IrPoint(endInterval, radius)).toXy().plus(translate);
     const sweepFlag = startInterval < endInterval ? 1 : 0;
     return [
       "M", startPoint.x, startPoint.y,
