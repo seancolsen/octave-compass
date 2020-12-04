@@ -51,6 +51,12 @@ export abstract class Voice {
     this.releaseTimeoutId = 
       window.setTimeout(() => this.reset(), this.releaseTime * 1000);
     this.state = 'releasing';
+
+    /**
+     * Call resume() here as well because apparently some WebKit versions only
+     * act on resume() calls within touchend, not touchstart.
+     */
+    this.audioContext.resume();
   }
   
   reset() {
@@ -62,6 +68,12 @@ export abstract class Voice {
     this.onReset();
 
     this.state = 'resting';
+    
+    /**
+     * Call resume() here as well because apparently some WebKit versions only
+     * act on resume() calls within touchend, not touchstart.
+     */
+    this.audioContext.resume();
   }
   
   protected abstract onAttack(pitches: Pitch[]): void
