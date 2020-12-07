@@ -6,6 +6,10 @@
   $: invertedChords = $intervalSet.invertedChords;
 </script>
 
+{#if scale || (invertedChords && invertedChords.length > 0)}
+  <p>The currently selected scale is known by the following names:</p>
+{/if}
+
 {#if invertedChords && invertedChords.length > 0 }
   <ul>
     {#each invertedChords as invertedChord}
@@ -23,5 +27,5 @@
 {/if}
 
 {#if !scale && (!invertedChords || invertedChords.length === 0)}
-  <p><em>Our data does not inclued any info about this scale.</em></p>
+  <p><em>Our data does not inclued any names for the currently selected scale.</em></p>
 {/if}
