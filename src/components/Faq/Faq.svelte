@@ -69,7 +69,7 @@
 <QA>
   <Q>Where can I find the source code for Octave Compass?</Q>
   <A>Octave Compass is open source (licensed as
-    <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPL v3.0</a>)
+    <a href="https://mit-license.org/">MIT</a>)
     and welcomes contributions!
     You can head to the
     <a href='https://github.com/seancolsen/octave-compass'>
