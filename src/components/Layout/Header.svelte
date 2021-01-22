@@ -53,7 +53,7 @@
     flex-direction: row-reverse;
     background: #EEE;
     border-bottom: solid 0.1em white;
-    box-shadow: 0 0 1em 0 black;
+    box-shadow: var(--shadow);
     padding: 0.5em;
   }
 

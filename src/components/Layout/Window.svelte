@@ -31,7 +31,7 @@
     border-radius: 0.5em;
     background: #DDD;
     overflow: hidden;
-    box-shadow: 0 0 1em 0 black;
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
   }

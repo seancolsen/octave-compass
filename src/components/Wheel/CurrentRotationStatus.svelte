@@ -45,6 +45,6 @@
     background: white;
     padding: 0.5em;
     border-radius: 0.5em;
-    box-shadow: 0 0 1.5em black;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.3);
   }
 </style>

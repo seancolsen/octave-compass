@@ -37,7 +37,7 @@
     height: 100%;
     width: 100%;
     z-index: 101;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.5);
     cursor: pointer;
   }
   .modal :global(.window) {

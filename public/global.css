@@ -52,3 +52,7 @@ svg text {
 svg text::selection {
   background: none;
 }
+
+body {
+  --shadow: 0 0 1em 0 rgba(0, 0, 0, 0.4);
+}

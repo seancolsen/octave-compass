@@ -48,8 +48,8 @@
   <svg bind:this={ref} {viewBox}
     text-rendering={$somethingIsRotating ? 'optimizeSpeed' : 'optimizeLegibility'}
   >
-    <ShadowFilter id='shadow-when-edit' opacity={1 - $editVsPlay} />
-    <ShadowFilter id='shadow-when-play' opacity={$editVsPlay} />
+    <ShadowFilter id='shadow-when-edit' opacity={(1 - $editVsPlay) * 0.4} />
+    <ShadowFilter id='shadow-when-play' opacity={($editVsPlay) * 0.4} />
     <BlurFilter bounds={3} size={8} id='blur' />
     <Base/>
     <IntervalSetPolygon

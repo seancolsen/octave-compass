@@ -89,7 +89,7 @@
   #center  { grid-row: 3; grid-column: 1;}
 
   #center {overflow: hidden;}
-  #toolbar {overflow: hidden; box-shadow: 0 0 1em 0 black;}
+  #toolbar {overflow: hidden; box-shadow: var(--shadow);}
 
   /* ======================================================================= */
   /* wide windows */

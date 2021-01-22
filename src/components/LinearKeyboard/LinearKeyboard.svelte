@@ -82,7 +82,7 @@
     background: #CCC;
   }
   .shadow {
-    box-shadow: 0 0 0.6em 0 black inset;
+    box-shadow: var(--shadow) inset;
     width: 100%;
     height: 100%;
     position: absolute;

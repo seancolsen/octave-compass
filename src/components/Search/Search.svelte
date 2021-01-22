@@ -115,9 +115,9 @@
     background: white;
     padding: 0.5em 2.7em 0.5em 0.7em;
     width: 10em;
-    border: none;
+    border: solid #BBB 0.1em;
     border-radius: 0.3em;
-    box-shadow: 0 0 0.4em 0 #777 inset;
+    box-shadow: 0 0 0.3em 0 rgba(0, 0, 0, 0.3) inset;
   }
   .delete {
     position: absolute;
