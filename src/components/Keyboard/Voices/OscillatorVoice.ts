@@ -10,9 +10,9 @@ const defaults: Required<Pick<OscillatorVoiceProps, 'type'>> = {
 }
 
 /**
- * Reduce from 1 just a hair to avoid some clicking.
+ * Provide enough headroom for 4-key multi-touch without clipping.
  */
-const centralGainValue = 0.9;
+const centralGainValue = 0.25;
 
 export class OscillatorVoice extends Voice {
 
