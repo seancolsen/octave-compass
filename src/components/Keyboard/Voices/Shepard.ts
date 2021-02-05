@@ -12,6 +12,17 @@ interface Point {
   oscillatorFrequency: number;
 }
 
+/**
+ * Reduce gain of all points so that the total gain is 1.
+ */
+function normalizePoints(points: Point[]): Point[] {
+  const totalGain = points.map(p => p.gainValue).reduce((a, b) => a + b);
+  return points.map(p => ({
+    gainValue: p.gainValue / totalGain,
+    oscillatorFrequency: p.oscillatorFrequency
+  }));
+}
+
 const defaultProps = {
   envelopeCenter: 60, // (midi note)
   envelopeWidth: 5, // (octaves)
@@ -59,10 +70,11 @@ export class Shepard {
   }
 
   points(pitch: Pitch): Point[] {
-    return this.midiNoteNumbers(pitch).map(noteNumber => ({
+    const points = this.midiNoteNumbers(pitch).map(noteNumber => ({
       gainValue: this.gainVsMidiNote(noteNumber),
       oscillatorFrequency: Midi.noteNumberToFrequency(noteNumber),
     }));
+    return normalizePoints(points);
   }
 
 }

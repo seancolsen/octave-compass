@@ -17,6 +17,11 @@ const defaultProps = {
   oscillatorType: 'sawtooth' as OscillatorType,
 }
 
+/**
+ * Reduce from 1 just a hair to avoid some clicking.
+ */
+const centralGainValue = 0.9;
+
 export class ShepardVoice extends Voice {
 
   oscillatorType: OscillatorType;
@@ -36,6 +41,7 @@ export class ShepardVoice extends Voice {
 
   onAttack(pitches: Pitch[]) {
     this.centralGain = this.audioContext.createGain();
+    this.centralGain.gain.value = centralGainValue;
     this.centralGain.connect(this.audioContext.destination);
     this.components = [];
     pitches.forEach((pitch, i) => {
@@ -62,7 +68,7 @@ export class ShepardVoice extends Voice {
 
   onRelease() {
     if (!this.centralGain) {return;}
-    const points = new Float32Array([1, 0]);
+    const points = new Float32Array([centralGainValue, 0]);
     this.centralGain.gain.setValueCurveAtTime(
       points,
       this.audioContext.currentTime,

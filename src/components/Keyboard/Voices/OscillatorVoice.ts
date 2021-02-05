@@ -9,6 +9,11 @@ const defaults: Required<Pick<OscillatorVoiceProps, 'type'>> = {
   type: 'sawtooth',
 }
 
+/**
+ * Reduce from 1 just a hair to avoid some clicking.
+ */
+const centralGainValue = 0.9;
+
 export class OscillatorVoice extends Voice {
 
   type: OscillatorType;
@@ -25,6 +30,7 @@ export class OscillatorVoice extends Voice {
 
   onAttack(pitches: Pitch[]) {
     this.gain = this.audioContext.createGain();
+    this.gain.gain.value = centralGainValue;
     this.gain.connect(this.audioContext.destination);
     this.oscillators = [];
     pitches.map(pitch => pitch.frequency).forEach((frequency, i) => {
@@ -39,7 +45,7 @@ export class OscillatorVoice extends Voice {
 
   onRelease() {
     if (!this.gain) {return;}
-    const points = new Float32Array([1, 0]);
+    const points = new Float32Array([centralGainValue, 0]);
     this.gain.gain.setValueCurveAtTime(
       points,
       this.audioContext.currentTime,
