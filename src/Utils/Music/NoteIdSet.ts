@@ -18,37 +18,39 @@ export class NoteIdSet {
     this.noteIds = new Set(noteIds);
   }
 
-  static fromArray(noteIdsArray: number[] = []) {
+  static fromArray(noteIdsArray: number[] = []): NoteIdSet {
     const noteIds = new Set<number>();
     noteIdsArray.forEach(id => noteIds.add(id));
     return new NoteIdSet(noteIds);
   }
 
-  add(noteIds: number[] = []) {
+  add(noteIds: number[] = []): NoteIdSet {
     const result = new Set(this.noteIds);
     noteIds.forEach(id => result.add(id));
     return new NoteIdSet(result);
   }
 
-  delete(noteIds: number[] = []) {
+  delete(noteIds: number[] = []): NoteIdSet {
     const result = new Set(this.noteIds);
     noteIds.forEach(id => result.delete(id));
     return new NoteIdSet(result);
   }
 
-  get placedChords() {
+  get placedChords(): PlacedChord[] {
     // For performance, give up if we don't have between 3 and 5 notes
     if (this.noteIds.size < 3 || this.noteIds.size > 5) {
       return [];
     }
-    let placedChords = [] as PlacedChord[];
+    const placedChords = [] as PlacedChord[];
     const intervalSet = IntervalSet.fromOrdinals([...this.noteIds]);
     this.noteIds.forEach(id => {
       try {
         const chord = Chord.fromBinary(intervalSet.shift(-id).binary);
         placedChords.push({chord, rootNoteId: id});
       }
-      catch { }
+      catch {
+        // Continue
+      }
     });
     return placedChords;
   }

@@ -18,15 +18,15 @@ export class Scale {
     this.names = data.names;
   }
 
-  get defaultName() {
+  get defaultName(): string {
     return this.names[0];
   }
 
-  get alternateNames() {
+  get alternateNames(): string[] {
     return this.names.slice(1);
   }
 
-  get intervalSetName() {
+  get intervalSetName(): IntervalSetName {
     return new IntervalSetName({
       binary: this.binary,
       baseName: this.defaultName,
@@ -34,7 +34,7 @@ export class Scale {
     });
   }
 
-  get intervalSet() {
+  get intervalSet(): IntervalSet {
     return IntervalSet.fromBinary(this.binary);
   }
 
@@ -42,7 +42,7 @@ export class Scale {
    * Given the binary intervals of a scale, search for the definition of that
    * scale and return a Scale object if possible.
    */
-  static fromBinary(binary: number) {
+  static fromBinary(binary: number): Scale {
     const scaleEntry = computedData.scales.find(s => s.binary === binary);
     if (!scaleEntry?.names) {
       throw new Error('Unknown scale');

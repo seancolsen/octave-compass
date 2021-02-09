@@ -1,7 +1,8 @@
-import { Point } from './Point';
+import type { Point } from './Point';
 import { RCoordinate, PrPoint } from "./PrPoint";
 import { Angle } from "./Angle";
 import { CustomMath } from "../Math/CustomMath";
+import type { XyPoint } from './XyPoint';
 
 export type ICoordinate = number;
 export type IrPointArray = [ICoordinate, RCoordinate];
@@ -25,24 +26,22 @@ export type IrPointArray = [ICoordinate, RCoordinate];
  * As `i` increases, we move clockwise (in contrast to polar, which moves 
  * counter-clockwise).
  */
-export class IrPoint extends Point {
+export class IrPoint implements Point {
 
-  /**
-   * Create a new point in IR space
-   */
-  constructor(public i: ICoordinate, public r: RCoordinate) {
-    super();
-  }
+  constructor(
+    public readonly i: ICoordinate,
+    public readonly r: RCoordinate
+  ) { }
 
   /**
    * Create a new IR point, given an array of I and R coordinates.
    */
-  static fromArray(ir: IrPointArray) {
-    let [i, r] = ir;
+  static fromArray(ir: IrPointArray): IrPoint {
+    const [i, r] = ir;
     return new IrPoint(i, r);
   }
 
-  roughlyEquals(irPoint: IrPoint) {
+  roughlyEquals(irPoint: IrPoint): boolean {
     return CustomMath.valuesAreWithinThreshold(this.i, irPoint.i) && 
       CustomMath.valuesAreWithinThreshold(this.r, irPoint.r);
   }
@@ -50,37 +49,37 @@ export class IrPoint extends Point {
   /**
    * Convert this point to a PR point.
    */
-  toPr() {
+  toPr(): PrPoint {
     return new PrPoint(Angle.iToP(this.i), this.r);
   }
 
   /**
    * Convert this point to an XY point.
    */
-  toXy() {
+  toXy(): XyPoint {
     return this.toPr().toXy();
   }
 
   /**
    * Vector addition
    */
-  plus(irPoint: IrPoint) {
-    let i = irPoint.i || 0;
-    let r = irPoint.r || 0;
+  plus(irPoint: IrPoint): IrPoint {
+    const i = irPoint.i || 0;
+    const r = irPoint.r || 0;
     return new IrPoint(this.i + i, this.r + r);
   }
 
   /**
    * Increment the `i` value of this point.
    */
-  plusI(i: number) {
+  plusI(i: number): IrPoint {
     return this.plus(new IrPoint(i, 0));
   }
 
   /**
    * Increment the `r` value of this point.
    */
-  plusR(r: number) {
+  plusR(r: number): IrPoint {
     return this.plus(new IrPoint(0, r));
   }
 

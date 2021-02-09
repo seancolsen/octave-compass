@@ -44,7 +44,7 @@ export class ChordSet {
   /**
    * Compare two chords to determine how they should be sorted.
    */
-  static chordSortOrder(chordA: Chord, chordB: Chord) {
+  static chordSortOrder(chordA: Chord, chordB: Chord): number {
     return chordA.weight - chordB.weight;
   }
 
@@ -137,7 +137,7 @@ export class ChordSet {
    * Given an array of ChordSets, return one ChordSet that contains all the
    * Chords contained in all the given ChordSets.
    */
-  static fromUnion(chordSets: ChordSet[]) {
+  static fromUnion(chordSets: ChordSet[]): ChordSet {
     const chords = chordSets.map(chordSet => chordSet.chords);
     const flattenedChords = chords.flat();
     return new ChordSet(flattenedChords);

@@ -12,13 +12,13 @@ import {default as computedData} from "../../Data/computedData.json";
  * are more computationally intensive to name and having the note names is
  * less useful.
  */
-export const maxSetSizeToName: number = 8;
+export const maxSetSizeToName = 8;
 
 export class NoteSet {
 
   notes: Note[] = [];
 
-  private isNamed: boolean = false;
+  private isNamed = false;
 
   /**
    * This NoteSet starts out without any names. Names are filled in only when
@@ -66,11 +66,11 @@ export class NoteSet {
   /**
    * Find the note within this set that has an ID matching the given ID.
    */
-  noteById(id: number) {
+  noteById(id: number): Note | undefined {
     return this.notes.find(note => note.id === id);
   }
 
-  get nameSetSignature() {
+  get nameSetSignature(): string {
     return this.notes
       .map(note => note.name?.modifier.shortCode || '?')
       .join('');
@@ -106,7 +106,7 @@ export class NoteSet {
    * set of `7` notes and each note has three possible names. The total possible
    * note name sets is `3^7 = 2187`.
    */
-  get possibleNoteNameSets() {
+  get possibleNoteNameSets(): NoteNameSet[] {
     return CustomMath.cartesianProduct(this.possibleModifiersForEachNoteName)
       .map(modifierKeys => NoteNameSet.fromModifiers(this, modifierKeys));
   }
@@ -134,7 +134,7 @@ export class NoteSet {
    * computationally intensive task, especially for larger note sets.
    */
   get namedViaBruteForce(): NoteSet {
-    let result = new NoteSet(this.notes);
+    const result = new NoteSet(this.notes);
     result.nameSet = result.bestNoteNameSet;
     result.nameSet.noteNames.forEach(name => {
       name.note.name = name
@@ -146,14 +146,14 @@ export class NoteSet {
   /**
    * Figure out what the tonal center is of this NoteSet.
    */
-  get tonalCenter() {
+  get tonalCenter(): number {
     return this.notes[0].id;
   }
 
   /**
    * Figure out what the interval set is of this NoteSet. 
    */
-  get intervalSet() {
+  get intervalSet(): IntervalSet {
     return IntervalSet
       .fromOrdinals(this.notes.map(note => note.id))
       .shift(-this.tonalCenter);
@@ -165,8 +165,8 @@ export class NoteSet {
    *
    * @param noteNameSetSignature e.g. 'nnfnffn'
    */
-  namedViaNoteNameSetSignature(noteNameSetSignature: string) {
-    let result = new NoteSet(this.notes);
+  namedViaNoteNameSetSignature(noteNameSetSignature: string): NoteSet {
+    const result = new NoteSet(this.notes);
     [...noteNameSetSignature].forEach((modifierShortCode, index) => {
       const modifier = Modifier.fromShortCode(modifierShortCode);
       if (modifier) {
@@ -182,14 +182,14 @@ export class NoteSet {
    * name its notes without the performance hit of calculating them. If we don't
    * find a matching entry in the cache, then we skip naming.
    */
-  get namedViaCache() {
+  get namedViaCache(): NoteSet {
     const scaleData = computedData.scales
       .find(scale => scale.binary === this.intervalSet.binary);
     const signature = scaleData?.noteNameSetSignatures?.[this.tonalCenter];
     return signature ? this.namedViaNoteNameSetSignature(signature) : this;
   }
 
-  get namedViaCacheOrFlat() {
+  get namedViaCacheOrFlat(): NoteSet {
     const namedViaCache = this.namedViaCache;
     return namedViaCache.isNamed
       ? namedViaCache
@@ -203,7 +203,7 @@ export class NoteSet {
   directionallyNamed(
     direction: string | null, fallback: null | string = null
   ): NoteSet {
-    let result = new NoteSet(this.notes);
+    const result = new NoteSet(this.notes);
     result.notes.forEach((note, index, notes) => {
       notes[index] = note.namedToMatch(direction, fallback);
     });
@@ -224,7 +224,7 @@ export class NoteSet {
    * @param shift This should match the shift value used to create a new NoteSet
    *   from the returned IntervalSet.
    */
-  toIntervalSet(shift: number = 0): IntervalSet {
+  toIntervalSet(shift = 0): IntervalSet {
     const ordinals = this.notes.map(note => note.id);
     const intervalSet = IntervalSet.fromOrdinals(ordinals);
     return intervalSet.shift(shift);

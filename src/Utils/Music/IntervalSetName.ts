@@ -1,4 +1,4 @@
-export function ordinalAbbreviation(ordinal: number) {
+export function ordinalAbbreviation(ordinal: number): string {
   const finalDigit = ordinal % 10;
   const suffix =
       finalDigit === 1 ? 'st'
@@ -53,7 +53,7 @@ export class IntervalSetName {
   /**
    * e.g. "(3rd inversion)"
    */
-  get inversionDescription() {
+  get inversionDescription(): string | undefined {
     if (this.inversion === undefined) { return undefined; }
     return `(${ordinalAbbreviation(this.inversion)} inversion)`;
   }
@@ -61,7 +61,7 @@ export class IntervalSetName {
   /**
    * e.g. "Minor 7 Chord (3rd inversion)"
    */
-  get full() {
+  get full(): string {
     if (!this.genus) {
       return `Scale ${this.binary}`;
     }
@@ -75,7 +75,7 @@ export class IntervalSetName {
   /**
    * e.g. "The Harmonic Minor Scale", "a Major Chord"
    */
-  get withArticle() {
+  get withArticle(): string {
     if (!this.genus) {
       return `Scale ${this.binary}`;
     }

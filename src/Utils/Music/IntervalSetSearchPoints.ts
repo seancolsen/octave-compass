@@ -8,7 +8,7 @@ const minorChord = Chord.fromName('Minor');
 const triads = [majorChord, minorChord];
 const perfectOrdinals = [0, 5, 7];
 
-let pointAccumulators = [] as ((is: IntervalSet) => number)[];
+const pointAccumulators = [] as ((is: IntervalSet) => number)[];
 
 /** 
  * Points for being the chromatic scale
@@ -71,5 +71,6 @@ pointAccumulators.push((intervalSet: IntervalSet) => {
     (perfectOrdinalsAllContainTheSameTriad ? 3 : 0);
 });
 
-export const intervalSetSearchPoints = (intervalSet: IntervalSet) =>
-  pointAccumulators.reduce((sum, f) => sum + f(intervalSet), 0);
+export function intervalSetSearchPoints(intervalSet: IntervalSet): number {
+ return pointAccumulators.reduce((sum, f) => sum + f(intervalSet), 0);
+}

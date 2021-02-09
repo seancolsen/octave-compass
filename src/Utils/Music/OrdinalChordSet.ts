@@ -15,7 +15,7 @@ export class OrdinalChordSet {
   /**
    * The interval ordinal at which this chord set exists.
    */
-  ordinal: number = 0;
+  ordinal = 0;
 
   constructor(chordSet: ChordSet, ordinal: number) {
     this.chordSet = chordSet;
@@ -29,7 +29,7 @@ export class OrdinalChordSet {
   static fromOrdinalWithinIntervalSet(
     intervalSet: IntervalSet, ordinal: number, setOfPossibleChords: ChordSet
   ): OrdinalChordSet {
-    let chords: Chord[] = [];
+    const chords: Chord[] = [];
     setOfPossibleChords.chords.forEach(chord => {
       const shiftedChord = chord.intervalSet.shift(ordinal);
       if (intervalSet.contains(shiftedChord)) {
@@ -51,7 +51,7 @@ export class OrdinalChordSet {
   static arrayFromIntervalSet(
     intervalSet: IntervalSet, setOfPossibleChords: ChordSet
   ): OrdinalChordSet[] {
-    let result: OrdinalChordSet[] = [];
+    const result: OrdinalChordSet[] = [];
     intervalSet.ordinals.forEach(ordinal => {
       result.push(OrdinalChordSet.fromOrdinalWithinIntervalSet(
         intervalSet, ordinal, setOfPossibleChords

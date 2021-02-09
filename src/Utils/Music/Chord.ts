@@ -37,7 +37,7 @@ export class Chord {
   /**
    * Return an array of all possible chords.
    */
-  static get allChords() {
+  static get allChords(): Chord[] {
     return chordsData.map(entry => new Chord(entry));
   }
 
@@ -45,7 +45,7 @@ export class Chord {
    * Given the binary intervals of a chord, search for the definition of that
    * chord and return a Chord object if possible.
    */
-  static fromBinary(binary: number) {
+  static fromBinary(binary: number): Chord {
     const data = chordsData.find(data => data.binary === binary);
     if (!data) { throw new Error('Unknown chord'); }
     return new Chord(data);
@@ -54,13 +54,13 @@ export class Chord {
   /**
    * Look for a chord with the given name and return it if possible.
    */
-  static fromName(name: string) {
+  static fromName(name: string): Chord {
     const data = chordsData.find(data => data.name === name);
     if (!data) { throw new Error('Unknown chord'); }
     return new Chord(data);
   }
 
-  get intervalSet() {
+  get intervalSet(): IntervalSet {
     return IntervalSet.fromBinary(this.binary);
   }
 

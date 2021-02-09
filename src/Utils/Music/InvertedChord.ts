@@ -12,7 +12,7 @@ export class InvertedChord {
     this.inversion = inversion;
   }
 
-  get intervalSetName() {
+  get intervalSetName(): IntervalSetName {
     return new IntervalSetName({
       binary: this.chord.binary,
       baseName: this.chord.name,

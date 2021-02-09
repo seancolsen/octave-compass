@@ -91,19 +91,21 @@ export class IntervalSet {
   }
   
   private initInvertedChords() {
-    let result = [] as InvertedChord[];
+    const result = [] as InvertedChord[];
     this.modes.forEach((intervalSet, modeShift) => {
       try {
         const chord = Chord.fromBinary(intervalSet.binary);
         const inversion = Scalar.wrap(-modeShift, this.count);
         result.push(new InvertedChord(chord, inversion));
       }
-      catch { }
+      catch {
+        // Move to next
+      }
     });
     this.invertedChords = result;
   }
   
-  static fromBinary(binary: number) {
+  static fromBinary(binary: number): IntervalSet {
     return new IntervalSet(binary);
   }
 
@@ -112,7 +114,7 @@ export class IntervalSet {
    * filled in. We don't do this in the constructor because it's somewhat
    * expensive.
    */
-  get analyzed() {
+  get analyzed(): IntervalSet {
     if (this.isAnalyzed) {
       return this;
     }
@@ -186,14 +188,14 @@ export class IntervalSet {
    * If this set doesn't have a tonal center, return a new set that does by
    * shifting this one.
    */
-  get shiftedToHaveTonalCenter() {
+  get shiftedToHaveTonalCenter(): IntervalSet {
     return this.shift(this.ordinals[0]);
   }
 
   /**
    * Return true if this set has a tonal center. False if not.
    */
-  get hasTonalCenter() {
+  get hasTonalCenter(): boolean {
     return this.contains(new IntervalSet(1));
   }
 
@@ -210,7 +212,7 @@ export class IntervalSet {
    * yet been performed. Note that an IntervalSet can be a Scale and a Chord at
    * the same time (in rare cases).
    */
-  get isScale() {
+  get isScale(): boolean | undefined {
     if (!this.isAnalyzed) {
       return undefined;
     }
@@ -222,14 +224,14 @@ export class IntervalSet {
    * yet been performed. Note that an IntervalSet can be a Scale and a Chord at
    * the same time (in rare cases).
    */
-  get isChord() {
+  get isChord(): boolean | undefined {
     if (!this.isAnalyzed) {
       return undefined;
     }
     return (this.invertedChords?.length ?? 0) > 0;
   }
 
-  get isNamed() {
+  get isNamed(): boolean | undefined {
     return this.isScale || this.isChord;
   }
 
@@ -239,7 +241,7 @@ export class IntervalSet {
    * different inversions (uncommon, but for example, sus2 and sus4), then we
    * use some complex logic to pick the best one.
    */
-  get invertedChord() {
+  get invertedChord(): InvertedChord | undefined {
     // If we don't have chords, then give up early.
     const invertedChords = this.invertedChords;
     if (!invertedChords || invertedChords.length === 0) {
@@ -352,7 +354,7 @@ export class IntervalSet {
     return i >= 0 ? i : null;
   }
 
-  get noteNameSetSignatures() {
+  get noteNameSetSignatures(): string[] | undefined {
     /**
      * Only calculate signatures for 6, 7, and 8 note scales. Naming larger sets
      * gets pretty ugly, with lots of double sharps and double flats. Naming

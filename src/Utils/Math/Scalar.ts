@@ -15,7 +15,7 @@ export class Scalar {
     input: number,
     domain: [number, number],
     range: [number, number]
-  ) {
+  ): number {
     const [x1, x2] = domain;
     const [y1, y2] = range;
     return  y1 + input*((y2-y1)/(x2-x1));

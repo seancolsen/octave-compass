@@ -31,7 +31,7 @@ export class IntervalSetBinary {
    * ordinals.
    */
   static toOrdinals(binary: number): number[] {
-    let result: number[] = [];
+    const result: number[] = [];
     IntervalSet.chromaticOrdinals.forEach(ordinal => {
       if (IntervalSetBinary.containsOrdinal(binary, ordinal)) {
         result.push(ordinal);
@@ -50,7 +50,7 @@ export class IntervalSetBinary {
   /**
    * Return the interval set to represent the chromatic scale (all notes).
    */
-  static get chromatic() {
+  static get chromatic(): number {
     return Math.pow(2, divisions) - 1
   }
 

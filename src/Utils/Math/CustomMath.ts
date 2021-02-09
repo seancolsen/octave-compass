@@ -1,4 +1,4 @@
-interface inOut {in: number, out: number};
+interface inOut {in: number, out: number}
 
 export class CustomMath {
 
@@ -10,8 +10,10 @@ export class CustomMath {
    * @param values - e.g. ['a', 'a', 'b', 'b', 'b', 'c']
    * @returns e.g. {a: 2, b: 3, c: 1}
    */
-  static valueFrequency<T extends string | number>(values: T[]) {
-    let result = {} as { [k in T]: number};
+  static valueFrequency<T extends string | number>(
+    values: T[]
+  ): {[k in T]: number} {
+    const result = {} as {[k in T]: number};
     values.forEach(v => {
       result[v] = (result[v] || 0) + 1
     });
@@ -48,7 +50,7 @@ export class CustomMath {
   static valuesAreWithinThreshold(
     v1: number, 
     v2: number, 
-    threshold: number = 0.00000000000001
+    threshold = 0.00000000000001
   ): boolean {
     return (Math.abs(v1 - v2) < threshold);
   }

@@ -86,7 +86,7 @@ export class Modifier {
   /**
    * Which way is this modifier pointing
    */
-  get direction() {
+  get direction(): string {
     return (
       this.ascii.includes('#') ? 'sharp' :
         this.ascii.includes('b') ? 'flat' :
@@ -99,9 +99,9 @@ export class Modifier {
    * 
    * @param shortCode e.g. 'n' or 'f', etc.
    */
-  static fromShortCode(shortCode: string) {
+  static fromShortCode(shortCode: string): Modifier | undefined {
     const modifierEntry = Object.entries(modifiers).find(
-      ([name, data]: [string, ModifierData]) => data.shortCode === shortCode
+      ([, data]: [string, ModifierData]) => data.shortCode === shortCode
     );
     return modifierEntry ? new Modifier(modifierEntry[0]) : undefined;
   }

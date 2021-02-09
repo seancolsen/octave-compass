@@ -13,7 +13,7 @@ export class NoteNameSet {
 
   noteNames: NoteName[] = [];
 
-  demerits: number = 0;
+  demerits: number;
 
   constructor(noteNames: NoteName[]) {
     this.noteNames = noteNames;
@@ -26,7 +26,7 @@ export class NoteNameSet {
    * correspond to a Note within the NoteSet, and the array indexes should be
    * the same between the modifiers and the Notes.
    */
-  static fromModifiers(noteSet: NoteSet, modifierKeys: string[]) {
+  static fromModifiers(noteSet: NoteSet, modifierKeys: string[]): NoteNameSet {
     const noteNames = noteSet.notes.map((note, index) =>
       note.possibleNames[modifierKeys[index]]
     );
@@ -76,7 +76,7 @@ export class NoteNameSet {
    */
   get accidentalInsteadOfNaturalDemerits(): number {
     return this.noteNames.filter(noteName =>
-      noteName.note.possibleNames.hasOwnProperty('natural') &&
+      noteName.note.canBeNamedAs('natural') &&
       noteName.direction !== 'none'
     ).length * demeritFactors.accidentalInsteadOfNatural;
   }
@@ -116,7 +116,7 @@ export class NoteNameSet {
     const baseNames = this.noteNames.map(name => name.baseName);
     const baseNameFrequency = CustomMath.valueFrequency(baseNames);
     const extraBaseNameCount = Object.entries(baseNameFrequency)
-      .map(([baseName, frequency]) => frequency - 1).reduce((a, b) => a + b, 0);
+      .map(([, frequency]) => frequency - 1).reduce((a, b) => a + b, 0);
     return extraBaseNameCount * demeritFactors.duplicateBaseNames;
   }
 

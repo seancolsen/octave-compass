@@ -27,8 +27,8 @@ export class Note {
   /**
    * Check to see if this note has a name of the given modifier type.
    */
-  canBeNamedAs(modifier: string) {
-    return this.possibleNames.hasOwnProperty(modifier)
+  canBeNamedAs(modifier: string): boolean {
+    return Object.prototype.hasOwnProperty.call(this.possibleNames, modifier);
   }
 
   /**
@@ -56,7 +56,7 @@ export class Note {
     if (!this.canBeNamedAs(modifier)) {
       throw new Error(`Cannot name note ${this.id} as ${modifier}`);
     }
-    let result = new Note(this.id);
+    const result = new Note(this.id);
     result.name = this.possibleNames[modifier];
     return result;
   }
@@ -71,7 +71,10 @@ export class Note {
    * @param direction e.g. 'sharp', 'flat', 'natural', null
    * @param fallback A name type to use if `direction` isn't available
    */
-  getNameToMatch(direction: null | string, fallback: null | string = null) {
+  getNameToMatch(
+    direction: null | string, 
+    fallback: null | string = null
+  ): NoteName | null {
     if (this.canBeNamedAs('natural')) {
       return this.possibleNames.natural;
     }
@@ -137,7 +140,7 @@ export class Note {
    *  The [SPN](https://en.wikipedia.org/wiki/Scientific_pitch_notation)
    *  octave number
    */
-  pitchInOctave(octave: number) {
+  pitchInOctave(octave: number): Pitch {
     return new Pitch(this, octave);
   }
 
@@ -155,7 +158,7 @@ export class Note {
   pitchAboveTonalCenterInOctave(
     tonalCenter: number,
     tonalCenterOctave: number
-  ) {
+  ): Pitch {
     const octave = tonalCenterOctave + (this.id < tonalCenter ? 1 : 0);
     return new Pitch(this, octave);
   }
