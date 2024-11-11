@@ -7,11 +7,7 @@
   import FaqIcon from "../common/Icons/FaqIcon.svelte";
   import SearchIcon from "../common/Icons/SearchIcon.svelte";
 
-  const {
-    intervalSet,
-    transposeTarget,
-    modeShiftTarget,
-  } = getStore();
+  const { intervalSet, title } = getStore();
 
   const windowIsWide = getContext('windowIsWide') as Readable<boolean>;
 
@@ -35,10 +31,7 @@
     class='marquee'
     class:isNamed={$intervalSet.isNamed}
   >
-    <h1 class='title'>
-      <span class='tonal-center-name'>{$transposeTarget}</span>
-      <span class="interval-set-name">{$modeShiftTarget}</span>
-    </h1>
+    <h1 class='title'>{$title}</h1>
   </div>
   
 </div>
